@@ -1,30 +1,19 @@
-import React from "react";
+import React from 'react'
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import Todo from "./Todo";
+import { QUERY_PLANNING_APPS_NEAR_POINT } from './queries'
 
-const QUERY_SITES = gql`
-  query sites_near_point($point: geography!) {
-    site(
-      where: { location: { _st_d_within: { distance: 2000, from: $point } } }
-    ) {
-      id
-      location
-      name
-    }
-  }
-`;
-
+// TODO: This should come from user data
 const queryVars = {
-  point: {
-    type: "Point",
-    coordinates: [12.939553, 77.6183303]
+  "point": {
+    "type": "Point",
+    "coordinates": [53.5184479,-2.6761717]
   }
 };
 
-export default function Sites() {
+export default function PlanningMap () {
   return (
-    <Query query={QUERY_SITES} variables={queryVars}>
+    <Query query={QUERY_PLANNING_APPS_NEAR_POINT} variables={queryVars}>
       {({ loading, error, data }) => {
         if (loading) {
           return <div>Loading. Please wait...</div>;
@@ -38,12 +27,12 @@ export default function Sites() {
           );
         }
         return (
-          <div className="parentContainer">
-            <h3>Sites query:</h3>
+          <div>
+            <h3>Planning Apps query:</h3>
             <pre>{JSON.stringify(data, null, 2)}</pre>
           </div>
         );
       }}
     </Query>
-  );
-}
+  )
+};

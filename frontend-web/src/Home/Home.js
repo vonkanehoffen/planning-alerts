@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import TodoComponent from "../Todo/TodoComponent";
+import PlanningApps from '../PlanningApps'
 
 class Home extends Component {
   login() {
@@ -8,7 +8,7 @@ class Home extends Component {
   render() {
     const { isAuthenticated } = this.props.auth;
     if (isAuthenticated()) {
-      return <TodoComponent />;
+      return <PlanningApps />;
     }
     return (
       <div className="container">
