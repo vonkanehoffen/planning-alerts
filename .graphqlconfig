@@ -1,0 +1,16 @@
+{
+  "name": "PlanningAlerts GraphQL Schema",
+  "schemaPath": "schema.graphql",
+  "extensions": {
+    "endpoints": {
+      "Hasura GraphQL Endpoint": {
+        "url": "https://planning-alerts.herokuapp.com/v1/graphql",
+        "headers": {
+          "user-agent": "JS GraphQL",
+          "x-hasura-admin-secret": "SECRET_HERE"
+        },
+        "introspect": true
+      }
+    }
+  }
+}
