@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 const QUERY_TODO = gql`
   query fetch_todos {
@@ -11,7 +11,7 @@ const QUERY_TODO = gql`
 `;
 
 const MUTATION_TODO_ADD = gql`
-  mutation insert_todo ($objects: [todo_insert_input!]!){
+  mutation insert_todo($objects: [todo_insert_input!]!) {
     insert_todo(objects: $objects) {
       affected_rows
       returning {
@@ -24,16 +24,16 @@ const MUTATION_TODO_ADD = gql`
 `;
 
 const MUTATION_TODO_UPDATE = gql`
-  mutation update_todo ($todoId: Int, $set: todo_set_input!) {
-    update_todo(where: {id: {_eq: $todoId}} _set: $set) {
+  mutation update_todo($todoId: Int, $set: todo_set_input!) {
+    update_todo(where: { id: { _eq: $todoId } }, _set: $set) {
       affected_rows
     }
   }
 `;
 
 const MUTATION_TODO_DELETE = gql`
-  mutation delete_todo ($todoId: Int) {
-    delete_todo(where: {id: {_eq: $todoId}}) {
+  mutation delete_todo($todoId: Int) {
+    delete_todo(where: { id: { _eq: $todoId } }) {
       affected_rows
     }
   }
