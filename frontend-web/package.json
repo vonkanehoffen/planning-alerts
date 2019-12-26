@@ -11,6 +11,7 @@
     "apollo-link-context": "^1.0.8",
     "auth0-js": "^9.0.0",
     "bootstrap": "^3.3.7",
+    "google-map-react": "^1.1.5",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
     "react": "^15.5.4",
