@@ -1,1533 +1,1542 @@
 # This file was generated based on ".graphqlconfig". Do not edit manually.
 
 schema {
-    query: query_root
-    mutation: mutation_root
-    subscription: subscription_root
+  query: query_root
+  mutation: mutation_root
+  subscription: subscription_root
 }
 
 "mutation root"
 type mutation_root {
-    "delete data from the table: \"planning_app\""
-    delete_planning_app(
-        #filter the rows which have to be deleted
-        where: planning_app_bool_exp!
-    ): planning_app_mutation_response
-    "delete data from the table: \"site\""
-    delete_site(
-        #filter the rows which have to be deleted
-        where: site_bool_exp!
-    ): site_mutation_response
-    "delete data from the table: \"user_location\""
-    delete_user_location(
-        #filter the rows which have to be deleted
-        where: user_location_bool_exp!
-    ): user_location_mutation_response
-    "delete data from the table: \"users\""
-    delete_users(
-        #filter the rows which have to be deleted
-        where: users_bool_exp!
-    ): users_mutation_response
-    "insert data into the table: \"planning_app\""
-    insert_planning_app(
-        #the rows to be inserted
-        objects: [planning_app_insert_input!]!,
-        #on conflict condition
-        on_conflict: planning_app_on_conflict
-    ): planning_app_mutation_response
-    "insert data into the table: \"site\""
-    insert_site(
-        #the rows to be inserted
-        objects: [site_insert_input!]!,
-        #on conflict condition
-        on_conflict: site_on_conflict
-    ): site_mutation_response
-    "insert data into the table: \"user_location\""
-    insert_user_location(
-        #the rows to be inserted
-        objects: [user_location_insert_input!]!,
-        #on conflict condition
-        on_conflict: user_location_on_conflict
-    ): user_location_mutation_response
-    "insert data into the table: \"users\""
-    insert_users(
-        #the rows to be inserted
-        objects: [users_insert_input!]!,
-        #on conflict condition
-        on_conflict: users_on_conflict
-    ): users_mutation_response
-    "update data of the table: \"planning_app\""
-    update_planning_app(
-        #sets the columns of the filtered rows to the given values
-        _set: planning_app_set_input,
-        #filter the rows which have to be updated
-        where: planning_app_bool_exp!
-    ): planning_app_mutation_response
-    "update data of the table: \"site\""
-    update_site(
-        #increments the integer columns with given value of the filtered values
-        _inc: site_inc_input,
-        #sets the columns of the filtered rows to the given values
-        _set: site_set_input,
-        #filter the rows which have to be updated
-        where: site_bool_exp!
-    ): site_mutation_response
-    "update data of the table: \"user_location\""
-    update_user_location(
-        #increments the integer columns with given value of the filtered values
-        _inc: user_location_inc_input,
-        #sets the columns of the filtered rows to the given values
-        _set: user_location_set_input,
-        #filter the rows which have to be updated
-        where: user_location_bool_exp!
-    ): user_location_mutation_response
-    "update data of the table: \"users\""
-    update_users(
-        #sets the columns of the filtered rows to the given values
-        _set: users_set_input,
-        #filter the rows which have to be updated
-        where: users_bool_exp!
-    ): users_mutation_response
+  "delete data from the table: \"planning_app\""
+  delete_planning_app(
+    #filter the rows which have to be deleted
+    where: planning_app_bool_exp!
+  ): planning_app_mutation_response
+  "delete data from the table: \"site\""
+  delete_site(
+    #filter the rows which have to be deleted
+    where: site_bool_exp!
+  ): site_mutation_response
+  "delete data from the table: \"user_location\""
+  delete_user_location(
+    #filter the rows which have to be deleted
+    where: user_location_bool_exp!
+  ): user_location_mutation_response
+  "delete data from the table: \"users\""
+  delete_users(
+    #filter the rows which have to be deleted
+    where: users_bool_exp!
+  ): users_mutation_response
+  "insert data into the table: \"planning_app\""
+  insert_planning_app(
+    #the rows to be inserted
+    objects: [planning_app_insert_input!]!,
+    #on conflict condition
+    on_conflict: planning_app_on_conflict
+  ): planning_app_mutation_response
+  "insert data into the table: \"site\""
+  insert_site(
+    #the rows to be inserted
+    objects: [site_insert_input!]!,
+    #on conflict condition
+    on_conflict: site_on_conflict
+  ): site_mutation_response
+  "insert data into the table: \"user_location\""
+  insert_user_location(
+    #the rows to be inserted
+    objects: [user_location_insert_input!]!,
+    #on conflict condition
+    on_conflict: user_location_on_conflict
+  ): user_location_mutation_response
+  "insert data into the table: \"users\""
+  insert_users(
+    #the rows to be inserted
+    objects: [users_insert_input!]!,
+    #on conflict condition
+    on_conflict: users_on_conflict
+  ): users_mutation_response
+  "update data of the table: \"planning_app\""
+  update_planning_app(
+    #sets the columns of the filtered rows to the given values
+    _set: planning_app_set_input,
+    #filter the rows which have to be updated
+    where: planning_app_bool_exp!
+  ): planning_app_mutation_response
+  "update data of the table: \"site\""
+  update_site(
+    #increments the integer columns with given value of the filtered values
+    _inc: site_inc_input,
+    #sets the columns of the filtered rows to the given values
+    _set: site_set_input,
+    #filter the rows which have to be updated
+    where: site_bool_exp!
+  ): site_mutation_response
+  "update data of the table: \"user_location\""
+  update_user_location(
+    #increments the integer columns with given value of the filtered values
+    _inc: user_location_inc_input,
+    #sets the columns of the filtered rows to the given values
+    _set: user_location_set_input,
+    #filter the rows which have to be updated
+    where: user_location_bool_exp!
+  ): user_location_mutation_response
+  "update data of the table: \"users\""
+  update_users(
+    #sets the columns of the filtered rows to the given values
+    _set: users_set_input,
+    #filter the rows which have to be updated
+    where: users_bool_exp!
+  ): users_mutation_response
 }
 
 "columns and relationships of \"planning_app\""
 type planning_app {
-    address: String!
-    alternative_ref: String
-    appeal_decision: String
-    appeal_status: String
-    created_at: timestamptz!
-    decision_date: date
-    decision_status: String
-    geocode_ok: Boolean
-    location: geography
-    proposal: String!
-    ref: String!
-    updated_at: timestamptz
-    url: String!
-    validated_date: date
+  address: String!
+  alternative_ref: String
+  appeal_decision: String
+  appeal_status: String
+  created_at: timestamptz!
+  decision_date: date
+  decision_status: String
+  geocode_ok: Boolean
+  location: geography
+  proposal: String!
+  ref: String!
+  updated_at: timestamptz
+  url: String!
+  validated_date: date
 }
 
 "aggregated selection of \"planning_app\""
 type planning_app_aggregate {
-    aggregate: planning_app_aggregate_fields
-    nodes: [planning_app!]!
+  aggregate: planning_app_aggregate_fields
+  nodes: [planning_app!]!
 }
 
 "aggregate fields of \"planning_app\""
 type planning_app_aggregate_fields {
-    count(columns: [planning_app_select_column!], distinct: Boolean): Int
-    max: planning_app_max_fields
-    min: planning_app_min_fields
+  count(columns: [planning_app_select_column!], distinct: Boolean): Int
+  max: planning_app_max_fields
+  min: planning_app_min_fields
 }
 
 "aggregate max on columns"
 type planning_app_max_fields {
-    address: String
-    alternative_ref: String
-    appeal_decision: String
-    appeal_status: String
-    created_at: timestamptz
-    decision_date: date
-    decision_status: String
-    proposal: String
-    ref: String
-    updated_at: timestamptz
-    url: String
-    validated_date: date
+  address: String
+  alternative_ref: String
+  appeal_decision: String
+  appeal_status: String
+  created_at: timestamptz
+  decision_date: date
+  decision_status: String
+  proposal: String
+  ref: String
+  updated_at: timestamptz
+  url: String
+  validated_date: date
 }
 
 "aggregate min on columns"
 type planning_app_min_fields {
-    address: String
-    alternative_ref: String
-    appeal_decision: String
-    appeal_status: String
-    created_at: timestamptz
-    decision_date: date
-    decision_status: String
-    proposal: String
-    ref: String
-    updated_at: timestamptz
-    url: String
-    validated_date: date
+  address: String
+  alternative_ref: String
+  appeal_decision: String
+  appeal_status: String
+  created_at: timestamptz
+  decision_date: date
+  decision_status: String
+  proposal: String
+  ref: String
+  updated_at: timestamptz
+  url: String
+  validated_date: date
 }
 
 "response of any mutation on the table \"planning_app\""
 type planning_app_mutation_response {
-    "number of affected rows by the mutation"
-    affected_rows: Int!
-    "data of the affected rows by the mutation"
-    returning: [planning_app!]!
+  "number of affected rows by the mutation"
+  affected_rows: Int!
+  "data of the affected rows by the mutation"
+  returning: [planning_app!]!
 }
 
 "query root"
 type query_root {
-    "fetch data from the table: \"planning_app\""
-    planning_app(
-        #distinct select on columns
-        distinct_on: [planning_app_select_column!],
-        #limit the number of rows returned
-        limit: Int,
-        #skip the first n rows. Use only with order_by
-        offset: Int,
-        #sort the rows by one or more columns
-        order_by: [planning_app_order_by!],
-        #filter the rows returned
-        where: planning_app_bool_exp
-    ): [planning_app!]!
-    "fetch aggregated fields from the table: \"planning_app\""
-    planning_app_aggregate(
-        #distinct select on columns
-        distinct_on: [planning_app_select_column!],
-        #limit the number of rows returned
-        limit: Int,
-        #skip the first n rows. Use only with order_by
-        offset: Int,
-        #sort the rows by one or more columns
-        order_by: [planning_app_order_by!],
-        #filter the rows returned
-        where: planning_app_bool_exp
-    ): planning_app_aggregate!
-    "fetch data from the table: \"planning_app\" using primary key columns"
-    planning_app_by_pk(ref: String!): planning_app
-    "fetch data from the table: \"site\""
-    site(
-        #distinct select on columns
-        distinct_on: [site_select_column!],
-        #limit the number of rows returned
-        limit: Int,
-        #skip the first n rows. Use only with order_by
-        offset: Int,
-        #sort the rows by one or more columns
-        order_by: [site_order_by!],
-        #filter the rows returned
-        where: site_bool_exp
-    ): [site!]!
-    "fetch aggregated fields from the table: \"site\""
-    site_aggregate(
-        #distinct select on columns
-        distinct_on: [site_select_column!],
-        #limit the number of rows returned
-        limit: Int,
-        #skip the first n rows. Use only with order_by
-        offset: Int,
-        #sort the rows by one or more columns
-        order_by: [site_order_by!],
-        #filter the rows returned
-        where: site_bool_exp
-    ): site_aggregate!
-    "fetch data from the table: \"site\" using primary key columns"
-    site_by_pk(id: Int!): site
-    "fetch data from the table: \"user_location\""
-    user_location(
-        #distinct select on columns
-        distinct_on: [user_location_select_column!],
-        #limit the number of rows returned
-        limit: Int,
-        #skip the first n rows. Use only with order_by
-        offset: Int,
-        #sort the rows by one or more columns
-        order_by: [user_location_order_by!],
-        #filter the rows returned
-        where: user_location_bool_exp
-    ): [user_location!]!
-    "fetch aggregated fields from the table: \"user_location\""
-    user_location_aggregate(
-        #distinct select on columns
-        distinct_on: [user_location_select_column!],
-        #limit the number of rows returned
-        limit: Int,
-        #skip the first n rows. Use only with order_by
-        offset: Int,
-        #sort the rows by one or more columns
-        order_by: [user_location_order_by!],
-        #filter the rows returned
-        where: user_location_bool_exp
-    ): user_location_aggregate!
-    "fetch data from the table: \"user_location\" using primary key columns"
-    user_location_by_pk(user_id: Int!): user_location
-    "fetch data from the table: \"users\""
-    users(
-        #distinct select on columns
-        distinct_on: [users_select_column!],
-        #limit the number of rows returned
-        limit: Int,
-        #skip the first n rows. Use only with order_by
-        offset: Int,
-        #sort the rows by one or more columns
-        order_by: [users_order_by!],
-        #filter the rows returned
-        where: users_bool_exp
-    ): [users!]!
-    "fetch aggregated fields from the table: \"users\""
-    users_aggregate(
-        #distinct select on columns
-        distinct_on: [users_select_column!],
-        #limit the number of rows returned
-        limit: Int,
-        #skip the first n rows. Use only with order_by
-        offset: Int,
-        #sort the rows by one or more columns
-        order_by: [users_order_by!],
-        #filter the rows returned
-        where: users_bool_exp
-    ): users_aggregate!
-    "fetch data from the table: \"users\" using primary key columns"
-    users_by_pk(id: String!): users
+  "fetch data from the table: \"planning_app\""
+  planning_app(
+    #distinct select on columns
+    distinct_on: [planning_app_select_column!],
+    #limit the number of rows returned
+    limit: Int,
+    #skip the first n rows. Use only with order_by
+    offset: Int,
+    #sort the rows by one or more columns
+    order_by: [planning_app_order_by!],
+    #filter the rows returned
+    where: planning_app_bool_exp
+  ): [planning_app!]!
+  "fetch aggregated fields from the table: \"planning_app\""
+  planning_app_aggregate(
+    #distinct select on columns
+    distinct_on: [planning_app_select_column!],
+    #limit the number of rows returned
+    limit: Int,
+    #skip the first n rows. Use only with order_by
+    offset: Int,
+    #sort the rows by one or more columns
+    order_by: [planning_app_order_by!],
+    #filter the rows returned
+    where: planning_app_bool_exp
+  ): planning_app_aggregate!
+  "fetch data from the table: \"planning_app\" using primary key columns"
+  planning_app_by_pk(ref: String!): planning_app
+  "fetch data from the table: \"site\""
+  site(
+    #distinct select on columns
+    distinct_on: [site_select_column!],
+    #limit the number of rows returned
+    limit: Int,
+    #skip the first n rows. Use only with order_by
+    offset: Int,
+    #sort the rows by one or more columns
+    order_by: [site_order_by!],
+    #filter the rows returned
+    where: site_bool_exp
+  ): [site!]!
+  "fetch aggregated fields from the table: \"site\""
+  site_aggregate(
+    #distinct select on columns
+    distinct_on: [site_select_column!],
+    #limit the number of rows returned
+    limit: Int,
+    #skip the first n rows. Use only with order_by
+    offset: Int,
+    #sort the rows by one or more columns
+    order_by: [site_order_by!],
+    #filter the rows returned
+    where: site_bool_exp
+  ): site_aggregate!
+  "fetch data from the table: \"site\" using primary key columns"
+  site_by_pk(id: Int!): site
+  "fetch data from the table: \"user_location\""
+  user_location(
+    #distinct select on columns
+    distinct_on: [user_location_select_column!],
+    #limit the number of rows returned
+    limit: Int,
+    #skip the first n rows. Use only with order_by
+    offset: Int,
+    #sort the rows by one or more columns
+    order_by: [user_location_order_by!],
+    #filter the rows returned
+    where: user_location_bool_exp
+  ): [user_location!]!
+  "fetch aggregated fields from the table: \"user_location\""
+  user_location_aggregate(
+    #distinct select on columns
+    distinct_on: [user_location_select_column!],
+    #limit the number of rows returned
+    limit: Int,
+    #skip the first n rows. Use only with order_by
+    offset: Int,
+    #sort the rows by one or more columns
+    order_by: [user_location_order_by!],
+    #filter the rows returned
+    where: user_location_bool_exp
+  ): user_location_aggregate!
+  "fetch data from the table: \"user_location\" using primary key columns"
+  user_location_by_pk(user_id: Int!): user_location
+  "fetch data from the table: \"users\""
+  users(
+    #distinct select on columns
+    distinct_on: [users_select_column!],
+    #limit the number of rows returned
+    limit: Int,
+    #skip the first n rows. Use only with order_by
+    offset: Int,
+    #sort the rows by one or more columns
+    order_by: [users_order_by!],
+    #filter the rows returned
+    where: users_bool_exp
+  ): [users!]!
+  "fetch aggregated fields from the table: \"users\""
+  users_aggregate(
+    #distinct select on columns
+    distinct_on: [users_select_column!],
+    #limit the number of rows returned
+    limit: Int,
+    #skip the first n rows. Use only with order_by
+    offset: Int,
+    #sort the rows by one or more columns
+    order_by: [users_order_by!],
+    #filter the rows returned
+    where: users_bool_exp
+  ): users_aggregate!
+  "fetch data from the table: \"users\" using primary key columns"
+  users_by_pk(id: String!): users
 }
 
 "columns and relationships of \"site\""
 type site {
-    address: String
-    alternative_reference: String
-    appeal_decision: String
-    appeal_status: String
-    created_at: timestamptz
-    decision: String
-    decision_issued_date: date
-    geocodeOk: Boolean
-    id: Int!
-    location: geography
-    name: String
-    proposal: String
-    reference: String
-    type: String
-    updated_at: timestamptz
-    url: String
-    validated_date: date
+  address: String
+  alternative_reference: String
+  appeal_decision: String
+  appeal_status: String
+  created_at: timestamptz
+  decision: String
+  decision_issued_date: date
+  geocodeOk: Boolean
+  id: Int!
+  location: geography
+  name: String
+  proposal: String
+  reference: String
+  type: String
+  updated_at: timestamptz
+  url: String
+  validated_date: date
 }
 
 "aggregated selection of \"site\""
 type site_aggregate {
-    aggregate: site_aggregate_fields
-    nodes: [site!]!
+  aggregate: site_aggregate_fields
+  nodes: [site!]!
 }
 
 "aggregate fields of \"site\""
 type site_aggregate_fields {
-    avg: site_avg_fields
-    count(columns: [site_select_column!], distinct: Boolean): Int
-    max: site_max_fields
-    min: site_min_fields
-    stddev: site_stddev_fields
-    stddev_pop: site_stddev_pop_fields
-    stddev_samp: site_stddev_samp_fields
-    sum: site_sum_fields
-    var_pop: site_var_pop_fields
-    var_samp: site_var_samp_fields
-    variance: site_variance_fields
+  avg: site_avg_fields
+  count(columns: [site_select_column!], distinct: Boolean): Int
+  max: site_max_fields
+  min: site_min_fields
+  stddev: site_stddev_fields
+  stddev_pop: site_stddev_pop_fields
+  stddev_samp: site_stddev_samp_fields
+  sum: site_sum_fields
+  var_pop: site_var_pop_fields
+  var_samp: site_var_samp_fields
+  variance: site_variance_fields
 }
 
 "aggregate avg on columns"
 type site_avg_fields {
-    id: Float
+  id: Float
 }
 
 "aggregate max on columns"
 type site_max_fields {
-    address: String
-    alternative_reference: String
-    appeal_decision: String
-    appeal_status: String
-    created_at: timestamptz
-    decision: String
-    decision_issued_date: date
-    id: Int
-    name: String
-    proposal: String
-    reference: String
-    type: String
-    updated_at: timestamptz
-    url: String
-    validated_date: date
+  address: String
+  alternative_reference: String
+  appeal_decision: String
+  appeal_status: String
+  created_at: timestamptz
+  decision: String
+  decision_issued_date: date
+  id: Int
+  name: String
+  proposal: String
+  reference: String
+  type: String
+  updated_at: timestamptz
+  url: String
+  validated_date: date
 }
 
 "aggregate min on columns"
 type site_min_fields {
-    address: String
-    alternative_reference: String
-    appeal_decision: String
-    appeal_status: String
-    created_at: timestamptz
-    decision: String
-    decision_issued_date: date
-    id: Int
-    name: String
-    proposal: String
-    reference: String
-    type: String
-    updated_at: timestamptz
-    url: String
-    validated_date: date
+  address: String
+  alternative_reference: String
+  appeal_decision: String
+  appeal_status: String
+  created_at: timestamptz
+  decision: String
+  decision_issued_date: date
+  id: Int
+  name: String
+  proposal: String
+  reference: String
+  type: String
+  updated_at: timestamptz
+  url: String
+  validated_date: date
 }
 
 "response of any mutation on the table \"site\""
 type site_mutation_response {
-    "number of affected rows by the mutation"
-    affected_rows: Int!
-    "data of the affected rows by the mutation"
-    returning: [site!]!
+  "number of affected rows by the mutation"
+  affected_rows: Int!
+  "data of the affected rows by the mutation"
+  returning: [site!]!
 }
 
 "aggregate stddev on columns"
 type site_stddev_fields {
-    id: Float
+  id: Float
 }
 
 "aggregate stddev_pop on columns"
 type site_stddev_pop_fields {
-    id: Float
+  id: Float
 }
 
 "aggregate stddev_samp on columns"
 type site_stddev_samp_fields {
-    id: Float
+  id: Float
 }
 
 "aggregate sum on columns"
 type site_sum_fields {
-    id: Int
+  id: Int
 }
 
 "aggregate var_pop on columns"
 type site_var_pop_fields {
-    id: Float
+  id: Float
 }
 
 "aggregate var_samp on columns"
 type site_var_samp_fields {
-    id: Float
+  id: Float
 }
 
 "aggregate variance on columns"
 type site_variance_fields {
-    id: Float
+  id: Float
 }
 
 "subscription root"
 type subscription_root {
-    "fetch data from the table: \"planning_app\""
-    planning_app(
-        #distinct select on columns
-        distinct_on: [planning_app_select_column!],
-        #limit the number of rows returned
-        limit: Int,
-        #skip the first n rows. Use only with order_by
-        offset: Int,
-        #sort the rows by one or more columns
-        order_by: [planning_app_order_by!],
-        #filter the rows returned
-        where: planning_app_bool_exp
-    ): [planning_app!]!
-    "fetch aggregated fields from the table: \"planning_app\""
-    planning_app_aggregate(
-        #distinct select on columns
-        distinct_on: [planning_app_select_column!],
-        #limit the number of rows returned
-        limit: Int,
-        #skip the first n rows. Use only with order_by
-        offset: Int,
-        #sort the rows by one or more columns
-        order_by: [planning_app_order_by!],
-        #filter the rows returned
-        where: planning_app_bool_exp
-    ): planning_app_aggregate!
-    "fetch data from the table: \"planning_app\" using primary key columns"
-    planning_app_by_pk(ref: String!): planning_app
-    "fetch data from the table: \"site\""
-    site(
-        #distinct select on columns
-        distinct_on: [site_select_column!],
-        #limit the number of rows returned
-        limit: Int,
-        #skip the first n rows. Use only with order_by
-        offset: Int,
-        #sort the rows by one or more columns
-        order_by: [site_order_by!],
-        #filter the rows returned
-        where: site_bool_exp
-    ): [site!]!
-    "fetch aggregated fields from the table: \"site\""
-    site_aggregate(
-        #distinct select on columns
-        distinct_on: [site_select_column!],
-        #limit the number of rows returned
-        limit: Int,
-        #skip the first n rows. Use only with order_by
-        offset: Int,
-        #sort the rows by one or more columns
-        order_by: [site_order_by!],
-        #filter the rows returned
-        where: site_bool_exp
-    ): site_aggregate!
-    "fetch data from the table: \"site\" using primary key columns"
-    site_by_pk(id: Int!): site
-    "fetch data from the table: \"user_location\""
-    user_location(
-        #distinct select on columns
-        distinct_on: [user_location_select_column!],
-        #limit the number of rows returned
-        limit: Int,
-        #skip the first n rows. Use only with order_by
-        offset: Int,
-        #sort the rows by one or more columns
-        order_by: [user_location_order_by!],
-        #filter the rows returned
-        where: user_location_bool_exp
-    ): [user_location!]!
-    "fetch aggregated fields from the table: \"user_location\""
-    user_location_aggregate(
-        #distinct select on columns
-        distinct_on: [user_location_select_column!],
-        #limit the number of rows returned
-        limit: Int,
-        #skip the first n rows. Use only with order_by
-        offset: Int,
-        #sort the rows by one or more columns
-        order_by: [user_location_order_by!],
-        #filter the rows returned
-        where: user_location_bool_exp
-    ): user_location_aggregate!
-    "fetch data from the table: \"user_location\" using primary key columns"
-    user_location_by_pk(user_id: Int!): user_location
-    "fetch data from the table: \"users\""
-    users(
-        #distinct select on columns
-        distinct_on: [users_select_column!],
-        #limit the number of rows returned
-        limit: Int,
-        #skip the first n rows. Use only with order_by
-        offset: Int,
-        #sort the rows by one or more columns
-        order_by: [users_order_by!],
-        #filter the rows returned
-        where: users_bool_exp
-    ): [users!]!
-    "fetch aggregated fields from the table: \"users\""
-    users_aggregate(
-        #distinct select on columns
-        distinct_on: [users_select_column!],
-        #limit the number of rows returned
-        limit: Int,
-        #skip the first n rows. Use only with order_by
-        offset: Int,
-        #sort the rows by one or more columns
-        order_by: [users_order_by!],
-        #filter the rows returned
-        where: users_bool_exp
-    ): users_aggregate!
-    "fetch data from the table: \"users\" using primary key columns"
-    users_by_pk(id: String!): users
+  "fetch data from the table: \"planning_app\""
+  planning_app(
+    #distinct select on columns
+    distinct_on: [planning_app_select_column!],
+    #limit the number of rows returned
+    limit: Int,
+    #skip the first n rows. Use only with order_by
+    offset: Int,
+    #sort the rows by one or more columns
+    order_by: [planning_app_order_by!],
+    #filter the rows returned
+    where: planning_app_bool_exp
+  ): [planning_app!]!
+  "fetch aggregated fields from the table: \"planning_app\""
+  planning_app_aggregate(
+    #distinct select on columns
+    distinct_on: [planning_app_select_column!],
+    #limit the number of rows returned
+    limit: Int,
+    #skip the first n rows. Use only with order_by
+    offset: Int,
+    #sort the rows by one or more columns
+    order_by: [planning_app_order_by!],
+    #filter the rows returned
+    where: planning_app_bool_exp
+  ): planning_app_aggregate!
+  "fetch data from the table: \"planning_app\" using primary key columns"
+  planning_app_by_pk(ref: String!): planning_app
+  "fetch data from the table: \"site\""
+  site(
+    #distinct select on columns
+    distinct_on: [site_select_column!],
+    #limit the number of rows returned
+    limit: Int,
+    #skip the first n rows. Use only with order_by
+    offset: Int,
+    #sort the rows by one or more columns
+    order_by: [site_order_by!],
+    #filter the rows returned
+    where: site_bool_exp
+  ): [site!]!
+  "fetch aggregated fields from the table: \"site\""
+  site_aggregate(
+    #distinct select on columns
+    distinct_on: [site_select_column!],
+    #limit the number of rows returned
+    limit: Int,
+    #skip the first n rows. Use only with order_by
+    offset: Int,
+    #sort the rows by one or more columns
+    order_by: [site_order_by!],
+    #filter the rows returned
+    where: site_bool_exp
+  ): site_aggregate!
+  "fetch data from the table: \"site\" using primary key columns"
+  site_by_pk(id: Int!): site
+  "fetch data from the table: \"user_location\""
+  user_location(
+    #distinct select on columns
+    distinct_on: [user_location_select_column!],
+    #limit the number of rows returned
+    limit: Int,
+    #skip the first n rows. Use only with order_by
+    offset: Int,
+    #sort the rows by one or more columns
+    order_by: [user_location_order_by!],
+    #filter the rows returned
+    where: user_location_bool_exp
+  ): [user_location!]!
+  "fetch aggregated fields from the table: \"user_location\""
+  user_location_aggregate(
+    #distinct select on columns
+    distinct_on: [user_location_select_column!],
+    #limit the number of rows returned
+    limit: Int,
+    #skip the first n rows. Use only with order_by
+    offset: Int,
+    #sort the rows by one or more columns
+    order_by: [user_location_order_by!],
+    #filter the rows returned
+    where: user_location_bool_exp
+  ): user_location_aggregate!
+  "fetch data from the table: \"user_location\" using primary key columns"
+  user_location_by_pk(user_id: Int!): user_location
+  "fetch data from the table: \"users\""
+  users(
+    #distinct select on columns
+    distinct_on: [users_select_column!],
+    #limit the number of rows returned
+    limit: Int,
+    #skip the first n rows. Use only with order_by
+    offset: Int,
+    #sort the rows by one or more columns
+    order_by: [users_order_by!],
+    #filter the rows returned
+    where: users_bool_exp
+  ): [users!]!
+  "fetch aggregated fields from the table: \"users\""
+  users_aggregate(
+    #distinct select on columns
+    distinct_on: [users_select_column!],
+    #limit the number of rows returned
+    limit: Int,
+    #skip the first n rows. Use only with order_by
+    offset: Int,
+    #sort the rows by one or more columns
+    order_by: [users_order_by!],
+    #filter the rows returned
+    where: users_bool_exp
+  ): users_aggregate!
+  "fetch data from the table: \"users\" using primary key columns"
+  users_by_pk(id: String!): users
 }
 
 "columns and relationships of \"user_location\""
 type user_location {
-    location: geography
-    user_id: Int!
+  location: geography
+  user_id: Int!
 }
 
 "aggregated selection of \"user_location\""
 type user_location_aggregate {
-    aggregate: user_location_aggregate_fields
-    nodes: [user_location!]!
+  aggregate: user_location_aggregate_fields
+  nodes: [user_location!]!
 }
 
 "aggregate fields of \"user_location\""
 type user_location_aggregate_fields {
-    avg: user_location_avg_fields
-    count(columns: [user_location_select_column!], distinct: Boolean): Int
-    max: user_location_max_fields
-    min: user_location_min_fields
-    stddev: user_location_stddev_fields
-    stddev_pop: user_location_stddev_pop_fields
-    stddev_samp: user_location_stddev_samp_fields
-    sum: user_location_sum_fields
-    var_pop: user_location_var_pop_fields
-    var_samp: user_location_var_samp_fields
-    variance: user_location_variance_fields
+  avg: user_location_avg_fields
+  count(columns: [user_location_select_column!], distinct: Boolean): Int
+  max: user_location_max_fields
+  min: user_location_min_fields
+  stddev: user_location_stddev_fields
+  stddev_pop: user_location_stddev_pop_fields
+  stddev_samp: user_location_stddev_samp_fields
+  sum: user_location_sum_fields
+  var_pop: user_location_var_pop_fields
+  var_samp: user_location_var_samp_fields
+  variance: user_location_variance_fields
 }
 
 "aggregate avg on columns"
 type user_location_avg_fields {
-    user_id: Float
+  user_id: Float
 }
 
 "aggregate max on columns"
 type user_location_max_fields {
-    user_id: Int
+  user_id: Int
 }
 
 "aggregate min on columns"
 type user_location_min_fields {
-    user_id: Int
+  user_id: Int
 }
 
 "response of any mutation on the table \"user_location\""
 type user_location_mutation_response {
-    "number of affected rows by the mutation"
-    affected_rows: Int!
-    "data of the affected rows by the mutation"
-    returning: [user_location!]!
+  "number of affected rows by the mutation"
+  affected_rows: Int!
+  "data of the affected rows by the mutation"
+  returning: [user_location!]!
 }
 
 "aggregate stddev on columns"
 type user_location_stddev_fields {
-    user_id: Float
+  user_id: Float
 }
 
 "aggregate stddev_pop on columns"
 type user_location_stddev_pop_fields {
-    user_id: Float
+  user_id: Float
 }
 
 "aggregate stddev_samp on columns"
 type user_location_stddev_samp_fields {
-    user_id: Float
+  user_id: Float
 }
 
 "aggregate sum on columns"
 type user_location_sum_fields {
-    user_id: Int
+  user_id: Int
 }
 
 "aggregate var_pop on columns"
 type user_location_var_pop_fields {
-    user_id: Float
+  user_id: Float
 }
 
 "aggregate var_samp on columns"
 type user_location_var_samp_fields {
-    user_id: Float
+  user_id: Float
 }
 
 "aggregate variance on columns"
 type user_location_variance_fields {
-    user_id: Float
+  user_id: Float
 }
 
 "columns and relationships of \"users\""
 type users {
-    email: String
-    id: String!
-    name: String
+  email: String
+  id: String!
+  location: geography
+  name: String
 }
 
 "aggregated selection of \"users\""
 type users_aggregate {
-    aggregate: users_aggregate_fields
-    nodes: [users!]!
+  aggregate: users_aggregate_fields
+  nodes: [users!]!
 }
 
 "aggregate fields of \"users\""
 type users_aggregate_fields {
-    count(columns: [users_select_column!], distinct: Boolean): Int
-    max: users_max_fields
-    min: users_min_fields
+  count(columns: [users_select_column!], distinct: Boolean): Int
+  max: users_max_fields
+  min: users_min_fields
 }
 
 "aggregate max on columns"
 type users_max_fields {
-    email: String
-    id: String
-    name: String
+  email: String
+  id: String
+  name: String
 }
 
 "aggregate min on columns"
 type users_min_fields {
-    email: String
-    id: String
-    name: String
+  email: String
+  id: String
+  name: String
 }
 
 "response of any mutation on the table \"users\""
 type users_mutation_response {
-    "number of affected rows by the mutation"
-    affected_rows: Int!
-    "data of the affected rows by the mutation"
-    returning: [users!]!
+  "number of affected rows by the mutation"
+  affected_rows: Int!
+  "data of the affected rows by the mutation"
+  returning: [users!]!
 }
 
 "column ordering options"
 enum order_by {
-    #in the ascending order, nulls last
-    asc
-    #in the ascending order, nulls first
-    asc_nulls_first
-    #in the ascending order, nulls last
-    asc_nulls_last
-    #in the descending order, nulls first
-    desc
-    #in the descending order, nulls first
-    desc_nulls_first
-    #in the descending order, nulls last
-    desc_nulls_last
+  #in the ascending order, nulls last
+  asc
+  #in the ascending order, nulls first
+  asc_nulls_first
+  #in the ascending order, nulls last
+  asc_nulls_last
+  #in the descending order, nulls first
+  desc
+  #in the descending order, nulls first
+  desc_nulls_first
+  #in the descending order, nulls last
+  desc_nulls_last
 }
 
 "unique or primary key constraints on table \"planning_app\""
 enum planning_app_constraint {
-    #unique or primary key constraint
-    planning_app_pkey
-    #unique or primary key constraint
-    planning_app_ref_key
+  #unique or primary key constraint
+  planning_app_pkey
+  #unique or primary key constraint
+  planning_app_ref_key
 }
 
 "select columns of table \"planning_app\""
 enum planning_app_select_column {
-    #column name
-    address
-    #column name
-    alternative_ref
-    #column name
-    appeal_decision
-    #column name
-    appeal_status
-    #column name
-    created_at
-    #column name
-    decision_date
-    #column name
-    decision_status
-    #column name
-    geocode_ok
-    #column name
-    location
-    #column name
-    proposal
-    #column name
-    ref
-    #column name
-    updated_at
-    #column name
-    url
-    #column name
-    validated_date
+  #column name
+  address
+  #column name
+  alternative_ref
+  #column name
+  appeal_decision
+  #column name
+  appeal_status
+  #column name
+  created_at
+  #column name
+  decision_date
+  #column name
+  decision_status
+  #column name
+  geocode_ok
+  #column name
+  location
+  #column name
+  proposal
+  #column name
+  ref
+  #column name
+  updated_at
+  #column name
+  url
+  #column name
+  validated_date
 }
 
 "update columns of table \"planning_app\""
 enum planning_app_update_column {
-    #column name
-    address
-    #column name
-    alternative_ref
-    #column name
-    appeal_decision
-    #column name
-    appeal_status
-    #column name
-    created_at
-    #column name
-    decision_date
-    #column name
-    decision_status
-    #column name
-    geocode_ok
-    #column name
-    location
-    #column name
-    proposal
-    #column name
-    ref
-    #column name
-    updated_at
-    #column name
-    url
-    #column name
-    validated_date
+  #column name
+  address
+  #column name
+  alternative_ref
+  #column name
+  appeal_decision
+  #column name
+  appeal_status
+  #column name
+  created_at
+  #column name
+  decision_date
+  #column name
+  decision_status
+  #column name
+  geocode_ok
+  #column name
+  location
+  #column name
+  proposal
+  #column name
+  ref
+  #column name
+  updated_at
+  #column name
+  url
+  #column name
+  validated_date
 }
 
 "unique or primary key constraints on table \"site\""
 enum site_constraint {
-    #unique or primary key constraint
-    site_pkey
+  #unique or primary key constraint
+  site_pkey
 }
 
 "select columns of table \"site\""
 enum site_select_column {
-    #column name
-    address
-    #column name
-    alternative_reference
-    #column name
-    appeal_decision
-    #column name
-    appeal_status
-    #column name
-    created_at
-    #column name
-    decision
-    #column name
-    decision_issued_date
-    #column name
-    geocodeOk
-    #column name
-    id
-    #column name
-    location
-    #column name
-    name
-    #column name
-    proposal
-    #column name
-    reference
-    #column name
-    type
-    #column name
-    updated_at
-    #column name
-    url
-    #column name
-    validated_date
+  #column name
+  address
+  #column name
+  alternative_reference
+  #column name
+  appeal_decision
+  #column name
+  appeal_status
+  #column name
+  created_at
+  #column name
+  decision
+  #column name
+  decision_issued_date
+  #column name
+  geocodeOk
+  #column name
+  id
+  #column name
+  location
+  #column name
+  name
+  #column name
+  proposal
+  #column name
+  reference
+  #column name
+  type
+  #column name
+  updated_at
+  #column name
+  url
+  #column name
+  validated_date
 }
 
 "update columns of table \"site\""
 enum site_update_column {
-    #column name
-    address
-    #column name
-    alternative_reference
-    #column name
-    appeal_decision
-    #column name
-    appeal_status
-    #column name
-    created_at
-    #column name
-    decision
-    #column name
-    decision_issued_date
-    #column name
-    geocodeOk
-    #column name
-    id
-    #column name
-    location
-    #column name
-    name
-    #column name
-    proposal
-    #column name
-    reference
-    #column name
-    type
-    #column name
-    updated_at
-    #column name
-    url
-    #column name
-    validated_date
+  #column name
+  address
+  #column name
+  alternative_reference
+  #column name
+  appeal_decision
+  #column name
+  appeal_status
+  #column name
+  created_at
+  #column name
+  decision
+  #column name
+  decision_issued_date
+  #column name
+  geocodeOk
+  #column name
+  id
+  #column name
+  location
+  #column name
+  name
+  #column name
+  proposal
+  #column name
+  reference
+  #column name
+  type
+  #column name
+  updated_at
+  #column name
+  url
+  #column name
+  validated_date
 }
 
 "unique or primary key constraints on table \"user_location\""
 enum user_location_constraint {
-    #unique or primary key constraint
-    user_location_pkey
+  #unique or primary key constraint
+  user_location_pkey
 }
 
 "select columns of table \"user_location\""
 enum user_location_select_column {
-    #column name
-    location
-    #column name
-    user_id
+  #column name
+  location
+  #column name
+  user_id
 }
 
 "update columns of table \"user_location\""
 enum user_location_update_column {
-    #column name
-    location
-    #column name
-    user_id
+  #column name
+  location
+  #column name
+  user_id
 }
 
 "unique or primary key constraints on table \"users\""
 enum users_constraint {
-    #unique or primary key constraint
-    users_pkey
+  #unique or primary key constraint
+  users_pkey
 }
 
 "select columns of table \"users\""
 enum users_select_column {
-    #column name
-    email
-    #column name
-    id
-    #column name
-    name
+  #column name
+  email
+  #column name
+  id
+  #column name
+  location
+  #column name
+  name
 }
 
 "update columns of table \"users\""
 enum users_update_column {
-    #column name
-    email
-    #column name
-    id
-    #column name
-    name
+  #column name
+  email
+  #column name
+  id
+  #column name
+  location
+  #column name
+  name
 }
 
 "expression to compare columns of type Boolean. All fields are combined with logical 'AND'."
 input Boolean_comparison_exp {
-    _eq: Boolean
-    _gt: Boolean
-    _gte: Boolean
-    _in: [Boolean!]
-    _is_null: Boolean
-    _lt: Boolean
-    _lte: Boolean
-    _neq: Boolean
-    _nin: [Boolean!]
+  _eq: Boolean
+  _gt: Boolean
+  _gte: Boolean
+  _in: [Boolean!]
+  _is_null: Boolean
+  _lt: Boolean
+  _lte: Boolean
+  _neq: Boolean
+  _nin: [Boolean!]
 }
 
 "expression to compare columns of type Int. All fields are combined with logical 'AND'."
 input Int_comparison_exp {
-    _eq: Int
-    _gt: Int
-    _gte: Int
-    _in: [Int!]
-    _is_null: Boolean
-    _lt: Int
-    _lte: Int
-    _neq: Int
-    _nin: [Int!]
+  _eq: Int
+  _gt: Int
+  _gte: Int
+  _in: [Int!]
+  _is_null: Boolean
+  _lt: Int
+  _lte: Int
+  _neq: Int
+  _nin: [Int!]
 }
 
 "expression to compare columns of type String. All fields are combined with logical 'AND'."
 input String_comparison_exp {
-    _eq: String
-    _gt: String
-    _gte: String
-    _ilike: String
-    _in: [String!]
-    _is_null: Boolean
-    _like: String
-    _lt: String
-    _lte: String
-    _neq: String
-    _nilike: String
-    _nin: [String!]
-    _nlike: String
-    _nsimilar: String
-    _similar: String
+  _eq: String
+  _gt: String
+  _gte: String
+  _ilike: String
+  _in: [String!]
+  _is_null: Boolean
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+  _nilike: String
+  _nin: [String!]
+  _nlike: String
+  _nsimilar: String
+  _similar: String
 }
 
 "expression to compare columns of type date. All fields are combined with logical 'AND'."
 input date_comparison_exp {
-    _eq: date
-    _gt: date
-    _gte: date
-    _in: [date!]
-    _is_null: Boolean
-    _lt: date
-    _lte: date
-    _neq: date
-    _nin: [date!]
+  _eq: date
+  _gt: date
+  _gte: date
+  _in: [date!]
+  _is_null: Boolean
+  _lt: date
+  _lte: date
+  _neq: date
+  _nin: [date!]
 }
 
 "Expression to compare the result of casting a column of type geography. Multiple cast targets are combined with logical 'AND'."
 input geography_cast_exp {
-    geometry: geometry_comparison_exp
+  geometry: geometry_comparison_exp
 }
 
 "expression to compare columns of type geography. All fields are combined with logical 'AND'."
 input geography_comparison_exp {
-    _cast: geography_cast_exp
-    _eq: geography
-    _gt: geography
-    _gte: geography
-    _in: [geography!]
-    _is_null: Boolean
-    _lt: geography
-    _lte: geography
-    _neq: geography
-    _nin: [geography!]
-    "is the column within a distance from a geography value"
-    _st_d_within: st_d_within_geography_input
-    "does the column spatially intersect the given geography value"
-    _st_intersects: geography
+  _cast: geography_cast_exp
+  _eq: geography
+  _gt: geography
+  _gte: geography
+  _in: [geography!]
+  _is_null: Boolean
+  _lt: geography
+  _lte: geography
+  _neq: geography
+  _nin: [geography!]
+  "is the column within a distance from a geography value"
+  _st_d_within: st_d_within_geography_input
+  "does the column spatially intersect the given geography value"
+  _st_intersects: geography
 }
 
 "Expression to compare the result of casting a column of type geometry. Multiple cast targets are combined with logical 'AND'."
 input geometry_cast_exp {
-    geography: geography_comparison_exp
+  geography: geography_comparison_exp
 }
 
 "expression to compare columns of type geometry. All fields are combined with logical 'AND'."
 input geometry_comparison_exp {
-    _cast: geometry_cast_exp
-    _eq: geometry
-    _gt: geometry
-    _gte: geometry
-    _in: [geometry!]
-    _is_null: Boolean
-    _lt: geometry
-    _lte: geometry
-    _neq: geometry
-    _nin: [geometry!]
-    "does the column contain the given geometry value"
-    _st_contains: geometry
-    "does the column crosses the given geometry value"
-    _st_crosses: geometry
-    "is the column within a distance from a geometry value"
-    _st_d_within: st_d_within_input
-    "is the column equal to given geometry value. Directionality is ignored"
-    _st_equals: geometry
-    "does the column spatially intersect the given geometry value"
-    _st_intersects: geometry
-    "does the column 'spatially overlap' (intersect but not completely contain) the given geometry value"
-    _st_overlaps: geometry
-    "does the column have atleast one point in common with the given geometry value"
-    _st_touches: geometry
-    "is the column contained in the given geometry value"
-    _st_within: geometry
+  _cast: geometry_cast_exp
+  _eq: geometry
+  _gt: geometry
+  _gte: geometry
+  _in: [geometry!]
+  _is_null: Boolean
+  _lt: geometry
+  _lte: geometry
+  _neq: geometry
+  _nin: [geometry!]
+  "does the column contain the given geometry value"
+  _st_contains: geometry
+  "does the column crosses the given geometry value"
+  _st_crosses: geometry
+  "is the column within a distance from a geometry value"
+  _st_d_within: st_d_within_input
+  "is the column equal to given geometry value. Directionality is ignored"
+  _st_equals: geometry
+  "does the column spatially intersect the given geometry value"
+  _st_intersects: geometry
+  "does the column 'spatially overlap' (intersect but not completely contain) the given geometry value"
+  _st_overlaps: geometry
+  "does the column have atleast one point in common with the given geometry value"
+  _st_touches: geometry
+  "is the column contained in the given geometry value"
+  _st_within: geometry
 }
 
 "order by aggregate values of table \"planning_app\""
 input planning_app_aggregate_order_by {
-    count: order_by
-    max: planning_app_max_order_by
-    min: planning_app_min_order_by
+  count: order_by
+  max: planning_app_max_order_by
+  min: planning_app_min_order_by
 }
 
 "input type for inserting array relation for remote table \"planning_app\""
 input planning_app_arr_rel_insert_input {
-    data: [planning_app_insert_input!]!
-    on_conflict: planning_app_on_conflict
+  data: [planning_app_insert_input!]!
+  on_conflict: planning_app_on_conflict
 }
 
 "Boolean expression to filter rows from the table \"planning_app\". All fields are combined with a logical 'AND'."
 input planning_app_bool_exp {
-    _and: [planning_app_bool_exp]
-    _not: planning_app_bool_exp
-    _or: [planning_app_bool_exp]
-    address: String_comparison_exp
-    alternative_ref: String_comparison_exp
-    appeal_decision: String_comparison_exp
-    appeal_status: String_comparison_exp
-    created_at: timestamptz_comparison_exp
-    decision_date: date_comparison_exp
-    decision_status: String_comparison_exp
-    geocode_ok: Boolean_comparison_exp
-    location: geography_comparison_exp
-    proposal: String_comparison_exp
-    ref: String_comparison_exp
-    updated_at: timestamptz_comparison_exp
-    url: String_comparison_exp
-    validated_date: date_comparison_exp
+  _and: [planning_app_bool_exp]
+  _not: planning_app_bool_exp
+  _or: [planning_app_bool_exp]
+  address: String_comparison_exp
+  alternative_ref: String_comparison_exp
+  appeal_decision: String_comparison_exp
+  appeal_status: String_comparison_exp
+  created_at: timestamptz_comparison_exp
+  decision_date: date_comparison_exp
+  decision_status: String_comparison_exp
+  geocode_ok: Boolean_comparison_exp
+  location: geography_comparison_exp
+  proposal: String_comparison_exp
+  ref: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  url: String_comparison_exp
+  validated_date: date_comparison_exp
 }
 
 "input type for inserting data into table \"planning_app\""
 input planning_app_insert_input {
-    address: String
-    alternative_ref: String
-    appeal_decision: String
-    appeal_status: String
-    created_at: timestamptz
-    decision_date: date
-    decision_status: String
-    geocode_ok: Boolean
-    location: geography
-    proposal: String
-    ref: String
-    updated_at: timestamptz
-    url: String
-    validated_date: date
+  address: String
+  alternative_ref: String
+  appeal_decision: String
+  appeal_status: String
+  created_at: timestamptz
+  decision_date: date
+  decision_status: String
+  geocode_ok: Boolean
+  location: geography
+  proposal: String
+  ref: String
+  updated_at: timestamptz
+  url: String
+  validated_date: date
 }
 
 "order by max() on columns of table \"planning_app\""
 input planning_app_max_order_by {
-    address: order_by
-    alternative_ref: order_by
-    appeal_decision: order_by
-    appeal_status: order_by
-    created_at: order_by
-    decision_date: order_by
-    decision_status: order_by
-    proposal: order_by
-    ref: order_by
-    updated_at: order_by
-    url: order_by
-    validated_date: order_by
+  address: order_by
+  alternative_ref: order_by
+  appeal_decision: order_by
+  appeal_status: order_by
+  created_at: order_by
+  decision_date: order_by
+  decision_status: order_by
+  proposal: order_by
+  ref: order_by
+  updated_at: order_by
+  url: order_by
+  validated_date: order_by
 }
 
 "order by min() on columns of table \"planning_app\""
 input planning_app_min_order_by {
-    address: order_by
-    alternative_ref: order_by
-    appeal_decision: order_by
-    appeal_status: order_by
-    created_at: order_by
-    decision_date: order_by
-    decision_status: order_by
-    proposal: order_by
-    ref: order_by
-    updated_at: order_by
-    url: order_by
-    validated_date: order_by
+  address: order_by
+  alternative_ref: order_by
+  appeal_decision: order_by
+  appeal_status: order_by
+  created_at: order_by
+  decision_date: order_by
+  decision_status: order_by
+  proposal: order_by
+  ref: order_by
+  updated_at: order_by
+  url: order_by
+  validated_date: order_by
 }
 
 "input type for inserting object relation for remote table \"planning_app\""
 input planning_app_obj_rel_insert_input {
-    data: planning_app_insert_input!
-    on_conflict: planning_app_on_conflict
+  data: planning_app_insert_input!
+  on_conflict: planning_app_on_conflict
 }
 
 "on conflict condition type for table \"planning_app\""
 input planning_app_on_conflict {
-    constraint: planning_app_constraint!
-    update_columns: [planning_app_update_column!]!
-    where: planning_app_bool_exp
+  constraint: planning_app_constraint!
+  update_columns: [planning_app_update_column!]!
+  where: planning_app_bool_exp
 }
 
 "ordering options when selecting data from \"planning_app\""
 input planning_app_order_by {
-    address: order_by
-    alternative_ref: order_by
-    appeal_decision: order_by
-    appeal_status: order_by
-    created_at: order_by
-    decision_date: order_by
-    decision_status: order_by
-    geocode_ok: order_by
-    location: order_by
-    proposal: order_by
-    ref: order_by
-    updated_at: order_by
-    url: order_by
-    validated_date: order_by
+  address: order_by
+  alternative_ref: order_by
+  appeal_decision: order_by
+  appeal_status: order_by
+  created_at: order_by
+  decision_date: order_by
+  decision_status: order_by
+  geocode_ok: order_by
+  location: order_by
+  proposal: order_by
+  ref: order_by
+  updated_at: order_by
+  url: order_by
+  validated_date: order_by
 }
 
 "input type for updating data in table \"planning_app\""
 input planning_app_set_input {
-    address: String
-    alternative_ref: String
-    appeal_decision: String
-    appeal_status: String
-    created_at: timestamptz
-    decision_date: date
-    decision_status: String
-    geocode_ok: Boolean
-    location: geography
-    proposal: String
-    ref: String
-    updated_at: timestamptz
-    url: String
-    validated_date: date
+  address: String
+  alternative_ref: String
+  appeal_decision: String
+  appeal_status: String
+  created_at: timestamptz
+  decision_date: date
+  decision_status: String
+  geocode_ok: Boolean
+  location: geography
+  proposal: String
+  ref: String
+  updated_at: timestamptz
+  url: String
+  validated_date: date
 }
 
 "order by aggregate values of table \"site\""
 input site_aggregate_order_by {
-    avg: site_avg_order_by
-    count: order_by
-    max: site_max_order_by
-    min: site_min_order_by
-    stddev: site_stddev_order_by
-    stddev_pop: site_stddev_pop_order_by
-    stddev_samp: site_stddev_samp_order_by
-    sum: site_sum_order_by
-    var_pop: site_var_pop_order_by
-    var_samp: site_var_samp_order_by
-    variance: site_variance_order_by
+  avg: site_avg_order_by
+  count: order_by
+  max: site_max_order_by
+  min: site_min_order_by
+  stddev: site_stddev_order_by
+  stddev_pop: site_stddev_pop_order_by
+  stddev_samp: site_stddev_samp_order_by
+  sum: site_sum_order_by
+  var_pop: site_var_pop_order_by
+  var_samp: site_var_samp_order_by
+  variance: site_variance_order_by
 }
 
 "input type for inserting array relation for remote table \"site\""
 input site_arr_rel_insert_input {
-    data: [site_insert_input!]!
-    on_conflict: site_on_conflict
+  data: [site_insert_input!]!
+  on_conflict: site_on_conflict
 }
 
 "order by avg() on columns of table \"site\""
 input site_avg_order_by {
-    id: order_by
+  id: order_by
 }
 
 "Boolean expression to filter rows from the table \"site\". All fields are combined with a logical 'AND'."
 input site_bool_exp {
-    _and: [site_bool_exp]
-    _not: site_bool_exp
-    _or: [site_bool_exp]
-    address: String_comparison_exp
-    alternative_reference: String_comparison_exp
-    appeal_decision: String_comparison_exp
-    appeal_status: String_comparison_exp
-    created_at: timestamptz_comparison_exp
-    decision: String_comparison_exp
-    decision_issued_date: date_comparison_exp
-    geocodeOk: Boolean_comparison_exp
-    id: Int_comparison_exp
-    location: geography_comparison_exp
-    name: String_comparison_exp
-    proposal: String_comparison_exp
-    reference: String_comparison_exp
-    type: String_comparison_exp
-    updated_at: timestamptz_comparison_exp
-    url: String_comparison_exp
-    validated_date: date_comparison_exp
+  _and: [site_bool_exp]
+  _not: site_bool_exp
+  _or: [site_bool_exp]
+  address: String_comparison_exp
+  alternative_reference: String_comparison_exp
+  appeal_decision: String_comparison_exp
+  appeal_status: String_comparison_exp
+  created_at: timestamptz_comparison_exp
+  decision: String_comparison_exp
+  decision_issued_date: date_comparison_exp
+  geocodeOk: Boolean_comparison_exp
+  id: Int_comparison_exp
+  location: geography_comparison_exp
+  name: String_comparison_exp
+  proposal: String_comparison_exp
+  reference: String_comparison_exp
+  type: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  url: String_comparison_exp
+  validated_date: date_comparison_exp
 }
 
 "input type for incrementing integer columne in table \"site\""
 input site_inc_input {
-    id: Int
+  id: Int
 }
 
 "input type for inserting data into table \"site\""
 input site_insert_input {
-    address: String
-    alternative_reference: String
-    appeal_decision: String
-    appeal_status: String
-    created_at: timestamptz
-    decision: String
-    decision_issued_date: date
-    geocodeOk: Boolean
-    id: Int
-    location: geography
-    name: String
-    proposal: String
-    reference: String
-    type: String
-    updated_at: timestamptz
-    url: String
-    validated_date: date
+  address: String
+  alternative_reference: String
+  appeal_decision: String
+  appeal_status: String
+  created_at: timestamptz
+  decision: String
+  decision_issued_date: date
+  geocodeOk: Boolean
+  id: Int
+  location: geography
+  name: String
+  proposal: String
+  reference: String
+  type: String
+  updated_at: timestamptz
+  url: String
+  validated_date: date
 }
 
 "order by max() on columns of table \"site\""
 input site_max_order_by {
-    address: order_by
-    alternative_reference: order_by
-    appeal_decision: order_by
-    appeal_status: order_by
-    created_at: order_by
-    decision: order_by
-    decision_issued_date: order_by
-    id: order_by
-    name: order_by
-    proposal: order_by
-    reference: order_by
-    type: order_by
-    updated_at: order_by
-    url: order_by
-    validated_date: order_by
+  address: order_by
+  alternative_reference: order_by
+  appeal_decision: order_by
+  appeal_status: order_by
+  created_at: order_by
+  decision: order_by
+  decision_issued_date: order_by
+  id: order_by
+  name: order_by
+  proposal: order_by
+  reference: order_by
+  type: order_by
+  updated_at: order_by
+  url: order_by
+  validated_date: order_by
 }
 
 "order by min() on columns of table \"site\""
 input site_min_order_by {
-    address: order_by
-    alternative_reference: order_by
-    appeal_decision: order_by
-    appeal_status: order_by
-    created_at: order_by
-    decision: order_by
-    decision_issued_date: order_by
-    id: order_by
-    name: order_by
-    proposal: order_by
-    reference: order_by
-    type: order_by
-    updated_at: order_by
-    url: order_by
-    validated_date: order_by
+  address: order_by
+  alternative_reference: order_by
+  appeal_decision: order_by
+  appeal_status: order_by
+  created_at: order_by
+  decision: order_by
+  decision_issued_date: order_by
+  id: order_by
+  name: order_by
+  proposal: order_by
+  reference: order_by
+  type: order_by
+  updated_at: order_by
+  url: order_by
+  validated_date: order_by
 }
 
 "input type for inserting object relation for remote table \"site\""
 input site_obj_rel_insert_input {
-    data: site_insert_input!
-    on_conflict: site_on_conflict
+  data: site_insert_input!
+  on_conflict: site_on_conflict
 }
 
 "on conflict condition type for table \"site\""
 input site_on_conflict {
-    constraint: site_constraint!
-    update_columns: [site_update_column!]!
-    where: site_bool_exp
+  constraint: site_constraint!
+  update_columns: [site_update_column!]!
+  where: site_bool_exp
 }
 
 "ordering options when selecting data from \"site\""
 input site_order_by {
-    address: order_by
-    alternative_reference: order_by
-    appeal_decision: order_by
-    appeal_status: order_by
-    created_at: order_by
-    decision: order_by
-    decision_issued_date: order_by
-    geocodeOk: order_by
-    id: order_by
-    location: order_by
-    name: order_by
-    proposal: order_by
-    reference: order_by
-    type: order_by
-    updated_at: order_by
-    url: order_by
-    validated_date: order_by
+  address: order_by
+  alternative_reference: order_by
+  appeal_decision: order_by
+  appeal_status: order_by
+  created_at: order_by
+  decision: order_by
+  decision_issued_date: order_by
+  geocodeOk: order_by
+  id: order_by
+  location: order_by
+  name: order_by
+  proposal: order_by
+  reference: order_by
+  type: order_by
+  updated_at: order_by
+  url: order_by
+  validated_date: order_by
 }
 
 "input type for updating data in table \"site\""
 input site_set_input {
-    address: String
-    alternative_reference: String
-    appeal_decision: String
-    appeal_status: String
-    created_at: timestamptz
-    decision: String
-    decision_issued_date: date
-    geocodeOk: Boolean
-    id: Int
-    location: geography
-    name: String
-    proposal: String
-    reference: String
-    type: String
-    updated_at: timestamptz
-    url: String
-    validated_date: date
+  address: String
+  alternative_reference: String
+  appeal_decision: String
+  appeal_status: String
+  created_at: timestamptz
+  decision: String
+  decision_issued_date: date
+  geocodeOk: Boolean
+  id: Int
+  location: geography
+  name: String
+  proposal: String
+  reference: String
+  type: String
+  updated_at: timestamptz
+  url: String
+  validated_date: date
 }
 
 "order by stddev() on columns of table \"site\""
 input site_stddev_order_by {
-    id: order_by
+  id: order_by
 }
 
 "order by stddev_pop() on columns of table \"site\""
 input site_stddev_pop_order_by {
-    id: order_by
+  id: order_by
 }
 
 "order by stddev_samp() on columns of table \"site\""
 input site_stddev_samp_order_by {
-    id: order_by
+  id: order_by
 }
 
 "order by sum() on columns of table \"site\""
 input site_sum_order_by {
-    id: order_by
+  id: order_by
 }
 
 "order by var_pop() on columns of table \"site\""
 input site_var_pop_order_by {
-    id: order_by
+  id: order_by
 }
 
 "order by var_samp() on columns of table \"site\""
 input site_var_samp_order_by {
-    id: order_by
+  id: order_by
 }
 
 "order by variance() on columns of table \"site\""
 input site_variance_order_by {
-    id: order_by
+  id: order_by
 }
 
 input st_d_within_geography_input {
-    distance: Float!
-    from: geography!
-    use_spheroid: Boolean = true
+  distance: Float!
+  from: geography!
+  use_spheroid: Boolean = true
 }
 
 input st_d_within_input {
-    distance: Float!
-    from: geometry!
+  distance: Float!
+  from: geometry!
 }
 
 "expression to compare columns of type timestamptz. All fields are combined with logical 'AND'."
 input timestamptz_comparison_exp {
-    _eq: timestamptz
-    _gt: timestamptz
-    _gte: timestamptz
-    _in: [timestamptz!]
-    _is_null: Boolean
-    _lt: timestamptz
-    _lte: timestamptz
-    _neq: timestamptz
-    _nin: [timestamptz!]
+  _eq: timestamptz
+  _gt: timestamptz
+  _gte: timestamptz
+  _in: [timestamptz!]
+  _is_null: Boolean
+  _lt: timestamptz
+  _lte: timestamptz
+  _neq: timestamptz
+  _nin: [timestamptz!]
 }
 
 "order by aggregate values of table \"user_location\""
 input user_location_aggregate_order_by {
-    avg: user_location_avg_order_by
-    count: order_by
-    max: user_location_max_order_by
-    min: user_location_min_order_by
-    stddev: user_location_stddev_order_by
-    stddev_pop: user_location_stddev_pop_order_by
-    stddev_samp: user_location_stddev_samp_order_by
-    sum: user_location_sum_order_by
-    var_pop: user_location_var_pop_order_by
-    var_samp: user_location_var_samp_order_by
-    variance: user_location_variance_order_by
+  avg: user_location_avg_order_by
+  count: order_by
+  max: user_location_max_order_by
+  min: user_location_min_order_by
+  stddev: user_location_stddev_order_by
+  stddev_pop: user_location_stddev_pop_order_by
+  stddev_samp: user_location_stddev_samp_order_by
+  sum: user_location_sum_order_by
+  var_pop: user_location_var_pop_order_by
+  var_samp: user_location_var_samp_order_by
+  variance: user_location_variance_order_by
 }
 
 "input type for inserting array relation for remote table \"user_location\""
 input user_location_arr_rel_insert_input {
-    data: [user_location_insert_input!]!
-    on_conflict: user_location_on_conflict
+  data: [user_location_insert_input!]!
+  on_conflict: user_location_on_conflict
 }
 
 "order by avg() on columns of table \"user_location\""
 input user_location_avg_order_by {
-    user_id: order_by
+  user_id: order_by
 }
 
 "Boolean expression to filter rows from the table \"user_location\". All fields are combined with a logical 'AND'."
 input user_location_bool_exp {
-    _and: [user_location_bool_exp]
-    _not: user_location_bool_exp
-    _or: [user_location_bool_exp]
-    location: geography_comparison_exp
-    user_id: Int_comparison_exp
+  _and: [user_location_bool_exp]
+  _not: user_location_bool_exp
+  _or: [user_location_bool_exp]
+  location: geography_comparison_exp
+  user_id: Int_comparison_exp
 }
 
 "input type for incrementing integer columne in table \"user_location\""
 input user_location_inc_input {
-    user_id: Int
+  user_id: Int
 }
 
 "input type for inserting data into table \"user_location\""
 input user_location_insert_input {
-    location: geography
-    user_id: Int
+  location: geography
+  user_id: Int
 }
 
 "order by max() on columns of table \"user_location\""
 input user_location_max_order_by {
-    user_id: order_by
+  user_id: order_by
 }
 
 "order by min() on columns of table \"user_location\""
 input user_location_min_order_by {
-    user_id: order_by
+  user_id: order_by
 }
 
 "input type for inserting object relation for remote table \"user_location\""
 input user_location_obj_rel_insert_input {
-    data: user_location_insert_input!
-    on_conflict: user_location_on_conflict
+  data: user_location_insert_input!
+  on_conflict: user_location_on_conflict
 }
 
 "on conflict condition type for table \"user_location\""
 input user_location_on_conflict {
-    constraint: user_location_constraint!
-    update_columns: [user_location_update_column!]!
-    where: user_location_bool_exp
+  constraint: user_location_constraint!
+  update_columns: [user_location_update_column!]!
+  where: user_location_bool_exp
 }
 
 "ordering options when selecting data from \"user_location\""
 input user_location_order_by {
-    location: order_by
-    user_id: order_by
+  location: order_by
+  user_id: order_by
 }
 
 "input type for updating data in table \"user_location\""
 input user_location_set_input {
-    location: geography
-    user_id: Int
+  location: geography
+  user_id: Int
 }
 
 "order by stddev() on columns of table \"user_location\""
 input user_location_stddev_order_by {
-    user_id: order_by
+  user_id: order_by
 }
 
 "order by stddev_pop() on columns of table \"user_location\""
 input user_location_stddev_pop_order_by {
-    user_id: order_by
+  user_id: order_by
 }
 
 "order by stddev_samp() on columns of table \"user_location\""
 input user_location_stddev_samp_order_by {
-    user_id: order_by
+  user_id: order_by
 }
 
 "order by sum() on columns of table \"user_location\""
 input user_location_sum_order_by {
-    user_id: order_by
+  user_id: order_by
 }
 
 "order by var_pop() on columns of table \"user_location\""
 input user_location_var_pop_order_by {
-    user_id: order_by
+  user_id: order_by
 }
 
 "order by var_samp() on columns of table \"user_location\""
 input user_location_var_samp_order_by {
-    user_id: order_by
+  user_id: order_by
 }
 
 "order by variance() on columns of table \"user_location\""
 input user_location_variance_order_by {
-    user_id: order_by
+  user_id: order_by
 }
 
 "order by aggregate values of table \"users\""
 input users_aggregate_order_by {
-    count: order_by
-    max: users_max_order_by
-    min: users_min_order_by
+  count: order_by
+  max: users_max_order_by
+  min: users_min_order_by
 }
 
 "input type for inserting array relation for remote table \"users\""
 input users_arr_rel_insert_input {
-    data: [users_insert_input!]!
-    on_conflict: users_on_conflict
+  data: [users_insert_input!]!
+  on_conflict: users_on_conflict
 }
 
 "Boolean expression to filter rows from the table \"users\". All fields are combined with a logical 'AND'."
 input users_bool_exp {
-    _and: [users_bool_exp]
-    _not: users_bool_exp
-    _or: [users_bool_exp]
-    email: String_comparison_exp
-    id: String_comparison_exp
-    name: String_comparison_exp
+  _and: [users_bool_exp]
+  _not: users_bool_exp
+  _or: [users_bool_exp]
+  email: String_comparison_exp
+  id: String_comparison_exp
+  location: geography_comparison_exp
+  name: String_comparison_exp
 }
 
 "input type for inserting data into table \"users\""
 input users_insert_input {
-    email: String
-    id: String
-    name: String
+  email: String
+  id: String
+  location: geography
+  name: String
 }
 
 "order by max() on columns of table \"users\""
 input users_max_order_by {
-    email: order_by
-    id: order_by
-    name: order_by
+  email: order_by
+  id: order_by
+  name: order_by
 }
 
 "order by min() on columns of table \"users\""
 input users_min_order_by {
-    email: order_by
-    id: order_by
-    name: order_by
+  email: order_by
+  id: order_by
+  name: order_by
 }
 
 "input type for inserting object relation for remote table \"users\""
 input users_obj_rel_insert_input {
-    data: users_insert_input!
-    on_conflict: users_on_conflict
+  data: users_insert_input!
+  on_conflict: users_on_conflict
 }
 
 "on conflict condition type for table \"users\""
 input users_on_conflict {
-    constraint: users_constraint!
-    update_columns: [users_update_column!]!
-    where: users_bool_exp
+  constraint: users_constraint!
+  update_columns: [users_update_column!]!
+  where: users_bool_exp
 }
 
 "ordering options when selecting data from \"users\""
 input users_order_by {
-    email: order_by
-    id: order_by
-    name: order_by
+  email: order_by
+  id: order_by
+  location: order_by
+  name: order_by
 }
 
 "input type for updating data in table \"users\""
 input users_set_input {
-    email: String
-    id: String
-    name: String
+  email: String
+  id: String
+  location: geography
+  name: String
 }
 
 

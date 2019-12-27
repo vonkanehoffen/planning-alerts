@@ -1,20 +1,19 @@
-import React from 'react'
+import React from "react";
 import { Query } from "react-apollo";
-import GoogleMapReact from 'google-map-react';
-import { QUERY_PLANNING_APPS_NEAR_POINT } from './queries'
-import { GOOGLE_API_KEY } from '../config'
-import Marker from './Marker'
+import GoogleMapReact from "google-map-react";
+import { GOOGLE_API_KEY } from "../config";
+import Marker from "./Marker";
+import { QUERY_PLANNING_APPS_NEAR_POINT } from "../gql/queries";
 
 // TODO: This should come from user data
 const queryVars = {
-  "point": {
-    "type": "Point",
-    "coordinates": [53.5184479,-2.6761717]
+  point: {
+    type: "Point",
+    coordinates: [53.5184479, -2.6761717]
   }
 };
 
-export default function PlanningMap () {
-
+export default function PlanningMap() {
   const center = {
     lat: queryVars.point.coordinates[0],
     lng: queryVars.point.coordinates[1]
@@ -38,15 +37,20 @@ export default function PlanningMap () {
         return (
           <div>
             <h3>Planning Apps query:</h3>
-            <div style={{ height: '100vh', width: '100%' }}>
-              <GoogleMapReact bootstrapURLKeys={{ key: GOOGLE_API_KEY}} defaultCenter={center} defaultZoom={zoom}>
+            <div style={{ height: "100vh", width: "100%" }}>
+              <GoogleMapReact
+                bootstrapURLKeys={{ key: GOOGLE_API_KEY }}
+                defaultCenter={center}
+                defaultZoom={zoom}
+              >
                 {data.planning_app.map(app => (
                   <Marker
                     lat={app.location.coordinates[0]}
                     lng={app.location.coordinates[1]}
                     text={app.ref}
                     key={app.ref}
-                  />))}
+                  />
+                ))}
               </GoogleMapReact>
             </div>
             <pre>{JSON.stringify(data, null, 2)}</pre>
@@ -54,5 +58,5 @@ export default function PlanningMap () {
         );
       }}
     </Query>
-  )
-};
+  );
+}
