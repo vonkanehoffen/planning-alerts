@@ -39,7 +39,7 @@ import { GRAPHQL_URL } from "./constants";
 const client = new ApolloClient({
   uri: "https://planning-alerts.herokuapp.com/v1/graphql",
   headers: {
-    authorization: "Bearer TOKEN_HERE"
+    authorization: `Bearer ${localStorage.getItem("auth0:id_token")}`
   }
 });
 
