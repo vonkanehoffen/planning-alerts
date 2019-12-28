@@ -1,26 +1,35 @@
 import React from "react";
+import _ from "lodash";
 import { useQuery } from "@apollo/react-hooks";
 import GoogleMapReact from "google-map-react";
 import { GOOGLE_API_KEY } from "../config";
 import Marker from "./Marker";
-import { QUERY_PLANNING_APPS_NEAR_POINT } from "../gql/queries";
-
-// TODO: This should come from user data
-const queryVars = {
-  point: {
-    type: "Point",
-    coordinates: [53.5184479, -2.6761717]
-  }
-};
+import {
+  GET_PLANNING_APPS_NEAR_POINT,
+  GET_USER_LOCATION
+} from "../gql/queries";
 
 export default function PlanningMap() {
-  const { loading, error, data } = useQuery(QUERY_PLANNING_APPS_NEAR_POINT, {
-    variables: queryVars
+  // See https://stackoverflow.com/questions/49317582/how-to-chain-two-graphql-queries-in-sequence-using-apollo-client#answer-49320606
+  const { loading: userLoading, error: userError, data: userData } = useQuery(
+    GET_USER_LOCATION,
+    {
+      variables: {
+        id: localStorage.getItem("auth0:id_token:sub")
+      }
+    }
+  );
+  const point = _.get(userData, "users[0].location");
+  const { loading, error, data } = useQuery(GET_PLANNING_APPS_NEAR_POINT, {
+    variables: {
+      point: point
+    },
+    skip: !point
   });
 
   const center = {
-    lat: queryVars.point.coordinates[0],
-    lng: queryVars.point.coordinates[1]
+    lat: point && point.coordinates[0],
+    lng: point && point.coordinates[1]
   };
   const zoom = 11;
 
@@ -39,6 +48,7 @@ export default function PlanningMap() {
 
   return (
     <div>
+      <pre>{JSON.stringify(userData, null, 2)}</pre>
       <h3>Planning Apps query:</h3>
       <div style={{ height: "100vh", width: "100%" }}>
         <GoogleMapReact
@@ -46,14 +56,15 @@ export default function PlanningMap() {
           defaultCenter={center}
           defaultZoom={zoom}
         >
-          {data.planning_app.map(app => (
-            <Marker
-              lat={app.location.coordinates[0]}
-              lng={app.location.coordinates[1]}
-              text={app.ref}
-              key={app.ref}
-            />
-          ))}
+          {data &&
+            data.planning_app.map(app => (
+              <Marker
+                lat={app.location.coordinates[0]}
+                lng={app.location.coordinates[1]}
+                text={app.ref}
+                key={app.ref}
+              />
+            ))}
         </GoogleMapReact>
       </div>
       <pre>{JSON.stringify(data, null, 2)}</pre>
