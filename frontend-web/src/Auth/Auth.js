@@ -24,6 +24,7 @@ export default class Auth {
   }
 
   handleAuthentication() {
+    console.log("handleAuthentication");
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
@@ -37,6 +38,7 @@ export default class Auth {
   }
 
   setSession(authResult) {
+    console.log("setSession");
     // Set the time that the access token will expire at
     let expiresAt = JSON.stringify(
       authResult.expiresIn * 1000 + new Date().getTime()
@@ -50,6 +52,7 @@ export default class Auth {
   }
 
   logout() {
+    console.log("logout");
     // Clear access token and ID token from local storage
     localStorage.removeItem("auth0:access_token");
     localStorage.removeItem("auth0:id_token");

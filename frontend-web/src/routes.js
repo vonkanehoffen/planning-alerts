@@ -1,10 +1,10 @@
 import React from "react";
-import { Route, Router } from "react-router-dom";
+import { Route, BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
 import Home from "./Home/Home";
 import Callback from "./Callback/Callback";
+import SetLocation from "./SetLocation";
 import Auth from "./Auth/Auth";
-import history from "./history";
 import { ApolloProvider } from "react-apollo";
 import { client } from "./apolloClient";
 
@@ -19,7 +19,7 @@ const handleAuthentication = ({ location }) => {
 export const makeMainRoutes = () => {
   return (
     <ApolloProvider client={client}>
-      <Router history={history}>
+      <Router>
         <div className="container">
           <Route path="/" render={props => <App auth={auth} {...props} />} />
           <Route
@@ -33,6 +33,7 @@ export const makeMainRoutes = () => {
               return <Callback {...props} />;
             }}
           />
+          <Route path="/set-location" render={props => <SetLocation />} />
         </div>
       </Router>
     </ApolloProvider>
