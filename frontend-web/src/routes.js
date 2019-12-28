@@ -6,33 +6,7 @@ import Callback from "./Callback/Callback";
 import Auth from "./Auth/Auth";
 import history from "./history";
 import { ApolloProvider } from "react-apollo";
-import { InMemoryCache } from "apollo-cache-inmemory";
-
-import { ApolloClient } from "apollo-client";
-import { HttpLink } from "apollo-link-http";
-import { ApolloLink, concat } from "apollo-link";
-import { GRAPHQL_URL } from "./constants";
-
-const httpLink = new HttpLink({ uri: GRAPHQL_URL });
-
-const authMiddleware = new ApolloLink((operation, forward) => {
-  const token = localStorage.getItem("auth0:id_token");
-
-  operation.setContext({
-    headers: {
-      authorization: token ? `Bearer ${token}` : ""
-    }
-  });
-
-  return forward(operation);
-});
-
-const client = new ApolloClient({
-  link: concat(authMiddleware, httpLink),
-  cache: new InMemoryCache({
-    addTypename: false
-  })
-});
+import { client } from "./apolloClient";
 
 const auth = new Auth();
 
