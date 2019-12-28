@@ -5,47 +5,34 @@ import Home from "./Home/Home";
 import Callback from "./Callback/Callback";
 import Auth from "./Auth/Auth";
 import history from "./history";
-import ApolloClient from "apollo-boost";
-import { HttpLink } from "apollo-link-http";
-import { setContext } from "apollo-link-context";
 import { ApolloProvider } from "react-apollo";
 import { InMemoryCache } from "apollo-cache-inmemory";
 
+import { ApolloClient } from "apollo-client";
+import { HttpLink } from "apollo-link-http";
+import { ApolloLink, concat } from "apollo-link";
 import { GRAPHQL_URL } from "./constants";
 
-// const httpLink = new HttpLink({
-//   uri: GRAPHQL_URL
-// });
-//
-// const authLink = setContext((_, { headers }) => {
-//   // get the authentication token from local storage if it exists
-//   const token = localStorage.getItem("auth0:id_token");
-//   // return the headers to the context so httpLink can read them
-//   return {
-//     headers: {
-//       ...headers,
-//       authorization: token ? `Bearer ${token}` : ""
-//     }
-//   };
-// });
-//
-// const client = new ApolloClient({
-//   link: authLink.concat(httpLink),
-//   cache: new InMemoryCache({
-//     addTypename: false
-//   })
-// });
+const httpLink = new HttpLink({ uri: GRAPHQL_URL });
 
-const client = new ApolloClient({
-  uri: "https://planning-alerts.herokuapp.com/v1/graphql",
-  headers: {
-    authorization: `Bearer ${localStorage.getItem("auth0:id_token")}`
-  }
+const authMiddleware = new ApolloLink((operation, forward) => {
+  const token = localStorage.getItem("auth0:id_token");
+
+  operation.setContext({
+    headers: {
+      authorization: token ? `Bearer ${token}` : ""
+    }
+  });
+
+  return forward(operation);
 });
 
-// const provideClient = component => {
-//   return <ApolloProvider client={client}>{component}</ApolloProvider>;
-// };
+const client = new ApolloClient({
+  link: concat(authMiddleware, httpLink),
+  cache: new InMemoryCache({
+    addTypename: false
+  })
+});
 
 const auth = new Auth();
 
