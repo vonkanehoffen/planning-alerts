@@ -20,6 +20,7 @@ export default class Auth {
   }
 
   login() {
+    console.log("login");
     this.auth0.authorize();
   }
 
@@ -63,6 +64,7 @@ export default class Auth {
   }
 
   isAuthenticated() {
+    console.log("isAuth called");
     // Check whether the current time is past the
     // access token's expiry time
     let expiresAt = JSON.parse(localStorage.getItem("auth0:expires_at"));
