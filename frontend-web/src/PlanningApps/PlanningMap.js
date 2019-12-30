@@ -33,15 +33,20 @@ export default function PlanningMap() {
   };
   const zoom = 11;
 
-  if (loading) {
-    return <div>Loading. Please wait...</div>;
+  if (loading || userLoading) {
+    return (
+      <div>
+        Loading. Please wait...{" "}
+        <pre>{JSON.stringify({ loading, userLoading }, null, 2)}</pre>
+      </div>
+    );
   }
 
-  if (error) {
+  if (error || userError) {
     return (
       <div>
         <h3>Error:</h3>
-        <pre>{JSON.stringify(error, null, 2)}</pre>
+        <pre>{JSON.stringify({ error, userError }, null, 2)}</pre>
       </div>
     );
   }
@@ -49,7 +54,7 @@ export default function PlanningMap() {
   return (
     <div>
       <pre>{JSON.stringify(userData, null, 2)}</pre>
-      <h3>Planning Apps query:</h3>
+      <h3>Planning Apps query: {data && data.planning_app.length}</h3>
       <div style={{ height: "100vh", width: "100%" }}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: GOOGLE_API_KEY }}

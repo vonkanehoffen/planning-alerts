@@ -9,8 +9,9 @@ import gql from "graphql-tag";
  * @type {DocumentNode}
  */
 export const GET_USER_LOCATION = gql`
-  query($id: String!) {
+  query get_user_location($id: String!) {
     users(where: { id: { _eq: $id } }) {
+      id
       location
     }
   }
@@ -54,9 +55,9 @@ export const UPDATE_USER_LOCATION = gql`
  * @type {DocumentNode}
  */
 export const GET_PLANNING_APPS_NEAR_POINT = gql`
-  query($point: geography!) {
+  query get_planning_apps_near_point($point: geography!) {
     planning_app(
-      where: { location: { _st_d_within: { distance: 20000, from: $point } } }
+      where: { location: { _st_d_within: { distance: 2000, from: $point } } }
     ) {
       ref
       location
