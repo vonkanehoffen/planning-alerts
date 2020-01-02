@@ -17,6 +17,7 @@ const handleAuthentication = ({ location }) => {
 };
 
 export const makeMainRoutes = () => {
+  // TODO: Add auth context here
   return (
     <ApolloProvider client={client}>
       <Router>

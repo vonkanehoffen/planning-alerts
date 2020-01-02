@@ -1,70 +1,25 @@
-import React, { Component } from "react";
-import { Navbar, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import "./App.css";
+import React from "react";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { Router, Link } from "@reach/router";
+import { useAuth0 } from "./react-auth0-spa";
+import NavBar from "./components/NavBar";
+import PlanningApps from "./PlanningApps";
 
-class App extends Component {
-  goTo(route) {
-    this.props.history.replace(`/${route}`);
+export default function App() {
+  const { loading, isAuthenticated } = useAuth0();
+
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
-  login() {
-    this.props.auth.login();
-  }
-
-  logout() {
-    this.props.auth.logout();
-  }
-
-  componentDidMount() {
-    if (this.props.auth.isAuthenticated()) {
-      this.props.history.push("/home");
-    }
-  }
-
-  render() {
-    const { isAuthenticated } = this.props.auth;
-
-    return (
-      <div>
-        <Navbar fluid>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <a href="#">Auth0 - React</a>
-            </Navbar.Brand>
-            <Button
-              bsStyle="primary"
-              className="btn-margin"
-              onClick={this.goTo.bind(this, "home")}
-            >
-              Home
-            </Button>
-            {!isAuthenticated() && (
-              <Button
-                id="qsLoginBtn"
-                bsStyle="primary"
-                className="btn-margin"
-                onClick={this.login.bind(this)}
-              >
-                Log In
-              </Button>
-            )}
-            {isAuthenticated() && (
-              <Button
-                id="qsLogoutBtn"
-                bsStyle="primary"
-                className="btn-margin"
-                onClick={this.logout.bind(this)}
-              >
-                Log Out
-              </Button>
-            )}
-            <Link to="/set-location">Set location</Link>
-          </Navbar.Header>
-        </Navbar>
-      </div>
-    );
-  }
+  return (
+    <div className="App">
+      <CssBaseline />
+      <NavBar />
+      {/*<Router>*/}
+      ere
+      {/*</Router>*/}
+      {/*{isAuthenticated && <PlanningApps/>}*/}
+    </div>
+  );
 }
-
-export default App;
