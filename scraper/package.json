@@ -1,0 +1,45 @@
+{
+  "name": "my-planning-alerts-scraper",
+  "version": "1.0.0",
+  "description": "Scrapes planning application data",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vonkanehoffen/MyPlanningAlerts-Scraper"
+  },
+  "main": "dist/index.js",
+  "type": "module",
+  "engines": {
+    "node": ">=12.0.0",
+    "npm": ">=6.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf dist && babel src -d dist",
+    "scrape": "babel-node src/index.js",
+    "deploy-production": "pm2 deploy ecosystem.config.js production --force",
+    "reload-production": "pm2 deploy ecosystem.config.js production exec 'pm2 reload MyPlanningAlerts-Scraper'"
+  },
+  "author": "Kane",
+  "license": "ISC",
+  "private": true,
+  "dependencies": {
+    "@sentry/node": "^5.7.1",
+    "cheerio": "^1.0.0-rc.2",
+    "colors": "^1.4.0",
+    "cookie": "^0.4.0",
+    "firebase-admin": "^8.7.0",
+    "geofirestore": "^3.3.1",
+    "geokit": "^0.1.4",
+    "lodash": "^4.17.15",
+    "node-fetch": "^2.6.0",
+    "winston": "^3.2.1",
+    "winston-slack-webhook-transport": "^1.1.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "@babel/node": "^7.7.0",
+    "@babel/preset-env": "^7.7.1",
+    "prettier": "^1.19.0"
+  }
+}

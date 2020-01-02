@@ -1,0 +1,374 @@
+/Users/cormorant/.nvm/versions/node/v10.4.1/bin/node /Users/cormorant/Library/Preferences/PhpStorm2018.3/scratches/scratch_129.jsx
+LOG:  getSearchForm: https://pa.manchester.gov.uk/online-applications/search.do?action=weeklyList&searchType=Application
+LOG:  getWeeklyList:  https://pa.manchester.gov.uk/online-applications/weeklyListResults.do?action=firstPage
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POPKJBBC05D00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POLSW6BCLPJ00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POLSXQBCLPR00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POKMHTBC05D00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POK10ABCLOJ00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POK6LWBCLOV00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POJYCYBCLNO00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POJYD8BCLNS00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POKEYPBCLPA00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POJYBMBCLN900&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/pagedSearchResults.do?action=page&searchCriteria.page=2
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POJYAVBCLN700&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POJYEOBCLOA00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POD1BABC03M00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POD0BKBCLKZ00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POD5X2BCLLG00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POD3Q8BC03O00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POB5S5BC01W00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PO8UGUBCLHL00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POAZKKBC0CT00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PO6ZN0BCLFT00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/pagedSearchResults.do?action=page&searchCriteria.page=3
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PO1TLHBCLF100&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PO04FYBCLDA00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PNXVHUBC0E700&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PNN05ZBCL6800&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PNKRMIBCL4G00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PNIWZMBCL3100&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PNH2BJBCL1M00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PNH73PBC03M00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PN7SXXBCKYU00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PMVAZOBCKTD00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/pagedSearchResults.do?action=page&searchCriteria.page=4
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PMUZTUBCKSX00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PM3MI5BC06N00&activeTab=summary
+LOG:  getPage: https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=P4YS6JBCK9D00&activeTab=summary
+[ { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POPKJBBC05D00&activeTab=summary',
+    reference: '123101/PDE/2019',
+    alternativeReference: '',
+    applicationValidated: 'Thu 21 Mar 2019',
+    address: '583 Princess Road Manchester M20 1HD',
+    proposal:
+     'Larger Homes extension for the erection of a single storey rear extension projecting 5 metres, 3.9 metres high and 2.5 metres to the eaves.',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POLSW6BCLPJ00&activeTab=summary',
+    reference: '123065/FH/2019',
+    alternativeReference: 'PP-07636618',
+    applicationValidated: 'Tue 19 Mar 2019',
+    address: '4 Burford Road Manchester M16 8EL',
+    proposal:
+     'Installation of a canopy over front door and alterations to the elevations.',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POLSXQBCLPR00&activeTab=summary',
+    reference: '123069/FH/2019',
+    alternativeReference: 'PP-07714740',
+    applicationValidated: 'Tue 19 Mar 2019',
+    address: '13 Penarth Road Manchester M22 4AG',
+    proposal:
+     'Erection of a single storey rear extension to form additional living accommodation',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POKMHTBC05D00&activeTab=summary',
+    reference: '123064/LP/2019',
+    alternativeReference: '',
+    applicationValidated: 'Mon 18 Mar 2019',
+    address: '52 St Margarets Avenue Manchester M19 1FJ',
+    proposal:
+     'Certificate of Lawful Proposed Development for the installation of a rear dormer',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POK10ABCLOJ00&activeTab=summary',
+    reference: '123051/FH/2019',
+    alternativeReference: 'PP-07691299',
+    applicationValidated: 'Mon 18 Mar 2019',
+    address: '35 Oswald Road Manchester M21 9NL',
+    proposal: 'Erection of a single storey rear extension.',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POK6LWBCLOV00&activeTab=summary',
+    reference: '123056/NMC/2019',
+    alternativeReference: 'PP-07709911',
+    applicationValidated: 'Tue 19 Mar 2019',
+    address: '43 Lambton Road Manchester M21 0ZJ',
+    proposal:
+     'Non material amendment to planning permission 120075/FH/2018 to allow for internal alterations and the repositioning of a door and window',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POJYCYBCLNO00&activeTab=summary',
+    reference: 'CDN/19/0230',
+    alternativeReference: 'PP-07704926',
+    applicationValidated: 'Mon 18 Mar 2019',
+    address: '167 Cheetham Hill Road Manchester M8 8LG',
+    proposal:
+     'Discharge of conditions 3 (cmp), 4 (external materials), 5 (roller shutters) and 6 (gas membrane) attached to planning permission referenced 118370/FO/2017',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POJYD8BCLNS00&activeTab=summary',
+    reference: 'CDN/19/0231',
+    alternativeReference: 'PP-07707427',
+    applicationValidated: 'Mon 18 Mar 2019',
+    address: 'Dantzic Building 29 Dantzic Street Manchester M2 2AH',
+    proposal:
+     'Discharge of Condition 7 (Signage Strategy) of application referenced 117385/LO/2017',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POKEYPBCLPA00&activeTab=summary',
+    reference: '123061/AO/2019',
+    alternativeReference: 'PP-07713202',
+    applicationValidated: 'Mon 18 Mar 2019',
+    address: 'Styal Road Service Station Styal Road Manchester M22 5WX',
+    proposal:
+     'Installation of one internally illuminated fascia sign, one non illuminated fascia sign , four internally illumionated spreader signs and one internally illuminated 4.57 metre high price identity sign',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POJYBMBCLN900&activeTab=summary',
+    reference: 'CDN/19/0228',
+    alternativeReference: 'PP-07644179',
+    applicationValidated: 'Mon 18 Mar 2019',
+    address:
+     'Land Known As Birley Plot E Stretford Road Hulme Manchester',
+    proposal:
+     'Discharge of conditions 15 (operational management strategy), 16 (access strategy), 17 (construction management plan), 18 (local labour agreement), 20 (noise), 24 (contaminated land) and 25 (contaminated land verification) associated with planning permission 120896/FO/2018',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POJYAVBCLN700&activeTab=summary',
+    reference: '123036/LO/2019',
+    alternativeReference: 'PP-07555148',
+    applicationValidated: 'Mon 18 Mar 2019',
+    address: 'Town Hall Albert Square Manchester M2 5DB',
+    proposal:
+     'Listed building consent works to facilitate an Asbestos Survey.',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POJYEOBCLOA00&activeTab=summary',
+    reference: '123048/TCA/2019',
+    alternativeReference: 'PP-07710452',
+    applicationValidated: 'Mon 18 Mar 2019',
+    address: '20 Clyde Road Manchester M20 2HN',
+    proposal:
+     'Works to trees - proposed felling of T1 - ash and T3 fruit tree within the rear gaden',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POD1BABC03M00&activeTab=summary',
+    reference: '123013/FH/2019',
+    alternativeReference: '',
+    applicationValidated: 'Thu 21 Mar 2019',
+    address: '3 Flatley Close Manchester M15 6FX',
+    proposal: 'Installation of access ramp to front of property',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POD0BKBCLKZ00&activeTab=summary',
+    reference: '123012/FO/2019',
+    alternativeReference: 'PP-07688594',
+    applicationValidated: 'Wed 20 Mar 2019',
+    address:
+     'Henshaws Society For Blind People 45 Yewtree Lane Manchester M23 0DU',
+    proposal:
+     'Change of use of community house (Class C2) to a supported living house (Class C3b) with care provision for 6 adults.',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POD5X2BCLLG00&activeTab=summary',
+    reference: 'CDN/19/0219',
+    alternativeReference: 'PP-07705533',
+    applicationValidated: 'Wed 20 Mar 2019',
+    address:
+     'Land Off Faversham Street And Kenyon Lane Manchester M40 5AR',
+    proposal:
+     'Discharge of conditions 3b ( Ground conditions Verification Report) 9 (boundary treatment), 14. (Driveways), 15 (Off Site highway works) 16 (Landscaping) attached to planning permission referenced 115908/VO/2017',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POD3Q8BC03O00&activeTab=summary',
+    reference: '123018/FH/2019',
+    alternativeReference: 'IAP00036823-001',
+    applicationValidated: 'Tue 19 Mar 2019',
+    address: '43 Southbank Road Manchester M19 1PZ',
+    proposal:
+     'Erection of a single storey side extension to provide additional living accommodation.',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POB5S5BC01W00&activeTab=summary',
+    reference: '122995/P3MPA/2019',
+    alternativeReference: '',
+    applicationValidated: 'Mon 18 Mar 2019',
+    address: '1A Kingshill Road Manchester M21 9EZ',
+    proposal:
+     'Prior Notification for the Change of Use from a shop (Class A1) to residential use (Class C3)',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PO8UGUBCLHL00&activeTab=summary',
+    reference: '122970/FH/2019',
+    alternativeReference: 'PP-07694894',
+    applicationValidated: 'Wed 20 Mar 2019',
+    address: '7 Norleigh Road Manchester M22 4AY',
+    proposal: 'Erection of a single storey rear extension.',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=POAZKKBC0CT00&activeTab=summary',
+    reference: '122989/P3CPA/2019',
+    alternativeReference: '',
+    applicationValidated: 'Wed 20 Mar 2019',
+    address: '28 Burton Road Manchester M20 3EB',
+    proposal:
+     'Prior Notification for the Change of Use from a shop (Class A1) to a Cafe/Restaurant (Class A3)',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PO6ZN0BCLFT00&activeTab=summary',
+    reference: 'CDN/19/0198',
+    alternativeReference: 'PP-07662735',
+    applicationValidated: 'Mon 18 Mar 2019',
+    address: '1 To 5 Swan Street Manchester M4 5JJ',
+    proposal:
+     'Discharge of condition 3 (Acoustic insulation) attached to application ref no 113894',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PO1TLHBCLF100&activeTab=summary',
+    reference: '122944/FH/2019',
+    alternativeReference: 'PP-07688828',
+    applicationValidated: 'Mon 18 Mar 2019',
+    address: '76 Warbeck Road Manchester M40 3LP',
+    proposal:
+     'Erection of single storey rear extension to form additional living accommodation together with single storey detached outbuilding to rear',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PO04FYBCLDA00&activeTab=summary',
+    reference: '122928/FO/2019',
+    alternativeReference: 'PP-07654699',
+    applicationValidated: 'Wed 20 Mar 2019',
+    address: 'Wythenshawe Hospital Floats Road Manchester M23 9LT',
+    proposal:
+     'Erection of 2no. temporary theatre units on an existing car park site, adjacent to the Wythenshawe Maternity Unit, including associated services provision, landscaping works and perimeter fencing',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PNXVHUBC0E700&activeTab=summary',
+    reference: '122901/FH/2019',
+    alternativeReference: '',
+    applicationValidated: 'Wed 20 Mar 2019',
+    address: '19 Devon Avenue Manchester M19 2JH',
+    proposal:
+     'Part single storey part two storey side extension and single storey rear extension',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PNN05ZBCL6800&activeTab=summary',
+    reference: '122839/FO/2019',
+    alternativeReference: 'PP-07640719',
+    applicationValidated: 'Mon 18 Mar 2019',
+    address: '12 Booth Street Manchester M2 4AW',
+    proposal:
+     'Replacement of 3no. substation doors to match existing, relocated to open inwards',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PNKRMIBCL4G00&activeTab=summary',
+    reference: '122814/JO/2019',
+    alternativeReference: 'PP-07611793',
+    applicationValidated: 'Tue 19 Mar 2019',
+    address: 'Rational House 64 Bridge Street Manchester M3 3BN',
+    proposal:
+     'Application to vary Condition 3 (Hours) on application ref 111677/FO/2016/C1 to extend the opening hours to Mon-Weds (11:00-23:00) as approved, Thursday, Friday and Saturday (11:00-00:00) and Sundays and Bank Holidays (12:00-22:30).',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PNIWZMBCL3100&activeTab=summary',
+    reference: '122801/AO/2019',
+    alternativeReference: 'PP-07647298',
+    applicationValidated: 'Wed 20 Mar 2019',
+    address: '1-5 New Wakefield Street Manchester M1 5AA',
+    proposal:
+     'Installation of three external illuminated facade signs to lower level of the north elevation, upper level of the south elevation and main entrance to New Wakefield Street \'',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PNH2BJBCL1M00&activeTab=summary',
+    reference: '122782/FH/2019',
+    alternativeReference: 'PP-07650981',
+    applicationValidated: 'Tue 19 Mar 2019',
+    address: '237 Platt Lane Manchester M14 7HH',
+    proposal:
+     'Erection of single-storey rear extension to form additional living accommodation',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PNH73PBC03M00&activeTab=summary',
+    reference: '122785/FH/2019',
+    alternativeReference: '',
+    applicationValidated: 'Mon 18 Mar 2019',
+    address: '30 Cardinal Street Manchester M8 0PS',
+    proposal:
+     'Erection of part single, part first floor rear extension together with the installation of front and rear roof dormers',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PN7SXXBCKYU00&activeTab=summary',
+    reference: '122749/FO/2019',
+    alternativeReference: 'PP-07642595',
+    applicationValidated: 'Mon 18 Mar 2019',
+    address:
+     'Units 5 And 6 Ifco Centre 40-44 Wilmslow Road Manchester M14 5TQ',
+    proposal:
+     'Division of single shop (42-44) into one ice cream parlour (A3) at 42 & one shop (A1) at 44 and erection of single storey extension at rear',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PMVAZOBCKTD00&activeTab=summary',
+    reference: '122686/AOH/2019',
+    alternativeReference: 'PP-07556513',
+    applicationValidated: 'Mon 18 Mar 2019',
+    address:
+     'Capricorn Security Group Ltd 1035 Oldham Road Newton Heath Manchester M40 2NW',
+    proposal:
+     'Installation of 5.7 metre high, internally illuminated doubled sided totem sign to forecourt',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PMUZTUBCKSX00&activeTab=summary',
+    reference: '122681/FO/2019',
+    alternativeReference: 'PP-07623974',
+    applicationValidated: 'Wed 20 Mar 2019',
+    address: '198 Altrincham Road Manchester M22 4RZ',
+    proposal:
+     'Installation of a timber storage unit within the grounds of the synagogue',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=PM3MI5BC06N00&activeTab=summary',
+    reference: '122545/FO/2019',
+    alternativeReference: '',
+    applicationValidated: 'Tue 19 Mar 2019',
+    address:
+     'Piece Of Land Between 821- 839 Ashton Old Road Manchester M11 2NL',
+    proposal:
+     'Change of use of vacant land to create car sales area with associated access from Ashton Old Road',
+    appealStatus: 'Unknown',
+    appealDecision: '' },
+  { url:
+     'https://pa.manchester.gov.uk/online-applications/applicationDetails.do?keyVal=P4YS6JBCK9D00&activeTab=summary',
+    reference: '119264/FO/2018',
+    alternativeReference: 'PP-06787841',
+    applicationValidated: 'Mon 18 Mar 2019',
+    address: '101-103 Oldham Street Manchester M4 1LW',
+    proposal:
+     'Retrospective application for the change of use of ground floor to dual use cafe (class A3)/bar (class A4).',
+    appealStatus: 'Unknown',
+    appealDecision: '' } ]
+
+Process finished with exit code 0
