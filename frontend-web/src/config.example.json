@@ -1,6 +1,7 @@
 {
-  "domain": "AUTH0_DOMAIN",
+  "domain": "kanec.eu.auth0.com",
   "clientId": "AUTH0_CLIENT_ID",
-  "audience": "AUTH0_API_AUDIENCE",
+  "audience": "https://planning-alerts.herokuapp.com/v1/graphql",
+  "graphQlEndpoint": "https://planning-alerts.herokuapp.com/v1/graphql",
   "googleApiKey": "GOOGLE_MAPS_ENABLED_API_KEY"
 }

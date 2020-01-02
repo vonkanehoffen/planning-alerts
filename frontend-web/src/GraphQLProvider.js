@@ -3,7 +3,7 @@ import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
 import Loading from "./components/Loading";
 import { useAuth0 } from "./react-auth0-spa";
-import { GRAPHQL_URL } from "./constants";
+import config from "./config.json";
 
 /**
  * Apollo Provider with Auth0 token.
@@ -18,7 +18,7 @@ export const GraphQLProvider = ({ children }) => {
   }
 
   const client = new ApolloClient({
-    uri: GRAPHQL_URL,
+    uri: config.graphQlEndpoint,
     request: async operation => {
       // Get token or get refreshed token
       const token = isAuthenticated ? await getTokenSilently() : null;
