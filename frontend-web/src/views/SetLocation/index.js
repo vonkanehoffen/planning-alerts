@@ -2,11 +2,13 @@ import React from "react";
 import { TextField, Button } from "@material-ui/core";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { GET_USER_LOCATION, UPDATE_USER_LOCATION } from "../../gql/queries";
+import { useAuth0 } from "../../react-auth0-spa";
 
 export default function SetLocation() {
+  const { user } = useAuth0();
   const [address, setAddress] = React.useState("");
   const variables = {
-    id: localStorage.getItem("auth0:id_token:sub")
+    id: user.sub
   };
   const { loading, error, data: userData } = useQuery(GET_USER_LOCATION, {
     variables
