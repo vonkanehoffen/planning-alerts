@@ -7,19 +7,22 @@ and [this example app](https://github.com/hasura/graphql-engine/tree/master/comm
 which uses `auth0-js`.
 
 However Auth0 now have an updated method [like this](https://auth0.com/docs/quickstart/spa/react) 
-based on `@auth0/auth0-spa-js`
+based on `@auth0/auth0-spa-js` [https://auth0.com/docs/libraries/auth0-spa-js]
 
 Followed that (with the "New" experience under "Universal Login" on the dashboard)
 and [this](https://auth0.com/docs/quickstart/spa/react/02-calling-an-api) follow on about calling an API.
 
 This included making an API in the dash, that wasn't necessary first time round.
 
-Apollo provider wrapped like [this](https://github.com/auth0-samples/auth0-javascript-samples/issues/79)
-
 The `audience` param was a gotcha [here](https://github.com/auth0/auth0-spa-js/issues/111)
 Set from the API made in the dash.
 
+This is needed for full JWTs to be returned.
+See also *Rules* in the Auth0 dash to add `x-hasura-user-id` to them etc.
 
+## Apollo
+
+[Getting the Auth0 JWT to the provider](https://github.com/auth0-samples/auth0-javascript-samples/issues/79#issuecomment-551331945)
 
 
 

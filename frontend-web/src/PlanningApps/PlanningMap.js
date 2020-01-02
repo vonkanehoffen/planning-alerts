@@ -12,7 +12,6 @@ import { useAuth0 } from "../react-auth0-spa";
 
 export default function PlanningMap() {
   const { user } = useAuth0();
-  console.log("user= ", user);
   // See https://stackoverflow.com/questions/49317582/how-to-chain-two-graphql-queries-in-sequence-using-apollo-client#answer-49320606
   const { loading: userLoading, error: userError, data: userData } = useQuery(
     GET_USER_LOCATION,

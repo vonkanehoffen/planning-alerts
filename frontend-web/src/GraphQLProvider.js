@@ -7,7 +7,6 @@ import { GRAPHQL_URL } from "./constants";
 
 /**
  * Apollo Provider with Auth0 token.
- * See https://github.com/auth0-samples/auth0-javascript-samples/issues/79
  * @param children
  * @returns {*}
  * @constructor
