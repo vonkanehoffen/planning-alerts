@@ -2,7 +2,7 @@ import React from "react";
 import _ from "lodash";
 import { useQuery } from "@apollo/react-hooks";
 import GoogleMapReact from "google-map-react";
-import { GOOGLE_API_KEY } from "../config";
+import config from "../config.json";
 import Marker from "./Marker";
 import {
   GET_PLANNING_APPS_NEAR_POINT,
@@ -59,7 +59,7 @@ export default function PlanningMap() {
       <h3>Planning Apps query: {data && data.planning_app.length}</h3>
       <div style={{ height: "100vh", width: "100%" }}>
         <GoogleMapReact
-          bootstrapURLKeys={{ key: GOOGLE_API_KEY }}
+          bootstrapURLKeys={{ key: config.googleApiKey }}
           defaultCenter={center}
           defaultZoom={zoom}
         >
