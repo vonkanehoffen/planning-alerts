@@ -8,14 +8,17 @@ import {
   GET_PLANNING_APPS_NEAR_POINT,
   GET_USER_LOCATION
 } from "../gql/queries";
+import { useAuth0 } from "../react-auth0-spa";
 
 export default function PlanningMap() {
+  const { user } = useAuth0();
+  console.log("user= ", user);
   // See https://stackoverflow.com/questions/49317582/how-to-chain-two-graphql-queries-in-sequence-using-apollo-client#answer-49320606
   const { loading: userLoading, error: userError, data: userData } = useQuery(
     GET_USER_LOCATION,
     {
       variables: {
-        id: localStorage.getItem("auth0:id_token:sub")
+        id: user.sub
       }
     }
   );

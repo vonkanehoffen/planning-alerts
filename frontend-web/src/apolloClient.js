@@ -7,8 +7,6 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 const httpLink = new HttpLink({ uri: GRAPHQL_URL });
 
 const authMiddleware = new ApolloLink((operation, forward) => {
-  const token = localStorage.getItem("auth0:id_token");
-
   operation.setContext({
     headers: {
       authorization: token ? `Bearer ${token}` : ""

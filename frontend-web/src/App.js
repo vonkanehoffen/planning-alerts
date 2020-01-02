@@ -9,7 +9,7 @@ export default function App() {
   const { loading, isAuthenticated } = useAuth0();
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>Loading (app)...</div>;
   }
 
   return (
@@ -19,7 +19,7 @@ export default function App() {
       {/*<Router>*/}
       ere
       {/*</Router>*/}
-      {/*{isAuthenticated && <PlanningApps/>}*/}
+      {isAuthenticated && <PlanningApps />}
     </div>
   );
 }
