@@ -2,13 +2,13 @@ import React from "react";
 import _ from "lodash";
 import { useQuery } from "@apollo/react-hooks";
 import GoogleMapReact from "google-map-react";
-import config from "../config.json";
+import config from "../../config.json";
 import Marker from "./Marker";
 import {
   GET_PLANNING_APPS_NEAR_POINT,
   GET_USER_LOCATION
-} from "../gql/queries";
-import { useAuth0 } from "../react-auth0-spa";
+} from "../../gql/queries";
+import { useAuth0 } from "../../react-auth0-spa";
 
 export default function PlanningMap() {
   const { user } = useAuth0();

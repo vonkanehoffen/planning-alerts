@@ -1,7 +1,7 @@
 import React from "react";
 import { TextField, Button } from "@material-ui/core";
 import { useMutation, useQuery } from "@apollo/react-hooks";
-import { GET_USER_LOCATION, UPDATE_USER_LOCATION } from "../gql/queries";
+import { GET_USER_LOCATION, UPDATE_USER_LOCATION } from "../../gql/queries";
 
 export default function SetLocation() {
   const [address, setAddress] = React.useState("");
