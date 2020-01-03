@@ -22,7 +22,6 @@ export const GraphQLProvider = ({ children }) => {
     request: async operation => {
       // Get token or get refreshed token
       const token = isAuthenticated ? await getTokenSilently() : null;
-      console.log("auth0 token = ", token);
       operation.setContext({
         headers: {
           authorization: token ? `Bearer ${token}` : undefined

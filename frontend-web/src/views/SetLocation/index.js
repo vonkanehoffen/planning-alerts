@@ -1,12 +1,11 @@
 import React from "react";
-import { TextField, Button } from "@material-ui/core";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { GET_USER_LOCATION, UPDATE_USER_LOCATION } from "../../gql/queries";
 import { useAuth0 } from "../../react-auth0-spa";
+import PostcodeLookup from "./PostcodeLookup";
 
 export default function SetLocation() {
   const { user } = useAuth0();
-  const [address, setAddress] = React.useState("");
   const variables = {
     id: user.sub
   };
@@ -32,14 +31,14 @@ export default function SetLocation() {
     }
   });
 
-  const doSetLocation = () => {
+  const doSetLocation = (lat, lon) => {
+    console.log("set ", lat, lon);
     setLocation({
       variables: {
-        id: localStorage.getItem("auth0:id_token:sub"),
+        id: user.sub,
         location: {
           type: "Point",
-          // 'coordinates': [53.4924094,-1.5816169]
-          coordinates: [53.4446175, -2.2748731]
+          coordinates: [lat, lon]
         }
       }
     });
@@ -47,10 +46,7 @@ export default function SetLocation() {
   return (
     <div>
       <h1>Set location</h1>
-      <TextField value={address} onChange={e => setAddress(e.target.value)} />
-      <Button variant="contained" onClick={doSetLocation}>
-        Set location
-      </Button>
+      <PostcodeLookup setLocation={doSetLocation} />
       <h4>user data</h4>
       <pre>{JSON.stringify(userData, null, 2)}</pre>
       <h4>mutation response</h4>

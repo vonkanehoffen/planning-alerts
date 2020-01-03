@@ -1,5 +1,3 @@
-import admin from "firebase-admin";
-import { GeoFirestore } from "geofirestore";
 import scrapeIdox from "./targets/idox/";
 import storeInGeoFirestore from "./targets/storeInGeoFirestore";
 import logger from "./logger";
@@ -10,15 +8,6 @@ Sentry.init({ dsn: config.sentryDSN, debug: true });
 
 async function doScrape() {
   try {
-    admin.initializeApp({
-      credential: admin.credential.cert(config.serviceAccountKey)
-    });
-
-    const db = admin.firestore();
-    db.settings({ timestampsInSnapshots: true });
-    const geofirestore = new GeoFirestore(db);
-    const geocollection = geofirestore.collection("planningLocations");
-
     // Think all these use "idox": http://www.idoxgroup.com/
     const idoxSites = [
       // Greater manchester councils
@@ -37,7 +26,7 @@ async function doScrape() {
 
     for (let i = 0; i < idoxSites.length; i++) {
       const data = await scrapeIdox(idoxSites[i]);
-      await storeInGeoFirestore(data, geocollection);
+      // await storeInGeoFirestore(data, geocollection);
     }
   } catch (e) {
     logger.error(e);
