@@ -7,7 +7,7 @@ export default function NavBar() {
   const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
 
   return (
-    <AppBar position="static" color="secondary">
+    <AppBar position="fixed" color="secondary">
       <Toolbar>
         <Link to="/">Planning Alerts</Link>
 

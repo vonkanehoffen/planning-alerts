@@ -1,5 +1,4 @@
 import React from "react";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import { Router, Link } from "@reach/router";
 import { useAuth0 } from "./react-auth0-spa";
 import NavBar from "./components/NavBar";
@@ -12,7 +11,6 @@ export default function App() {
 
   return (
     <div className="App">
-      <CssBaseline />
       <NavBar />
 
       {isAuthenticated ? (
