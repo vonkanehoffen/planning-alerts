@@ -25,6 +25,6 @@ See also *Rules* in the Auth0 dash to add `x-hasura-user-id` to them etc.
 [Getting the Auth0 JWT to the provider](https://github.com/auth0-samples/auth0-javascript-samples/issues/79#issuecomment-551331945)
 
 
+## TODO
 
-DOo Reach Router with protected routes like:
-https://gist.github.com/ryanflorence/eba97731b5579a1c01702c9d394b3feb
+- Change `ref` to `id` in GraphQL - Apollo understands that for auto updates?

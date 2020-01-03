@@ -62,6 +62,7 @@ export const GET_PLANNING_APPS_NEAR_POINT = gql`
       ref
       location
       proposal
+      address
     }
   }
 `;

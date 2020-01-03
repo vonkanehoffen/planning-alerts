@@ -2,6 +2,7 @@ import React from "react";
 import _ from "lodash";
 import { useQuery } from "@apollo/react-hooks";
 import GoogleMapReact from "google-map-react";
+import { Grid } from "@material-ui/core";
 import config from "../../config.json";
 import Marker from "./Marker";
 import {
@@ -9,7 +10,10 @@ import {
   GET_USER_LOCATION
 } from "../../gql/queries";
 import { useAuth0 } from "../../react-auth0-spa";
+import PlanningList from "./PlanningList";
 
+// TODO: Split to data and display component
+//  drive queries on map movement (mouse up)
 export default function PlanningMap() {
   const { user } = useAuth0();
   // See https://stackoverflow.com/questions/49317582/how-to-chain-two-graphql-queries-in-sequence-using-apollo-client#answer-49320606
@@ -54,27 +58,29 @@ export default function PlanningMap() {
   }
 
   return (
-    <div>
-      <pre>{JSON.stringify(userData, null, 2)}</pre>
-      <h3>Planning Apps query: {data && data.planning_app.length}</h3>
-      <div style={{ height: "100vh", width: "100%" }}>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: config.googleApiKey }}
-          defaultCenter={center}
-          defaultZoom={zoom}
-        >
-          {data &&
-            data.planning_app.map(app => (
-              <Marker
-                lat={app.location.coordinates[0]}
-                lng={app.location.coordinates[1]}
-                text={app.ref}
-                key={app.ref}
-              />
-            ))}
-        </GoogleMapReact>
-      </div>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-    </div>
+    <Grid container>
+      <Grid item sm={4}>
+        <PlanningList planning_app={data.planning_app} />
+      </Grid>
+      <Grid item sm={8}>
+        <div style={{ height: "100vh", width: "100%" }}>
+          <GoogleMapReact
+            bootstrapURLKeys={{ key: config.googleApiKey }}
+            defaultCenter={center}
+            defaultZoom={zoom}
+          >
+            {data &&
+              data.planning_app.map(app => (
+                <Marker
+                  lat={app.location.coordinates[0]}
+                  lng={app.location.coordinates[1]}
+                  text={app.ref}
+                  key={app.ref}
+                />
+              ))}
+          </GoogleMapReact>
+        </div>
+      </Grid>
+    </Grid>
   );
 }

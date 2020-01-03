@@ -10,7 +10,6 @@ import PlanningMap from "./PlanningMap";
 export default function Home() {
   return (
     <div>
-      <h1>Home</h1>
       <PlanningMap />
     </div>
   );
