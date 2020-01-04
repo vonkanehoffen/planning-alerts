@@ -23,6 +23,7 @@ See also *Rules* in the Auth0 dash to add `x-hasura-user-id` to them etc.
 ## Apollo
 
 [Getting the Auth0 JWT to the provider](https://github.com/auth0-samples/auth0-javascript-samples/issues/79#issuecomment-551331945)
+[Chaining queries](https://stackoverflow.com/questions/49317582/how-to-chain-two-graphql-queries-in-sequence-using-apollo-client#answer-49320606)
 
 
 ## TODO

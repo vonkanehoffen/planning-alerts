@@ -10,6 +10,9 @@ import {
 import { useAuth0 } from "../react-auth0-spa";
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    // opacity: .5,
+  },
   title: {
     flexGrow: 1
   }
@@ -19,7 +22,7 @@ export default function NavBar() {
   const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
 
   return (
-    <AppBar position="fixed" color="secondary">
+    <AppBar position="fixed" color="secondary" className={classes.root}>
       <Toolbar>
         <Link to="/" className={classes.title}>
           Planning Alerts

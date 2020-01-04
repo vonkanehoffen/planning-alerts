@@ -2,7 +2,6 @@ import React from "react";
 import _ from "lodash";
 import { useQuery } from "@apollo/react-hooks";
 import GoogleMapReact from "google-map-react";
-import { Grid } from "@material-ui/core";
 import config from "../../config.json";
 import Marker from "./Marker";
 import {
@@ -10,13 +9,13 @@ import {
   GET_USER_LOCATION
 } from "../../gql/queries";
 import { useAuth0 } from "../../react-auth0-spa";
-import PlanningList from "./PlanningList";
+import View from "../../components/View";
 
 // TODO: Split to data and display component
 //  drive queries on map movement (mouse up)
 export default function PlanningMap() {
   const { user } = useAuth0();
-  // See https://stackoverflow.com/questions/49317582/how-to-chain-two-graphql-queries-in-sequence-using-apollo-client#answer-49320606
+  const [draggedPoint, setDraggedPoint] = React.useState(false);
   const { loading: userLoading, error: userError, data: userData } = useQuery(
     GET_USER_LOCATION,
     {
@@ -29,7 +28,7 @@ export default function PlanningMap() {
   const minDate = new Date("2019-06-01"); // TODO: Dynamic date
   const { loading, error, data } = useQuery(GET_PLANNING_APPS_NEAR_POINT, {
     variables: {
-      point: point,
+      point: draggedPoint || point,
       minDate
     },
     skip: !point
@@ -60,33 +59,42 @@ export default function PlanningMap() {
       </div>
     );
   }
-  console.log(data);
+
+  if (!point) {
+    console.log("No location");
+    return <div>No location</div>;
+  }
+  console.log("data: ", data, draggedPoint);
+  // TODO: Move map to class to stop redraw.
   return (
-    <Grid container>
-      {/*<Grid item sm={4}>*/}
-      {/*  <PlanningList planning_app={data.planning_app} map={googleMap}/>*/}
-      {/*</Grid>*/}
-      <Grid item sm={12}>
-        <div style={{ height: "100vh", width: "100%" }}>
-          <GoogleMapReact
-            bootstrapURLKeys={{ key: config.googleApiKey }}
-            defaultCenter={center}
-            defaultZoom={zoom}
-            yesIWantToUseGoogleMapApiInternals
-            onGoogleApiLoaded={({ map, maps }) => (googleMap = map)}
-          >
-            {data &&
-              data.planning_app.map(app => (
-                <Marker
-                  lat={app.location.coordinates[0]}
-                  lng={app.location.coordinates[1]}
-                  app={app}
-                  key={app.ref}
-                />
-              ))}
-          </GoogleMapReact>
-        </div>
-      </Grid>
-    </Grid>
+    <View>
+      <GoogleMapReact
+        bootstrapURLKeys={{ key: config.googleApiKey }}
+        defaultCenter={center}
+        defaultZoom={zoom}
+        yesIWantToUseGoogleMapApiInternals
+        onGoogleApiLoaded={({ map, maps }) => (googleMap = map)}
+        options={{
+          fullscreenControl: false
+        }}
+        onChange={center => {
+          console.log("onBoundsChange", center);
+          // setDraggedPoint({
+          //   "type": "Point",
+          //   "coordinates": center
+          // });
+        }}
+      >
+        {data &&
+          data.planning_app.map(app => (
+            <Marker
+              lat={app.location.coordinates[0]}
+              lng={app.location.coordinates[1]}
+              app={app}
+              key={app.ref}
+            />
+          ))}
+      </GoogleMapReact>
+    </View>
   );
 }

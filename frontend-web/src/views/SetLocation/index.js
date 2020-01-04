@@ -4,6 +4,7 @@ import { GET_USER_LOCATION, UPDATE_USER_LOCATION } from "../../gql/queries";
 import { useAuth0 } from "../../react-auth0-spa";
 import PostcodeLookup from "./PostcodeLookup";
 import DeviceLocation from "./DeviceLocation";
+import View from "../../components/View";
 
 export default function SetLocation() {
   const { user } = useAuth0();
@@ -45,7 +46,7 @@ export default function SetLocation() {
     });
   };
   return (
-    <div>
+    <View>
       <h1>Set location</h1>
       <PostcodeLookup setLocation={doSetLocation} />
       <DeviceLocation setLocation={doSetLocation} />
@@ -53,6 +54,6 @@ export default function SetLocation() {
       <pre>{JSON.stringify(userData, null, 2)}</pre>
       <h4>mutation response</h4>
       <pre>{JSON.stringify(data, null, 2)}</pre>
-    </div>
+    </View>
   );
 }
