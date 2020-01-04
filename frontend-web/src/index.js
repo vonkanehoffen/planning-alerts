@@ -7,6 +7,8 @@ import config from "./config.json";
 import { navigate } from "@reach/router";
 import { GraphQLProvider } from "./GraphQLProvider";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import { ThemeProvider } from "@material-ui/core/styles";
+import theme from "./theme";
 
 // A function that routes the user to the right place
 // after login
@@ -26,10 +28,12 @@ ReactDOM.render(
     onRedirectCallback={onRedirectCallback}
     audience={config.audience}
   >
-    <CssBaseline />
-    <GraphQLProvider>
-      <App />
-    </GraphQLProvider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <GraphQLProvider>
+        <App />
+      </GraphQLProvider>
+    </ThemeProvider>
   </Auth0Provider>,
   document.getElementById("root")
 );
