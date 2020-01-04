@@ -63,6 +63,7 @@ export const GET_PLANNING_APPS_NEAR_POINT = gql`
       location
       proposal
       address
+      validated_date
     }
   }
 `;

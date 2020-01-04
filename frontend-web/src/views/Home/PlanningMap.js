@@ -37,7 +37,9 @@ export default function PlanningMap() {
     lat: point && point.coordinates[0],
     lng: point && point.coordinates[1]
   };
-  const zoom = 11;
+  const zoom = 14;
+
+  let googleMap = false;
 
   if (loading || userLoading) {
     return (
@@ -59,22 +61,24 @@ export default function PlanningMap() {
 
   return (
     <Grid container>
-      <Grid item sm={4}>
-        <PlanningList planning_app={data.planning_app} />
-      </Grid>
-      <Grid item sm={8}>
+      {/*<Grid item sm={4}>*/}
+      {/*  <PlanningList planning_app={data.planning_app} map={googleMap}/>*/}
+      {/*</Grid>*/}
+      <Grid item sm={12}>
         <div style={{ height: "100vh", width: "100%" }}>
           <GoogleMapReact
             bootstrapURLKeys={{ key: config.googleApiKey }}
             defaultCenter={center}
             defaultZoom={zoom}
+            yesIWantToUseGoogleMapApiInternals
+            onGoogleApiLoaded={({ map, maps }) => (googleMap = map)}
           >
             {data &&
               data.planning_app.map(app => (
                 <Marker
                   lat={app.location.coordinates[0]}
                   lng={app.location.coordinates[1]}
-                  text={app.ref}
+                  app={app}
                   key={app.ref}
                 />
               ))}

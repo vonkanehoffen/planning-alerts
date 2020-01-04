@@ -10,6 +10,8 @@ import {
 } from "@material-ui/core";
 import { Home } from "@material-ui/icons";
 
+// Unused..... Stick with just the map?
+
 const useStyles = makeStyles({
   root: {
     height: "100vh",
