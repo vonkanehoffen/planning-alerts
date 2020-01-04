@@ -1,8 +1,6 @@
 import React from "react";
-import _ from "lodash";
 import { useQuery } from "@apollo/react-hooks";
 import GoogleMapReact from "google-map-react";
-import { navigate } from "@reach/router";
 import config from "../../config.json";
 import Marker from "./Marker";
 import { GET_PLANNING_APPS_NEAR_POINT } from "../../gql/queries";
@@ -10,8 +8,7 @@ import View from "../../components/View";
 import Loading from "../../components/Loading";
 import Error from "../../components/Error";
 
-// TODO: Split to data and display component
-//  drive queries on map movement (mouse up)
+// TODO: drive queries on map movement (mouse up)
 export default function PlanningMap({ userLocation }) {
   const [draggedPoint, setDraggedPoint] = React.useState(false);
 
@@ -40,7 +37,7 @@ export default function PlanningMap({ userLocation }) {
     lat: userLocation.coordinates[0],
     lng: userLocation.coordinates[1]
   };
-  const zoom = 14;
+  const zoom = 15;
 
   let googleMap = false;
 
@@ -57,11 +54,11 @@ export default function PlanningMap({ userLocation }) {
         options={{
           fullscreenControl: false
         }}
-        onChange={center => {
+        onChange={({ center }) => {
           console.log("onChange", center);
           // setDraggedPoint({
           //   "type": "Point",
-          //   "coordinates": center
+          //   "coordinates": [center.lat, center.lng]
           // });
         }}
       >
