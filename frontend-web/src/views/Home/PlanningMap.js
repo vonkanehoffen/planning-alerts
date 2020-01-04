@@ -2,6 +2,7 @@ import React from "react";
 import _ from "lodash";
 import { useQuery } from "@apollo/react-hooks";
 import GoogleMapReact from "google-map-react";
+import { navigate } from "@reach/router";
 import config from "../../config.json";
 import Marker from "./Marker";
 import {
@@ -61,9 +62,10 @@ export default function PlanningMap() {
   }
 
   if (!point) {
-    console.log("No location");
-    return <div>No location</div>;
+    navigate("set-location");
+    return false;
   }
+
   console.log("data: ", data, draggedPoint);
   // TODO: Move map to class to stop redraw.
   return (
