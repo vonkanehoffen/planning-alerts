@@ -1,5 +1,5 @@
 import React from "react";
-import PlanningMap from "./PlanningMap";
+import UserLocation from "./UserLocation";
 
 /**
  * Home page for authenticated users
@@ -10,7 +10,7 @@ import PlanningMap from "./PlanningMap";
 export default function Home() {
   return (
     <div>
-      <PlanningMap />
+      <UserLocation />
     </div>
   );
 }
