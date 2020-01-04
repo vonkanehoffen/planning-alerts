@@ -7,15 +7,18 @@ import { GET_PLANNING_APPS_NEAR_POINT } from "../../gql/queries";
 import View from "../../components/View";
 import Loading from "../../components/Loading";
 import Error from "../../components/Error";
+import { round } from "../../utils/math";
 
 // TODO: drive queries on map movement (mouse up)
 export default function PlanningMap({ userLocation }) {
   const [draggedPoint, setDraggedPoint] = React.useState(false);
 
+  const location = draggedPoint || userLocation;
   const minDate = new Date("2019-06-01"); // TODO: Dynamic date
+
   const { loading, error, data } = useQuery(GET_PLANNING_APPS_NEAR_POINT, {
     variables: {
-      point: draggedPoint || userLocation,
+      point: location,
       minDate
     }
     // skip: !userLocation
@@ -34,32 +37,33 @@ export default function PlanningMap({ userLocation }) {
   }
 
   const center = {
-    lat: userLocation.coordinates[0],
-    lng: userLocation.coordinates[1]
+    lat: location.coordinates[0],
+    lng: location.coordinates[1]
   };
   const zoom = 15;
 
-  let googleMap = false;
-
   console.log("data: ", data, draggedPoint);
 
+  // TODO: Stop this map redrawing when markers update
   return (
     <View>
       <GoogleMapReact
         bootstrapURLKeys={{ key: config.googleApiKey }}
         defaultCenter={center}
         defaultZoom={zoom}
-        yesIWantToUseGoogleMapApiInternals
-        onGoogleApiLoaded={({ map, maps }) => (googleMap = map)}
         options={{
           fullscreenControl: false
         }}
-        onChange={({ center }) => {
-          console.log("onChange", center);
-          // setDraggedPoint({
-          //   "type": "Point",
-          //   "coordinates": [center.lat, center.lng]
-          // });
+        onChange={({ center: newCenter }) => {
+          if (
+            center.lat !== round(newCenter.lat, 7) &&
+            center.lng !== round(newCenter.lng, 7)
+          ) {
+            setDraggedPoint({
+              type: "Point",
+              coordinates: [newCenter.lat, newCenter.lng]
+            });
+          }
         }}
       >
         {data.planning_app.map(app => (
