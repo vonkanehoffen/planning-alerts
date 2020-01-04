@@ -55,9 +55,12 @@ export const UPDATE_USER_LOCATION = gql`
  * @type {DocumentNode}
  */
 export const GET_PLANNING_APPS_NEAR_POINT = gql`
-  query get_planning_apps_near_point($point: geography!) {
+  query get_planning_apps_near_point($point: geography!, $minDate: date!) {
     planning_app(
-      where: { location: { _st_d_within: { distance: 2000, from: $point } } }
+      where: {
+        location: { _st_d_within: { distance: 2000, from: $point } }
+        validated_date: { _gt: $minDate }
+      }
     ) {
       ref
       location

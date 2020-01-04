@@ -28,3 +28,5 @@ See also *Rules* in the Auth0 dash to add `x-hasura-user-id` to them etc.
 ## TODO
 
 - Change `ref` to `id` in GraphQL - Apollo understands that for auto updates?
+- Can I search in a polygon (i.e. map bounds), not a radius? See [here](https://github.com/hasura/graphql-engine/issues/1983) 
+  and [here](https://blog.hasura.io/native-support-for-postgis-topology-operators-now-in-graphql-engine/)

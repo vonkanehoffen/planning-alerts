@@ -26,9 +26,11 @@ export default function PlanningMap() {
     }
   );
   const point = _.get(userData, "users[0].location");
+  const minDate = new Date("2019-06-01"); // TODO: Dynamic date
   const { loading, error, data } = useQuery(GET_PLANNING_APPS_NEAR_POINT, {
     variables: {
-      point: point
+      point: point,
+      minDate
     },
     skip: !point
   });
@@ -58,7 +60,7 @@ export default function PlanningMap() {
       </div>
     );
   }
-
+  console.log(data);
   return (
     <Grid container>
       {/*<Grid item sm={4}>*/}
