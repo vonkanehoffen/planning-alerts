@@ -4,7 +4,8 @@ import { GET_USER_LOCATION, UPDATE_USER_LOCATION } from "../../gql/queries";
 import { useAuth0 } from "../../react-auth0-spa";
 import PostcodeLookup from "./PostcodeLookup";
 import DeviceLocation from "./DeviceLocation";
-import View from "../../components/View";
+import CenterVh from "../../components/CenterVh";
+import { Box, Typography } from "@material-ui/core";
 
 export default function SetLocation() {
   const { user } = useAuth0();
@@ -46,14 +47,18 @@ export default function SetLocation() {
     });
   };
   return (
-    <View>
-      <h1>Set location</h1>
-      <PostcodeLookup setLocation={doSetLocation} />
-      <DeviceLocation setLocation={doSetLocation} />
-      <h4>user data</h4>
-      <pre>{JSON.stringify(userData, null, 2)}</pre>
-      <h4>mutation response</h4>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-    </View>
+    <CenterVh>
+      <Box>
+        <Typography variant="h3">Set location</Typography>
+        <Box display="flex" alignItems="flex-end">
+          <PostcodeLookup setLocation={doSetLocation} />
+          <DeviceLocation setLocation={doSetLocation} />
+        </Box>
+        <h4>user data</h4>
+        <pre>{JSON.stringify(userData, null, 2)}</pre>
+        <h4>mutation response</h4>
+        <pre>{JSON.stringify(data, null, 2)}</pre>
+      </Box>
+    </CenterVh>
   );
 }

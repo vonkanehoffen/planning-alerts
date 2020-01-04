@@ -26,7 +26,7 @@ export default function Welcome() {
           color="primary"
           onClick={() => loginWithRedirect({})}
         >
-          Sign up
+          Login / Sign up
         </Button>
       </Box>
     </CenterVh>

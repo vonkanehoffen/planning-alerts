@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, Button, CircularProgress } from "@material-ui/core";
+import { TextField, Button, CircularProgress, Box } from "@material-ui/core";
 import config from "../../config.json";
 import Error from "../../components/Error";
 
@@ -38,17 +38,19 @@ export default function PostcodeLookup({ setLocation }) {
   };
 
   return (
-    <div>
+    <>
       <TextField
         value={postcode}
         onChange={e => setPostcode(e.target.value)}
         label="Postcode"
       />
-      <Button variant="contained" color="primary" onClick={doPostcodeLookup}>
-        Lookup
-      </Button>
+      <Box mx={1}>
+        <Button variant="contained" color="primary" onClick={doPostcodeLookup}>
+          Lookup
+        </Button>
+      </Box>
       {fetching && <CircularProgress />}
       {error && <Error message={error} />}
-    </div>
+    </>
   );
 }

@@ -8,6 +8,7 @@ import {
   makeStyles
 } from "@material-ui/core";
 import { useAuth0 } from "../react-auth0-spa";
+import { ReactComponent as PlanningIcon } from "../images/planning-alerts-icon-round.svg";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -15,6 +16,15 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1
+  },
+  icon: {
+    height: 45,
+    "& .cls-1": {
+      fill: "#ff0"
+    },
+    "& .cls-2": {
+      fill: "#f00"
+    }
   }
 }));
 export default function NavBar() {
@@ -25,7 +35,7 @@ export default function NavBar() {
     <AppBar position="fixed" color="secondary" className={classes.root}>
       <Toolbar>
         <Link to="/" className={classes.title}>
-          Planning Alerts
+          <PlanningIcon className={classes.icon} />
         </Link>
 
         {isAuthenticated ? (

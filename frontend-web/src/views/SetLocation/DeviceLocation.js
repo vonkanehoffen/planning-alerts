@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, CircularProgress } from "@material-ui/core";
+import LocationSearchingIcon from "@material-ui/icons/LocationSearching";
 import Error from "../../components/Error";
 
 export default function DeviceLocation({ setLocation }) {
@@ -25,12 +26,17 @@ export default function DeviceLocation({ setLocation }) {
     }
   };
   return (
-    <div>
-      <Button onClick={getDeviceLocation} variant="contained" color="primary">
+    <>
+      <Button
+        startIcon={<LocationSearchingIcon />}
+        onClick={getDeviceLocation}
+        variant="outlined"
+        color="primary"
+      >
         Use current location
       </Button>
       {fetching && <CircularProgress />}
       {error && <Error message={error} />}
-    </div>
+    </>
   );
 }
