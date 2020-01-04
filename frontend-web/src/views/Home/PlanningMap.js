@@ -11,6 +11,8 @@ import {
 } from "../../gql/queries";
 import { useAuth0 } from "../../react-auth0-spa";
 import View from "../../components/View";
+import Loading from "../../components/Loading";
+import Error from "../../components/Error";
 
 // TODO: Split to data and display component
 //  drive queries on map movement (mouse up)
@@ -44,20 +46,16 @@ export default function PlanningMap() {
   let googleMap = false;
 
   if (loading || userLoading) {
-    return (
-      <div>
-        Loading. Please wait...{" "}
-        <pre>{JSON.stringify({ loading, userLoading }, null, 2)}</pre>
-      </div>
-    );
+    return <Loading />;
   }
 
   if (error || userError) {
     return (
-      <div>
-        <h3>Error:</h3>
-        <pre>{JSON.stringify({ error, userError }, null, 2)}</pre>
-      </div>
+      <View>
+        <Error
+          message={<pre>{JSON.stringify({ error, userError }, null, 2)}</pre>}
+        />
+      </View>
     );
   }
 
