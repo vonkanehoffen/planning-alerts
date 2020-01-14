@@ -68,13 +68,13 @@ type planning_app {
   decision_date: date
   decision_status: String
   geocode_ok: Boolean
+  id: String!
   location: geography
   previousData(
     #JSON select path
     path: String
   ): jsonb
   proposal: String!
-  ref: String!
   updated_at: timestamptz
   url: String!
   validated_date: date
@@ -102,8 +102,8 @@ type planning_app_max_fields {
   created_at: timestamptz
   decision_date: date
   decision_status: String
+  id: String
   proposal: String
-  ref: String
   updated_at: timestamptz
   url: String
   validated_date: date
@@ -118,8 +118,8 @@ type planning_app_min_fields {
   created_at: timestamptz
   decision_date: date
   decision_status: String
+  id: String
   proposal: String
-  ref: String
   updated_at: timestamptz
   url: String
   validated_date: date
@@ -162,7 +162,7 @@ type query_root {
     where: planning_app_bool_exp
   ): planning_app_aggregate!
   "fetch data from the table: \"planning_app\" using primary key columns"
-  planning_app_by_pk(ref: String!): planning_app
+  planning_app_by_pk(id: String!): planning_app
   "fetch data from the table: \"users\""
   users(
     #distinct select on columns
@@ -222,7 +222,7 @@ type subscription_root {
     where: planning_app_bool_exp
   ): planning_app_aggregate!
   "fetch data from the table: \"planning_app\" using primary key columns"
-  planning_app_by_pk(ref: String!): planning_app
+  planning_app_by_pk(id: String!): planning_app
   "fetch data from the table: \"users\""
   users(
     #distinct select on columns
@@ -339,13 +339,13 @@ enum planning_app_select_column {
   #column name
   geocode_ok
   #column name
+  id
+  #column name
   location
   #column name
   previousData
   #column name
   proposal
-  #column name
-  ref
   #column name
   updated_at
   #column name
@@ -373,13 +373,13 @@ enum planning_app_update_column {
   #column name
   geocode_ok
   #column name
+  id
+  #column name
   location
   #column name
   previousData
   #column name
   proposal
-  #column name
-  ref
   #column name
   updated_at
   #column name
@@ -575,10 +575,10 @@ input planning_app_bool_exp {
   decision_date: date_comparison_exp
   decision_status: String_comparison_exp
   geocode_ok: Boolean_comparison_exp
+  id: String_comparison_exp
   location: geography_comparison_exp
   previousData: jsonb_comparison_exp
   proposal: String_comparison_exp
-  ref: String_comparison_exp
   updated_at: timestamptz_comparison_exp
   url: String_comparison_exp
   validated_date: date_comparison_exp
@@ -609,10 +609,10 @@ input planning_app_insert_input {
   decision_date: date
   decision_status: String
   geocode_ok: Boolean
+  id: String
   location: geography
   previousData: jsonb
   proposal: String
-  ref: String
   updated_at: timestamptz
   url: String
   validated_date: date
@@ -627,8 +627,8 @@ input planning_app_max_order_by {
   created_at: order_by
   decision_date: order_by
   decision_status: order_by
+  id: order_by
   proposal: order_by
-  ref: order_by
   updated_at: order_by
   url: order_by
   validated_date: order_by
@@ -643,8 +643,8 @@ input planning_app_min_order_by {
   created_at: order_by
   decision_date: order_by
   decision_status: order_by
+  id: order_by
   proposal: order_by
-  ref: order_by
   updated_at: order_by
   url: order_by
   validated_date: order_by
@@ -673,10 +673,10 @@ input planning_app_order_by {
   decision_date: order_by
   decision_status: order_by
   geocode_ok: order_by
+  id: order_by
   location: order_by
   previousData: order_by
   proposal: order_by
-  ref: order_by
   updated_at: order_by
   url: order_by
   validated_date: order_by
@@ -697,10 +697,10 @@ input planning_app_set_input {
   decision_date: date
   decision_status: String
   geocode_ok: Boolean
+  id: String
   location: geography
   previousData: jsonb
   proposal: String
-  ref: String
   updated_at: timestamptz
   url: String
   validated_date: date
