@@ -154,16 +154,33 @@ function getDetailFields(html) {
       .first()
       .text()
       .trim();
-  return {
-    reference: getField("Reference"),
-    alternativeReference: getField("Alternative Reference"),
-    applicationValidated: getField("Application Validated"),
-    address: getField("Address"),
+
+  const obj = {
+    ref: getField("Reference"),
+    alternative_ref: getField("Alternative Reference"),
     proposal: getField("Proposal"),
-    decision: getField("Decision\n"),
+    url: app.url,
+    address: getField("Address"),
+    location,
+    geocode_ok: app.geocodeStatus === 'OK',
+    ...(validated_date && { validated_date }),
+    ...(decision_date && { decision_date }),
+    decision_status:getField("Decision\n"),
+    appeal_status: getField("Appeal Status"),
+    appeal_decision: getField("Appeal Decision"),
+    created_at,
+    ...(updated_at && { updated_at })
+  };
+  return {
+    reference: ,
+    alternativeReference: ,
+    applicationValidated: getField("Application Validated"),
+    address: ,
+    proposal: ,
+    decision: ,
     decisionIssuedDate: getField("Decision Issued Date"),
-    appealStatus: getField("Appeal Status"),
-    appealDecision: getField("Appeal Decision")
+    appealStatus: ,
+    appealDecision:
   };
 }
 

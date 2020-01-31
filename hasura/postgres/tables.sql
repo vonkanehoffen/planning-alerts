@@ -3,6 +3,10 @@
 -- Current status of planning apps
 create table pa_status(
     id TEXT NOT NULL, -- planning app reference - foreign key on scrape tables
+
+    created_at TIMESTAMPTZ DEFAULT now(),
+    updated_at TIMESTAMPTZ DEFAULT now(),
+
     proposal TEXT NOT NULL,
     location geography(Point),
     address TEXT NOT NULL,
@@ -17,7 +21,7 @@ create table pa_status(
 -- Data from each scraped record in council "validated" lists
 create table pa_scrape_validated(
     id SERIAL PRIMARY KEY,
-    scraped_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    scraped_at TIMESTAMPTZ DEFAULT now(),
     url TEXT NOT NULL,
     scraper TEXT NOT NULL,
 
@@ -43,7 +47,7 @@ create table pa_scrape_validated(
 -- Data from each scraped record in council "decided" lists
 create table pa_scrape_decided(
     id SERIAL PRIMARY KEY,
-    scraped_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    scraped_at TIMESTAMPTZ DEFAULT now(),
     url TEXT NOT NULL,
     scraper TEXT NOT NULL,
 
@@ -72,7 +76,7 @@ create table scrape_log(
     scraper TEXT NOT NULL,
     event TEXT NOT NULL,
     meta JSONB NOT NULL,
-    ts TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+    ts TIMESTAMPTZ DEFAULT now()
 );
 
 -- fed by "Add user to Hasura" rule in Auth0

@@ -137,3 +137,25 @@ Status data is unreliable so
    No: Store & notify
    Yes: Find users who are watching it and only notify them
    
+Or now we have Hasura:
+ - Scrape planning app
+ - GQL query 1: Does it exist?
+    - yes? Set "updatedAt" timestamp (date now) + archive old data (selected bits of object that could change) under "previousData" column (JSONB)
+        - OR ACTUALLY just create a few "old" columns... what actually changes?
+        - OR ... full audit table with relationship
+        
+    - no? Store with createdAt timestamp (date now)
+ - After scrape finished, run 2 queries per user:
+    - New planning apps near me - createdAt within say, past 2 days (as we're doing this weekly)
+        - give them count in push notification
+        - take them to the map screen and highlight the new ones (carry on showing other open ones)
+    - Updated planning apps near me - updatedAt within past 2 days 
+        - again, count in notification
+        - to map screen, highlight updates
+            - in detail view, data (status basically) is diffed. "Changed from "approved to "decided""
+            
+        
+Run on Google Cloud Run + Cloud Scheduler?
+https://levelup.gitconnected.com/running-a-scraping-platform-at-google-cloud-for-as-little-as-us-0-05-month-6d9658982f04
+Terraform?
+

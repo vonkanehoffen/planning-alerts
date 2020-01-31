@@ -197,7 +197,7 @@ type pa_scrape_decided {
   pa_status: pa_status!
   proposal: String!
   reference: String!
-  scraped_at: timestamptz
+  scraped_at: timestamptz!
   scraper: String!
   status: String
   url: String!
@@ -337,7 +337,7 @@ type pa_scrape_validated {
   pa_status: pa_status!
   proposal: String!
   reference: String!
-  scraped_at: timestamptz
+  scraped_at: timestamptz!
   scraper: String!
   status: String
   url: String!
@@ -454,6 +454,7 @@ type pa_scrape_validated_variance_fields {
 type pa_status {
   address: String!
   application_validated: timestamptz
+  created_at: timestamptz!
   decision: String
   decision_issued_date: timestamptz
   id: String!
@@ -512,6 +513,7 @@ type pa_status {
     where: pa_scrape_validated_bool_exp
   ): pa_scrape_validated_aggregate!
   proposal: String!
+  updated_at: timestamptz!
   url: String!
 }
 
@@ -532,10 +534,12 @@ type pa_status_aggregate_fields {
 type pa_status_max_fields {
   address: String
   application_validated: timestamptz
+  created_at: timestamptz
   decision: String
   decision_issued_date: timestamptz
   id: String
   proposal: String
+  updated_at: timestamptz
   url: String
 }
 
@@ -543,10 +547,12 @@ type pa_status_max_fields {
 type pa_status_min_fields {
   address: String
   application_validated: timestamptz
+  created_at: timestamptz
   decision: String
   decision_issued_date: timestamptz
   id: String
   proposal: String
+  updated_at: timestamptz
   url: String
 }
 
@@ -1318,6 +1324,8 @@ enum pa_status_select_column {
   #column name
   application_validated
   #column name
+  created_at
+  #column name
   decision
   #column name
   decision_issued_date
@@ -1329,6 +1337,8 @@ enum pa_status_select_column {
   open
   #column name
   proposal
+  #column name
+  updated_at
   #column name
   url
 }
@@ -1340,6 +1350,8 @@ enum pa_status_update_column {
   #column name
   application_validated
   #column name
+  created_at
+  #column name
   decision
   #column name
   decision_issued_date
@@ -1351,6 +1363,8 @@ enum pa_status_update_column {
   open
   #column name
   proposal
+  #column name
+  updated_at
   #column name
   url
 }
@@ -2146,6 +2160,7 @@ input pa_status_bool_exp {
   _or: [pa_status_bool_exp]
   address: String_comparison_exp
   application_validated: timestamptz_comparison_exp
+  created_at: timestamptz_comparison_exp
   decision: String_comparison_exp
   decision_issued_date: timestamptz_comparison_exp
   id: String_comparison_exp
@@ -2154,6 +2169,7 @@ input pa_status_bool_exp {
   pa_scrape_decideds: pa_scrape_decided_bool_exp
   pa_scrape_validateds: pa_scrape_validated_bool_exp
   proposal: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
   url: String_comparison_exp
 }
 
@@ -2161,6 +2177,7 @@ input pa_status_bool_exp {
 input pa_status_insert_input {
   address: String
   application_validated: timestamptz
+  created_at: timestamptz
   decision: String
   decision_issued_date: timestamptz
   id: String
@@ -2169,6 +2186,7 @@ input pa_status_insert_input {
   pa_scrape_decideds: pa_scrape_decided_arr_rel_insert_input
   pa_scrape_validateds: pa_scrape_validated_arr_rel_insert_input
   proposal: String
+  updated_at: timestamptz
   url: String
 }
 
@@ -2176,10 +2194,12 @@ input pa_status_insert_input {
 input pa_status_max_order_by {
   address: order_by
   application_validated: order_by
+  created_at: order_by
   decision: order_by
   decision_issued_date: order_by
   id: order_by
   proposal: order_by
+  updated_at: order_by
   url: order_by
 }
 
@@ -2187,10 +2207,12 @@ input pa_status_max_order_by {
 input pa_status_min_order_by {
   address: order_by
   application_validated: order_by
+  created_at: order_by
   decision: order_by
   decision_issued_date: order_by
   id: order_by
   proposal: order_by
+  updated_at: order_by
   url: order_by
 }
 
@@ -2211,6 +2233,7 @@ input pa_status_on_conflict {
 input pa_status_order_by {
   address: order_by
   application_validated: order_by
+  created_at: order_by
   decision: order_by
   decision_issued_date: order_by
   id: order_by
@@ -2219,6 +2242,7 @@ input pa_status_order_by {
   pa_scrape_decideds_aggregate: pa_scrape_decided_aggregate_order_by
   pa_scrape_validateds_aggregate: pa_scrape_validated_aggregate_order_by
   proposal: order_by
+  updated_at: order_by
   url: order_by
 }
 
@@ -2226,12 +2250,14 @@ input pa_status_order_by {
 input pa_status_set_input {
   address: String
   application_validated: timestamptz
+  created_at: timestamptz
   decision: String
   decision_issued_date: timestamptz
   id: String
   location: geography
   open: Boolean
   proposal: String
+  updated_at: timestamptz
   url: String
 }
 

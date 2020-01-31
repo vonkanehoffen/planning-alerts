@@ -25,7 +25,7 @@ export default async function storeInHasura(data) {
 
     if (!location) {
       // TODO: Some way to have manual entry for these un-geocodable addresses.
-      // stor anyway...
+      // store anyway...
       logger.error(
         `App not geocoded. Unable to store. Address: ${app.address}`,
         { app }
