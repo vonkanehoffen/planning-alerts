@@ -49,6 +49,31 @@ export const UPSERT_PA_STATUS = gql`
   }
 `;
 
+export const INSERT_PA_STATUS = gql`
+  mutation insert_pa_status($objects: [pa_status_insert_input!]!) {
+    insert_pa_status(objects: $objects) {
+      returning {
+        id
+        created_at
+      }
+    }
+  }
+`
+
+export const UPDATE_PA_STATUS = gql`
+  mutation update_pa_status($id: String!, $set: pa_status_set_input!) {
+    update_pa_status(
+      where: { id: { _eq: $id}},
+      _set: $set
+    ) {
+      returning {
+        id
+        created_at
+        updated_at
+      }
+    }
+  }
+`;
 /**
  * Check of a status record for a particular app ref exists
  * @type {DocumentNode}
