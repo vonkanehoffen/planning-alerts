@@ -12,6 +12,7 @@ let sessionCookie = "";
  */
 export default async function fetchPage(url, opts) {
   const t0 = performance.now();
+  console.log('using ', sessionCookie);
   try {
     const response = await fetch(url, {
       headers: {
