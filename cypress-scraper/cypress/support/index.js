@@ -18,3 +18,6 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+// See https://github.com/cypress-io/cypress/issues/987
+Cypress.on('uncaught:exception', (err, runnable) => false);
