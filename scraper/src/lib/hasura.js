@@ -1,5 +1,5 @@
-import apolloFetch from '../apolloFetch'
-import { getGeocodedLocation } from './geocode'
+import apolloFetch from './apolloFetch'
+import { getGeocodedLocation } from '../idox/geocode'
 import * as queries from '../queries';
 
 /**

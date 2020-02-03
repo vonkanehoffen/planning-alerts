@@ -1,5 +1,5 @@
 import { createApolloFetch } from 'apollo-fetch'
-import config from '../config'
+import config from '../../config'
 
 const apolloFetch = createApolloFetch({ uri: config.hasuraApi });
 
