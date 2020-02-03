@@ -1,12 +1,7 @@
-import { createApolloFetch } from 'apollo-fetch';
-import config from "../../config";
+import apolloFetch from '../apolloFetch'
 import { getGeocodedLocation } from './geocode'
 import * as queries from '../queries';
 
-const apolloFetch = createApolloFetch({ uri: config.hasuraApi });
-
-const VALIDATED = 'VALIDATED';
-const DECIDED = 'DECIDED';
 /**
  * Store a validated planning app in Hasura
  * @param record - pa_scrape_validated_insert_input
@@ -85,29 +80,28 @@ async function storePaStatus (record, open) {
 
   if(existing.data.pa_status_by_pk) {
     // We have an existing pa. Let's update status
-
+    const response = await apolloFetch({
+      query: queries.UPDATE_PA_STATUS,
+      variables: {
+        id: record.reference,
+        set: record
+      }
+    })
+    return response;
   } else {
     // This is a new pa. Create status
     const location = await getGeocodedLocation(record.address);
+    pa_status.location = location;
 
     const response = await apolloFetch({
-      query: queries.UPSERT_PA_STATUS,
+      query: queries.INSERT_PA_STATUS,
       variables: {
         objects: [
-          {
-            address: record.address,
-            application_validated: record.application_validated,
-            decision: record.decision,
-            decision_issued_date: record.decision_issued_date,
-            id: record.reference,
-            location,
-            open: record.open,
-            proposal: record.proposal,
-            url: record.url
-          }
+          pa_status
         ]
       }
     })
+    console.log('insert_pa_status', response);
     return response;
   }
 }
