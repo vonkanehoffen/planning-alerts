@@ -3,6 +3,9 @@ import storeInGeoFirestore from "./targets/storeInGeoFirestore";
 import logger from "./logger";
 import config from "../config";
 
+// TODO: Old version! See root index.js
+
+
 const Sentry = require("@sentry/node");
 Sentry.init({ dsn: config.sentryDSN, debug: true });
 

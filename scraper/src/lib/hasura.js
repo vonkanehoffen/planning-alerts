@@ -16,6 +16,7 @@ export async function storeValidated (record) {
       ]
     }
   });
+  // TODO: What about storing errors?
   console.log('insert_pa_scrape_validated:', response);
   await storePaStatus(record, VALIDATED);
 }
