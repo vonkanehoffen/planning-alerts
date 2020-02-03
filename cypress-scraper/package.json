@@ -1,0 +1,14 @@
+{
+  "name": "cypress-scraper",
+  "version": "1.0.0",
+  "description": "Cypress based web scraper for Planning Alerts app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kane Clover",
+  "license": "ISC",
+  "dependencies": {
+    "cypress": "^3.8.3"
+  }
+}
