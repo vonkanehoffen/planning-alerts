@@ -31,26 +31,53 @@ async function scrapeFullList(root, listType) {
 
   // Get request args from the form
 
-  const firstUrl = searchForm("form[name=searchCriteriaForm]").attr('action');
-  const uri = `${rootURL.origin}${firstUrl}`;
+  const firstUri = searchForm("form[name=searchCriteriaForm]").attr('action');
+  const firstPageUri = `${rootURL.origin}${firstUri}`;
   let params = searchForm("form[name=searchCriteriaForm]").serialize();
   params = params.replace(/dateType=.*&/, `dateType=${listType}&`)
   console.log(params);
-  console.log("URI: ", uri);
+  console.log("URI: ", firstPageUri);
 
   // Get first page of the chosen list type
 
-  const firstPage = await request({uri,
+  const firstPage = await request({uri: firstPageUri,
     method: "POST",
     body: params,
   });
-  const detailURLs = getDetailURLs(firstPage);
+  let detailURLs = [];
+  detailURLs = getDetailURLs(firstPage);
+  if(detailURLs.length < 1) {
+    console.log('Single app only');
+    detailURLs = [firstUri]
+  }
+
   console.log(detailURLs);
 
+  // Scrape every PA on the page
   for (const detailURL of detailURLs) {
     let scrape = {};
+
+    // Scrape summary
     const summaryPage =  await request({ uri: `${rootURL.origin}${detailURL}` });
     scrape.summaryPage = scrapeTableData(summaryPage);
+
+    // Scrape further info
+    const furtherInfoUri = summaryPage('#subtab_details').attr('href');
+    const furtherInfoPage =  await request({ uri: `${rootURL.origin}${furtherInfoUri}` });
+    scrape.furtherInfoPage = scrapeTableData(furtherInfoPage);
+
+    // Scrape dates
+    const datesUri = summaryPage('#subtab_dates').attr('href');
+    const datesPage =  await request({ uri: `${rootURL.origin}${datesUri}` });
+    scrape.datesPage = scrapeTableData(datesPage);
+
+    // Scrape contacts
+    // TODO: Needs different scrape and is on main tab (but always blank?) for westminster
+    //  Also do we need it? Agent name is on Further info tab, so this is just email addressses.
+    // const contactsUri = summaryPage('#subtab_contacts').attr('href');
+    // const contactsPage =  await request({ firstPageUri: `${rootURL.origin}${contactsUri}` });
+    // scrape.contactsPage = scrapeTableData(contactsPage); /
+
     console.log("scrape:", scrape);
   }
   // return;
@@ -65,7 +92,7 @@ async function scrapeFullList(root, listType) {
  */
 function getDetailURLs(page) {
   const urls = [];
-  page('a[href*="applicationDetails.do"]').each((i, a) => {
+  page('#searchresults a[href*="applicationDetails.do"]').each((i, a) => {
     urls.push(page(a).attr("href"));
   });
   return urls;
