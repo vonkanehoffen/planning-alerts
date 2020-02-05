@@ -1,4 +1,6 @@
 const { request } = require('../lib/request');
+const { snakeCase } = require('change-case');
+const cheerio = require('cheerio');
 
 /**
  * Scrape weekly planning lists from a council's idox system
@@ -22,28 +24,35 @@ async function scrapeFullList(root, listType) {
   const rootURL = new URL(root);
 
   // Get latest list date
+
   const searchForm = await request({uri: `${rootURL}/search.do?action=weeklyList&searchType=Application`});
   const latestListDate = searchForm("select#week option").first().attr("value");
   console.log(latestListDate);
+
+  // Get request args from the form
+
   const firstUrl = searchForm("form[name=searchCriteriaForm]").attr('action');
-  const params = searchForm("form[name=searchCriteriaForm]").serialize();
+  const uri = `${rootURL.origin}${firstUrl}`;
+  let params = searchForm("form[name=searchCriteriaForm]").serialize();
+  params = params.replace(/dateType=.*&/, `dateType=${listType}&`)
   console.log(params);
+  console.log("URI: ", uri);
 
   // Get first page of the chosen list type
-  // const params = new URLSearchParams({
-  //   "searchCriteria.parish": "", // ward for some councils.... ffs.
-  //   "week": latestListDate,
-  //   "dateType": listType,
-  //   "searchType": "Application"
-  // });
 
-  const firstPage = await request({uri: `${rootURL.origin}${firstUrl}`,
+  const firstPage = await request({uri,
     method: "POST",
     body: params,
-    jar: true
   });
   const detailURLs = getDetailURLs(firstPage);
   console.log(detailURLs);
+
+  for (const detailURL of detailURLs) {
+    let scrape = {};
+    const summaryPage =  await request({ uri: `${rootURL.origin}${detailURL}` });
+    scrape.summaryPage = scrapeTableData(summaryPage);
+    console.log("scrape:", scrape);
+  }
   // return;
   // await getAllApplicationDetails(rootURL, detailURLs);
 
@@ -62,23 +71,16 @@ function getDetailURLs(page) {
   return urls;
 }
 
-/**
- * Loop through an array of detail page URLs
- * @param rootURL
- * @param detailURLs
- * @returns {Promise<Array>}
- */
-async function getAllApplicationDetails(rootURL, detailURLs) {
-  let planningApps = [];
-  for (let i = 0; i < detailURLs.length; i++) {
-    const url = new URL(rootURL).origin + detailURLs[i];
-    const page = await getPage(url, rootURL);
-    planningApps.push({
-      url,
-      ...getDetailFields(page)
-    });
-  }
-  return planningApps;
+function scrapeTableData(page) {
+  let scrape = {};
+  page('.tabcontainer tr').each((i, v) => {
+    // console.log("EACH: ", i, v);
+    const el = cheerio.load(v);
+    const key = el('th').first().text().trim();
+    const val = el('td').first().text().trim();
+    scrape[snakeCase(key)] = val;
+  });
+  return scrape
 }
 
 exports.scrapeWeekly = scrapeWeekly;
