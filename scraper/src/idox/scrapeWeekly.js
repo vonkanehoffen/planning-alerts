@@ -1,12 +1,10 @@
-import cheerio from "cheerio";
-import fetchPage from '../lib/fetchPage.js'
-import { URLSearchParams } from "url"
+const { request } = require('../lib/request');
 
 /**
  * Scrape weekly planning lists from a council's idox system
  * @param rootURL - eg https://idoxpa.westminster.gov.uk/online-applications
  */
-export default async function scrapeWeekly(rootURL) {
+async function scrapeWeekly(rootURL) {
   console.log(`Starting idox scrape: ${rootURL}`);
   await scrapeFullList(rootURL, "DC_Validated");
   // await scrapeFullList(rootURL, "DC_Decided");
@@ -16,31 +14,36 @@ export default async function scrapeWeekly(rootURL) {
  * Scrape a full weekly planning list data set
  * Iterates over pages etc.
  *
- * @param rootURL
+ * @param root
  * @param listType
  * @returns {Promise<Array>}
  */
-async function scrapeFullList(rootURL, listType) {
+async function scrapeFullList(root, listType) {
+  const rootURL = new URL(root);
 
   // Get latest list date
-  const searchForm = await fetchPage(`${rootURL}/search.do?action=weeklyList&searchType=Application`);
-  const latestListDate = cheerio.load(searchForm)("select#week option").first().attr("value");
+  const searchForm = await request({uri: `${rootURL}/search.do?action=weeklyList&searchType=Application`});
+  const latestListDate = searchForm("select#week option").first().attr("value");
   console.log(latestListDate);
+  const firstUrl = searchForm("form[name=searchCriteriaForm]").attr('action');
+  const params = searchForm("form[name=searchCriteriaForm]").serialize();
+  console.log(params);
 
   // Get first page of the chosen list type
-  const params = new URLSearchParams();
-  params.append("searchCriteria.ward", "");
-  params.append("week", latestListDate);
-  params.append("dateType", listType);
-  params.append("searchType", "Application");
+  // const params = new URLSearchParams({
+  //   "searchCriteria.parish": "", // ward for some councils.... ffs.
+  //   "week": latestListDate,
+  //   "dateType": listType,
+  //   "searchType": "Application"
+  // });
 
-  const firstPage = await fetchPage(`${rootURL}/weeklyListResults.do?action=firstPage`, {
+  const firstPage = await request({uri: `${rootURL.origin}${firstUrl}`,
     method: "POST",
-    body: params
+    body: params,
+    jar: true
   });
   const detailURLs = getDetailURLs(firstPage);
   console.log(detailURLs);
-  console.log(firstPage);
   // return;
   // await getAllApplicationDetails(rootURL, detailURLs);
 
@@ -48,14 +51,13 @@ async function scrapeFullList(rootURL, listType) {
 
 /**
  * Get the URLs of the application detail pages from the weekly list
- * @param html
+ * @param page
  * @returns {Array}
  */
-function getDetailURLs(html) {
-  const $ = cheerio.load(html);
+function getDetailURLs(page) {
   const urls = [];
-  $('a[href*="applicationDetails.do"]').each((i, a) => {
-    urls.push($(a).attr("href"));
+  page('a[href*="applicationDetails.do"]').each((i, a) => {
+    urls.push(page(a).attr("href"));
   });
   return urls;
 }
@@ -78,3 +80,5 @@ async function getAllApplicationDetails(rootURL, detailURLs) {
   }
   return planningApps;
 }
+
+exports.scrapeWeekly = scrapeWeekly;
