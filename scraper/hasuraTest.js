@@ -26,8 +26,6 @@ async function whatever() {
       query,
       variables
     });
-
-  console.log(response);
 }
 
 whatever();

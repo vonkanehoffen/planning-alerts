@@ -1,21 +1,34 @@
 const { execute, makePromise } = require("apollo-link");
-const { HttpLink } = require("apollo-link-http");
+const { ApolloLink } = require("apollo-link");
+const { createHttpLink } = require("apollo-link-http");
 const fetch = require("node-fetch");
 const config = require("../../config");
 
-const link = new HttpLink({
+const httpLink = createHttpLink({
   uri: config.hasuraApi,
   headers: { 'x-hasura-admin-secret': config.hasuraAdminSecret },
   fetch: fetch
 });
+
+const middlewareLink = new ApolloLink((operation, forward) => {
+  if(config.debug) console.log("HASURA REQUEST:", operation);
+  return forward(operation);
+});
+
+const link = middlewareLink.concat(httpLink);
 
 /**
  * Make a GraphQL request to our Hasura instance
  * @param operation
  * @returns {Promise<unknown>}
  */
-const hasuraRequest = (operation) => makePromise(
-  execute(link, operation)
-);
+async function hasuraRequest(operation) {
+
+  const response = await makePromise(
+    execute(link, operation)
+  );
+  if(config.debug) console.log("HASURA RESPONSE:", response);
+  return response;
+}
 
 exports.hasuraRequest = hasuraRequest;
