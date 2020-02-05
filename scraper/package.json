@@ -24,6 +24,8 @@
   "dependencies": {
     "@sentry/node": "^5.10.2",
     "apollo-fetch": "^0.7.0",
+    "apollo-link": "^1.2.13",
+    "apollo-link-http": "^1.5.16",
     "change-case": "^4.1.1",
     "cheerio": "^1.0.0-rc.2",
     "colors": "^1.4.0",
