@@ -1,6 +1,7 @@
 const { request } = require('../lib/request');
 const { snakeCase } = require('change-case');
 const cheerio = require('cheerio');
+const { storeValidated,storeDecided } = require('../lib/hasura');
 
 /**
  * Scrape weekly planning lists from a council's idox system
@@ -17,7 +18,7 @@ async function scrapeWeekly(rootURL) {
  * Iterates over pages etc.
  *
  * @param root
- * @param listType
+ * @param listType {('DC_Validated'|'DC_Decided')}
  * @returns {Promise<Array>}
  */
 async function scrapeFullList(root, listType) {
@@ -74,9 +75,11 @@ async function scrapeFullList(root, listType) {
 
       // Scrape contacts
       // TODO: Needs different scrape and is on main tab (but always blank?) for westminster
-      //  Also do we need it? Agent name is on Further info tab, so this is just email addressses.
+      //  Also do we need it? Agent name is on Further info tab, so this is just email addresses.
 
       console.log("scrape:", scrape);
+      if(listType === 'DC_Validated') await storeValidated(scrape);
+      if(listType === 'DC_Decided') await storeDecided(scrape);
     }
 
     // Get next page of the list

@@ -1,5 +1,5 @@
-import { createApolloFetch } from 'apollo-fetch'
-import config from '../../config'
+const { createApolloFetch } = require('apollo-fetch');
+const config = require('../../config');
 
 const apolloFetch = createApolloFetch({ uri: config.hasuraApi });
 
@@ -12,4 +12,4 @@ apolloFetch.use(({ request, options }, next) => {
   next();
 });
 
-export default apolloFetch;
+exports.apolloFetch = apolloFetch;

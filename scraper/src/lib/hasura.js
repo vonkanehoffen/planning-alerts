@@ -1,13 +1,13 @@
-import apolloFetch from './apolloFetch'
-import { getGeocodedLocation } from '../idox/geocode'
-import * as queries from '../queries';
+const { apolloFetch } = require('./apolloFetch');
+const { getGeocodedLocation } = require('../idox/geocode');
+const queries = require('../queries');
 
 /**
  * Store a validated planning app in Hasura
  * @param record - pa_scrape_validated_insert_input
  * @returns {Promise<void>}
  */
-export async function storeValidated (record) {
+async function storeValidated (record) {
   const response = await apolloFetch({
     query: queries.INSERT_PA_SCRAPE_VALIDATED,
     variables: {
@@ -18,7 +18,7 @@ export async function storeValidated (record) {
   });
   // TODO: What about storing errors?
   console.log('insert_pa_scrape_validated:', response);
-  await storePaStatus(record, VALIDATED);
+  await storePaStatus(record, true);
 }
 
 /**
@@ -26,7 +26,7 @@ export async function storeValidated (record) {
  * @param record - pa_scrape_decided_insert_input
  * @returns {Promise<void>}
  */
-export async function storeDecided (record) {
+async function storeDecided (record) {
   const response = await apolloFetch({
     query: queries.INSERT_PA_SCRAPE_DECIDED,
     variables: {
@@ -36,7 +36,7 @@ export async function storeDecided (record) {
     }
   });
   console.log('insert_pa_scrape_decided:', response);
-  await storePaStatus(record, DECIDED);
+  await storePaStatus(record, false);
 }
 
 /**
@@ -54,29 +54,30 @@ export async function storeDecided (record) {
  */
 async function storePaStatus (record, open) {
 
+  console.log("REF: ", record.summaryPage.reference);
   const existing  = await apolloFetch({
     query: queries.GET_PA_STATUS_EXISTS,
     variables: {
-      id: record.reference
+      id: record.summaryPage.reference
     }
   });
 
-  const now = new Date().toISOString();
+  console.log("EXISTING: ", existing);
+
 
   // are null vals ok tho?
   // pa_status_insert_input
 
   let pa_status = {
-    address: record.address,
-    application_validated: record.application_validated,
-    decision: record.decision,
-    decision_issued_date: record.decision_issued_date,
-    id: record.reference,
+    address: record.summaryPage.address,
+    application_validated: record.summaryPage.application_validated,
+    decision: record.summaryPage.decision,
+    decision_issued_date: record.summaryPage.decision_issued_date,
+    id: record.summaryPage.reference,
     // location: geography
     open: open,
-    proposal: record.proposal,
-    url: record.url,
-    updatedAt: now
+    proposal: record.summaryPage.proposal,
+    url: record.summaryPage.url,
   }
 
   if(existing.data.pa_status_by_pk) {
@@ -84,14 +85,15 @@ async function storePaStatus (record, open) {
     const response = await apolloFetch({
       query: queries.UPDATE_PA_STATUS,
       variables: {
-        id: record.reference,
+        id: record.summaryPage.reference,
         set: record
       }
     })
+    console.log('update_pa_status', response);
     return response;
   } else {
     // This is a new pa. Create status
-    const location = await getGeocodedLocation(record.address);
+    const location = await getGeocodedLocation(record.summaryPage.address);
     pa_status.location = location;
 
     const response = await apolloFetch({
@@ -106,3 +108,6 @@ async function storePaStatus (record, open) {
     return response;
   }
 }
+
+exports.storeValidated = storeValidated;
+exports.storeDecided = storeDecided;

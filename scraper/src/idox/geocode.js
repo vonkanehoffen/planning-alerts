@@ -1,7 +1,7 @@
-import config from "../../config";
-import fetch from "node-fetch";
-import querystring from "querystring";
-import * as queries from '../queries'
+const config = require("../../config");
+const fetch = require("node-fetch");
+const querystring = require("querystring");
+const queries = require('../queries');
 
 /**
  * Get geocoded location
@@ -10,7 +10,7 @@ import * as queries from '../queries'
  * @param address
  * @returns {Promise<{}|boolean>}
  */
-export async function getGeocodedLocation(address) {
+async function getGeocodedLocation(address) {
   const existingQuery = await apolloFetch({
     query: queries.GET_EXISTING_LOCATION,
     variables: {
@@ -139,3 +139,5 @@ let result_eg = {
   ],
   "status": "OK"
 };
+
+exports.getGeocodedLocation = getGeocodedLocation;
