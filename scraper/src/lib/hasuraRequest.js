@@ -24,6 +24,8 @@ const link = middlewareLink.concat(httpLink);
  */
 async function hasuraRequest(operation) {
   const response = await makePromise(execute(link, operation));
+  if (response.errors)
+    throw `hasuraRequest error: ${JSON.stringify(response.errors, null, 2)}`;
   if (config.debug) console.log("HASURA RESPONSE:", response);
   return response;
 }
