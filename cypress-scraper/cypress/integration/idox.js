@@ -1,11 +1,11 @@
-import metaDefs from '../support/metaDefs'
+import { snakeCase } from 'change-case'
 
 function scrapeTable(table) {
   let scrape = {};
   Cypress.$(table).find('tr').each((i, v) => {
     const key = Cypress.$(v).find('th').first().text().trim();
     const val = Cypress.$(v).find('td').first().text().trim();
-    scrape[key] = val;
+    scrape[snakeCase(key)] = val;
   });
   return scrape
 }
@@ -17,16 +17,17 @@ context('Idox scraper', () => {
     cy.get('ul#searchresults li').first().find('a').click();
     let scrape = {};
     cy.get('.tabcontainer').then(tab => {
-      scrape.summary = scrapeTable(tab);
+      scrape = scrapeTable(tab);
     });
     cy.get('ul.tabs').contains('Further Information').click();
     cy.get('.tabcontainer').then(tab => {
-      scrape.furtherInfo = scrapeTable(tab);
+      scrape.further_information = scrapeTable(tab);
     });
     cy.get('ul.tabs').contains('Important Dates').click();
     cy.get('.tabcontainer').then(tab => {
-      scrape.importantDates = scrapeTable(tab);
+      scrape.important_dates = scrapeTable(tab);
       console.log(scrape);
     });
+    cy.storeValidated("plops");
   })
 });

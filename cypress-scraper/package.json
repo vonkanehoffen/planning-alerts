@@ -9,6 +9,10 @@
   "author": "Kane Clover",
   "license": "ISC",
   "dependencies": {
-    "cypress": "^3.8.3"
+    "apollo-fetch": "^0.7.0",
+    "change-case": "^4.1.1",
+    "cypress": "^3.8.3",
+    "graphql": "^14.6.0",
+    "graphql-tag": "^2.10.2"
   }
 }
