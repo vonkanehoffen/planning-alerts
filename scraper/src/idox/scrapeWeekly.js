@@ -1,7 +1,7 @@
-const { request } = require('../lib/request');
-const { snakeCase } = require('change-case');
-const cheerio = require('cheerio');
-const { storeValidated,storeDecided } = require('../lib/hasura');
+const { request } = require("../lib/request");
+const { snakeCase } = require("change-case");
+const cheerio = require("cheerio");
+const { storeValidated, storeDecided } = require("../lib/hasura");
 
 /**
  * Scrape weekly planning lists from a council's idox system
@@ -26,51 +26,60 @@ async function scrapeFullList(root, listType) {
 
   // Get latest list date
 
-  const searchForm = await request({uri: `${rootURL}/search.do?action=weeklyList&searchType=Application`});
-  const latestListDate = searchForm("select#week option").first().attr("value");
+  const searchForm = await request({
+    uri: `${rootURL}/search.do?action=weeklyList&searchType=Application`
+  });
+  const latestListDate = searchForm("select#week option")
+    .first()
+    .attr("value");
   console.log(latestListDate);
 
   // Get request args from the form
 
-  const firstUri = searchForm("form[name=searchCriteriaForm]").attr('action');
+  const firstUri = searchForm("form[name=searchCriteriaForm]").attr("action");
   const firstPageUri = `${rootURL.origin}${firstUri}`;
   let params = searchForm("form[name=searchCriteriaForm]").serialize();
-  params = params.replace(/dateType=.*&/, `dateType=${listType}&`)
+  params = params.replace(/dateType=.*&/, `dateType=${listType}&`);
   console.log(params);
   console.log("URI: ", firstPageUri);
 
   // Get first page of the chosen list type
 
-  let listPage = await request({uri: firstPageUri,
+  let listPage = await request({
+    uri: firstPageUri,
     method: "POST",
-    body: params,
+    body: params
   });
   let detailURLs = [];
   detailURLs = getDetailURLs(listPage);
-  if(detailURLs.length < 1) {
-    console.log('Single app only');
-    detailURLs = [firstUri]
+  if (detailURLs.length < 1) {
+    console.log("Single app only");
+    detailURLs = [firstUri];
   }
 
   console.log(detailURLs);
 
   // Scrape PA detail, looping over pagination
-  while(detailURLs.length > 0) {
+  while (detailURLs.length > 0) {
     for (const detailURL of detailURLs) {
       let scrape = {};
 
       // Scrape summary
-      const summaryPage =  await request({ uri: `${rootURL.origin}${detailURL}` });
+      const summaryPage = await request({
+        uri: `${rootURL.origin}${detailURL}`
+      });
       scrape.summaryPage = scrapeTableData(summaryPage);
 
       // Scrape further info
-      const furtherInfoUri = summaryPage('#subtab_details').attr('href');
-      const furtherInfoPage =  await request({ uri: `${rootURL.origin}${furtherInfoUri}` });
+      const furtherInfoUri = summaryPage("#subtab_details").attr("href");
+      const furtherInfoPage = await request({
+        uri: `${rootURL.origin}${furtherInfoUri}`
+      });
       scrape.furtherInfoPage = scrapeTableData(furtherInfoPage);
 
       // Scrape dates
-      const datesUri = summaryPage('#subtab_dates').attr('href');
-      const datesPage =  await request({ uri: `${rootURL.origin}${datesUri}` });
+      const datesUri = summaryPage("#subtab_dates").attr("href");
+      const datesPage = await request({ uri: `${rootURL.origin}${datesUri}` });
       scrape.datesPage = scrapeTableData(datesPage);
 
       // Scrape contacts
@@ -78,24 +87,25 @@ async function scrapeFullList(root, listType) {
       //  Also do we need it? Agent name is on Further info tab, so this is just email addresses.
 
       console.log("scrape:", scrape);
-      if(listType === 'DC_Validated') await storeValidated(scrape);
-      if(listType === 'DC_Decided') await storeDecided(scrape);
+      if (listType === "DC_Validated") await storeValidated(scrape);
+      if (listType === "DC_Decided") await storeDecided(scrape);
     }
 
     // Get next page of the list
-    const nextLink = listPage("#searchResultsContainer a.next").first().attr('href');
-    if(nextLink) {
+    const nextLink = listPage("#searchResultsContainer a.next")
+      .first()
+      .attr("href");
+    if (nextLink) {
       console.log("Next page: ", nextLink);
       listPage = await request({ uri: `${rootURL.origin}${nextLink}` });
       detailURLs = getDetailURLs(listPage);
     } else {
-      console.log('All pages scraped.');
+      console.log("All pages scraped.");
       detailURLs = [];
     }
   }
   // return;
   // await getAllApplicationDetails(rootURL, detailURLs);
-
 }
 
 /**
@@ -113,14 +123,20 @@ function getDetailURLs(page) {
 
 function scrapeTableData(page) {
   let scrape = {};
-  page('.tabcontainer tr').each((i, v) => {
+  page(".tabcontainer tr").each((i, v) => {
     // console.log("EACH: ", i, v);
     const el = cheerio.load(v);
-    const key = el('th').first().text().trim();
-    const val = el('td').first().text().trim();
+    const key = el("th")
+      .first()
+      .text()
+      .trim();
+    const val = el("td")
+      .first()
+      .text()
+      .trim();
     scrape[snakeCase(key)] = val;
   });
-  return scrape
+  return scrape;
 }
 
 exports.scrapeWeekly = scrapeWeekly;

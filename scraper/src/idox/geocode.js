@@ -1,8 +1,8 @@
-const { hasuraRequest } = require('../lib/hasuraRequest');
+const { hasuraRequest } = require("../lib/hasuraRequest");
 const config = require("../../config");
 const fetch = require("node-fetch");
 const querystring = require("querystring");
-const queries = require('../queries');
+const queries = require("../queries");
 
 /**
  * Get geocoded location
@@ -20,21 +20,22 @@ async function getGeocodedLocation(address) {
   });
 
   const match = existingQuery.data.pa_status[0];
-  if(match) {
+  if (match) {
     console.log("getGeocodedLocation from existing pa_status, id:", match.id);
     return match.location;
   }
 
   const geocode = await geocodeAddress(address);
-  if(geocode.results.length > 0) return {
-    "point": {
-      "type": "Point",
-      "coordinates": [
-        geocode.results[0].geometry.location.lat,
-        geocode.results[0].geometry.location.lng,
-      ]
-    }
-  }
+  if (geocode.results.length > 0)
+    return {
+      point: {
+        type: "Point",
+        coordinates: [
+          geocode.results[0].geometry.location.lat,
+          geocode.results[0].geometry.location.lng
+        ]
+      }
+    };
 
   return false;
 }
@@ -57,88 +58,69 @@ async function geocodeAddress(address) {
 }
 
 let result_eg = {
-  "results": [
+  results: [
     {
-      "address_components": [
+      address_components: [
         {
-          "long_name": "101",
-          "short_name": "101",
-          "types": [
-            "street_number"
-          ]
+          long_name: "101",
+          short_name: "101",
+          types: ["street_number"]
         },
         {
-          "long_name": "Dudley Road",
-          "short_name": "Dudley Rd",
-          "types": [
-            "route"
-          ]
+          long_name: "Dudley Road",
+          short_name: "Dudley Rd",
+          types: ["route"]
         },
         {
-          "long_name": "Manchester",
-          "short_name": "Manchester",
-          "types": [
-            "postal_town"
-          ]
+          long_name: "Manchester",
+          short_name: "Manchester",
+          types: ["postal_town"]
         },
         {
-          "long_name": "Greater Manchester",
-          "short_name": "Greater Manchester",
-          "types": [
-            "administrative_area_level_2",
-            "political"
-          ]
+          long_name: "Greater Manchester",
+          short_name: "Greater Manchester",
+          types: ["administrative_area_level_2", "political"]
         },
         {
-          "long_name": "England",
-          "short_name": "England",
-          "types": [
-            "administrative_area_level_1",
-            "political"
-          ]
+          long_name: "England",
+          short_name: "England",
+          types: ["administrative_area_level_1", "political"]
         },
         {
-          "long_name": "United Kingdom",
-          "short_name": "GB",
-          "types": [
-            "country",
-            "political"
-          ]
+          long_name: "United Kingdom",
+          short_name: "GB",
+          types: ["country", "political"]
         },
         {
-          "long_name": "M16",
-          "short_name": "M16",
-          "types": [
-            "postal_code",
-            "postal_code_prefix"
-          ]
+          long_name: "M16",
+          short_name: "M16",
+          types: ["postal_code", "postal_code_prefix"]
         }
       ],
-      "formatted_address": "101 Dudley Rd, Manchester M16, UK",
-      "geometry": {
-        "location": {
-          "lat": 53.4507316,
-          "lng": -2.2630649
+      formatted_address: "101 Dudley Rd, Manchester M16, UK",
+      geometry: {
+        location: {
+          lat: 53.4507316,
+          lng: -2.2630649
         },
-        "location_type": "RANGE_INTERPOLATED",
-        "viewport": {
-          "northeast": {
-            "lat": 53.4520805802915,
-            "lng": -2.261715919708498
+        location_type: "RANGE_INTERPOLATED",
+        viewport: {
+          northeast: {
+            lat: 53.4520805802915,
+            lng: -2.261715919708498
           },
-          "southwest": {
-            "lat": 53.4493826197085,
-            "lng": -2.264413880291502
+          southwest: {
+            lat: 53.4493826197085,
+            lng: -2.264413880291502
           }
         }
       },
-      "place_id": "Eh0xMDEgRHVkbGV5IFJkLCBNYW5jaGVzdGVyLCBVSyIaEhgKFAoSCZEnx1j_rXtIESSEj8Kd8PrKEGU",
-      "types": [
-        "street_address"
-      ]
+      place_id:
+        "Eh0xMDEgRHVkbGV5IFJkLCBNYW5jaGVzdGVyLCBVSyIaEhgKFAoSCZEnx1j_rXtIESSEj8Kd8PrKEGU",
+      types: ["street_address"]
     }
   ],
-  "status": "OK"
+  status: "OK"
 };
 
 exports.getGeocodedLocation = getGeocodedLocation;

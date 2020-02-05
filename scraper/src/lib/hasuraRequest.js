@@ -6,12 +6,12 @@ const config = require("../../config");
 
 const httpLink = createHttpLink({
   uri: config.hasuraApi,
-  headers: { 'x-hasura-admin-secret': config.hasuraAdminSecret },
+  headers: { "x-hasura-admin-secret": config.hasuraAdminSecret },
   fetch: fetch
 });
 
 const middlewareLink = new ApolloLink((operation, forward) => {
-  if(config.debug) console.log("HASURA REQUEST:", operation);
+  if (config.debug) console.log("HASURA REQUEST:", operation);
   return forward(operation);
 });
 
@@ -23,11 +23,8 @@ const link = middlewareLink.concat(httpLink);
  * @returns {Promise<unknown>}
  */
 async function hasuraRequest(operation) {
-
-  const response = await makePromise(
-    execute(link, operation)
-  );
-  if(config.debug) console.log("HASURA RESPONSE:", response);
+  const response = await makePromise(execute(link, operation));
+  if (config.debug) console.log("HASURA RESPONSE:", response);
   return response;
 }
 

@@ -19,4 +19,3 @@ export async function geocodeAddress(address) {
   logger.info(`geocodeAddress: ${geocode.status}`, { geocode });
   return geocode;
 }
-

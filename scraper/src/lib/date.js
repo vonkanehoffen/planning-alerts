@@ -1,9 +1,9 @@
 function stringToISODate(s) {
-  if(s) {
+  if (s) {
     try {
       const d = new Date(s);
       return d.toISOString();
-    } catch(e) {
+    } catch (e) {
       return false;
     }
   } else {

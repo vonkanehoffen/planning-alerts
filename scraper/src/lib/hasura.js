@@ -1,23 +1,21 @@
-const { hasuraRequest } = require('./hasuraRequest');
-const { getGeocodedLocation } = require('../idox/geocode');
-const queries = require('../queries');
+const { hasuraRequest } = require("./hasuraRequest");
+const { getGeocodedLocation } = require("../idox/geocode");
+const queries = require("../queries");
 
 /**
  * Store a validated planning app in Hasura
  * @param record - pa_scrape_validated_insert_input
  * @returns {Promise<void>}
  */
-async function storeValidated (record) {
+async function storeValidated(record) {
   const response = await hasuraRequest({
     query: queries.INSERT_PA_SCRAPE_VALIDATED,
     variables: {
-      objects: [
-        record
-      ]
+      objects: [record]
     }
   });
   // TODO: What about storing errors?
-  console.log('insert_pa_scrape_validated:', response);
+  console.log("insert_pa_scrape_validated:", response);
   await storePaStatus(record, true);
 }
 
@@ -26,16 +24,14 @@ async function storeValidated (record) {
  * @param record - pa_scrape_decided_insert_input
  * @returns {Promise<void>}
  */
-async function storeDecided (record) {
+async function storeDecided(record) {
   const response = await hasuraRequest({
     query: queries.INSERT_PA_SCRAPE_DECIDED,
     variables: {
-      objects: [
-        record
-      ]
+      objects: [record]
     }
   });
-  console.log('insert_pa_scrape_decided:', response);
+  console.log("insert_pa_scrape_decided:", response);
   await storePaStatus(record, false);
 }
 
@@ -52,10 +48,9 @@ async function storeDecided (record) {
  * @param open {boolean}
  * @returns {Promise<void>}
  */
-async function storePaStatus (record, open) {
-
+async function storePaStatus(record, open) {
   console.log("REF: ", record.summaryPage.reference);
-  const existing  = await hasuraRequest({
+  const existing = await hasuraRequest({
     query: queries.GET_PA_STATUS_EXISTS,
     variables: {
       id: record.summaryPage.reference
@@ -63,7 +58,6 @@ async function storePaStatus (record, open) {
   });
 
   console.log("EXISTING: ", existing);
-
 
   // are null vals ok tho?
   // pa_status_insert_input
@@ -77,10 +71,10 @@ async function storePaStatus (record, open) {
     // location: geography
     open: open,
     proposal: record.summaryPage.proposal,
-    url: record.summaryPage.url,
-  }
+    url: record.summaryPage.url
+  };
 
-  if(existing.data.pa_status_by_pk) {
+  if (existing.data.pa_status_by_pk) {
     // We have an existing pa. Let's update status
     const response = await hasuraRequest({
       query: queries.UPDATE_PA_STATUS,
@@ -88,8 +82,8 @@ async function storePaStatus (record, open) {
         id: record.summaryPage.reference,
         set: record
       }
-    })
-    console.log('update_pa_status', response);
+    });
+    console.log("update_pa_status", response);
     return response;
   } else {
     // This is a new pa. Create status
@@ -99,12 +93,10 @@ async function storePaStatus (record, open) {
     const response = await hasuraRequest({
       query: queries.INSERT_PA_STATUS,
       variables: {
-        objects: [
-          pa_status
-        ]
+        objects: [pa_status]
       }
-    })
-    console.log('insert_pa_status', response);
+    });
+    console.log("insert_pa_status", response);
     return response;
   }
 }

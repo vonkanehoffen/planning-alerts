@@ -1,6 +1,5 @@
 const gql = require("graphql-tag");
-const { hasuraRequest } = require("./src/lib/hasuraRequest")
-
+const { hasuraRequest } = require("./src/lib/hasuraRequest");
 
 const query = gql`
   query get_planning_app_by_id($id: String!) {
@@ -23,9 +22,9 @@ async function whatever() {
   //   variables
   // });
   const response = await hasuraRequest({
-      query,
-      variables
-    });
+    query,
+    variables
+  });
 }
 
 whatever();
