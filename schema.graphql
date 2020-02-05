@@ -8,16 +8,16 @@ schema {
 
 "mutation root"
 type mutation_root {
-  "delete data from the table: \"pa_scrape_decided\""
-  delete_pa_scrape_decided(
+  "delete data from the table: \"pa_scrape\""
+  delete_pa_scrape(
     #filter the rows which have to be deleted
-    where: pa_scrape_decided_bool_exp!
-  ): pa_scrape_decided_mutation_response
-  "delete data from the table: \"pa_scrape_validated\""
-  delete_pa_scrape_validated(
+    where: pa_scrape_bool_exp!
+  ): pa_scrape_mutation_response
+  "delete data from the table: \"pa_scrape_validated_depreciated\""
+  delete_pa_scrape_validated_depreciated(
     #filter the rows which have to be deleted
-    where: pa_scrape_validated_bool_exp!
-  ): pa_scrape_validated_mutation_response
+    where: pa_scrape_validated_depreciated_bool_exp!
+  ): pa_scrape_validated_depreciated_mutation_response
   "delete data from the table: \"pa_status\""
   delete_pa_status(
     #filter the rows which have to be deleted
@@ -38,20 +38,20 @@ type mutation_root {
     #filter the rows which have to be deleted
     where: users_bool_exp!
   ): users_mutation_response
-  "insert data into the table: \"pa_scrape_decided\""
-  insert_pa_scrape_decided(
+  "insert data into the table: \"pa_scrape\""
+  insert_pa_scrape(
     #the rows to be inserted
-    objects: [pa_scrape_decided_insert_input!]!,
+    objects: [pa_scrape_insert_input!]!,
     #on conflict condition
-    on_conflict: pa_scrape_decided_on_conflict
-  ): pa_scrape_decided_mutation_response
-  "insert data into the table: \"pa_scrape_validated\""
-  insert_pa_scrape_validated(
+    on_conflict: pa_scrape_on_conflict
+  ): pa_scrape_mutation_response
+  "insert data into the table: \"pa_scrape_validated_depreciated\""
+  insert_pa_scrape_validated_depreciated(
     #the rows to be inserted
-    objects: [pa_scrape_validated_insert_input!]!,
+    objects: [pa_scrape_validated_depreciated_insert_input!]!,
     #on conflict condition
-    on_conflict: pa_scrape_validated_on_conflict
-  ): pa_scrape_validated_mutation_response
+    on_conflict: pa_scrape_validated_depreciated_on_conflict
+  ): pa_scrape_validated_depreciated_mutation_response
   "insert data into the table: \"pa_status\""
   insert_pa_status(
     #the rows to be inserted
@@ -80,44 +80,44 @@ type mutation_root {
     #on conflict condition
     on_conflict: users_on_conflict
   ): users_mutation_response
-  "update data of the table: \"pa_scrape_decided\""
-  update_pa_scrape_decided(
+  "update data of the table: \"pa_scrape\""
+  update_pa_scrape(
     #append existing jsonb value of filtered columns with new jsonb value
-    _append: pa_scrape_decided_append_input,
+    _append: pa_scrape_append_input,
     #delete the field or element with specified path (for JSON arrays, negative integers count from the end)
-    _delete_at_path: pa_scrape_decided_delete_at_path_input,
+    _delete_at_path: pa_scrape_delete_at_path_input,
     #delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
-    _delete_elem: pa_scrape_decided_delete_elem_input,
+    _delete_elem: pa_scrape_delete_elem_input,
     #delete key/value pair or string element. key/value pairs are matched based on their key value
-    _delete_key: pa_scrape_decided_delete_key_input,
+    _delete_key: pa_scrape_delete_key_input,
     #increments the integer columns with given value of the filtered values
-    _inc: pa_scrape_decided_inc_input,
+    _inc: pa_scrape_inc_input,
     #prepend existing jsonb value of filtered columns with new jsonb value
-    _prepend: pa_scrape_decided_prepend_input,
+    _prepend: pa_scrape_prepend_input,
     #sets the columns of the filtered rows to the given values
-    _set: pa_scrape_decided_set_input,
+    _set: pa_scrape_set_input,
     #filter the rows which have to be updated
-    where: pa_scrape_decided_bool_exp!
-  ): pa_scrape_decided_mutation_response
-  "update data of the table: \"pa_scrape_validated\""
-  update_pa_scrape_validated(
+    where: pa_scrape_bool_exp!
+  ): pa_scrape_mutation_response
+  "update data of the table: \"pa_scrape_validated_depreciated\""
+  update_pa_scrape_validated_depreciated(
     #append existing jsonb value of filtered columns with new jsonb value
-    _append: pa_scrape_validated_append_input,
+    _append: pa_scrape_validated_depreciated_append_input,
     #delete the field or element with specified path (for JSON arrays, negative integers count from the end)
-    _delete_at_path: pa_scrape_validated_delete_at_path_input,
+    _delete_at_path: pa_scrape_validated_depreciated_delete_at_path_input,
     #delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
-    _delete_elem: pa_scrape_validated_delete_elem_input,
+    _delete_elem: pa_scrape_validated_depreciated_delete_elem_input,
     #delete key/value pair or string element. key/value pairs are matched based on their key value
-    _delete_key: pa_scrape_validated_delete_key_input,
+    _delete_key: pa_scrape_validated_depreciated_delete_key_input,
     #increments the integer columns with given value of the filtered values
-    _inc: pa_scrape_validated_inc_input,
+    _inc: pa_scrape_validated_depreciated_inc_input,
     #prepend existing jsonb value of filtered columns with new jsonb value
-    _prepend: pa_scrape_validated_prepend_input,
+    _prepend: pa_scrape_validated_depreciated_prepend_input,
     #sets the columns of the filtered rows to the given values
-    _set: pa_scrape_validated_set_input,
+    _set: pa_scrape_validated_depreciated_set_input,
     #filter the rows which have to be updated
-    where: pa_scrape_validated_bool_exp!
-  ): pa_scrape_validated_mutation_response
+    where: pa_scrape_validated_depreciated_bool_exp!
+  ): pa_scrape_validated_depreciated_mutation_response
   "update data of the table: \"pa_status\""
   update_pa_status(
     #sets the columns of the filtered rows to the given values
@@ -170,154 +170,111 @@ type mutation_root {
   ): users_mutation_response
 }
 
-"columns and relationships of \"pa_scrape_decided\""
-type pa_scrape_decided {
-  address: String!
-  alternative_reference: String
-  appeal_decision: String
-  appeal_status: String
-  application_received: timestamptz
-  application_validated: timestamptz
+"columns and relationships of \"pa_scrape\""
+type pa_scrape {
   contacts(
     #JSON select path
     path: String
   ): jsonb
-  decision: String
-  decision_issued_date: timestamptz
   further_information(
     #JSON select path
     path: String
-  ): jsonb!
+  ): jsonb
   id: Int!
   important_dates(
     #JSON select path
     path: String
-  ): jsonb!
+  ): jsonb
+  list_type: String!
   "An object relationship"
   pa_status: pa_status!
-  proposal: String!
   reference: String!
   scraped_at: timestamptz!
   scraper: String!
-  status: String
   summary(
     #JSON select path
     path: String
-  ): jsonb!
+  ): jsonb
   url: String!
 }
 
-"aggregated selection of \"pa_scrape_decided\""
-type pa_scrape_decided_aggregate {
-  aggregate: pa_scrape_decided_aggregate_fields
-  nodes: [pa_scrape_decided!]!
+"aggregated selection of \"pa_scrape\""
+type pa_scrape_aggregate {
+  aggregate: pa_scrape_aggregate_fields
+  nodes: [pa_scrape!]!
 }
 
-"aggregate fields of \"pa_scrape_decided\""
-type pa_scrape_decided_aggregate_fields {
-  avg: pa_scrape_decided_avg_fields
-  count(columns: [pa_scrape_decided_select_column!], distinct: Boolean): Int
-  max: pa_scrape_decided_max_fields
-  min: pa_scrape_decided_min_fields
-  stddev: pa_scrape_decided_stddev_fields
-  stddev_pop: pa_scrape_decided_stddev_pop_fields
-  stddev_samp: pa_scrape_decided_stddev_samp_fields
-  sum: pa_scrape_decided_sum_fields
-  var_pop: pa_scrape_decided_var_pop_fields
-  var_samp: pa_scrape_decided_var_samp_fields
-  variance: pa_scrape_decided_variance_fields
+"aggregate fields of \"pa_scrape\""
+type pa_scrape_aggregate_fields {
+  avg: pa_scrape_avg_fields
+  count(columns: [pa_scrape_select_column!], distinct: Boolean): Int
+  max: pa_scrape_max_fields
+  min: pa_scrape_min_fields
+  stddev: pa_scrape_stddev_fields
+  stddev_pop: pa_scrape_stddev_pop_fields
+  stddev_samp: pa_scrape_stddev_samp_fields
+  sum: pa_scrape_sum_fields
+  var_pop: pa_scrape_var_pop_fields
+  var_samp: pa_scrape_var_samp_fields
+  variance: pa_scrape_variance_fields
 }
 
 "aggregate avg on columns"
-type pa_scrape_decided_avg_fields {
+type pa_scrape_avg_fields {
   id: Float
 }
 
 "aggregate max on columns"
-type pa_scrape_decided_max_fields {
-  address: String
-  alternative_reference: String
-  appeal_decision: String
-  appeal_status: String
-  application_received: timestamptz
-  application_validated: timestamptz
-  decision: String
-  decision_issued_date: timestamptz
+type pa_scrape_max_fields {
   id: Int
-  proposal: String
+  list_type: String
   reference: String
   scraped_at: timestamptz
   scraper: String
-  status: String
   url: String
 }
 
 "aggregate min on columns"
-type pa_scrape_decided_min_fields {
-  address: String
-  alternative_reference: String
-  appeal_decision: String
-  appeal_status: String
-  application_received: timestamptz
-  application_validated: timestamptz
-  decision: String
-  decision_issued_date: timestamptz
+type pa_scrape_min_fields {
   id: Int
-  proposal: String
+  list_type: String
   reference: String
   scraped_at: timestamptz
   scraper: String
-  status: String
   url: String
 }
 
-"response of any mutation on the table \"pa_scrape_decided\""
-type pa_scrape_decided_mutation_response {
+"response of any mutation on the table \"pa_scrape\""
+type pa_scrape_mutation_response {
   "number of affected rows by the mutation"
   affected_rows: Int!
   "data of the affected rows by the mutation"
-  returning: [pa_scrape_decided!]!
+  returning: [pa_scrape!]!
 }
 
 "aggregate stddev on columns"
-type pa_scrape_decided_stddev_fields {
+type pa_scrape_stddev_fields {
   id: Float
 }
 
 "aggregate stddev_pop on columns"
-type pa_scrape_decided_stddev_pop_fields {
+type pa_scrape_stddev_pop_fields {
   id: Float
 }
 
 "aggregate stddev_samp on columns"
-type pa_scrape_decided_stddev_samp_fields {
+type pa_scrape_stddev_samp_fields {
   id: Float
 }
 
 "aggregate sum on columns"
-type pa_scrape_decided_sum_fields {
+type pa_scrape_sum_fields {
   id: Int
 }
 
-"aggregate var_pop on columns"
-type pa_scrape_decided_var_pop_fields {
-  id: Float
-}
-
-"aggregate var_samp on columns"
-type pa_scrape_decided_var_samp_fields {
-  id: Float
-}
-
-"aggregate variance on columns"
-type pa_scrape_decided_variance_fields {
-  id: Float
-}
-
-"columns and relationships of \"pa_scrape_validated\""
-type pa_scrape_validated {
+"columns and relationships of \"pa_scrape_validated_depreciated\""
+type pa_scrape_validated_depreciated {
   address: String!
-  alternative_reference: String
   appeal_decision: String
   appeal_status: String
   application_received: timestamptz
@@ -347,36 +304,35 @@ type pa_scrape_validated {
   url: String!
 }
 
-"aggregated selection of \"pa_scrape_validated\""
-type pa_scrape_validated_aggregate {
-  aggregate: pa_scrape_validated_aggregate_fields
-  nodes: [pa_scrape_validated!]!
+"aggregated selection of \"pa_scrape_validated_depreciated\""
+type pa_scrape_validated_depreciated_aggregate {
+  aggregate: pa_scrape_validated_depreciated_aggregate_fields
+  nodes: [pa_scrape_validated_depreciated!]!
 }
 
-"aggregate fields of \"pa_scrape_validated\""
-type pa_scrape_validated_aggregate_fields {
-  avg: pa_scrape_validated_avg_fields
-  count(columns: [pa_scrape_validated_select_column!], distinct: Boolean): Int
-  max: pa_scrape_validated_max_fields
-  min: pa_scrape_validated_min_fields
-  stddev: pa_scrape_validated_stddev_fields
-  stddev_pop: pa_scrape_validated_stddev_pop_fields
-  stddev_samp: pa_scrape_validated_stddev_samp_fields
-  sum: pa_scrape_validated_sum_fields
-  var_pop: pa_scrape_validated_var_pop_fields
-  var_samp: pa_scrape_validated_var_samp_fields
-  variance: pa_scrape_validated_variance_fields
+"aggregate fields of \"pa_scrape_validated_depreciated\""
+type pa_scrape_validated_depreciated_aggregate_fields {
+  avg: pa_scrape_validated_depreciated_avg_fields
+  count(columns: [pa_scrape_validated_depreciated_select_column!], distinct: Boolean): Int
+  max: pa_scrape_validated_depreciated_max_fields
+  min: pa_scrape_validated_depreciated_min_fields
+  stddev: pa_scrape_validated_depreciated_stddev_fields
+  stddev_pop: pa_scrape_validated_depreciated_stddev_pop_fields
+  stddev_samp: pa_scrape_validated_depreciated_stddev_samp_fields
+  sum: pa_scrape_validated_depreciated_sum_fields
+  var_pop: pa_scrape_validated_depreciated_var_pop_fields
+  var_samp: pa_scrape_validated_depreciated_var_samp_fields
+  variance: pa_scrape_validated_depreciated_variance_fields
 }
 
 "aggregate avg on columns"
-type pa_scrape_validated_avg_fields {
+type pa_scrape_validated_depreciated_avg_fields {
   id: Float
 }
 
 "aggregate max on columns"
-type pa_scrape_validated_max_fields {
+type pa_scrape_validated_depreciated_max_fields {
   address: String
-  alternative_reference: String
   appeal_decision: String
   appeal_status: String
   application_received: timestamptz
@@ -393,9 +349,8 @@ type pa_scrape_validated_max_fields {
 }
 
 "aggregate min on columns"
-type pa_scrape_validated_min_fields {
+type pa_scrape_validated_depreciated_min_fields {
   address: String
-  alternative_reference: String
   appeal_decision: String
   appeal_status: String
   application_received: timestamptz
@@ -411,46 +366,61 @@ type pa_scrape_validated_min_fields {
   url: String
 }
 
-"response of any mutation on the table \"pa_scrape_validated\""
-type pa_scrape_validated_mutation_response {
+"response of any mutation on the table \"pa_scrape_validated_depreciated\""
+type pa_scrape_validated_depreciated_mutation_response {
   "number of affected rows by the mutation"
   affected_rows: Int!
   "data of the affected rows by the mutation"
-  returning: [pa_scrape_validated!]!
+  returning: [pa_scrape_validated_depreciated!]!
 }
 
 "aggregate stddev on columns"
-type pa_scrape_validated_stddev_fields {
+type pa_scrape_validated_depreciated_stddev_fields {
   id: Float
 }
 
 "aggregate stddev_pop on columns"
-type pa_scrape_validated_stddev_pop_fields {
+type pa_scrape_validated_depreciated_stddev_pop_fields {
   id: Float
 }
 
 "aggregate stddev_samp on columns"
-type pa_scrape_validated_stddev_samp_fields {
+type pa_scrape_validated_depreciated_stddev_samp_fields {
   id: Float
 }
 
 "aggregate sum on columns"
-type pa_scrape_validated_sum_fields {
+type pa_scrape_validated_depreciated_sum_fields {
   id: Int
 }
 
 "aggregate var_pop on columns"
-type pa_scrape_validated_var_pop_fields {
+type pa_scrape_validated_depreciated_var_pop_fields {
   id: Float
 }
 
 "aggregate var_samp on columns"
-type pa_scrape_validated_var_samp_fields {
+type pa_scrape_validated_depreciated_var_samp_fields {
   id: Float
 }
 
 "aggregate variance on columns"
-type pa_scrape_validated_variance_fields {
+type pa_scrape_validated_depreciated_variance_fields {
+  id: Float
+}
+
+"aggregate var_pop on columns"
+type pa_scrape_var_pop_fields {
+  id: Float
+}
+
+"aggregate var_samp on columns"
+type pa_scrape_var_samp_fields {
+  id: Float
+}
+
+"aggregate variance on columns"
+type pa_scrape_variance_fields {
   id: Float
 }
 
@@ -467,56 +437,57 @@ type pa_status {
   "An array relationship"
   pa_scrape_decideds(
     #distinct select on columns
-    distinct_on: [pa_scrape_decided_select_column!],
+    distinct_on: [pa_scrape_select_column!],
     #limit the number of rows returned
     limit: Int,
     #skip the first n rows. Use only with order_by
     offset: Int,
     #sort the rows by one or more columns
-    order_by: [pa_scrape_decided_order_by!],
+    order_by: [pa_scrape_order_by!],
     #filter the rows returned
-    where: pa_scrape_decided_bool_exp
-  ): [pa_scrape_decided!]!
+    where: pa_scrape_bool_exp
+  ): [pa_scrape!]!
   "An aggregated array relationship"
   pa_scrape_decideds_aggregate(
     #distinct select on columns
-    distinct_on: [pa_scrape_decided_select_column!],
+    distinct_on: [pa_scrape_select_column!],
     #limit the number of rows returned
     limit: Int,
     #skip the first n rows. Use only with order_by
     offset: Int,
     #sort the rows by one or more columns
-    order_by: [pa_scrape_decided_order_by!],
+    order_by: [pa_scrape_order_by!],
     #filter the rows returned
-    where: pa_scrape_decided_bool_exp
-  ): pa_scrape_decided_aggregate!
+    where: pa_scrape_bool_exp
+  ): pa_scrape_aggregate!
   "An array relationship"
   pa_scrape_validateds(
     #distinct select on columns
-    distinct_on: [pa_scrape_validated_select_column!],
+    distinct_on: [pa_scrape_validated_depreciated_select_column!],
     #limit the number of rows returned
     limit: Int,
     #skip the first n rows. Use only with order_by
     offset: Int,
     #sort the rows by one or more columns
-    order_by: [pa_scrape_validated_order_by!],
+    order_by: [pa_scrape_validated_depreciated_order_by!],
     #filter the rows returned
-    where: pa_scrape_validated_bool_exp
-  ): [pa_scrape_validated!]!
+    where: pa_scrape_validated_depreciated_bool_exp
+  ): [pa_scrape_validated_depreciated!]!
   "An aggregated array relationship"
   pa_scrape_validateds_aggregate(
     #distinct select on columns
-    distinct_on: [pa_scrape_validated_select_column!],
+    distinct_on: [pa_scrape_validated_depreciated_select_column!],
     #limit the number of rows returned
     limit: Int,
     #skip the first n rows. Use only with order_by
     offset: Int,
     #sort the rows by one or more columns
-    order_by: [pa_scrape_validated_order_by!],
+    order_by: [pa_scrape_validated_depreciated_order_by!],
     #filter the rows returned
-    where: pa_scrape_validated_bool_exp
-  ): pa_scrape_validated_aggregate!
+    where: pa_scrape_validated_depreciated_bool_exp
+  ): pa_scrape_validated_depreciated_aggregate!
   proposal: String!
+  status: String
   updated_at: timestamptz!
   url: String!
 }
@@ -543,6 +514,7 @@ type pa_status_max_fields {
   decision_issued_date: timestamptz
   id: String
   proposal: String
+  status: String
   updated_at: timestamptz
   url: String
 }
@@ -556,6 +528,7 @@ type pa_status_min_fields {
   decision_issued_date: timestamptz
   id: String
   proposal: String
+  status: String
   updated_at: timestamptz
   url: String
 }
@@ -645,62 +618,62 @@ type planning_app_mutation_response {
 
 "query root"
 type query_root {
-  "fetch data from the table: \"pa_scrape_decided\""
-  pa_scrape_decided(
+  "fetch data from the table: \"pa_scrape\""
+  pa_scrape(
     #distinct select on columns
-    distinct_on: [pa_scrape_decided_select_column!],
+    distinct_on: [pa_scrape_select_column!],
     #limit the number of rows returned
     limit: Int,
     #skip the first n rows. Use only with order_by
     offset: Int,
     #sort the rows by one or more columns
-    order_by: [pa_scrape_decided_order_by!],
+    order_by: [pa_scrape_order_by!],
     #filter the rows returned
-    where: pa_scrape_decided_bool_exp
-  ): [pa_scrape_decided!]!
-  "fetch aggregated fields from the table: \"pa_scrape_decided\""
-  pa_scrape_decided_aggregate(
+    where: pa_scrape_bool_exp
+  ): [pa_scrape!]!
+  "fetch aggregated fields from the table: \"pa_scrape\""
+  pa_scrape_aggregate(
     #distinct select on columns
-    distinct_on: [pa_scrape_decided_select_column!],
+    distinct_on: [pa_scrape_select_column!],
     #limit the number of rows returned
     limit: Int,
     #skip the first n rows. Use only with order_by
     offset: Int,
     #sort the rows by one or more columns
-    order_by: [pa_scrape_decided_order_by!],
+    order_by: [pa_scrape_order_by!],
     #filter the rows returned
-    where: pa_scrape_decided_bool_exp
-  ): pa_scrape_decided_aggregate!
-  "fetch data from the table: \"pa_scrape_decided\" using primary key columns"
-  pa_scrape_decided_by_pk(id: Int!): pa_scrape_decided
-  "fetch data from the table: \"pa_scrape_validated\""
-  pa_scrape_validated(
+    where: pa_scrape_bool_exp
+  ): pa_scrape_aggregate!
+  "fetch data from the table: \"pa_scrape\" using primary key columns"
+  pa_scrape_by_pk(id: Int!): pa_scrape
+  "fetch data from the table: \"pa_scrape_validated_depreciated\""
+  pa_scrape_validated_depreciated(
     #distinct select on columns
-    distinct_on: [pa_scrape_validated_select_column!],
+    distinct_on: [pa_scrape_validated_depreciated_select_column!],
     #limit the number of rows returned
     limit: Int,
     #skip the first n rows. Use only with order_by
     offset: Int,
     #sort the rows by one or more columns
-    order_by: [pa_scrape_validated_order_by!],
+    order_by: [pa_scrape_validated_depreciated_order_by!],
     #filter the rows returned
-    where: pa_scrape_validated_bool_exp
-  ): [pa_scrape_validated!]!
-  "fetch aggregated fields from the table: \"pa_scrape_validated\""
-  pa_scrape_validated_aggregate(
+    where: pa_scrape_validated_depreciated_bool_exp
+  ): [pa_scrape_validated_depreciated!]!
+  "fetch aggregated fields from the table: \"pa_scrape_validated_depreciated\""
+  pa_scrape_validated_depreciated_aggregate(
     #distinct select on columns
-    distinct_on: [pa_scrape_validated_select_column!],
+    distinct_on: [pa_scrape_validated_depreciated_select_column!],
     #limit the number of rows returned
     limit: Int,
     #skip the first n rows. Use only with order_by
     offset: Int,
     #sort the rows by one or more columns
-    order_by: [pa_scrape_validated_order_by!],
+    order_by: [pa_scrape_validated_depreciated_order_by!],
     #filter the rows returned
-    where: pa_scrape_validated_bool_exp
-  ): pa_scrape_validated_aggregate!
-  "fetch data from the table: \"pa_scrape_validated\" using primary key columns"
-  pa_scrape_validated_by_pk(id: Int!): pa_scrape_validated
+    where: pa_scrape_validated_depreciated_bool_exp
+  ): pa_scrape_validated_depreciated_aggregate!
+  "fetch data from the table: \"pa_scrape_validated_depreciated\" using primary key columns"
+  pa_scrape_validated_depreciated_by_pk(id: Int!): pa_scrape_validated_depreciated
   "fetch data from the table: \"pa_status\""
   pa_status(
     #distinct select on columns
@@ -914,62 +887,62 @@ type scrape_log_variance_fields {
 
 "subscription root"
 type subscription_root {
-  "fetch data from the table: \"pa_scrape_decided\""
-  pa_scrape_decided(
+  "fetch data from the table: \"pa_scrape\""
+  pa_scrape(
     #distinct select on columns
-    distinct_on: [pa_scrape_decided_select_column!],
+    distinct_on: [pa_scrape_select_column!],
     #limit the number of rows returned
     limit: Int,
     #skip the first n rows. Use only with order_by
     offset: Int,
     #sort the rows by one or more columns
-    order_by: [pa_scrape_decided_order_by!],
+    order_by: [pa_scrape_order_by!],
     #filter the rows returned
-    where: pa_scrape_decided_bool_exp
-  ): [pa_scrape_decided!]!
-  "fetch aggregated fields from the table: \"pa_scrape_decided\""
-  pa_scrape_decided_aggregate(
+    where: pa_scrape_bool_exp
+  ): [pa_scrape!]!
+  "fetch aggregated fields from the table: \"pa_scrape\""
+  pa_scrape_aggregate(
     #distinct select on columns
-    distinct_on: [pa_scrape_decided_select_column!],
+    distinct_on: [pa_scrape_select_column!],
     #limit the number of rows returned
     limit: Int,
     #skip the first n rows. Use only with order_by
     offset: Int,
     #sort the rows by one or more columns
-    order_by: [pa_scrape_decided_order_by!],
+    order_by: [pa_scrape_order_by!],
     #filter the rows returned
-    where: pa_scrape_decided_bool_exp
-  ): pa_scrape_decided_aggregate!
-  "fetch data from the table: \"pa_scrape_decided\" using primary key columns"
-  pa_scrape_decided_by_pk(id: Int!): pa_scrape_decided
-  "fetch data from the table: \"pa_scrape_validated\""
-  pa_scrape_validated(
+    where: pa_scrape_bool_exp
+  ): pa_scrape_aggregate!
+  "fetch data from the table: \"pa_scrape\" using primary key columns"
+  pa_scrape_by_pk(id: Int!): pa_scrape
+  "fetch data from the table: \"pa_scrape_validated_depreciated\""
+  pa_scrape_validated_depreciated(
     #distinct select on columns
-    distinct_on: [pa_scrape_validated_select_column!],
+    distinct_on: [pa_scrape_validated_depreciated_select_column!],
     #limit the number of rows returned
     limit: Int,
     #skip the first n rows. Use only with order_by
     offset: Int,
     #sort the rows by one or more columns
-    order_by: [pa_scrape_validated_order_by!],
+    order_by: [pa_scrape_validated_depreciated_order_by!],
     #filter the rows returned
-    where: pa_scrape_validated_bool_exp
-  ): [pa_scrape_validated!]!
-  "fetch aggregated fields from the table: \"pa_scrape_validated\""
-  pa_scrape_validated_aggregate(
+    where: pa_scrape_validated_depreciated_bool_exp
+  ): [pa_scrape_validated_depreciated!]!
+  "fetch aggregated fields from the table: \"pa_scrape_validated_depreciated\""
+  pa_scrape_validated_depreciated_aggregate(
     #distinct select on columns
-    distinct_on: [pa_scrape_validated_select_column!],
+    distinct_on: [pa_scrape_validated_depreciated_select_column!],
     #limit the number of rows returned
     limit: Int,
     #skip the first n rows. Use only with order_by
     offset: Int,
     #sort the rows by one or more columns
-    order_by: [pa_scrape_validated_order_by!],
+    order_by: [pa_scrape_validated_depreciated_order_by!],
     #filter the rows returned
-    where: pa_scrape_validated_bool_exp
-  ): pa_scrape_validated_aggregate!
-  "fetch data from the table: \"pa_scrape_validated\" using primary key columns"
-  pa_scrape_validated_by_pk(id: Int!): pa_scrape_validated
+    where: pa_scrape_validated_depreciated_bool_exp
+  ): pa_scrape_validated_depreciated_aggregate!
+  "fetch data from the table: \"pa_scrape_validated_depreciated\" using primary key columns"
+  pa_scrape_validated_depreciated_by_pk(id: Int!): pa_scrape_validated_depreciated
   "fetch data from the table: \"pa_status\""
   pa_status(
     #distinct select on columns
@@ -1143,32 +1116,16 @@ enum order_by {
   desc_nulls_last
 }
 
-"unique or primary key constraints on table \"pa_scrape_decided\""
-enum pa_scrape_decided_constraint {
+"unique or primary key constraints on table \"pa_scrape\""
+enum pa_scrape_constraint {
   #unique or primary key constraint
   pa_scrape_decided_pkey
 }
 
-"select columns of table \"pa_scrape_decided\""
-enum pa_scrape_decided_select_column {
-  #column name
-  address
-  #column name
-  alternative_reference
-  #column name
-  appeal_decision
-  #column name
-  appeal_status
-  #column name
-  application_received
-  #column name
-  application_validated
+"select columns of table \"pa_scrape\""
+enum pa_scrape_select_column {
   #column name
   contacts
-  #column name
-  decision
-  #column name
-  decision_issued_date
   #column name
   further_information
   #column name
@@ -1176,7 +1133,7 @@ enum pa_scrape_decided_select_column {
   #column name
   important_dates
   #column name
-  proposal
+  list_type
   #column name
   reference
   #column name
@@ -1184,33 +1141,15 @@ enum pa_scrape_decided_select_column {
   #column name
   scraper
   #column name
-  status
-  #column name
   summary
   #column name
   url
 }
 
-"update columns of table \"pa_scrape_decided\""
-enum pa_scrape_decided_update_column {
-  #column name
-  address
-  #column name
-  alternative_reference
-  #column name
-  appeal_decision
-  #column name
-  appeal_status
-  #column name
-  application_received
-  #column name
-  application_validated
+"update columns of table \"pa_scrape\""
+enum pa_scrape_update_column {
   #column name
   contacts
-  #column name
-  decision
-  #column name
-  decision_issued_date
   #column name
   further_information
   #column name
@@ -1218,7 +1157,7 @@ enum pa_scrape_decided_update_column {
   #column name
   important_dates
   #column name
-  proposal
+  list_type
   #column name
   reference
   #column name
@@ -1226,25 +1165,21 @@ enum pa_scrape_decided_update_column {
   #column name
   scraper
   #column name
-  status
-  #column name
   summary
   #column name
   url
 }
 
-"unique or primary key constraints on table \"pa_scrape_validated\""
-enum pa_scrape_validated_constraint {
+"unique or primary key constraints on table \"pa_scrape_validated_depreciated\""
+enum pa_scrape_validated_depreciated_constraint {
   #unique or primary key constraint
   pa_scrape_validated_pkey
 }
 
-"select columns of table \"pa_scrape_validated\""
-enum pa_scrape_validated_select_column {
+"select columns of table \"pa_scrape_validated_depreciated\""
+enum pa_scrape_validated_depreciated_select_column {
   #column name
   address
-  #column name
-  alternative_reference
   #column name
   appeal_decision
   #column name
@@ -1279,12 +1214,10 @@ enum pa_scrape_validated_select_column {
   url
 }
 
-"update columns of table \"pa_scrape_validated\""
-enum pa_scrape_validated_update_column {
+"update columns of table \"pa_scrape_validated_depreciated\""
+enum pa_scrape_validated_depreciated_update_column {
   #column name
   address
-  #column name
-  alternative_reference
   #column name
   appeal_decision
   #column name
@@ -1346,6 +1279,8 @@ enum pa_status_select_column {
   #column name
   proposal
   #column name
+  status
+  #column name
   updated_at
   #column name
   url
@@ -1371,6 +1306,8 @@ enum pa_status_update_column {
   open
   #column name
   proposal
+  #column name
+  status
   #column name
   updated_at
   #column name
@@ -1656,69 +1593,60 @@ input jsonb_comparison_exp {
   _nin: [jsonb!]
 }
 
-"order by aggregate values of table \"pa_scrape_decided\""
-input pa_scrape_decided_aggregate_order_by {
-  avg: pa_scrape_decided_avg_order_by
+"order by aggregate values of table \"pa_scrape\""
+input pa_scrape_aggregate_order_by {
+  avg: pa_scrape_avg_order_by
   count: order_by
-  max: pa_scrape_decided_max_order_by
-  min: pa_scrape_decided_min_order_by
-  stddev: pa_scrape_decided_stddev_order_by
-  stddev_pop: pa_scrape_decided_stddev_pop_order_by
-  stddev_samp: pa_scrape_decided_stddev_samp_order_by
-  sum: pa_scrape_decided_sum_order_by
-  var_pop: pa_scrape_decided_var_pop_order_by
-  var_samp: pa_scrape_decided_var_samp_order_by
-  variance: pa_scrape_decided_variance_order_by
+  max: pa_scrape_max_order_by
+  min: pa_scrape_min_order_by
+  stddev: pa_scrape_stddev_order_by
+  stddev_pop: pa_scrape_stddev_pop_order_by
+  stddev_samp: pa_scrape_stddev_samp_order_by
+  sum: pa_scrape_sum_order_by
+  var_pop: pa_scrape_var_pop_order_by
+  var_samp: pa_scrape_var_samp_order_by
+  variance: pa_scrape_variance_order_by
 }
 
 "append existing jsonb value of filtered columns with new jsonb value"
-input pa_scrape_decided_append_input {
+input pa_scrape_append_input {
   contacts: jsonb
   further_information: jsonb
   important_dates: jsonb
   summary: jsonb
 }
 
-"input type for inserting array relation for remote table \"pa_scrape_decided\""
-input pa_scrape_decided_arr_rel_insert_input {
-  data: [pa_scrape_decided_insert_input!]!
-  on_conflict: pa_scrape_decided_on_conflict
+"input type for inserting array relation for remote table \"pa_scrape\""
+input pa_scrape_arr_rel_insert_input {
+  data: [pa_scrape_insert_input!]!
+  on_conflict: pa_scrape_on_conflict
 }
 
-"order by avg() on columns of table \"pa_scrape_decided\""
-input pa_scrape_decided_avg_order_by {
+"order by avg() on columns of table \"pa_scrape\""
+input pa_scrape_avg_order_by {
   id: order_by
 }
 
-"Boolean expression to filter rows from the table \"pa_scrape_decided\". All fields are combined with a logical 'AND'."
-input pa_scrape_decided_bool_exp {
-  _and: [pa_scrape_decided_bool_exp]
-  _not: pa_scrape_decided_bool_exp
-  _or: [pa_scrape_decided_bool_exp]
-  address: String_comparison_exp
-  alternative_reference: String_comparison_exp
-  appeal_decision: String_comparison_exp
-  appeal_status: String_comparison_exp
-  application_received: timestamptz_comparison_exp
-  application_validated: timestamptz_comparison_exp
+"Boolean expression to filter rows from the table \"pa_scrape\". All fields are combined with a logical 'AND'."
+input pa_scrape_bool_exp {
+  _and: [pa_scrape_bool_exp]
+  _not: pa_scrape_bool_exp
+  _or: [pa_scrape_bool_exp]
   contacts: jsonb_comparison_exp
-  decision: String_comparison_exp
-  decision_issued_date: timestamptz_comparison_exp
   further_information: jsonb_comparison_exp
   id: Int_comparison_exp
   important_dates: jsonb_comparison_exp
+  list_type: String_comparison_exp
   pa_status: pa_status_bool_exp
-  proposal: String_comparison_exp
   reference: String_comparison_exp
   scraped_at: timestamptz_comparison_exp
   scraper: String_comparison_exp
-  status: String_comparison_exp
   summary: jsonb_comparison_exp
   url: String_comparison_exp
 }
 
 "delete the field or element with specified path (for JSON arrays, negative integers count from the end)"
-input pa_scrape_decided_delete_at_path_input {
+input pa_scrape_delete_at_path_input {
   contacts: [String]
   further_information: [String]
   important_dates: [String]
@@ -1726,7 +1654,7 @@ input pa_scrape_decided_delete_at_path_input {
 }
 
 "delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array"
-input pa_scrape_decided_delete_elem_input {
+input pa_scrape_delete_elem_input {
   contacts: Int
   further_information: Int
   important_dates: Int
@@ -1734,223 +1662,162 @@ input pa_scrape_decided_delete_elem_input {
 }
 
 "delete key/value pair or string element. key/value pairs are matched based on their key value"
-input pa_scrape_decided_delete_key_input {
+input pa_scrape_delete_key_input {
   contacts: String
   further_information: String
   important_dates: String
   summary: String
 }
 
-"input type for incrementing integer columne in table \"pa_scrape_decided\""
-input pa_scrape_decided_inc_input {
+"input type for incrementing integer columne in table \"pa_scrape\""
+input pa_scrape_inc_input {
   id: Int
 }
 
-"input type for inserting data into table \"pa_scrape_decided\""
-input pa_scrape_decided_insert_input {
-  address: String
-  alternative_reference: String
-  appeal_decision: String
-  appeal_status: String
-  application_received: timestamptz
-  application_validated: timestamptz
+"input type for inserting data into table \"pa_scrape\""
+input pa_scrape_insert_input {
   contacts: jsonb
-  decision: String
-  decision_issued_date: timestamptz
   further_information: jsonb
   id: Int
   important_dates: jsonb
+  list_type: String
   pa_status: pa_status_obj_rel_insert_input
-  proposal: String
   reference: String
   scraped_at: timestamptz
   scraper: String
-  status: String
   summary: jsonb
   url: String
 }
 
-"order by max() on columns of table \"pa_scrape_decided\""
-input pa_scrape_decided_max_order_by {
-  address: order_by
-  alternative_reference: order_by
-  appeal_decision: order_by
-  appeal_status: order_by
-  application_received: order_by
-  application_validated: order_by
-  decision: order_by
-  decision_issued_date: order_by
+"order by max() on columns of table \"pa_scrape\""
+input pa_scrape_max_order_by {
   id: order_by
-  proposal: order_by
+  list_type: order_by
   reference: order_by
   scraped_at: order_by
   scraper: order_by
-  status: order_by
   url: order_by
 }
 
-"order by min() on columns of table \"pa_scrape_decided\""
-input pa_scrape_decided_min_order_by {
-  address: order_by
-  alternative_reference: order_by
-  appeal_decision: order_by
-  appeal_status: order_by
-  application_received: order_by
-  application_validated: order_by
-  decision: order_by
-  decision_issued_date: order_by
+"order by min() on columns of table \"pa_scrape\""
+input pa_scrape_min_order_by {
   id: order_by
-  proposal: order_by
+  list_type: order_by
   reference: order_by
   scraped_at: order_by
   scraper: order_by
-  status: order_by
   url: order_by
 }
 
-"input type for inserting object relation for remote table \"pa_scrape_decided\""
-input pa_scrape_decided_obj_rel_insert_input {
-  data: pa_scrape_decided_insert_input!
-  on_conflict: pa_scrape_decided_on_conflict
+"input type for inserting object relation for remote table \"pa_scrape\""
+input pa_scrape_obj_rel_insert_input {
+  data: pa_scrape_insert_input!
+  on_conflict: pa_scrape_on_conflict
 }
 
-"on conflict condition type for table \"pa_scrape_decided\""
-input pa_scrape_decided_on_conflict {
-  constraint: pa_scrape_decided_constraint!
-  update_columns: [pa_scrape_decided_update_column!]!
-  where: pa_scrape_decided_bool_exp
+"on conflict condition type for table \"pa_scrape\""
+input pa_scrape_on_conflict {
+  constraint: pa_scrape_constraint!
+  update_columns: [pa_scrape_update_column!]!
+  where: pa_scrape_bool_exp
 }
 
-"ordering options when selecting data from \"pa_scrape_decided\""
-input pa_scrape_decided_order_by {
-  address: order_by
-  alternative_reference: order_by
-  appeal_decision: order_by
-  appeal_status: order_by
-  application_received: order_by
-  application_validated: order_by
+"ordering options when selecting data from \"pa_scrape\""
+input pa_scrape_order_by {
   contacts: order_by
-  decision: order_by
-  decision_issued_date: order_by
   further_information: order_by
   id: order_by
   important_dates: order_by
+  list_type: order_by
   pa_status: pa_status_order_by
-  proposal: order_by
   reference: order_by
   scraped_at: order_by
   scraper: order_by
-  status: order_by
   summary: order_by
   url: order_by
 }
 
 "prepend existing jsonb value of filtered columns with new jsonb value"
-input pa_scrape_decided_prepend_input {
+input pa_scrape_prepend_input {
   contacts: jsonb
   further_information: jsonb
   important_dates: jsonb
   summary: jsonb
 }
 
-"input type for updating data in table \"pa_scrape_decided\""
-input pa_scrape_decided_set_input {
-  address: String
-  alternative_reference: String
-  appeal_decision: String
-  appeal_status: String
-  application_received: timestamptz
-  application_validated: timestamptz
+"input type for updating data in table \"pa_scrape\""
+input pa_scrape_set_input {
   contacts: jsonb
-  decision: String
-  decision_issued_date: timestamptz
   further_information: jsonb
   id: Int
   important_dates: jsonb
-  proposal: String
+  list_type: String
   reference: String
   scraped_at: timestamptz
   scraper: String
-  status: String
   summary: jsonb
   url: String
 }
 
-"order by stddev() on columns of table \"pa_scrape_decided\""
-input pa_scrape_decided_stddev_order_by {
+"order by stddev() on columns of table \"pa_scrape\""
+input pa_scrape_stddev_order_by {
   id: order_by
 }
 
-"order by stddev_pop() on columns of table \"pa_scrape_decided\""
-input pa_scrape_decided_stddev_pop_order_by {
+"order by stddev_pop() on columns of table \"pa_scrape\""
+input pa_scrape_stddev_pop_order_by {
   id: order_by
 }
 
-"order by stddev_samp() on columns of table \"pa_scrape_decided\""
-input pa_scrape_decided_stddev_samp_order_by {
+"order by stddev_samp() on columns of table \"pa_scrape\""
+input pa_scrape_stddev_samp_order_by {
   id: order_by
 }
 
-"order by sum() on columns of table \"pa_scrape_decided\""
-input pa_scrape_decided_sum_order_by {
+"order by sum() on columns of table \"pa_scrape\""
+input pa_scrape_sum_order_by {
   id: order_by
 }
 
-"order by var_pop() on columns of table \"pa_scrape_decided\""
-input pa_scrape_decided_var_pop_order_by {
-  id: order_by
-}
-
-"order by var_samp() on columns of table \"pa_scrape_decided\""
-input pa_scrape_decided_var_samp_order_by {
-  id: order_by
-}
-
-"order by variance() on columns of table \"pa_scrape_decided\""
-input pa_scrape_decided_variance_order_by {
-  id: order_by
-}
-
-"order by aggregate values of table \"pa_scrape_validated\""
-input pa_scrape_validated_aggregate_order_by {
-  avg: pa_scrape_validated_avg_order_by
+"order by aggregate values of table \"pa_scrape_validated_depreciated\""
+input pa_scrape_validated_depreciated_aggregate_order_by {
+  avg: pa_scrape_validated_depreciated_avg_order_by
   count: order_by
-  max: pa_scrape_validated_max_order_by
-  min: pa_scrape_validated_min_order_by
-  stddev: pa_scrape_validated_stddev_order_by
-  stddev_pop: pa_scrape_validated_stddev_pop_order_by
-  stddev_samp: pa_scrape_validated_stddev_samp_order_by
-  sum: pa_scrape_validated_sum_order_by
-  var_pop: pa_scrape_validated_var_pop_order_by
-  var_samp: pa_scrape_validated_var_samp_order_by
-  variance: pa_scrape_validated_variance_order_by
+  max: pa_scrape_validated_depreciated_max_order_by
+  min: pa_scrape_validated_depreciated_min_order_by
+  stddev: pa_scrape_validated_depreciated_stddev_order_by
+  stddev_pop: pa_scrape_validated_depreciated_stddev_pop_order_by
+  stddev_samp: pa_scrape_validated_depreciated_stddev_samp_order_by
+  sum: pa_scrape_validated_depreciated_sum_order_by
+  var_pop: pa_scrape_validated_depreciated_var_pop_order_by
+  var_samp: pa_scrape_validated_depreciated_var_samp_order_by
+  variance: pa_scrape_validated_depreciated_variance_order_by
 }
 
 "append existing jsonb value of filtered columns with new jsonb value"
-input pa_scrape_validated_append_input {
+input pa_scrape_validated_depreciated_append_input {
   contacts: jsonb
   further_information: jsonb
   important_dates: jsonb
 }
 
-"input type for inserting array relation for remote table \"pa_scrape_validated\""
-input pa_scrape_validated_arr_rel_insert_input {
-  data: [pa_scrape_validated_insert_input!]!
-  on_conflict: pa_scrape_validated_on_conflict
+"input type for inserting array relation for remote table \"pa_scrape_validated_depreciated\""
+input pa_scrape_validated_depreciated_arr_rel_insert_input {
+  data: [pa_scrape_validated_depreciated_insert_input!]!
+  on_conflict: pa_scrape_validated_depreciated_on_conflict
 }
 
-"order by avg() on columns of table \"pa_scrape_validated\""
-input pa_scrape_validated_avg_order_by {
+"order by avg() on columns of table \"pa_scrape_validated_depreciated\""
+input pa_scrape_validated_depreciated_avg_order_by {
   id: order_by
 }
 
-"Boolean expression to filter rows from the table \"pa_scrape_validated\". All fields are combined with a logical 'AND'."
-input pa_scrape_validated_bool_exp {
-  _and: [pa_scrape_validated_bool_exp]
-  _not: pa_scrape_validated_bool_exp
-  _or: [pa_scrape_validated_bool_exp]
+"Boolean expression to filter rows from the table \"pa_scrape_validated_depreciated\". All fields are combined with a logical 'AND'."
+input pa_scrape_validated_depreciated_bool_exp {
+  _and: [pa_scrape_validated_depreciated_bool_exp]
+  _not: pa_scrape_validated_depreciated_bool_exp
+  _or: [pa_scrape_validated_depreciated_bool_exp]
   address: String_comparison_exp
-  alternative_reference: String_comparison_exp
   appeal_decision: String_comparison_exp
   appeal_status: String_comparison_exp
   application_received: timestamptz_comparison_exp
@@ -1971,35 +1838,34 @@ input pa_scrape_validated_bool_exp {
 }
 
 "delete the field or element with specified path (for JSON arrays, negative integers count from the end)"
-input pa_scrape_validated_delete_at_path_input {
+input pa_scrape_validated_depreciated_delete_at_path_input {
   contacts: [String]
   further_information: [String]
   important_dates: [String]
 }
 
 "delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array"
-input pa_scrape_validated_delete_elem_input {
+input pa_scrape_validated_depreciated_delete_elem_input {
   contacts: Int
   further_information: Int
   important_dates: Int
 }
 
 "delete key/value pair or string element. key/value pairs are matched based on their key value"
-input pa_scrape_validated_delete_key_input {
+input pa_scrape_validated_depreciated_delete_key_input {
   contacts: String
   further_information: String
   important_dates: String
 }
 
-"input type for incrementing integer columne in table \"pa_scrape_validated\""
-input pa_scrape_validated_inc_input {
+"input type for incrementing integer columne in table \"pa_scrape_validated_depreciated\""
+input pa_scrape_validated_depreciated_inc_input {
   id: Int
 }
 
-"input type for inserting data into table \"pa_scrape_validated\""
-input pa_scrape_validated_insert_input {
+"input type for inserting data into table \"pa_scrape_validated_depreciated\""
+input pa_scrape_validated_depreciated_insert_input {
   address: String
-  alternative_reference: String
   appeal_decision: String
   appeal_status: String
   application_received: timestamptz
@@ -2019,10 +1885,9 @@ input pa_scrape_validated_insert_input {
   url: String
 }
 
-"order by max() on columns of table \"pa_scrape_validated\""
-input pa_scrape_validated_max_order_by {
+"order by max() on columns of table \"pa_scrape_validated_depreciated\""
+input pa_scrape_validated_depreciated_max_order_by {
   address: order_by
-  alternative_reference: order_by
   appeal_decision: order_by
   appeal_status: order_by
   application_received: order_by
@@ -2038,10 +1903,9 @@ input pa_scrape_validated_max_order_by {
   url: order_by
 }
 
-"order by min() on columns of table \"pa_scrape_validated\""
-input pa_scrape_validated_min_order_by {
+"order by min() on columns of table \"pa_scrape_validated_depreciated\""
+input pa_scrape_validated_depreciated_min_order_by {
   address: order_by
-  alternative_reference: order_by
   appeal_decision: order_by
   appeal_status: order_by
   application_received: order_by
@@ -2057,23 +1921,22 @@ input pa_scrape_validated_min_order_by {
   url: order_by
 }
 
-"input type for inserting object relation for remote table \"pa_scrape_validated\""
-input pa_scrape_validated_obj_rel_insert_input {
-  data: pa_scrape_validated_insert_input!
-  on_conflict: pa_scrape_validated_on_conflict
+"input type for inserting object relation for remote table \"pa_scrape_validated_depreciated\""
+input pa_scrape_validated_depreciated_obj_rel_insert_input {
+  data: pa_scrape_validated_depreciated_insert_input!
+  on_conflict: pa_scrape_validated_depreciated_on_conflict
 }
 
-"on conflict condition type for table \"pa_scrape_validated\""
-input pa_scrape_validated_on_conflict {
-  constraint: pa_scrape_validated_constraint!
-  update_columns: [pa_scrape_validated_update_column!]!
-  where: pa_scrape_validated_bool_exp
+"on conflict condition type for table \"pa_scrape_validated_depreciated\""
+input pa_scrape_validated_depreciated_on_conflict {
+  constraint: pa_scrape_validated_depreciated_constraint!
+  update_columns: [pa_scrape_validated_depreciated_update_column!]!
+  where: pa_scrape_validated_depreciated_bool_exp
 }
 
-"ordering options when selecting data from \"pa_scrape_validated\""
-input pa_scrape_validated_order_by {
+"ordering options when selecting data from \"pa_scrape_validated_depreciated\""
+input pa_scrape_validated_depreciated_order_by {
   address: order_by
-  alternative_reference: order_by
   appeal_decision: order_by
   appeal_status: order_by
   application_received: order_by
@@ -2094,16 +1957,15 @@ input pa_scrape_validated_order_by {
 }
 
 "prepend existing jsonb value of filtered columns with new jsonb value"
-input pa_scrape_validated_prepend_input {
+input pa_scrape_validated_depreciated_prepend_input {
   contacts: jsonb
   further_information: jsonb
   important_dates: jsonb
 }
 
-"input type for updating data in table \"pa_scrape_validated\""
-input pa_scrape_validated_set_input {
+"input type for updating data in table \"pa_scrape_validated_depreciated\""
+input pa_scrape_validated_depreciated_set_input {
   address: String
-  alternative_reference: String
   appeal_decision: String
   appeal_status: String
   application_received: timestamptz
@@ -2122,38 +1984,53 @@ input pa_scrape_validated_set_input {
   url: String
 }
 
-"order by stddev() on columns of table \"pa_scrape_validated\""
-input pa_scrape_validated_stddev_order_by {
+"order by stddev() on columns of table \"pa_scrape_validated_depreciated\""
+input pa_scrape_validated_depreciated_stddev_order_by {
   id: order_by
 }
 
-"order by stddev_pop() on columns of table \"pa_scrape_validated\""
-input pa_scrape_validated_stddev_pop_order_by {
+"order by stddev_pop() on columns of table \"pa_scrape_validated_depreciated\""
+input pa_scrape_validated_depreciated_stddev_pop_order_by {
   id: order_by
 }
 
-"order by stddev_samp() on columns of table \"pa_scrape_validated\""
-input pa_scrape_validated_stddev_samp_order_by {
+"order by stddev_samp() on columns of table \"pa_scrape_validated_depreciated\""
+input pa_scrape_validated_depreciated_stddev_samp_order_by {
   id: order_by
 }
 
-"order by sum() on columns of table \"pa_scrape_validated\""
-input pa_scrape_validated_sum_order_by {
+"order by sum() on columns of table \"pa_scrape_validated_depreciated\""
+input pa_scrape_validated_depreciated_sum_order_by {
   id: order_by
 }
 
-"order by var_pop() on columns of table \"pa_scrape_validated\""
-input pa_scrape_validated_var_pop_order_by {
+"order by var_pop() on columns of table \"pa_scrape_validated_depreciated\""
+input pa_scrape_validated_depreciated_var_pop_order_by {
   id: order_by
 }
 
-"order by var_samp() on columns of table \"pa_scrape_validated\""
-input pa_scrape_validated_var_samp_order_by {
+"order by var_samp() on columns of table \"pa_scrape_validated_depreciated\""
+input pa_scrape_validated_depreciated_var_samp_order_by {
   id: order_by
 }
 
-"order by variance() on columns of table \"pa_scrape_validated\""
-input pa_scrape_validated_variance_order_by {
+"order by variance() on columns of table \"pa_scrape_validated_depreciated\""
+input pa_scrape_validated_depreciated_variance_order_by {
+  id: order_by
+}
+
+"order by var_pop() on columns of table \"pa_scrape\""
+input pa_scrape_var_pop_order_by {
+  id: order_by
+}
+
+"order by var_samp() on columns of table \"pa_scrape\""
+input pa_scrape_var_samp_order_by {
+  id: order_by
+}
+
+"order by variance() on columns of table \"pa_scrape\""
+input pa_scrape_variance_order_by {
   id: order_by
 }
 
@@ -2183,9 +2060,10 @@ input pa_status_bool_exp {
   id: String_comparison_exp
   location: geography_comparison_exp
   open: Boolean_comparison_exp
-  pa_scrape_decideds: pa_scrape_decided_bool_exp
-  pa_scrape_validateds: pa_scrape_validated_bool_exp
+  pa_scrape_decideds: pa_scrape_bool_exp
+  pa_scrape_validateds: pa_scrape_validated_depreciated_bool_exp
   proposal: String_comparison_exp
+  status: String_comparison_exp
   updated_at: timestamptz_comparison_exp
   url: String_comparison_exp
 }
@@ -2200,9 +2078,10 @@ input pa_status_insert_input {
   id: String
   location: geography
   open: Boolean
-  pa_scrape_decideds: pa_scrape_decided_arr_rel_insert_input
-  pa_scrape_validateds: pa_scrape_validated_arr_rel_insert_input
+  pa_scrape_decideds: pa_scrape_arr_rel_insert_input
+  pa_scrape_validateds: pa_scrape_validated_depreciated_arr_rel_insert_input
   proposal: String
+  status: String
   updated_at: timestamptz
   url: String
 }
@@ -2216,6 +2095,7 @@ input pa_status_max_order_by {
   decision_issued_date: order_by
   id: order_by
   proposal: order_by
+  status: order_by
   updated_at: order_by
   url: order_by
 }
@@ -2229,6 +2109,7 @@ input pa_status_min_order_by {
   decision_issued_date: order_by
   id: order_by
   proposal: order_by
+  status: order_by
   updated_at: order_by
   url: order_by
 }
@@ -2256,9 +2137,10 @@ input pa_status_order_by {
   id: order_by
   location: order_by
   open: order_by
-  pa_scrape_decideds_aggregate: pa_scrape_decided_aggregate_order_by
-  pa_scrape_validateds_aggregate: pa_scrape_validated_aggregate_order_by
+  pa_scrape_decideds_aggregate: pa_scrape_aggregate_order_by
+  pa_scrape_validateds_aggregate: pa_scrape_validated_depreciated_aggregate_order_by
   proposal: order_by
+  status: order_by
   updated_at: order_by
   url: order_by
 }
@@ -2274,6 +2156,7 @@ input pa_status_set_input {
   location: geography
   open: Boolean
   proposal: String
+  status: String
   updated_at: timestamptz
   url: String
 }
