@@ -1,4 +1,4 @@
-const { apolloFetch } = require('./apolloFetch');
+const { hasuraRequest } = require('./hasuraRequest');
 const { getGeocodedLocation } = require('../idox/geocode');
 const queries = require('../queries');
 
@@ -8,7 +8,7 @@ const queries = require('../queries');
  * @returns {Promise<void>}
  */
 async function storeValidated (record) {
-  const response = await apolloFetch({
+  const response = await hasuraRequest({
     query: queries.INSERT_PA_SCRAPE_VALIDATED,
     variables: {
       objects: [
@@ -27,7 +27,7 @@ async function storeValidated (record) {
  * @returns {Promise<void>}
  */
 async function storeDecided (record) {
-  const response = await apolloFetch({
+  const response = await hasuraRequest({
     query: queries.INSERT_PA_SCRAPE_DECIDED,
     variables: {
       objects: [
@@ -55,7 +55,7 @@ async function storeDecided (record) {
 async function storePaStatus (record, open) {
 
   console.log("REF: ", record.summaryPage.reference);
-  const existing  = await apolloFetch({
+  const existing  = await hasuraRequest({
     query: queries.GET_PA_STATUS_EXISTS,
     variables: {
       id: record.summaryPage.reference
@@ -82,7 +82,7 @@ async function storePaStatus (record, open) {
 
   if(existing.data.pa_status_by_pk) {
     // We have an existing pa. Let's update status
-    const response = await apolloFetch({
+    const response = await hasuraRequest({
       query: queries.UPDATE_PA_STATUS,
       variables: {
         id: record.summaryPage.reference,
@@ -96,7 +96,7 @@ async function storePaStatus (record, open) {
     const location = await getGeocodedLocation(record.summaryPage.address);
     pa_status.location = location;
 
-    const response = await apolloFetch({
+    const response = await hasuraRequest({
       query: queries.INSERT_PA_STATUS,
       variables: {
         objects: [

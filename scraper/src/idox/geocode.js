@@ -1,3 +1,4 @@
+const { hasuraRequest } = require('../lib/hasuraRequest');
 const config = require("../../config");
 const fetch = require("node-fetch");
 const querystring = require("querystring");
@@ -11,7 +12,7 @@ const queries = require('../queries');
  * @returns {Promise<{}|boolean>}
  */
 async function getGeocodedLocation(address) {
-  const existingQuery = await apolloFetch({
+  const existingQuery = await hasuraRequest({
     query: queries.GET_EXISTING_LOCATION,
     variables: {
       address: address
