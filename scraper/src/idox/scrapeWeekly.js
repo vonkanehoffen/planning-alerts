@@ -40,12 +40,12 @@ async function scrapeFullList(root, listType) {
 
   // Get first page of the chosen list type
 
-  const firstPage = await request({uri: firstPageUri,
+  let listPage = await request({uri: firstPageUri,
     method: "POST",
     body: params,
   });
   let detailURLs = [];
-  detailURLs = getDetailURLs(firstPage);
+  detailURLs = getDetailURLs(listPage);
   if(detailURLs.length < 1) {
     console.log('Single app only');
     detailURLs = [firstUri]
@@ -53,32 +53,42 @@ async function scrapeFullList(root, listType) {
 
   console.log(detailURLs);
 
-  // Scrape every PA on the page
-  for (const detailURL of detailURLs) {
-    let scrape = {};
+  // Scrape PA detail, looping over pagination
+  while(detailURLs.length > 0) {
+    for (const detailURL of detailURLs) {
+      let scrape = {};
 
-    // Scrape summary
-    const summaryPage =  await request({ uri: `${rootURL.origin}${detailURL}` });
-    scrape.summaryPage = scrapeTableData(summaryPage);
+      // Scrape summary
+      const summaryPage =  await request({ uri: `${rootURL.origin}${detailURL}` });
+      scrape.summaryPage = scrapeTableData(summaryPage);
 
-    // Scrape further info
-    const furtherInfoUri = summaryPage('#subtab_details').attr('href');
-    const furtherInfoPage =  await request({ uri: `${rootURL.origin}${furtherInfoUri}` });
-    scrape.furtherInfoPage = scrapeTableData(furtherInfoPage);
+      // Scrape further info
+      const furtherInfoUri = summaryPage('#subtab_details').attr('href');
+      const furtherInfoPage =  await request({ uri: `${rootURL.origin}${furtherInfoUri}` });
+      scrape.furtherInfoPage = scrapeTableData(furtherInfoPage);
 
-    // Scrape dates
-    const datesUri = summaryPage('#subtab_dates').attr('href');
-    const datesPage =  await request({ uri: `${rootURL.origin}${datesUri}` });
-    scrape.datesPage = scrapeTableData(datesPage);
+      // Scrape dates
+      const datesUri = summaryPage('#subtab_dates').attr('href');
+      const datesPage =  await request({ uri: `${rootURL.origin}${datesUri}` });
+      scrape.datesPage = scrapeTableData(datesPage);
 
-    // Scrape contacts
-    // TODO: Needs different scrape and is on main tab (but always blank?) for westminster
-    //  Also do we need it? Agent name is on Further info tab, so this is just email addressses.
-    // const contactsUri = summaryPage('#subtab_contacts').attr('href');
-    // const contactsPage =  await request({ firstPageUri: `${rootURL.origin}${contactsUri}` });
-    // scrape.contactsPage = scrapeTableData(contactsPage); /
+      // Scrape contacts
+      // TODO: Needs different scrape and is on main tab (but always blank?) for westminster
+      //  Also do we need it? Agent name is on Further info tab, so this is just email addressses.
 
-    console.log("scrape:", scrape);
+      console.log("scrape:", scrape);
+    }
+
+    // Get next page of the list
+    const nextLink = listPage("#searchResultsContainer a.next").first().attr('href');
+    if(nextLink) {
+      console.log("Next page: ", nextLink);
+      listPage = await request({ uri: `${rootURL.origin}${nextLink}` });
+      detailURLs = getDetailURLs(listPage);
+    } else {
+      console.log('All pages scraped.');
+      detailURLs = [];
+    }
   }
   // return;
   // await getAllApplicationDetails(rootURL, detailURLs);
