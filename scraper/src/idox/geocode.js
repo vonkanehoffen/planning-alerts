@@ -28,16 +28,14 @@ async function getGeocodedLocation(address) {
   const geocode = await geocodeAddress(address);
   if (geocode.results.length > 0)
     return {
-      point: {
-        type: "Point",
-        coordinates: [
-          geocode.results[0].geometry.location.lat,
-          geocode.results[0].geometry.location.lng
-        ]
-      }
+      type: "Point",
+      coordinates: [
+        geocode.results[0].geometry.location.lat,
+        geocode.results[0].geometry.location.lng
+      ]
     };
 
-  return false;
+  return undefined;
 }
 
 /**

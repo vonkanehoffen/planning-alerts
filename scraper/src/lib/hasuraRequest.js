@@ -11,7 +11,15 @@ const httpLink = createHttpLink({
 });
 
 const middlewareLink = new ApolloLink((operation, forward) => {
-  if (config.debug) console.log("HASURA REQUEST:", operation);
+  if (config.debug)
+    console.log(`
+HASURA REQUEST--------
+query:
+${operation.query.loc.source.body}
+
+variables:
+${JSON.stringify(operation.variables, null, 2)}
+`);
   return forward(operation);
 });
 
@@ -26,7 +34,11 @@ async function hasuraRequest(operation) {
   const response = await makePromise(execute(link, operation));
   if (response.errors)
     throw `hasuraRequest error: ${JSON.stringify(response.errors, null, 2)}`;
-  if (config.debug) console.log("HASURA RESPONSE:", response);
+  if (config.debug)
+    console.log(`
+HASURA RESPONSE--------
+${JSON.stringify(response, null, 2)}
+`);
   return response;
 }
 

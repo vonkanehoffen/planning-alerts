@@ -3,10 +3,10 @@ const { getGeocodedLocation } = require("../idox/geocode");
 const queries = require("../queries");
 
 /**
- * Store a validated planning app in Hasura
+ * Store a planning app in Hasura
  *
- * First store the raw scrape data in pa_scrape
- * Then add or update pa_status with the most important bits + geocoded location
+ * Add or update pa_status with the most important bits + geocoded location
+ * Then store the raw scrape data in pa_scrape, which has a foreign key relationship with pa_status
  *
  * Note theres a function triggered on the table in hasura for created_at and updated_at timestamps
  * See https://x-team.com/blog/automatic-timestamps-with-postgresql/
@@ -16,17 +16,8 @@ const queries = require("../queries");
  * @returns {Promise<void>}
  */
 async function storeScrape(scrape) {
-  // Store scraoe data
-
-  await hasuraRequest({
-    query: queries.INSERT_PA_SCRAPE,
-    variables: {
-      objects: [scrape]
-    }
-  });
-
   // Build pa_status_insert_input
-  const scrapeUrl = new URL(root);
+  const scrapeUrl = new URL(scrape.url);
   const council = scrapeUrl.hostname;
 
   let pa_status = {
@@ -35,44 +26,56 @@ async function storeScrape(scrape) {
     council,
     decision: scrape.summary.decision,
     decision_issued_date: scrape.summary.decision_issued_date,
-    reference: scrape.summary.reference,
+    id: scrape.summary.reference, // ID because that's what Apollo Client likes...
     // location: geography
     open: scrape.list_type === "DC_Validated",
     proposal: scrape.summary.proposal,
     status: scrape.summary.status,
-    url: scrape.summary.url
+    url: scrape.url
   };
 
   // Find any existing status for this PA
   const existing = await hasuraRequest({
     query: queries.GET_PA_STATUS_EXISTS,
     variables: {
-      id: record.summary.reference
+      id: scrape.summary.reference
     }
   });
 
   if (existing.data.pa_status_by_pk) {
     // We have an existing pa. Let's update status
-    const response = await hasuraRequest({
+    await hasuraRequest({
       query: queries.UPDATE_PA_STATUS,
       variables: {
         id: scrape.summary.reference,
         set: pa_status
       }
     });
-    return response;
   } else {
     // This is a new pa. Create status
     pa_status.location = await getGeocodedLocation(scrape.summary.address);
 
-    const response = await hasuraRequest({
+    await hasuraRequest({
       query: queries.INSERT_PA_STATUS,
       variables: {
         objects: [pa_status]
       }
     });
-    return response;
   }
+
+  // Store raw scraoe data
+  await hasuraRequest({
+    query: queries.INSERT_PA_SCRAPE,
+    variables: {
+      objects: [scrape]
+    }
+  });
 }
 
+async function storeScrapeError(error) {
+  // TODO: store in scrape_log
+  console.log("Scrape error:", error);
+}
+
+exports.storeScrapeError = storeScrapeError;
 exports.storeScrape = storeScrape;

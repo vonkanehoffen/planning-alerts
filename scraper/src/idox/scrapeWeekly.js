@@ -1,7 +1,7 @@
 const { request } = require("../lib/request");
 const { snakeCase } = require("change-case");
 const cheerio = require("cheerio");
-const { storeScrape } = require("../lib/hasura");
+const { storeScrape, storeScrapeError } = require("../lib/hasura");
 
 /**
  * Scrape weekly planning lists from a council's idox system
@@ -75,6 +75,15 @@ async function scrapeFullList(root, listType) {
       });
       scrape.summary = scrapeTableData(summaryPage);
       scrape.reference = scrape.summary.reference;
+
+      // If there's no reference, something's gone wrong...
+      if (!scrape.reference) {
+        await storeScrapeError({
+          scrape,
+          html: summaryPage.html()
+        });
+        continue;
+      }
 
       // Scrape further info
       const furtherInfoUri = summaryPage("#subtab_details").attr("href");
