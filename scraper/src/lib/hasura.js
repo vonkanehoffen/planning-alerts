@@ -1,5 +1,6 @@
 const { hasuraRequest } = require("./hasuraRequest");
 const { getGeocodedLocation } = require("../idox/geocode");
+const { stringToISODate } = require("./date");
 const queries = require("../queries");
 
 /**
@@ -22,10 +23,12 @@ async function storeScrape(scrape) {
 
   let pa_status = {
     address: scrape.summary.address,
-    application_validated: scrape.summary.application_validated,
+    application_validated: stringToISODate(
+      scrape.summary.application_validated
+    ),
     council,
     decision: scrape.summary.decision,
-    decision_issued_date: scrape.summary.decision_issued_date,
+    decision_issued_date: stringToISODate(scrape.summary.decision_issued_date),
     id: scrape.summary.reference, // ID because that's what Apollo Client likes...
     // location: geography
     open: scrape.list_type === "DC_Validated",

@@ -10,7 +10,7 @@ const { storeScrape, storeScrapeError } = require("../lib/hasura");
 async function scrapeWeekly(rootURL) {
   console.log(`Starting idox scrape: ${rootURL}`);
   await scrapeFullList(rootURL, "DC_Validated");
-  // await scrapeFullList(rootURL, "DC_Decided");
+  await scrapeFullList(rootURL, "DC_Decided");
 }
 
 /**

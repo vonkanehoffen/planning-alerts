@@ -4,9 +4,11 @@ function stringToISODate(s) {
       const d = new Date(s);
       return d.toISOString();
     } catch (e) {
-      return false;
+      return undefined;
     }
   } else {
-    return false;
+    return undefined;
   }
 }
+
+exports.stringToISODate = stringToISODate;
