@@ -1,7 +1,7 @@
 const { request } = require("../lib/request");
 const { snakeCase } = require("change-case");
 const cheerio = require("cheerio");
-const { storeValidated, storeDecided } = require("../lib/hasura");
+const { storeScrape } = require("../lib/hasura");
 
 /**
  * Scrape weekly planning lists from a council's idox system
@@ -62,33 +62,38 @@ async function scrapeFullList(root, listType) {
   // Scrape PA detail, looping over pagination
   while (detailURLs.length > 0) {
     for (const detailURL of detailURLs) {
-      let scrape = {};
+      const uri = `${rootURL.origin}${detailURL}`;
+      let scrape = {
+        list_type: listType,
+        scraper: "idox",
+        url: uri
+      };
 
       // Scrape summary
       const summaryPage = await request({
-        uri: `${rootURL.origin}${detailURL}`
+        uri
       });
-      scrape.summaryPage = scrapeTableData(summaryPage);
+      scrape.summary = scrapeTableData(summaryPage);
+      scrape.reference = scrape.summary.reference;
 
       // Scrape further info
       const furtherInfoUri = summaryPage("#subtab_details").attr("href");
       const furtherInfoPage = await request({
         uri: `${rootURL.origin}${furtherInfoUri}`
       });
-      scrape.furtherInfoPage = scrapeTableData(furtherInfoPage);
+      scrape.further_information = scrapeTableData(furtherInfoPage);
 
       // Scrape dates
       const datesUri = summaryPage("#subtab_dates").attr("href");
       const datesPage = await request({ uri: `${rootURL.origin}${datesUri}` });
-      scrape.datesPage = scrapeTableData(datesPage);
+      scrape.important_dates = scrapeTableData(datesPage);
 
       // Scrape contacts
       // TODO: Needs different scrape and is on main tab (but always blank?) for westminster
       //  Also do we need it? Agent name is on Further info tab, so this is just email addresses.
 
       console.log("scrape:", scrape);
-      if (listType === "DC_Validated") await storeValidated(scrape);
-      if (listType === "DC_Decided") await storeDecided(scrape);
+      await storeScrape(scrape);
     }
 
     // Get next page of the list
