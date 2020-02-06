@@ -82,7 +82,7 @@ async function storeScrape(scrape) {
  * @param meta {object}
  * @returns {Promise<void>}
  */
-async function storeScrapeError(scraper, event, meta) {
+async function storeScrapeLog(scraper, event, meta) {
   await hasuraRequest({
     query: queries.INSERT_SCRAPE_LOG,
     variables: {
@@ -97,5 +97,5 @@ async function storeScrapeError(scraper, event, meta) {
   });
 }
 
-exports.storeScrapeError = storeScrapeError;
+exports.storeScrapeLog = storeScrapeLog;
 exports.storeScrape = storeScrape;

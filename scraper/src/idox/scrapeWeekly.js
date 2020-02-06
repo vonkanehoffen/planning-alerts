@@ -1,7 +1,7 @@
 const { request } = require("../lib/request");
 const { snakeCase } = require("change-case");
 const cheerio = require("cheerio");
-const { storeScrape, storeScrapeError } = require("../lib/hasura");
+const { storeScrape, storeScrapeLog } = require("../lib/hasura");
 
 /**
  * Scrape weekly planning lists from a council's idox system
@@ -9,8 +9,10 @@ const { storeScrape, storeScrapeError } = require("../lib/hasura");
  */
 async function scrapeWeekly(rootURL) {
   console.log(`Starting idox scrape: ${rootURL}`);
+  await storeScrapeLog("idox", "START_SCRAPE_WEEKLY", { rootURL });
   await scrapeFullList(rootURL, "DC_Validated");
   await scrapeFullList(rootURL, "DC_Decided");
+  await storeScrapeLog("idox", "END_SCRAPE_WEEKLY", { rootURL });
 }
 
 /**
@@ -78,7 +80,7 @@ async function scrapeFullList(root, listType) {
 
       // If there's no reference, something's gone wrong...
       if (!scrape.reference) {
-        await storeScrapeError("idox", "NO_SCRAPED_REFERENCE", {
+        await storeScrapeLog("idox", "NO_SCRAPED_REFERENCE", {
           scrape,
           html: summaryPage.html()
         });
