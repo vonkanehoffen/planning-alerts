@@ -231,6 +231,7 @@ type pa_scrape_variance_fields {
 type pa_status {
   address: String!
   application_validated: timestamptz
+  council: String!
   created_at: timestamptz!
   decision: String
   decision_issued_date: timestamptz
@@ -286,6 +287,7 @@ type pa_status_aggregate_fields {
 type pa_status_max_fields {
   address: String
   application_validated: timestamptz
+  council: String
   created_at: timestamptz
   decision: String
   decision_issued_date: timestamptz
@@ -300,6 +302,7 @@ type pa_status_max_fields {
 type pa_status_min_fields {
   address: String
   application_validated: timestamptz
+  council: String
   created_at: timestamptz
   decision: String
   decision_issued_date: timestamptz
@@ -773,6 +776,8 @@ enum pa_status_select_column {
   #column name
   application_validated
   #column name
+  council
+  #column name
   created_at
   #column name
   decision
@@ -800,6 +805,8 @@ enum pa_status_update_column {
   address
   #column name
   application_validated
+  #column name
+  council
   #column name
   created_at
   #column name
@@ -1233,6 +1240,7 @@ input pa_status_bool_exp {
   _or: [pa_status_bool_exp]
   address: String_comparison_exp
   application_validated: timestamptz_comparison_exp
+  council: String_comparison_exp
   created_at: timestamptz_comparison_exp
   decision: String_comparison_exp
   decision_issued_date: timestamptz_comparison_exp
@@ -1250,6 +1258,7 @@ input pa_status_bool_exp {
 input pa_status_insert_input {
   address: String
   application_validated: timestamptz
+  council: String
   created_at: timestamptz
   decision: String
   decision_issued_date: timestamptz
@@ -1267,6 +1276,7 @@ input pa_status_insert_input {
 input pa_status_max_order_by {
   address: order_by
   application_validated: order_by
+  council: order_by
   created_at: order_by
   decision: order_by
   decision_issued_date: order_by
@@ -1281,6 +1291,7 @@ input pa_status_max_order_by {
 input pa_status_min_order_by {
   address: order_by
   application_validated: order_by
+  council: order_by
   created_at: order_by
   decision: order_by
   decision_issued_date: order_by
@@ -1308,6 +1319,7 @@ input pa_status_on_conflict {
 input pa_status_order_by {
   address: order_by
   application_validated: order_by
+  council: order_by
   created_at: order_by
   decision: order_by
   decision_issued_date: order_by
@@ -1325,6 +1337,7 @@ input pa_status_order_by {
 input pa_status_set_input {
   address: String
   application_validated: timestamptz
+  council: String
   created_at: timestamptz
   decision: String
   decision_issued_date: timestamptz
