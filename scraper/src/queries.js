@@ -70,3 +70,14 @@ exports.GET_PA_STATUS_EXISTS = gql`
     }
   }
 `;
+
+exports.INSERT_SCRAPE_LOG = gql`
+  mutation insert_scrape_log($objects: [scrape_log_insert_input!]!) {
+    insert_scrape_log(objects: $objects) {
+      returning {
+        id
+        ts
+      }
+    }
+  }
+`;

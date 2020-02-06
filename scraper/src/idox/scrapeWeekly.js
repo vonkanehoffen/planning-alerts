@@ -78,7 +78,7 @@ async function scrapeFullList(root, listType) {
 
       // If there's no reference, something's gone wrong...
       if (!scrape.reference) {
-        await storeScrapeError({
+        await storeScrapeError("idox", "NO_SCRAPED_REFERENCE", {
           scrape,
           html: summaryPage.html()
         });

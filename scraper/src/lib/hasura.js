@@ -72,9 +72,26 @@ async function storeScrape(scrape) {
   });
 }
 
-async function storeScrapeError(error) {
-  // TODO: store in scrape_log
-  console.log("Scrape error:", error);
+/**
+ * Store a log entry
+ * @param scraper {string}
+ * @param event {string}
+ * @param meta {object}
+ * @returns {Promise<void>}
+ */
+async function storeScrapeError(scraper, event, meta) {
+  await hasuraRequest({
+    query: queries.INSERT_SCRAPE_LOG,
+    variables: {
+      objects: [
+        {
+          scraper,
+          event,
+          meta
+        }
+      ]
+    }
+  });
 }
 
 exports.storeScrapeError = storeScrapeError;
