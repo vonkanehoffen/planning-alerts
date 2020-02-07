@@ -2,7 +2,7 @@ const Sentry = require("@sentry/node");
 const { scrapeWeekly } = require("./src/idox/scrapeWeekly.js");
 const { pushNotify } = require("./src/lib/pushNotify");
 const config = require("./config");
-const targets = require("targets");
+const targets = require("./targets");
 
 Sentry.init({ dsn: config.sentryDSN, debug: true });
 
