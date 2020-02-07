@@ -71,6 +71,11 @@ exports.GET_PA_STATUS_EXISTS = gql`
   }
 `;
 
+/**
+ * Insert a log entry
+ * Things like scrape starts and ends, errors....
+ * TODO: Table fkey/enum entry event type?
+ */
 exports.INSERT_SCRAPE_LOG = gql`
   mutation insert_scrape_log($objects: [scrape_log_insert_input!]!) {
     insert_scrape_log(objects: $objects) {
@@ -78,6 +83,40 @@ exports.INSERT_SCRAPE_LOG = gql`
         id
         ts
       }
+    }
+  }
+`;
+
+/**
+ * Get planning apps within a specified distance of a point, made after a certain time
+ * This is for the push notifications
+ *
+ * eg.
+ * $point: {
+          type: "Point",
+          coordinates: [ 53.4443108,-2.2754739 ]
+        }
+ * $distance: 1000
+ * $date: "2020-02-06"
+ */
+exports.GET_NEW_PLANNING_APPS_NEAR = gql`
+  query get_new_planning_apps_near(
+    $point: geography!
+    $distance: Float!
+    $date: timestamptz
+  ) {
+    pa_status(
+      where: {
+        location: { _st_d_within: { distance: $distance, from: $point } }
+        created_at: { _gte: $date }
+      }
+    ) {
+      id
+      address
+      proposal
+      created_at
+      updated_at
+      url
     }
   }
 `;

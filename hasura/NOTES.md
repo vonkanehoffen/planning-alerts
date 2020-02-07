@@ -72,6 +72,58 @@ query sites_near_point($point: geography!){
 }
 ```
 
+## Compound queries
+
+...with jsonb:
+
+```graphql
+query cho_ward {
+  pa_status(where: { 
+    pa_scrapes: { 
+      further_information: { 
+        _contains: { ward: "Chorlton Ward"}
+      }
+    }
+  }) {
+    address
+    id
+    pa_scrapes {
+      further_information
+    }
+  }
+}
+```
+
+.. geo + text filter
+
+```graphql
+query tree_works_near_point {
+  pa_status(where: {
+    location: {
+      _st_d_within: {
+        distance: 1000, 
+        from: {
+          type: "Point",
+          coordinates: [ 53.4443108,-2.2754739 ]
+        }
+      }
+    },
+    proposal: {
+      _ilike: "%tree%"
+    }
+  }) {
+    id
+    proposal
+    address
+    updated_at
+    url
+    pa_scrapes {
+      further_information
+    }
+  }
+}
+```
+
 ## Heroku deploy:
 
 Normal template here:

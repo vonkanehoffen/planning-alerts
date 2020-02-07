@@ -14,7 +14,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rm -rf dist && babel src -d dist",
-    "scrape": "babel-node src/index.js",
+    "scrape": "node index.js",
     "deploy-production": "pm2 deploy ecosystem.config.js production --force",
     "reload-production": "pm2 deploy ecosystem.config.js production exec 'pm2 reload MyPlanningAlerts-Scraper'"
   },

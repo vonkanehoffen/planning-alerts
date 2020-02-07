@@ -1,6 +1,6 @@
 const { hasuraRequest } = require("./hasuraRequest");
 const { getGeocodedLocation } = require("../idox/geocode");
-const { stringToISODate } = require("./date");
+const { stringToISODate, getHostname } = require("./util");
 const queries = require("../queries");
 
 /**
@@ -18,15 +18,12 @@ const queries = require("../queries");
  */
 async function storeScrape(scrape) {
   // Build pa_status_insert_input
-  const scrapeUrl = new URL(scrape.url);
-  const council = scrapeUrl.hostname;
-
   let pa_status = {
     address: scrape.summary.address,
     application_validated: stringToISODate(
       scrape.summary.application_validated
     ),
-    council,
+    council: getHostname(scrape.url),
     decision: scrape.summary.decision,
     decision_issued_date: stringToISODate(scrape.summary.decision_issued_date),
     id: scrape.summary.reference, // ID because that's what Apollo Client likes...
@@ -77,6 +74,7 @@ async function storeScrape(scrape) {
 
 /**
  * Store a log entry
+ * TODO: Also post to Slack with config.slackWebHookURL
  * @param scraper {string}
  * @param event {string}
  * @param meta {object}
