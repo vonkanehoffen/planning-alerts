@@ -38,12 +38,12 @@ export default function AppMarker({ app }) {
             </Typography>
             <Typography variant="caption">{app.address}</Typography>
             <Box mt={1}>
-              <Chip icon={<AccountBalance />} label={app.ref} />
+              <Chip icon={<AccountBalance />} label={app.id} />
             </Box>
             <Box mt={1}>
               <Chip
                 icon={<Event />}
-                label={`Validated ${app.validated_date}`}
+                label={`Validated ${app.application_validated}`}
               />
             </Box>
           </CardContent>

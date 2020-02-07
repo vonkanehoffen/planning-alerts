@@ -54,19 +54,19 @@ export const UPDATE_USER_LOCATION = gql`
 }
  * @type {DocumentNode}
  */
-export const GET_PLANNING_APPS_NEAR_POINT = gql`
-  query get_planning_apps_near_point($point: geography!, $minDate: date!) {
-    planning_app(
+export const GET_OPEN_PA_NEAR_POINT = gql`
+  query get_open_pa_near_point($point: geography!, $distance: Float!) {
+    pa_status(
       where: {
-        location: { _st_d_within: { distance: 2000, from: $point } }
-        validated_date: { _gt: $minDate }
+        location: { _st_d_within: { distance: $distance, from: $point } }
+        open: { _eq: true }
       }
     ) {
-      ref
+      id
       location
       proposal
       address
-      validated_date
+      application_validated
     }
   }
 `;

@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/react-hooks";
 import GoogleMapReact from "google-map-react";
 import config from "../../config.json";
 import Marker from "./Marker";
-import { GET_PLANNING_APPS_NEAR_POINT } from "../../gql/queries";
+import { GET_OPEN_PA_NEAR_POINT } from "../../gql/queries";
 import View from "../../components/View";
 import Loading from "../../components/Loading";
 import Error from "../../components/Error";
@@ -16,10 +16,10 @@ export default function PlanningMap({ userLocation }) {
   const location = draggedPoint || userLocation;
   const minDate = new Date("2019-06-01"); // TODO: Dynamic date
 
-  const { loading, error, data } = useQuery(GET_PLANNING_APPS_NEAR_POINT, {
+  const { loading, error, data } = useQuery(GET_OPEN_PA_NEAR_POINT, {
     variables: {
       point: location,
-      minDate
+      distance: 2000
     }
     // skip: !userLocation
   });
@@ -66,7 +66,7 @@ export default function PlanningMap({ userLocation }) {
           }
         }}
       >
-        {data.planning_app.map(app => (
+        {data.pa_status.map(app => (
           <Marker
             lat={app.location.coordinates[0]}
             lng={app.location.coordinates[1]}
