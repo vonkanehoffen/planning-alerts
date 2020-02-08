@@ -25,6 +25,7 @@ import {
   mapping,
   light as theme,
 } from '@eva-design/eva';
+import PaMap from './scenes/paMap/PaMap'
 
 /**
  * Use any valid `name` property from eva icons (e.g `github`, or `heart-outline`)
@@ -39,8 +40,9 @@ const App = () => (
     <IconRegistry icons={EvaIconsPack}/>
     <ApplicationProvider mapping={mapping} theme={theme}>
       <Layout style={styles.container}>
+        <PaMap/>
         <Text style={styles.text} category='h1'>
-          Welcome to UI Kitten 😻
+          Welcome to UI Kitten map 😻
         </Text>
         <Text style={styles.text} category='s1'>
           Start with editing App.js to configure your App

@@ -36,3 +36,15 @@ allprojects {
         maven { url 'https://jitpack.io' }
     }
 }
+
+ext {
+    // https://github.com/react-native-community/react-native-maps/blob/master/docs/installation.md
+    // https://stackoverflow.com/questions/58806151/get-supportlibversion-playservicesversion-and-androidmapsutilsversion-va
+    compileSdkVersion   = 28
+    targetSdkVersion    = 28
+    buildToolsVersion   = "28.0.3"
+    minSdkVersion       = 16
+    supportLibVersion   = "28.0.0"
+    playServicesVersion = "17.0.0" // or set latest version
+    androidMapsUtilsVersion = "0.6.2"
+}
