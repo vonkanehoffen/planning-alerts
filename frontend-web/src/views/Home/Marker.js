@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     // zIndex: 10
   }
 });
-export default function AppMarker({ app }) {
+export default function AppMarker({ app, variant }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState();
 
@@ -46,6 +46,7 @@ export default function AppMarker({ app }) {
                 label={`Validated ${app.application_validated}`}
               />
             </Box>
+            {app.decision && <Chip label={`Decision: ${app.decision}`}/>}
           </CardContent>
         </Card>
       </div>
@@ -53,7 +54,8 @@ export default function AppMarker({ app }) {
 
   return (
     <Fab size="small" color="secondary" onClick={() => setOpen(true)}>
-      <Home />
+      {variant === 'open' && <Home />}
+      {variant === 'closed' && <Close />}
     </Fab>
   );
 }

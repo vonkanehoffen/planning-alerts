@@ -22,6 +22,7 @@
     "apollo-link-http": "^1.5.16",
     "auth0-js": "^9.12.1",
     "bootstrap": "^3.3.7",
+    "date-fns": "^2.9.0",
     "google-map-react": "^1.1.5",
     "graphql": "^14.5.8",
     "graphql-tag": "^2.10.1",

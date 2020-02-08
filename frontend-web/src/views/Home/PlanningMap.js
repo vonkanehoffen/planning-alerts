@@ -3,20 +3,24 @@ import { useQuery } from "@apollo/react-hooks";
 import GoogleMapReact from "google-map-react";
 import config from "../../config.json";
 import Marker from "./Marker";
-import { GET_OPEN_PA_NEAR_POINT } from "../../gql/queries";
+import * as queries from "../../gql/queries";
 import View from "../../components/View";
 import Loading from "../../components/Loading";
 import Error from "../../components/Error";
-import { round } from "../../utils/math";
-import RefreshButton from '../../components/RefreshButton'
+import RefreshButton from "../../components/RefreshButton";
+import { subDays,formatISO } from 'date-fns';
 
 // TODO: drive queries on map movement (mouse up)
 export default function PlanningMap({ userLocation }) {
-  const [ draggedCenter, setDraggedCenter] = React.useState(false);
-  const [ location, setLocation ] = React.useState(userLocation)
-  const minDate = new Date("2019-06-01"); // TODO: Dynamic date
+  const [draggedCenter, setDraggedCenter] = React.useState(false);
+  const [location, setLocation] = React.useState(userLocation);
+  const minDate = formatISO(subDays(new Date(), 3), { representation: 'date' });
 
-  const { loading, error, data } = useQuery(GET_OPEN_PA_NEAR_POINT, {
+  const {
+    loading: openPaLoading,
+    error: openPaError,
+    data: openPaData
+  } = useQuery(queries.GET_OPEN_PA_NEAR_POINT, {
     variables: {
       point: location,
       distance: 2000
@@ -24,22 +28,34 @@ export default function PlanningMap({ userLocation }) {
     // skip: !userLocation
   });
 
+  const {
+    loading: closedPaLoading,
+    error: closedPaError,
+    data: closedPaData
+  } = useQuery(queries.GET_RECENT_CLOSED_PA_NEAR_POINT, {
+    variables: {
+      point: location,
+      distance: 2000,
+      minDate: minDate
+    }
+  });
+
   const handleRefresh = () => {
-    console.log('referesh');
+    console.log("referesh");
     setLocation({
       type: "Point",
       coordinates: [draggedCenter.lat, draggedCenter.lng]
     });
-  }
+  };
 
-  if (loading) {
+  if (openPaLoading || closedPaLoading) {
     return <Loading />;
   }
 
-  if (error) {
+  if (openPaError || closedPaError) {
     return (
       <View>
-        <Error message={error} />
+        <Error message={`${openPaError} ${closedPaError}`} />
       </View>
     );
   }
@@ -51,7 +67,8 @@ export default function PlanningMap({ userLocation }) {
   const zoom = 15;
 
   console.log({
-    data,
+    openPaData,
+    closedPaData,
     location,
     draggedCenter
   });
@@ -68,16 +85,26 @@ export default function PlanningMap({ userLocation }) {
         }}
         onChange={({ center }) => setDraggedCenter(center)}
       >
-        {data.pa_status.map(app => (
+        {closedPaData.pa_status.map(pa => (
           <Marker
-            lat={app.location.coordinates[0]}
-            lng={app.location.coordinates[1]}
-            app={app}
-            key={app.id}
+            lat={pa.location.coordinates[0]}
+            lng={pa.location.coordinates[1]}
+            app={pa}
+            key={pa.id}
+            variant="closed"
+          />
+        ))}
+        {openPaData.pa_status.map(pa => (
+          <Marker
+            lat={pa.location.coordinates[0]}
+            lng={pa.location.coordinates[1]}
+            app={pa}
+            key={pa.id}
+            variant="open"
           />
         ))}
       </GoogleMapReact>
-      <RefreshButton doRefresh={handleRefresh}/>
+      <RefreshButton doRefresh={handleRefresh} />
     </View>
   );
 }
