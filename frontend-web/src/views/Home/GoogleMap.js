@@ -3,6 +3,10 @@ import config from '../../config';
 
 /* global google */
 
+/**
+ * Loading google mas direct... perhaps we can dynamically add markers this way
+ * ... or perhaps fuck it as it'll be completely different for the mobile version which is the main aim.
+ */
 class GoogleMap extends React.Component {
 
   componentDidMount() {
