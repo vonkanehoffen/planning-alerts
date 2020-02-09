@@ -79,7 +79,7 @@ class App extends React.Component {
           <Layout style={styles.container}>
             <PaMap/>
             <Text style={styles.text} category='h1'>
-              Welcome to UI Kitten map 😻
+              Planning Alerts 😻
             </Text>
             <Text style={styles.text} category='s1'>
               Start with editing App.js to configure your App
