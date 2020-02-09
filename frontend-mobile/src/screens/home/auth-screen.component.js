@@ -2,8 +2,9 @@ import React from 'react';
 import {Alert, StyleSheet} from 'react-native';
 import Auth0 from 'react-native-auth0';
 import {Button, Icon, Layout, Text} from '@ui-kitten/components';
+import { AuthContext } from '../../App'
 
-const auth0 = new Auth0({
+export const auth0 = new Auth0({
   domain: 'kanec.eu.auth0.com',
   clientId: 'QcSRHtExt8Zqjb66TejCF3jisKy1fSnY',
 });
@@ -11,40 +12,24 @@ const auth0 = new Auth0({
 const HeartIcon = style => <Icon {...style} name="heart" />;
 
 export function AuthScreen({navigation}) {
-  const [accessToken, setAccessToken] = React.useState(null);
-
+  // const [accessToken, setAccessToken] = React.useState(null);
+  const [accessToken, setAccessToken] = React.useContext(AuthContext);
   const _onLogin = () => {
     auth0.webAuth
       .authorize({scope: 'openid profile email'})
-      .then(credentials =>
-        // Successfully authenticated
-        // Store the accessToken
-        setAccessToken(credentials.accessToken),
-      )
+      .then(credentials => {
+          // Successfully authenticated
+          // Store the accessToken
+          console.log('creds -', credentials);
+          setAccessToken(credentials.accessToken)
+      })
       .catch(error => console.log(error));
   };
 
-  const _onLogout = () => {
-    auth0.webAuth
-      .clearSession({})
-      .then(success => {
-        Alert.alert('Logged out!');
-        setAccessToken(null);
-      })
-      .catch(error => {
-        console.log('Log out cancelled');
-      });
-  };
-
-  let loggedIn = accessToken !== null;
-
+  const loggedIn = false; //TODO: logout should be on settings menu
   return (
     <Layout style={styles.container}>
-      <Text>
-        You are{loggedIn ? ' ' : ' not '}logged in . {accessToken}
-      </Text>
       <Button
-        style={styles.likeButton}
         icon={HeartIcon}
         onPress={loggedIn ? _onLogout : _onLogin}>
         {loggedIn ? 'Log Out' : 'Log In'}

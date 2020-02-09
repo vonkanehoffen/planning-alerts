@@ -21,20 +21,25 @@ import {
   light as theme,
 } from '@eva-design/eva';
 import { AppNavigator } from './navigation/app.navigator'
+import { AuthScreen } from './screens/home/auth-screen.component'
 
+export const AuthContext = React.createContext(null);
 
-class App extends React.Component {
-
-  render () {
-    return (
-      <>
-        <IconRegistry icons={EvaIconsPack}/>
-        <ApplicationProvider mapping={mapping} theme={theme}>
-          <AppNavigator/>
-        </ApplicationProvider>
-      </>
-    );
-  }
+export function App () {
+  // TODO: Is passing useState to context like this ok? Perf?
+  const authState = React.useState(null);
+  return (
+    <>
+      <IconRegistry icons={EvaIconsPack}/>
+      <ApplicationProvider mapping={mapping} theme={theme}>
+        <AuthContext.Provider value={authState}>
+          {authState[0] ? (
+            <AppNavigator/>
+          ) : (
+            <AuthScreen/>
+          )}
+        </AuthContext.Provider>
+      </ApplicationProvider>
+    </>
+  );
 }
-
-export default App;
