@@ -9,6 +9,10 @@ https://github.com/react-native-community/react-native-maps/blob/master/docs/ins
 
 Auth0:
 https://auth0.com/docs/quickstart/native/react-native/00-login?download=true
+(config in Default App)
+
+React Navigation:
+https://reactnavigation.org/docs/en/navigating.html
 
 Android:
 com.planningalerts
