@@ -12,18 +12,21 @@ export const auth0 = new Auth0({
 const HeartIcon = style => <Icon {...style} name="heart" />;
 
 export function AuthScreen({navigation}) {
-  // const [idToken, setIdToken] = React.useState(null);
-  const [idToken, setIdToken] = React.useContext(AuthContext);
-  const _onLogin = () => {
-    auth0.webAuth
-      .authorize({scope: 'openid profile email'})
-      .then(credentials => {
-          // Successfully authenticated
-          // Store the idToken
-          console.log('creds -', credentials);
-          setIdToken(credentials.idToken)
-      })
-      .catch(error => console.log(error));
+  const [auth, setAuth] = React.useContext(AuthContext);
+  const _onLogin = async () => {
+    try {
+      const credentials = await auth0.webAuth.authorize({scope: 'openid profile email'});
+
+      // Successfully authenticated
+      // Store the idToken
+      console.log('creds -', credentials);
+      const userInfo = await auth0.auth.userInfo({ token: credentials.accessToken });
+      console.log("USER INFO:", userInfo);
+      setAuth({ credentials, userInfo });
+    } catch (error ) {
+      // TODO: Error toasts
+      console.log("Auth error: ", error);
+    }
   };
 
   const loggedIn = false; //TODO: logout should be on settings menu

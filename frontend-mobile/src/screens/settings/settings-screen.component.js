@@ -5,14 +5,14 @@ import { AuthContext } from '../../App'
 import { auth0 } from '../auth/auth-screen.component'
 
 export function SettingsScreen() {
-  const [idToken, setIdToken] = React.useContext(AuthContext);
+  const [auth, setAuth] = React.useContext(AuthContext);
 
   const _onLogout = () => {
     auth0.webAuth
       .clearSession({})
       .then(success => {
         Alert.alert('Logged out!');
-        setIdToken(null);
+        setAuth(null);
       })
       .catch(error => {
         console.log('Log out cancelled');
