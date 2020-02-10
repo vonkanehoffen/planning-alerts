@@ -21,7 +21,7 @@ export function AuthScreen({navigation}) {
           // Successfully authenticated
           // Store the accessToken
           console.log('creds -', credentials);
-          setAccessToken(credentials.accessToken)
+          setAccessToken(credentials.idToken)
       })
       .catch(error => console.log(error));
   };

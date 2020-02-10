@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert } from 'react-native'
 import {Button, Icon, Layout, Text} from '@ui-kitten/components';
 import { AuthContext } from '../../App'
-import { auth0 } from './auth-screen.component'
+import { auth0 } from '../auth/auth-screen.component'
 
 export function SettingsScreen() {
   const [accessToken, setAccessToken] = React.useContext(AuthContext);

@@ -1,7 +1,8 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import PaMap from '../paMap/PaMap';
+import PaMap from './PaMap';
 import {Layout, Button, Text} from '@ui-kitten/components';
+import { GQLTest } from './GQLTest'
 
 export function HomeScreen({navigation}) {
   return (
@@ -9,6 +10,7 @@ export function HomeScreen({navigation}) {
       <Text category="h1">Home Screen</Text>
       <PaMap />
       <Button onPress={() => navigation.navigate('Settings')}>Settings</Button>
+      <GQLTest/>
     </Layout>
   );
 }

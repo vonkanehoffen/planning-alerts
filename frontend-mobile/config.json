@@ -1,0 +1,4 @@
+{
+  "graphQlEndpoint": "https://planning-alerts.herokuapp.com/v1/graphql",
+  "googleApiKey": "AIzaSyD55mv6CdMyBpL1EwofzTqaah_hE0A0ANc"
+}
