@@ -12,16 +12,16 @@ export const auth0 = new Auth0({
 const HeartIcon = style => <Icon {...style} name="heart" />;
 
 export function AuthScreen({navigation}) {
-  // const [accessToken, setAccessToken] = React.useState(null);
-  const [accessToken, setAccessToken] = React.useContext(AuthContext);
+  // const [idToken, setIdToken] = React.useState(null);
+  const [idToken, setIdToken] = React.useContext(AuthContext);
   const _onLogin = () => {
     auth0.webAuth
       .authorize({scope: 'openid profile email'})
       .then(credentials => {
           // Successfully authenticated
-          // Store the accessToken
+          // Store the idToken
           console.log('creds -', credentials);
-          setAccessToken(credentials.idToken)
+          setIdToken(credentials.idToken)
       })
       .catch(error => console.log(error));
   };

@@ -17,7 +17,7 @@ export const GraphQLProvider = ({ children }) => {
   // if (loading) {
   //   return <Loading fullscreen={true} />;
   // }
-  const [accessToken, setAccessToken] = useContext(AuthContext)
+  const [idToken, setIdToken] = useContext(AuthContext)
 
   const client = new ApolloClient({
     uri: config.graphQlEndpoint,
@@ -26,7 +26,7 @@ export const GraphQLProvider = ({ children }) => {
       // const token = isAuthenticated ? await getTokenSilently() : null;
       operation.setContext({
         headers: {
-          authorization: accessToken ? `Bearer ${accessToken}` : undefined
+          authorization: idToken ? `Bearer ${idToken}` : undefined
         }
       });
     }
