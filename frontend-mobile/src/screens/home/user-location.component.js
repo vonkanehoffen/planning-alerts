@@ -3,12 +3,12 @@ import {useQuery} from '@apollo/react-hooks';
 import * as queries from '../../data-layer/graphql-queries';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {Layout, Text, Spinner} from '@ui-kitten/components';
-import {PaMap} from './pa-map.component';
+import {PaStatusMarkers} from './pa-map.component';
 import _ from 'lodash';
 import {AuthContext} from '../auth/auth-provider.component';
 import {StyleSheet, View} from 'react-native';
 
-export function UserLocation({navigation}) {
+export function UserLocationMap({navigation}) {
   const {auth} = useContext(AuthContext);
   const {loading, error, data} = useQuery(queries.GET_USER_LOCATION, {
     variables: {
@@ -65,7 +65,7 @@ export function UserLocation({navigation}) {
           longitudeDelta: 0.0421,
         }}
         onRegionChangeComplete={doLocationChange}>
-        <PaMap userLocation={location} />
+        <PaStatusMarkers location={location} />
       </MapView>
     </View>
   );

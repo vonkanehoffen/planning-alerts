@@ -5,7 +5,7 @@ import * as queries from '../../data-layer/graphql-queries';
 import {useQuery} from '@apollo/react-hooks';
 import {subDays, formatISO} from 'date-fns';
 
-export function PaMap({userLocation}) {
+export function PaStatusMarkers({location}) {
 
   const {
     loading: openPaLoading,
@@ -13,10 +13,10 @@ export function PaMap({userLocation}) {
     data: openPaData,
   } = useQuery(queries.GET_OPEN_PA_NEAR_POINT, {
     variables: {
-      point: userLocation,
+      point: location,
       distance: 2000,
     },
-    // skip: !userLocation
+    // skip: !location
   });
 
   const minDate = formatISO(subDays(new Date(), 3), {representation: 'date'});
@@ -26,7 +26,7 @@ export function PaMap({userLocation}) {
     data: closedPaData,
   } = useQuery(queries.GET_RECENT_CLOSED_PA_NEAR_POINT, {
     variables: {
-      point: userLocation,
+      point: location,
       distance: 2000,
       minDate: minDate,
     },
@@ -56,7 +56,7 @@ export function PaMap({userLocation}) {
   }
 
   console.log({
-    userLocation,
+    location,
     openPaData,
     closedPaData,
   });
