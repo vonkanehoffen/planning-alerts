@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import * as queries from "../../data-layer/graphql-queries";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
@@ -15,8 +15,7 @@ export function UserLocationMap({ navigation }) {
       id: auth.userInfo.sub
     }
   });
-
-  const doLocationChange = region => console.log("REGION CHANGE", region);
+  const [mapViewLocation, setMapViewLocation] = useState(null);
 
   console.log("RENDER USERLOC", { loading, error, data });
   if (loading) {
@@ -39,12 +38,12 @@ export function UserLocationMap({ navigation }) {
    * Update location gql query param with new map region, when dragged.
    * @param region
    */
-  // const doSetQueryLocation = (region) => {
-  //   setQueryLocation({
-  //     type: "Point",
-  //     coordinates: [region.latitude, region.longitude]
-  //   });
-  // }
+  const handleRegionChange = region => {
+    setMapViewLocation({
+      type: "Point",
+      coordinates: [region.latitude, region.longitude]
+    });
+  };
 
   const location = _.get(data, "users[0].location");
 
@@ -64,9 +63,9 @@ export function UserLocationMap({ navigation }) {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421
         }}
-        onRegionChangeComplete={doLocationChange}
+        onRegionChangeComplete={handleRegionChange}
       >
-        <PaStatusMarkers location={location} />
+        <PaStatusMarkers location={mapViewLocation || location} />
       </MapView>
     </View>
   );
