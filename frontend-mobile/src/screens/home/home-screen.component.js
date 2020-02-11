@@ -1,16 +1,14 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import PaMap from './PaMap';
 import {Layout, Button, Text} from '@ui-kitten/components';
-import { GQLTest } from './GQLTest'
+import { UserLocation } from './user-location.component'
 
 export function HomeScreen({navigation}) {
   return (
     <Layout style={styles.container}>
       <Text category="h1">Home Screen</Text>
-      <PaMap />
       <Button onPress={() => navigation.navigate('Settings')}>Settings</Button>
-      <GQLTest/>
+      <UserLocation navigation={navigation}/>
     </Layout>
   );
 }
