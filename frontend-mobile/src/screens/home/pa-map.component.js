@@ -7,14 +7,7 @@ import { useQuery } from '@apollo/react-hooks'
 import { subDays, formatISO } from 'date-fns';
 
 export function PaMap ({ userLocation }) {
-  const [region, setRegion] = React.useState({
-    latitude: userLocation.coordinates[0],
-    longitude: userLocation.coordinates[1],
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  });
   const [queryLocation, setQueryLocation] = React.useState(userLocation);
-  const minDate = formatISO(subDays(new Date(), 3), { representation: 'date' });
 
   const {
     loading: openPaLoading,
@@ -28,6 +21,7 @@ export function PaMap ({ userLocation }) {
     // skip: !userLocation
   });
 
+  const minDate = formatISO(subDays(new Date(), 3), { representation: 'date' });
   const {
     loading: closedPaLoading,
     error: closedPaError,
@@ -39,6 +33,25 @@ export function PaMap ({ userLocation }) {
       minDate: minDate
     }
   });
+
+  const initialRegion = {
+    latitude: userLocation.coordinates[0],
+    longitude: userLocation.coordinates[1],
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  };
+
+  /**
+   * Update location gql query param with new map region, when dragged.
+   * TODO: This redraws the whole map.... recompose.
+   * @param region
+   */
+  const doSetQueryLocation = (region) => {
+    setQueryLocation({
+      type: "Point",
+      coordinates: [region.latitude, region.longitude]
+    });
+  }
 
   if (openPaLoading || closedPaLoading) {
     return <Layout><Spinner/></Layout>;
@@ -53,6 +66,7 @@ export function PaMap ({ userLocation }) {
   }
 
   console.log({
+    queryLocation,
     openPaData,
     closedPaData,
   });
@@ -62,8 +76,8 @@ export function PaMap ({ userLocation }) {
       <MapView
         provider={PROVIDER_GOOGLE} // remove if not using Google Maps
         style={styles.map}
-        region={region}
-        onRegionChange={setRegion}
+        initialRegion={initialRegion}
+        onRegionChangeComplete={doSetQueryLocation}
       >
         {closedPaData.pa_status.map(pa => (
           <Marker

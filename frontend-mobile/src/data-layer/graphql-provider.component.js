@@ -16,6 +16,7 @@ export const GraphQLProvider = ({ children }) => {
   const client = new ApolloClient({
     uri: config.graphQlEndpoint,
     request: async operation => {
+      console.log('Doing gql query');
       operation.setContext({
         headers: {
           authorization: auth ? `Bearer ${auth.credentials.idToken}` : undefined

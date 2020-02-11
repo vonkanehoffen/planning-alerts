@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Layout, Button, Text} from '@ui-kitten/components';
 import { UserLocation } from './user-location.component'
+import MapTestComponent from './map-test.component'
 
 export function HomeScreen({navigation}) {
   return (
@@ -9,6 +10,7 @@ export function HomeScreen({navigation}) {
       <Text category="h1">Home Screen</Text>
       <Button onPress={() => navigation.navigate('Settings')}>Settings</Button>
       <UserLocation navigation={navigation}/>
+      {/*<MapTestComponent/>*/}
     </Layout>
   );
 }
