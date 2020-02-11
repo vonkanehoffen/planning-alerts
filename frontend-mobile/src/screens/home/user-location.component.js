@@ -1,24 +1,24 @@
-import React, {useContext} from 'react';
-import {useQuery} from '@apollo/react-hooks';
-import * as queries from '../../data-layer/graphql-queries';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
-import {Layout, Text, Spinner} from '@ui-kitten/components';
-import {PaStatusMarkers} from './pa-map.component';
-import _ from 'lodash';
-import {AuthContext} from '../auth/auth-provider.component';
-import {StyleSheet, View} from 'react-native';
+import React, { useContext } from "react";
+import { useQuery } from "@apollo/react-hooks";
+import * as queries from "../../data-layer/graphql-queries";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import { Layout, Text, Spinner } from "@ui-kitten/components";
+import { PaStatusMarkers } from "./pa-map.component";
+import _ from "lodash";
+import { AuthContext } from "../auth/auth-provider.component";
+import { StyleSheet, View } from "react-native";
 
-export function UserLocationMap({navigation}) {
-  const {auth} = useContext(AuthContext);
-  const {loading, error, data} = useQuery(queries.GET_USER_LOCATION, {
+export function UserLocationMap({ navigation }) {
+  const { auth } = useContext(AuthContext);
+  const { loading, error, data } = useQuery(queries.GET_USER_LOCATION, {
     variables: {
-      id: auth.userInfo.sub,
-    },
+      id: auth.userInfo.sub
+    }
   });
 
-  const doLocationChange = (region) => console.log("REGION CHANGE", region);
+  const doLocationChange = region => console.log("REGION CHANGE", region);
 
-  console.log("RENDER USERLOC", {loading, error, data});
+  console.log("RENDER USERLOC", { loading, error, data });
   if (loading) {
     return (
       <Layout>
@@ -46,10 +46,10 @@ export function UserLocationMap({navigation}) {
   //   });
   // }
 
-  const location = _.get(data, 'users[0].location');
+  const location = _.get(data, "users[0].location");
 
   if (!location) {
-    navigation.navigate('set-location');
+    navigation.navigate("set-location");
     return false;
   }
 
@@ -62,9 +62,10 @@ export function UserLocationMap({navigation}) {
           latitude: location.coordinates[0],
           longitude: location.coordinates[1],
           latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+          longitudeDelta: 0.0421
         }}
-        onRegionChangeComplete={doLocationChange}>
+        onRegionChangeComplete={doLocationChange}
+      >
         <PaStatusMarkers location={location} />
       </MapView>
     </View>
@@ -76,10 +77,10 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     height: 400,
     width: 400,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    justifyContent: "flex-end",
+    alignItems: "center"
   },
   map: {
-    ...StyleSheet.absoluteFillObject,
-  },
+    ...StyleSheet.absoluteFillObject
+  }
 });

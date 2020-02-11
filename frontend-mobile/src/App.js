@@ -10,29 +10,22 @@
  * @format
  */
 
-import React from 'react';
-import {
-  ApplicationProvider,
-  IconRegistry
-} from '@ui-kitten/components';
-import { EvaIconsPack } from '@ui-kitten/eva-icons';
-import {
-  mapping,
-  light as theme,
-} from '@eva-design/eva';
-import { AppNavigator } from './navigation/app.navigator'
-import { GraphQLProvider } from './data-layer/graphql-provider.component'
-import { AuthProvider } from './screens/auth/auth-provider.component'
+import React from "react";
+import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
+import { mapping, light as theme } from "@eva-design/eva";
+import { AppNavigator } from "./navigation/app.navigator";
+import { GraphQLProvider } from "./data-layer/graphql-provider.component";
+import { AuthProvider } from "./screens/auth/auth-provider.component";
 
-
-export function App () {
+export function App() {
   return (
     <>
-      <IconRegistry icons={EvaIconsPack}/>
+      <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider mapping={mapping} theme={theme}>
         <AuthProvider>
           <GraphQLProvider>
-            <AppNavigator/>
+            <AppNavigator />
           </GraphQLProvider>
         </AuthProvider>
       </ApplicationProvider>

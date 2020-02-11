@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
 import config from "../../config.json";
-import { AuthContext } from '../screens/auth/auth-provider.component'
+import { AuthContext } from "../screens/auth/auth-provider.component";
 
 /**
  * Apollo Provider with Auth0 token.
@@ -11,12 +11,12 @@ import { AuthContext } from '../screens/auth/auth-provider.component'
  * @constructor
  */
 export const GraphQLProvider = ({ children }) => {
-  const { auth } = useContext(AuthContext)
+  const { auth } = useContext(AuthContext);
 
   const client = new ApolloClient({
     uri: config.graphQlEndpoint,
     request: async operation => {
-      console.log('Doing gql query');
+      console.log("Doing gql query");
       operation.setContext({
         headers: {
           authorization: auth ? `Bearer ${auth.credentials.idToken}` : undefined
@@ -24,6 +24,6 @@ export const GraphQLProvider = ({ children }) => {
       });
     }
   });
-  console.log('GraphQLProvider rendering');
+  console.log("GraphQLProvider rendering");
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };

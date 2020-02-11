@@ -77,7 +77,11 @@ export const GET_OPEN_PA_NEAR_POINT = gql`
 `;
 
 export const GET_RECENT_CLOSED_PA_NEAR_POINT = gql`
-  query get_open_and_recent_pa_near_point($point: geography!, $distance: Float!, $minDate: timestamptz!) {
+  query get_open_and_recent_pa_near_point(
+    $point: geography!
+    $distance: Float!
+    $minDate: timestamptz!
+  ) {
     pa_status(
       where: {
         location: { _st_d_within: { distance: $distance, from: $point } }

@@ -1,38 +1,44 @@
-import React from 'react';
-import {StyleSheet} from 'react-native';
-import {Marker} from 'react-native-maps';
-import * as queries from '../../data-layer/graphql-queries';
-import {useQuery} from '@apollo/react-hooks';
-import {subDays, formatISO} from 'date-fns';
+import React from "react";
+import { StyleSheet } from "react-native";
+import { Marker } from "react-native-maps";
+import * as queries from "../../data-layer/graphql-queries";
+import { useQuery } from "@apollo/react-hooks";
+import { subDays, formatISO } from "date-fns";
 
-export function PaStatusMarkers({location}) {
-
+export function PaStatusMarkers({ location }) {
   const {
     loading: openPaLoading,
     error: openPaError,
-    data: openPaData,
+    data: openPaData
   } = useQuery(queries.GET_OPEN_PA_NEAR_POINT, {
     variables: {
       point: location,
-      distance: 2000,
-    },
+      distance: 2000
+    }
     // skip: !location
   });
 
-  const minDate = formatISO(subDays(new Date(), 3), {representation: 'date'});
+  const minDate = formatISO(subDays(new Date(), 3), { representation: "date" });
   const {
     loading: closedPaLoading,
     error: closedPaError,
-    data: closedPaData,
+    data: closedPaData
   } = useQuery(queries.GET_RECENT_CLOSED_PA_NEAR_POINT, {
     variables: {
       point: location,
       distance: 2000,
-      minDate: minDate,
-    },
+      minDate: minDate
+    }
   });
 
-  console.log("RENDER PA MAP PINS", { openPaLoading, openPaError, openPaData, closedPaLoading,closedPaError, closedPaData});
+  console.log("RENDER PA MAP PINS", {
+    openPaLoading,
+    openPaError,
+    openPaData,
+    closedPaLoading,
+    closedPaError,
+    closedPaData
+  });
 
   // TODO: Loading and error display for this further up the tree.
   if (openPaLoading || closedPaLoading) {
@@ -58,7 +64,7 @@ export function PaStatusMarkers({location}) {
   console.log({
     location,
     openPaData,
-    closedPaData,
+    closedPaData
   });
 
   return (
@@ -67,7 +73,7 @@ export function PaStatusMarkers({location}) {
         <Marker
           coordinate={{
             latitude: pa.location.coordinates[0],
-            longitude: pa.location.coordinates[1],
+            longitude: pa.location.coordinates[1]
           }}
           key={pa.id}
           title={pa.id}
@@ -78,7 +84,7 @@ export function PaStatusMarkers({location}) {
         <Marker
           coordinate={{
             latitude: pa.location.coordinates[0],
-            longitude: pa.location.coordinates[1],
+            longitude: pa.location.coordinates[1]
           }}
           key={pa.id}
           title={pa.id}
