@@ -1,27 +1,22 @@
 import React from 'react';
-import {Alert, StyleSheet} from 'react-native';
-import Auth0 from 'react-native-auth0';
+import {StyleSheet} from 'react-native';
 import {Button, Icon, Layout, Text} from '@ui-kitten/components';
-import { AuthContext } from '../../App'
-
-export const auth0 = new Auth0({
-  domain: 'kanec.eu.auth0.com',
-  clientId: 'QcSRHtExt8Zqjb66TejCF3jisKy1fSnY',
-});
+import * as Keychain from 'react-native-keychain';
+import { auth0 } from './auth-provider.component'
 
 const HeartIcon = style => <Icon {...style} name="heart" />;
 
-export function AuthScreen({navigation}) {
-  const [auth, setAuth] = React.useContext(AuthContext);
+export function AuthScreen({navigation, setAuth}) {
   const _onLogin = async () => {
     try {
-      const credentials = await auth0.webAuth.authorize({scope: 'openid profile email'});
+      const credentials = await auth0.webAuth.authorize({scope: 'openid profile email offline_access'});
 
       // Successfully authenticated
       // Store the idToken
       console.log('creds -', credentials);
       const userInfo = await auth0.auth.userInfo({ token: credentials.accessToken });
       console.log("USER INFO:", userInfo);
+      await Keychain.setGenericPassword('refreshToken', credentials.refreshToken);
       setAuth({ credentials, userInfo });
     } catch (error ) {
       // TODO: Error toasts
@@ -29,13 +24,12 @@ export function AuthScreen({navigation}) {
     }
   };
 
-  const loggedIn = false; //TODO: logout should be on settings menu
   return (
     <Layout style={styles.container}>
       <Button
         icon={HeartIcon}
-        onPress={loggedIn ? _onLogout : _onLogin}>
-        {loggedIn ? 'Log Out' : 'Log In'}
+        onPress={_onLogin}>
+        Log In
       </Button>
     </Layout>
   );

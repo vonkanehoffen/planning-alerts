@@ -1,11 +1,11 @@
 import React from 'react';
 import { Alert } from 'react-native'
 import {Button, Icon, Layout, Text} from '@ui-kitten/components';
-import { AuthContext } from '../../App'
-import { auth0 } from '../auth/auth-screen.component'
+import { AuthContext } from '../auth/auth-provider.component'
+import { auth0 } from '../auth/auth-provider.component'
 
 export function SettingsScreen() {
-  const [auth, setAuth] = React.useContext(AuthContext);
+  const { setAuth } = React.useContext(AuthContext);
 
   const _onLogout = () => {
     auth0.webAuth
