@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Layout, Button, Text } from "@ui-kitten/components";
-import { UserLocationMap } from "./user-location.component";
+import { UserLocationMap } from "./user-location-map.component";
 import MapTestComponent from "./map-test.component";
 
 export function HomeScreen({ navigation }) {
