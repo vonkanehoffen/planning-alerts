@@ -70,8 +70,8 @@ export function PaStatusMarkers({ location, focusPa }) {
     closedPaData
   });
 
-  // TODO: Custom marker pins. https://github.com/react-native-community/react-native-maps#rendering-a-custom-marker-with-a-custom-callout
-  // https://github.com/react-native-community/react-native-maps#custom-callouts
+  // TODO: Marker performance: https://medium.com/@buchereli/performant-custom-map-markers-for-react-native-maps-ddc8d5a1eeb0
+  //  maybe just tracksViewChanges is ok?
   return (
     <>
       {closedPaData &&
@@ -83,6 +83,7 @@ export function PaStatusMarkers({ location, focusPa }) {
               console.log("PRESSED CLOSED MARKER");
               focusPa(pa);
             }}
+            tracksViewChanges={false}
           >
             <PaMarker open={false} />
             {/*<Callout>*/}
@@ -102,6 +103,7 @@ export function PaStatusMarkers({ location, focusPa }) {
               console.log("PRESSED OPEN MARKER");
               focusPa(pa);
             }}
+            tracksViewChanges={false}
           >
             <PaMarker open={true} />
           </Marker>

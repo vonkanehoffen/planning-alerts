@@ -82,7 +82,11 @@ export function UserLocationMap({ navigation }) {
         minZoomLevel={12}
         onRegionChangeComplete={handleRegionChange}
       >
-        <Marker coordinate={postGisToRNMapsLocation(location)} title="you">
+        <Marker
+          coordinate={postGisToRNMapsLocation(location)}
+          title="You"
+          tracksViewChanges={false}
+        >
           <HomeMarker />
         </Marker>
         <PaStatusMarkers
