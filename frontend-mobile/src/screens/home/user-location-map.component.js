@@ -1,12 +1,15 @@
 import React, { useContext, useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import * as queries from "../../data-layer/graphql-queries";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { Layout, Text, Spinner } from "@ui-kitten/components";
 import { PaStatusMarkers } from "./pa-status-markers.component";
 import _ from "lodash";
 import { AuthContext } from "../auth/auth-provider.component";
 import { StyleSheet, View } from "react-native";
+import { postGisToRNMapsLocation } from "../../utils";
+import { HomeMarker } from "../../components/home-marker.component";
+import { PaStatusDetails } from "../../components/pa-status-details-callout.component";
 
 export function UserLocationMap({ navigation }) {
   const { auth } = useContext(AuthContext);
@@ -16,6 +19,7 @@ export function UserLocationMap({ navigation }) {
     }
   });
   const [mapViewLocation, setMapViewLocation] = useState(null);
+  const [focussedPa, setFocussedPa] = useState(null);
 
   console.log("RENDER USERLOC", { loading, error, data });
   if (loading) {
@@ -45,6 +49,18 @@ export function UserLocationMap({ navigation }) {
     });
   };
 
+  /**
+   * Focus on a planning application
+   * Opens details when map marker clicked
+   * TODO: Control map position here
+   * @param pa
+   */
+  const focusPa = pa => {
+    setFocussedPa(pa);
+  };
+
+  const unFocusPa = () => setFocussedPa(null);
+
   const location = _.get(data, "users[0].location");
 
   if (!location) {
@@ -63,10 +79,20 @@ export function UserLocationMap({ navigation }) {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421
         }}
+        minZoomLevel={12}
         onRegionChangeComplete={handleRegionChange}
       >
-        <PaStatusMarkers location={mapViewLocation || location} />
+        <Marker coordinate={postGisToRNMapsLocation(location)} title="you">
+          <HomeMarker />
+        </Marker>
+        <PaStatusMarkers
+          location={mapViewLocation || location}
+          focusPa={focusPa}
+        />
       </MapView>
+      {focussedPa !== null && (
+        <PaStatusDetails pa={focussedPa} unFocusPa={unFocusPa} />
+      )}
     </View>
   );
 }
@@ -74,8 +100,8 @@ export function UserLocationMap({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    height: 400,
-    width: 400,
+    height: "100%",
+    width: "100%",
     justifyContent: "flex-end",
     alignItems: "center"
   },
