@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Linking } from "react-native";
 import {
   Button,
   Card,
@@ -8,12 +8,16 @@ import {
   Icon,
   ListItem
 } from "@ui-kitten/components";
+import { formatDistance, parseISO } from "date-fns";
 
-const Header = () => (
-  <CardHeader title="Planning Application" description="address here" />
+const Header = ({ pa }) => (
+  <CardHeader
+    title={`${pa.open ? "Open" : "Closed"} Planning Application`}
+    description={pa.address}
+  />
 );
 
-const Footer = ({ unFocusPa }) => (
+const Footer = ({ pa, unFocusPa }) => (
   <View style={styles.footerContainer}>
     <Button
       style={styles.footerControl}
@@ -23,7 +27,11 @@ const Footer = ({ unFocusPa }) => (
     >
       BACK
     </Button>
-    <Button style={styles.footerControl} size="small">
+    <Button
+      style={styles.footerControl}
+      size="small"
+      onPress={() => Linking.openURL(pa.url)}
+    >
       MORE INFO
     </Button>
   </View>
@@ -47,7 +55,11 @@ export function PaStatusDetails({ pa, unFocusPa }) {
       style={styles.card}
     >
       <Meta title="Proposal" icon="briefcase-outline" value={pa.proposal} />
-      <Meta title="Address" icon="home-outline" value={pa.address} />
+      <Meta
+        title="Last Update"
+        icon="calendar-outline"
+        value={`${formatDistance(parseISO(pa.updated_at), new Date())} ago`}
+      />
     </Card>
   );
 }

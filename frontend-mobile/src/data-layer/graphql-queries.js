@@ -67,11 +67,19 @@ export const GET_OPEN_PA_NEAR_POINT = gql`
         open: { _eq: true }
       }
     ) {
-      id
-      location
-      proposal
       address
       application_validated
+      council
+      created_at
+      decision
+      decision_issued_date
+      id
+      location
+      open
+      proposal
+      status
+      updated_at
+      url
     }
   }
 `;
