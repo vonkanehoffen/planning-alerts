@@ -34,15 +34,6 @@ export function PaStatusMarkers({ location, focusPa }) {
     }
   });
 
-  console.log("RENDER PA MAP PINS", {
-    openPaLoading,
-    openPaError,
-    openPaData,
-    closedPaLoading,
-    closedPaError,
-    closedPaData
-  });
-
   // // TODO: Loading and error display for this further up the tree.
   // if (openPaLoading || closedPaLoading) {
   //   return false;

@@ -56,6 +56,7 @@
 		2420DB06039F18DB68DEB37D /* libPods-PlanningAlerts-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PlanningAlerts-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E47B1E0B4A5D006451C7 /* PlanningAlerts-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlanningAlerts-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* PlanningAlerts-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PlanningAlerts-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		381814E323F843360055DA21 /* PlanningAlerts.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = PlanningAlerts.entitlements; path = PlanningAlerts/PlanningAlerts.entitlements; sourceTree = "<group>"; };
 		3829E27223F82EB200E0D4F7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3BB61A9990E8EF9562A13BF5 /* libPods-PlanningAlertsTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PlanningAlertsTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49BB5D330DEB841DB424844B /* libPods-PlanningAlerts.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PlanningAlerts.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,6 +128,7 @@
 		13B07FAE1A68108700A75B9A /* PlanningAlerts */ = {
 			isa = PBXGroup;
 			children = (
+				381814E323F843360055DA21 /* PlanningAlerts.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -663,6 +665,7 @@
 			baseConfigurationReference = 6C3A1D8A232951A36A8E0AFB /* Pods-PlanningAlerts.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PlanningAlerts/PlanningAlerts.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = J69YVNU2C8;
@@ -684,6 +687,7 @@
 			baseConfigurationReference = 99A5B4E0F8E093E57882EDCD /* Pods-PlanningAlerts.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PlanningAlerts/PlanningAlerts.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = J69YVNU2C8;
 				INFOPLIST_FILE = PlanningAlerts/Info.plist;

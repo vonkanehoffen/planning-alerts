@@ -12,11 +12,9 @@ import { AuthContext } from "../screens/auth/auth-provider.component";
  */
 export const GraphQLProvider = ({ children }) => {
   const { auth } = useContext(AuthContext);
-
   const client = new ApolloClient({
     uri: config.graphQlEndpoint,
     request: async operation => {
-      console.log("Doing gql query");
       operation.setContext({
         headers: {
           authorization: auth ? `Bearer ${auth.credentials.idToken}` : undefined
@@ -24,6 +22,5 @@ export const GraphQLProvider = ({ children }) => {
       });
     }
   });
-  console.log("GraphQLProvider rendering");
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };

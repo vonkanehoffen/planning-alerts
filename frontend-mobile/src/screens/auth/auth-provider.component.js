@@ -22,6 +22,7 @@ export function AuthProvider({ children }) {
       console.log("getting refresh token");
       const keychain = await Keychain.getGenericPassword();
       if (keychain) {
+        // TODO: Store + use old jwt when valid. Refresh takes ages.
         const credentials = await auth0.auth.refreshToken({
           refreshToken: keychain.password
         });

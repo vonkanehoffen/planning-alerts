@@ -21,7 +21,6 @@ export function UserLocationMap({ navigation }) {
   const [mapViewLocation, setMapViewLocation] = useState(null);
   const [focussedPa, setFocussedPa] = useState(null);
 
-  console.log("RENDER USERLOC", { loading, error, data });
   if (loading) {
     return (
       <Layout>
