@@ -15,16 +15,11 @@ https://auth0.com/docs/quickstart/native/react-native/00-login?download=true
 React Navigation:
 https://reactnavigation.org/docs/en/navigating.html
 
-Android:
+Android package name & iOS Bundle Identifier:
+
+```
 com.kanec.planningalerts
-
-iOs: changed from
-org.reactjs.native.example.PlanningAlerts
-
-to
-com.planningalerts
-
-See Auth0 instructions. Guess might need to change for submission tho...
+```
 
 Seems ok on node v10.16.0
 watchman / metro have problems on 12.15.0 LTS
