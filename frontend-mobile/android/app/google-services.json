@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "540026944263",
+    "firebase_url": "https://planning-alerts.firebaseio.com",
+    "project_id": "planning-alerts",
+    "storage_bucket": "planning-alerts.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:540026944263:android:1fec4ce1b2671908be23a2",
+        "android_client_info": {
+          "package_name": "com.kanec.planningalerts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "540026944263-lfelak1rtkaul9j5nemrpn7aa5044p4v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kanec.planningalerts",
+            "certificate_hash": "2c98d5fa93167f873114e1f625e6d36d86589d2f"
+          }
+        },
+        {
+          "client_id": "540026944263-2uo0js3cq8nmmjjmp3vmuu92kn74fh6t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeHi-DoyeOX3OlP5ku9acJ0gcyObD0iBM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "540026944263-2uo0js3cq8nmmjjmp3vmuu92kn74fh6t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
