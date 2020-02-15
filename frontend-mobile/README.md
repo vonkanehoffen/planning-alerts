@@ -1,4 +1,5 @@
 # Planning Alerts Mobile App
+
 ## React Native
 
 With UI Kitten:
@@ -15,9 +16,9 @@ React Navigation:
 https://reactnavigation.org/docs/en/navigating.html
 
 Android:
-com.planningalerts
+com.kanec.planningalerts
 
-iOs: changed from 
+iOs: changed from
 org.reactjs.native.example.PlanningAlerts
 
 to

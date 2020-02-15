@@ -1,4 +1,4 @@
-package com.planningalerts;
+package com.kanec.planningalerts;
 
 import android.app.Application;
 import android.content.Context;
