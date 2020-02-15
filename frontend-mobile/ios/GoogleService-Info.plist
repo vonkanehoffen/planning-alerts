@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>540026944263-pdiuselr178rcopsaq7qaljhgifuinuj.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.540026944263-pdiuselr178rcopsaq7qaljhgifuinuj</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>540026944263-lfelak1rtkaul9j5nemrpn7aa5044p4v.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAT-OzA5SUkW73pjmiUbx5MkO2cYJuao4M</string>
+	<key>GCM_SENDER_ID</key>
+	<string>540026944263</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.kanec.planningalerts</string>
+	<key>PROJECT_ID</key>
+	<string>planning-alerts</string>
+	<key>STORAGE_BUCKET</key>
+	<string>planning-alerts.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:540026944263:ios:4ec6a2165407de89be23a2</string>
+	<key>DATABASE_URL</key>
+	<string>https://planning-alerts.firebaseio.com</string>
+</dict>
+</plist>

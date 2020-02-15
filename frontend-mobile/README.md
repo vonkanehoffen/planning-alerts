@@ -21,6 +21,8 @@ Android package name & iOS Bundle Identifier:
 com.kanec.planningalerts
 ```
 
+Apple App ID: 1499203549
+
 Seems ok on node v10.16.0
 watchman / metro have problems on 12.15.0 LTS
 
