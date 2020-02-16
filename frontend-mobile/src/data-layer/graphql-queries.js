@@ -48,6 +48,13 @@ export const UPDATE_USER_LOCATION = gql`
   }
 `;
 
+/**
+ * Upsert a user FCM token
+ *
+ * $token - the token
+ * $user_id - user (foreign key relationship)
+ * @type {DocumentNode}
+ */
 export const UPSERT_FCM_TOKEN = gql`
   mutation upsert_fcm_token($token: String!, $user_id: String!) {
     insert_fcm_token(
