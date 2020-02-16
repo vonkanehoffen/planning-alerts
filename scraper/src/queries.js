@@ -87,8 +87,23 @@ exports.INSERT_SCRAPE_LOG = gql`
   }
 `;
 
+exports.GET_USERS = gql`
+  query get_users($limit: Int!, $offset: Int!) {
+    users( limit: $limit, offset: $offset) {
+      id
+      location
+      fcm_tokens {
+        token
+      }
+    }
+  }
+`;
+
 /**
- * Get planning apps within a specified distance of a point, made after a certain time
+ * Get planning apps
+ *  - within a specified distance (km) of a point
+ *  - Scraped after a certain time
+ *  - From a certain council
  * This is for the push notifications
  *
  * eg.
@@ -98,17 +113,20 @@ exports.INSERT_SCRAPE_LOG = gql`
         }
  * $distance: 1000
  * $date: "2020-02-06"
+ * $council: "pa.manchester.gov.uk"
  */
 exports.GET_NEW_PLANNING_APPS_NEAR = gql`
   query get_new_planning_apps_near(
     $point: geography!
     $distance: Float!
-    $date: timestamptz
+    $date: timestamptz!
+    $council: String!
   ) {
     pa_status(
       where: {
         location: { _st_d_within: { distance: $distance, from: $point } }
         created_at: { _gte: $date }
+        council: { _eq: $council }
       }
     ) {
       id
