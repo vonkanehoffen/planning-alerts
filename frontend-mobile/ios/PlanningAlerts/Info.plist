@@ -51,7 +51,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Location access is required to view planning applications near you.</string>
+	<string>View planning applications near you.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

@@ -3,6 +3,7 @@ import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { HomeScreen } from "../screens/home/home-screen.component";
 import { SettingsScreen } from "../screens/settings/settings-screen.component";
+import { SetLocationScreen } from "../screens/set-location/set-location-screen.component";
 import { Icon } from "@ui-kitten/components";
 import { TouchableOpacity } from "react-native";
 
@@ -20,6 +21,7 @@ export function AppNavigator() {
           }}
         />
         <Stack.Screen name="Settings" component={SettingsScreen} />
+        <Stack.Screen name="Set Location" component={SetLocationScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

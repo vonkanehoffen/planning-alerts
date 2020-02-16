@@ -38,7 +38,10 @@ target 'PlanningAlerts' do
   permissions_path = '../node_modules/react-native-permissions/ios'
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse.podspec"
   pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications.podspec"
-  
+
+  # react-native-geolocation-service
+  pod 'react-native-geolocation', path: '../node_modules/@react-native-community/geolocation'
+
   target 'PlanningAlertsTests' do
     inherit! :search_paths
     # Pods for testing

@@ -4,7 +4,7 @@ import { Button, Icon, Layout, Text } from "@ui-kitten/components";
 import { AuthContext } from "../auth/auth-provider.component";
 import { auth0 } from "../auth/auth-provider.component";
 
-export function SettingsScreen() {
+export function SettingsScreen({ navigation }) {
   const { setAuth } = React.useContext(AuthContext);
 
   const _onLogout = () => {
@@ -23,6 +23,9 @@ export function SettingsScreen() {
     <Layout style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Settings Screen</Text>
       <Button onPress={_onLogout}>Log Out</Button>
+      <Button onPress={() => navigation.navigate("Set Location")}>
+        Set Location
+      </Button>
     </Layout>
   );
 }
