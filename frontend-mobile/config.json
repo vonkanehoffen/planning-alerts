@@ -3,6 +3,7 @@
   "googleApiKey": "AIzaSyD55mv6CdMyBpL1EwofzTqaah_hE0A0ANc",
   "auth0": {
     "domain": "kanec.eu.auth0.com",
-    "clientId": "QcSRHtExt8Zqjb66TejCF3jisKy1fSnY",
-  }
+    "clientId": "QcSRHtExt8Zqjb66TejCF3jisKy1fSnY"
+  },
+  "debug": true
 }

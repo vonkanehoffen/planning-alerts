@@ -20,6 +20,16 @@ export const GraphQLProvider = ({ children }) => {
           authorization: auth ? `Bearer ${auth.credentials.idToken}` : undefined
         }
       });
+      if (config.debug) {
+        console.log(`
+HASURA REQUEST--------
+query:
+${operation.query.loc.source.body}
+
+variables:
+${JSON.stringify(operation.variables, null, 2)}
+`);
+      }
     }
   });
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
