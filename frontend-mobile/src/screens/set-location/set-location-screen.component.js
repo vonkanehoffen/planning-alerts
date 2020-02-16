@@ -37,6 +37,18 @@ export function SetLocationScreen() {
         Geolocation.getCurrentPosition(
           position => {
             console.log("GEOLOCATION SUCCESS", position);
+            updateUserLocation({
+              variables: {
+                id: auth.userInfo.sub,
+                location: {
+                  type: "Point",
+                  coordinates: [
+                    position.coords.latitude,
+                    position.coords.longitude
+                  ]
+                }
+              }
+            });
           },
           error => {
             // See error code charts below.
@@ -55,13 +67,11 @@ export function SetLocationScreen() {
       <Text category="h3">
         Welcome to Planning Alerts. Alpha. This needs styling for a start.
       </Text>
-      <Text category="h3">
-        It's time you knew what's happening in your neighbourhood :-)
-      </Text>
-      <Text category="h1">Let's get started!</Text>
+      <Text category="h3">Let's get started!</Text>
       <Button onPress={getLocation} icon={NavigationIcon}>
         Get Location
       </Button>
+      <Text>Data: {JSON.stringify(data, null, 2)}</Text>
     </Layout>
   );
 }
