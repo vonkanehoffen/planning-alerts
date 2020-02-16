@@ -55,12 +55,6 @@ export function PaStatusMarkers({ location, focusPa }) {
   //   // );
   // }
 
-  console.log({
-    location,
-    openPaData,
-    closedPaData
-  });
-
   // TODO: Marker performance: https://medium.com/@buchereli/performant-custom-map-markers-for-react-native-maps-ddc8d5a1eeb0
   //  maybe just tracksViewChanges is ok?
   return (

@@ -20,11 +20,18 @@ export function FCMSetup() {
   const [upsertFCMToken, { data }] = useMutation(queries.UPSERT_FCM_TOKEN);
   useEffect(() => {
     async function registerForPushNotifications() {
+      // TODO: Is this still a bit shaky on iOS? Seems ok on fresh install, but saw error on update
+      console.log("DOING registerForPushNotifications");
       try {
+        console.log("DOING requestPermission");
         await messaging().requestPermission();
+        console.log("DOING requestNotifications");
         await requestNotifications(["alert", "badge", "sound"]);
 
+        console.log("DOING getToken");
         const token = await messaging().getToken();
+
+        console.log("GOT TOKEN", token);
         upsertFCMToken({
           variables: {
             user_id: auth.userInfo.sub,

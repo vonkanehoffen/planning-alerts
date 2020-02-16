@@ -20,7 +20,7 @@ export const GraphQLProvider = ({ children }) => {
           authorization: auth ? `Bearer ${auth.credentials.idToken}` : undefined
         }
       });
-      if (config.debug) {
+      if (config.gqlDebug) {
         console.log(`
 HASURA REQUEST--------
 query:

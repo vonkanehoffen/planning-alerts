@@ -5,5 +5,5 @@
     "domain": "kanec.eu.auth0.com",
     "clientId": "QcSRHtExt8Zqjb66TejCF3jisKy1fSnY"
   },
-  "debug": true
+  "gqlDebug": false
 }
