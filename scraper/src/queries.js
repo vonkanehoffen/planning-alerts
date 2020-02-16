@@ -91,6 +91,7 @@ exports.GET_USERS = gql`
   query get_users($limit: Int!, $offset: Int!) {
     users( limit: $limit, offset: $offset) {
       id
+      name
       location
       fcm_tokens {
         token
@@ -130,11 +131,6 @@ exports.GET_NEW_PLANNING_APPS_NEAR = gql`
       }
     ) {
       id
-      address
-      proposal
-      created_at
-      updated_at
-      url
     }
   }
 `;
