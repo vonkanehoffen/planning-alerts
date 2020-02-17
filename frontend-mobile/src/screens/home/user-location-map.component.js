@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import * as queries from "../../data-layer/graphql-queries";
-import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { Layout, Text, Spinner } from "@ui-kitten/components";
 import { PaStatusMarkers } from "./pa-status-markers.component";
 import _ from "lodash";
@@ -63,7 +63,7 @@ export function UserLocationMap({ navigation }) {
   const location = _.get(data, "users[0].location");
 
   if (!location) {
-    navigation.navigate("set-location");
+    navigation.navigate("Set Location");
     return false;
   }
 

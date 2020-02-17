@@ -9,7 +9,7 @@ import { Platform } from "react-native";
 
 const NavigationIcon = style => <Icon {...style} name="navigation-2-outline" />;
 
-export function SetLocationScreen() {
+export function SetLocationScreen({ navigation }) {
   const { auth } = useContext(AuthContext);
   const [updateUserLocation, { loading, error, data }] = useMutation(
     queries.UPDATE_USER_LOCATION
@@ -35,9 +35,9 @@ export function SetLocationScreen() {
       case RESULTS.GRANTED:
         console.log("Location permission is granted");
         Geolocation.getCurrentPosition(
-          position => {
+          async position => {
             console.log("GEOLOCATION SUCCESS", position);
-            updateUserLocation({
+            await updateUserLocation({
               variables: {
                 id: auth.userInfo.sub,
                 location: {
@@ -49,6 +49,7 @@ export function SetLocationScreen() {
                 }
               }
             });
+            navigation.navigate("Home");
           },
           error => {
             // See error code charts below.
