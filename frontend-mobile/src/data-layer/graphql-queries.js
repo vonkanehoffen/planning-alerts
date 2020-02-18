@@ -125,6 +125,7 @@ export const GET_RECENT_CLOSED_PA_NEAR_POINT = gql`
       application_validated
       decision
       decision_issued_date
+      updated_at
     }
   }
 `;
