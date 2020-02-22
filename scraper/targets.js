@@ -10,7 +10,10 @@ exports.idox = [
   "http://publicaccess.rochdale.gov.uk/online-applications",
   "http://publicaccess.salford.gov.uk/publicaccess",
   "https://planning.stockport.gov.uk/PlanningData-live", // 302
-  "https://planning.wigan.gov.uk/online-applications"
-
+  "https://planning.wigan.gov.uk/online-applications",
   // tameside is not idox: https://www.tameside.gov.uk/planning/applications
+
+  // Other councils
+  "https://pa.sefton.gov.uk/online-applications",
+  "https://pa.cheshirewestandchester.gov.uk/online-applications"
 ];
