@@ -20,7 +20,7 @@ async function pushNotify(rootURL) {
   const council = getHostname(rootURL);
   console.log("PUSH NOTIFY --------", council);
 
-  const limit = 3;
+  const limit = 10;
   let offset = 0;
   let users;
 
@@ -63,7 +63,7 @@ async function pushNotify(rootURL) {
           }
         }
       } else {
-        console.log("SKIPPING USER", user.name);
+        console.log("SKIPPING USER", user.name, "No new PAs nearby");
       }
     }
   } while (users.data.users.length > 0);
