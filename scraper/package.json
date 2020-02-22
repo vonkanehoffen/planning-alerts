@@ -1,6 +1,6 @@
 {
   "name": "my-planning-alerts-scraper",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Scrapes planning application data",
   "repository": {
     "type": "git",
