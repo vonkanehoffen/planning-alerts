@@ -3,11 +3,13 @@ import { Alert } from "react-native";
 import { Button, Icon, Layout, Text } from "@ui-kitten/components";
 import { AuthContext } from "../auth/auth-provider.component";
 import { auth0 } from "../auth/auth-provider.component";
+import * as Keychain from "react-native-keychain"
 
 export function SettingsScreen({ navigation }) {
   const { setAuth } = React.useContext(AuthContext);
 
   const _onLogout = () => {
+    Keychain.resetGenericPassword();
     auth0.webAuth
       .clearSession({})
       .then(success => {
