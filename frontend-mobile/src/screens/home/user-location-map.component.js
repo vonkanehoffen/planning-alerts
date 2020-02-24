@@ -12,10 +12,10 @@ import { HomeMarker } from "../../components/home-marker.component";
 import { PaStatusDetails } from "../../components/pa-status-details-callout.component";
 
 export function UserLocationMap({ navigation }) {
-  const { auth } = useContext(AuthContext);
+  const { credentials } = useContext(AuthContext);
   const { loading, error, data } = useQuery(queries.GET_USER_LOCATION, {
     variables: {
-      id: auth.userInfo.sub
+      id: credentials.claims.sub
     }
   });
   const [mapViewLocation, setMapViewLocation] = useState(null);
@@ -32,7 +32,7 @@ export function UserLocationMap({ navigation }) {
   if (error) {
     return (
       <Layout>
-        <Text status="danger">{error.message}</Text>
+        <Text status="danger">UserLocationMap error: {error.message}</Text>
       </Layout>
     );
   }

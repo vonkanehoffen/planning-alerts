@@ -10,7 +10,7 @@ import { Platform } from "react-native";
 const NavigationIcon = style => <Icon {...style} name="navigation-2-outline" />;
 
 export function SetLocationScreen({ navigation }) {
-  const { auth } = useContext(AuthContext);
+  const { credentials } = useContext(AuthContext);
   const [updateUserLocation, { loading, error, data }] = useMutation(
     queries.UPDATE_USER_LOCATION
   );
@@ -39,7 +39,7 @@ export function SetLocationScreen({ navigation }) {
             console.log("GEOLOCATION SUCCESS", position);
             await updateUserLocation({
               variables: {
-                id: auth.userInfo.sub,
+                id: credentials.claims.sub,
                 location: {
                   type: "Point",
                   coordinates: [

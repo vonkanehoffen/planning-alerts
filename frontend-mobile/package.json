@@ -23,6 +23,7 @@
     "date-fns": "^2.9.0",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
+    "jwt-decode": "^2.2.0",
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-auth0": "^2.2.0",

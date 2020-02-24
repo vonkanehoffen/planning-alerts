@@ -16,7 +16,7 @@ import * as queries from "./graphql-queries";
  * @constructor
  */
 export function FCMSetup() {
-  const { auth } = useContext(AuthContext);
+  const { credentials } = useContext(AuthContext);
   const [upsertFCMToken, { data }] = useMutation(queries.UPSERT_FCM_TOKEN);
   useEffect(() => {
     async function registerForPushNotifications() {
@@ -40,7 +40,7 @@ export function FCMSetup() {
         console.log("GOT TOKEN", token);
         upsertFCMToken({
           variables: {
-            user_id: auth.userInfo.sub,
+            user_id: credentials.claims.sub,
             token
           }
         });
@@ -49,7 +49,7 @@ export function FCMSetup() {
           if (token) {
             upsertFCMToken({
               variables: {
-                user_id: auth.userInfo.sub,
+                user_id: credentials.claims.sub,
                 token
               }
             });

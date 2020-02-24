@@ -6,25 +6,12 @@ import { auth0 } from "../auth/auth-provider.component";
 import * as Keychain from "react-native-keychain"
 
 export function SettingsScreen({ navigation }) {
-  const { setAuth } = React.useContext(AuthContext);
-
-  const _onLogout = () => {
-    Keychain.resetGenericPassword();
-    auth0.webAuth
-      .clearSession({})
-      .then(success => {
-        Alert.alert("Logged out!");
-        setAuth(null);
-      })
-      .catch(error => {
-        console.log("Log out cancelled");
-      });
-  };
+  const { doLogout } = React.useContext(AuthContext);
 
   return (
     <Layout style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Settings Screen</Text>
-      <Button onPress={_onLogout}>Log Out</Button>
+      <Button onPress={doLogout}>Log Out</Button>
       <Button onPress={() => navigation.navigate("Set Location")}>
         Set Location
       </Button>
