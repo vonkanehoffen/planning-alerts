@@ -1,12 +1,11 @@
 import React, { useEffect, useContext } from "react";
-import { useQuery } from "@apollo/react-hooks";
-import { AsyncStorage, PushNotificationIOS } from "react-native";
 import { Text } from "@ui-kitten/components";
 import messaging, { firebase } from "@react-native-firebase/messaging";
 import { requestNotifications } from "react-native-permissions";
 import { useMutation } from "@apollo/react-hooks";
 import { AuthContext } from "../screens/auth/auth-provider.component";
 import * as queries from "./graphql-queries";
+import Snackbar from 'react-native-snackbar';
 
 /**
  * Get FCM token and store with user record in Hasura
@@ -38,11 +37,16 @@ export function FCMSetup() {
         const token = await messaging().getToken();
 
         console.log("GOT TOKEN", token);
+        // TODO: This ain't firing on iOS
         upsertFCMToken({
           variables: {
             user_id: credentials.claims.sub,
             token
           }
+        });
+        Snackbar.show({
+          text: "Saved FCM Token",
+          duration: Snackbar.LENGTH_SHORT
         });
 
         const onTokenRefreshListenerRef = messaging().onTokenRefresh(token => {
@@ -57,6 +61,10 @@ export function FCMSetup() {
         });
       } catch (error) {
         // TODO: Handle error
+        Snackbar.show({
+          text: `registerForPushNotifications error: ${error.message}`,
+          duration: Snackbar.LENGTH_SHORT
+        });
         console.log("registerForPushNotifications", error);
       }
     }
