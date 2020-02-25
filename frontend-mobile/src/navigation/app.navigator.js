@@ -1,15 +1,15 @@
 import React from "react";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { HomeScreen } from "../screens/home/home-screen.component";
 import { SettingsScreen } from "../screens/settings/settings-screen.component";
 import { SetLocationScreen } from "../screens/set-location/set-location-screen.component";
-import { Icon } from "@ui-kitten/components";
-import { TouchableOpacity } from "react-native";
+import { NavSpinnerIcon } from './nav-spinner-icon.component'
 
 const Stack = createStackNavigator();
 
 export function AppNavigator() {
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
@@ -17,7 +17,7 @@ export function AppNavigator() {
           name="Home"
           component={HomeScreen}
           options={{
-            headerRight: () => <SettingsButton />
+            headerRight: () => <NavSpinnerIcon/>
           }}
         />
         <Stack.Screen name="Settings" component={SettingsScreen} />
@@ -27,11 +27,3 @@ export function AppNavigator() {
   );
 }
 
-function SettingsButton() {
-  const navigation = useNavigation();
-  return (
-    <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
-      <Icon name="settings-outline" width={32} height={32} fill="#3366FF" />
-    </TouchableOpacity>
-  );
-}
