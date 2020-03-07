@@ -8,8 +8,6 @@ export function NavSpinnerIcon() {
   const navigation = useNavigation();
   const status = useApolloNetworkStatus();
 
-  console.log("NETSTAT",status);
-
   if(status.numPendingQueries > 0 || status.numPendingMutations > 0) {
     return <Spinner/>
   }
