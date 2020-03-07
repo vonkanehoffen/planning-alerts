@@ -61,7 +61,6 @@ export function AuthProvider({ children }) {
       });
       // A bug in auth0? https://community.auth0.com/t/expires-in-value-is-always-86400/10549/5
       response.expiresIn = 36000;
-
       const credentials = {
         ...response,
         expiryDate: addSeconds(new Date(), response.expiresIn),
@@ -69,12 +68,13 @@ export function AuthProvider({ children }) {
       };
       console.log("doLogin Auth good. Creds object:", credentials);
 
-      setCredentials(credentials);
-
       await Keychain.setGenericPassword(
         "credentials",
         JSON.stringify(credentials)
       );
+
+      setCredentials(credentials);
+
     } catch (error) {
       // TODO: Error toasts
       console.log("Auth error: ", error);
@@ -105,9 +105,9 @@ export function AuthProvider({ children }) {
    * @returns {Promise<void>}
    */
   const getIdTokenSilently = async (forceRefresh) => {
-    console.log('EXPIRY DATE', parseISO(credentials.expiryDate));
-    if(isPast(parseISO(credentials.expiryDate)) || forceRefresh) {
-      console.log('getIdTokenSilently PAST');
+    const expiryDate = parseISO(credentials.expiryDate);
+    if(isPast(expiryDate) || forceRefresh) {
+      console.log('getIdTokenSilently - refreshing', forceRefresh && 'forced');
       const response = await auth0.auth.refreshToken({
         refreshToken: credentials.refreshToken
       });
@@ -122,7 +122,6 @@ export function AuthProvider({ children }) {
       });
       return response.idToken;
     } else {
-      console.log('getIdTokenSilently NOT PAST');
       return credentials.idToken;
     }
   }
