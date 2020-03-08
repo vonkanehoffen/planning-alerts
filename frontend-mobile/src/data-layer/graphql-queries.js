@@ -56,12 +56,12 @@ export const UPDATE_USER_LOCATION = gql`
  * @type {DocumentNode}
  */
 export const UPSERT_FCM_TOKEN = gql`
-  mutation upsert_fcm_token($token: String!, $user_id: String!) {
+  mutation upsert_fcm_token($token: String!, $user_id: String!, $device_id: String!) {
     insert_fcm_token(
-      objects: [{ token: $token, user_id: $user_id }]
+      objects: [{ token: $token, user_id: $user_id, device_id: $device_id }]
       on_conflict: {
         constraint: fcm_token_pkey
-        update_columns: [token, user_id]
+        update_columns: [token, user_id, device_id]
       }
     ) {
       affected_rows

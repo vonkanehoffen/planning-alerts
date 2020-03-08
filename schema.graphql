@@ -13,6 +13,8 @@ FCM device tokens for users
 columns and relationships of \"fcm_token\"
 """
 type fcm_token {
+  created_at: timestamptz
+  device_id: String!
   token: String!
   "An object relationship"
   user: users!
@@ -34,12 +36,16 @@ type fcm_token_aggregate_fields {
 
 "aggregate max on columns"
 type fcm_token_max_fields {
+  created_at: timestamptz
+  device_id: String
   token: String
   user_id: String
 }
 
 "aggregate min on columns"
 type fcm_token_min_fields {
+  created_at: timestamptz
+  device_id: String
   token: String
   user_id: String
 }
@@ -415,7 +421,7 @@ type query_root {
     where: fcm_token_bool_exp
   ): fcm_token_aggregate!
   "fetch data from the table: \"fcm_token\" using primary key columns"
-  fcm_token_by_pk(token: String!): fcm_token
+  fcm_token_by_pk(device_id: String!): fcm_token
   "fetch data from the table: \"pa_scrape\""
   pa_scrape(
     #distinct select on columns
@@ -656,7 +662,7 @@ type subscription_root {
     where: fcm_token_bool_exp
   ): fcm_token_aggregate!
   "fetch data from the table: \"fcm_token\" using primary key columns"
-  fcm_token_by_pk(token: String!): fcm_token
+  fcm_token_by_pk(device_id: String!): fcm_token
   "fetch data from the table: \"pa_scrape\""
   pa_scrape(
     #distinct select on columns
@@ -846,11 +852,17 @@ type users_mutation_response {
 "unique or primary key constraints on table \"fcm_token\""
 enum fcm_token_constraint {
   #unique or primary key constraint
+  fcm_token_device_id_key
+  #unique or primary key constraint
   fcm_token_pkey
 }
 
 "select columns of table \"fcm_token\""
 enum fcm_token_select_column {
+  #column name
+  created_at
+  #column name
+  device_id
   #column name
   token
   #column name
@@ -859,6 +871,10 @@ enum fcm_token_select_column {
 
 "update columns of table \"fcm_token\""
 enum fcm_token_update_column {
+  #column name
+  created_at
+  #column name
+  device_id
   #column name
   token
   #column name
@@ -1132,6 +1148,8 @@ input fcm_token_bool_exp {
   _and: [fcm_token_bool_exp]
   _not: fcm_token_bool_exp
   _or: [fcm_token_bool_exp]
+  created_at: timestamptz_comparison_exp
+  device_id: String_comparison_exp
   token: String_comparison_exp
   user: users_bool_exp
   user_id: String_comparison_exp
@@ -1139,6 +1157,8 @@ input fcm_token_bool_exp {
 
 "input type for inserting data into table \"fcm_token\""
 input fcm_token_insert_input {
+  created_at: timestamptz
+  device_id: String
   token: String
   user: users_obj_rel_insert_input
   user_id: String
@@ -1146,12 +1166,16 @@ input fcm_token_insert_input {
 
 "order by max() on columns of table \"fcm_token\""
 input fcm_token_max_order_by {
+  created_at: order_by
+  device_id: order_by
   token: order_by
   user_id: order_by
 }
 
 "order by min() on columns of table \"fcm_token\""
 input fcm_token_min_order_by {
+  created_at: order_by
+  device_id: order_by
   token: order_by
   user_id: order_by
 }
@@ -1171,6 +1195,8 @@ input fcm_token_on_conflict {
 
 "ordering options when selecting data from \"fcm_token\""
 input fcm_token_order_by {
+  created_at: order_by
+  device_id: order_by
   token: order_by
   user: users_order_by
   user_id: order_by
@@ -1178,6 +1204,8 @@ input fcm_token_order_by {
 
 "input type for updating data in table \"fcm_token\""
 input fcm_token_set_input {
+  created_at: timestamptz
+  device_id: String
   token: String
   user_id: String
 }

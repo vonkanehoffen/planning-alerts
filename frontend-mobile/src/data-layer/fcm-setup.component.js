@@ -6,6 +6,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { AuthContext } from "../screens/auth/auth-provider.component";
 import * as queries from "./graphql-queries";
 import Snackbar from 'react-native-snackbar';
+import DeviceInfo from 'react-native-device-info';
 
 /**
  * Get FCM token and store with user record in Hasura
@@ -27,6 +28,8 @@ export function FCMSetup() {
       //  devices vs new tokens for an existing device?
       //  Look at https://github.com/react-native-community/react-native-device-info
       console.log("DOING registerForPushNotifications");
+      const device_id = DeviceInfo.getUniqueId();
+      console.log('unique ID = ', device_id);
       try {
         console.log("DOING requestPermission");
         await messaging().requestPermission();
@@ -36,12 +39,13 @@ export function FCMSetup() {
         console.log("DOING getToken");
         const token = await messaging().getToken();
 
-        console.log("GOT TOKEN", token);
+        console.log("GOT TOKEN", token); // TODO: This shouldn't block the ui
         // TODO: This ain't firing on iOS
         upsertFCMToken({
           variables: {
             user_id: credentials.claims.sub,
-            token
+            token,
+            device_id
           }
         });
         Snackbar.show({
