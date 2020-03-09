@@ -7,6 +7,7 @@ import jwtDecode from 'jwt-decode'
 import { WelcomeScreen } from './welcome-screen.component'
 import { addSeconds, isPast, parseISO } from 'date-fns'
 import { Alert } from 'react-native'
+import FullScreenLoader from '../../components/full-screen-loader.component';
 
 export const auth0 = new Auth0({
   domain: config.auth0.domain,
@@ -127,7 +128,7 @@ export function AuthProvider({ children }) {
   }
 
   // Getting token? Show loading
-  if (loading) return <Spinner />;
+  if (loading) return <FullScreenLoader message="Loading Profile" />;
 
   // No credentials? Show auth / welcome started screen
   if (!credentials.idToken) return <WelcomeScreen doLogin={doLogin}/>;

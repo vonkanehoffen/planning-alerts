@@ -10,6 +10,7 @@ import { StyleSheet, View } from "react-native";
 import { postGisToRNMapsLocation } from "../../utils";
 import { HomeMarker } from "../../components/home-marker.component";
 import { PaStatusDetails } from "../../components/pa-status-details-callout.component";
+import FullScreenLoader from "../../components/full-screen-loader.component";
 
 export function UserLocationMap({ navigation }) {
   const { credentials } = useContext(AuthContext);
@@ -22,11 +23,7 @@ export function UserLocationMap({ navigation }) {
   const [focussedPa, setFocussedPa] = useState(null);
 
   if (loading) {
-    return (
-      <Layout>
-        <Spinner />
-      </Layout>
-    );
+    return <FullScreenLoader message="Loading Map" />;
   }
 
   if (error) {

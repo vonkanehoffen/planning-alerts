@@ -6,6 +6,7 @@ import * as queries from "../../data-layer/graphql-queries";
 import Geolocation from "react-native-geolocation-service";
 import { check, request, PERMISSIONS, RESULTS } from "react-native-permissions";
 import { Platform } from "react-native";
+import FullScreenLoader from '../../components/full-screen-loader.component';
 
 const NavigationIcon = style => <Icon {...style} name="navigation-2-outline" />;
 
@@ -61,7 +62,7 @@ export function SetLocationScreen({ navigation }) {
     }
   };
 
-  if (loading) return <Spinner />;
+  if (loading) return <FullScreenLoader message="Setting Location" />;
   if (error) return <Text status="danger">{error.message}</Text>;
   return (
     <Layout>

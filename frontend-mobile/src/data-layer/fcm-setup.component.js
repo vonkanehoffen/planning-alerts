@@ -76,5 +76,5 @@ export function FCMSetup() {
     registerForPushNotifications();
   }, []);
 
-  return <Text>FCM Init....</Text>;
+  return false;
 }
