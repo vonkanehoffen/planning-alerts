@@ -12,7 +12,7 @@ import {
 } from '../../components/pa-marker.component';
 import { PaStatusDetails } from "../../components/pa-status-details-callout.component";
 
-export function PaStatusMarkers({ location, focusPa }) {
+export function PaStatusMarkers({ location, focusPa, focusedPa }) {
   const {
     error: openPaError,
     data: openPaData
@@ -84,7 +84,7 @@ export function PaStatusMarkers({ location, focusPa }) {
             }}
             tracksViewChanges={false}
           >
-            <PaMarker status={compareAsc(parseISO(pa.updated_at), minDate) > -1 ? PA_NEW : PA_OPEN} />
+            <PaMarker status={compareAsc(parseISO(pa.updated_at), minDate) > -1 ? PA_NEW : PA_OPEN} focused={pa.id === focusedPa?.id}/>
           </Marker>
         ))}
     </>

@@ -20,7 +20,7 @@ export function UserLocationMap({ navigation }) {
     }
   });
   const [mapViewLocation, setMapViewLocation] = useState(null);
-  const [focussedPa, setFocussedPa] = useState(null);
+  const [focusedPa, setfocusedPa] = useState(null);
 
   if (loading) {
     return <FullScreenLoader message="Loading Map" />;
@@ -52,10 +52,10 @@ export function UserLocationMap({ navigation }) {
    * @param pa
    */
   const focusPa = pa => {
-    setFocussedPa(pa);
+    setfocusedPa(pa);
   };
 
-  const unFocusPa = () => setFocussedPa(null);
+  const unFocusPa = () => setfocusedPa(null);
 
   const location = _.get(data, "users[0].location");
 
@@ -88,10 +88,11 @@ export function UserLocationMap({ navigation }) {
         <PaStatusMarkers
           location={mapViewLocation || location}
           focusPa={focusPa}
+          focusedPa={focusedPa}
         />
       </MapView>
-      {focussedPa !== null && (
-        <PaStatusDetails pa={focussedPa} unFocusPa={unFocusPa} />
+      {focusedPa !== null && (
+        <PaStatusDetails pa={focusedPa} unFocusPa={unFocusPa} />
       )}
     </View>
   );

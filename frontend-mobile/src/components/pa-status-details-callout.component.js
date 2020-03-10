@@ -48,7 +48,7 @@ function Meta({ icon, title, value }) {
 }
 
 export function PaStatusDetails({ pa, unFocusPa }) {
-  console.log("PaStatusDetails ---- ", JSON.stringify(pa, null, 2));
+  // console.log("PaStatusDetails ---- ", JSON.stringify(pa, null, 2));
   return (
     <Card
       header={() => <Header pa={pa} />}

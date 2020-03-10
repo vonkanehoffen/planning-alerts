@@ -5,10 +5,12 @@ export const PA_OPEN = 'PA_OPEN';
 export const PA_CLOSED = 'PA_CLOSED';
 export const PA_NEW = 'PA_NEW';
 
-export function PaMarker({ status }) {
+export function PaMarker({ status, focused }) {
   const bgFill = { [PA_OPEN]: "#426C49", [PA_CLOSED]: "#999999", [PA_NEW]: "#ff9900" };
   const iconFill = { [PA_OPEN]: "#7BAF5B", [PA_CLOSED]: "#777777", [PA_NEW]: '#ffffff' };
 
+  // TODO: Highlight marker ... can it be done where tracksViewChanges={false} is?
+  //     <Svg width={focused ? 51 : 34} height={focused ? 70 : 47} viewBox="0 0 34 47">
   return (
     <Svg width="34px" height="47px" viewBox="0 0 34 47">
       <G
@@ -24,11 +26,7 @@ export function PaMarker({ status }) {
               d="M16.6,45.9 C16,45.2 1,28.4 1,16.7 C1,7.9 8.2,0.7 17,0.7 C25.8,0.7 33,7.9 33,16.7 C33,28.4 18,45.2 17.3,45.9 L17,46.3 L16.6,45.9 Z"
               id="Path"
               fill={bgFill[status]}
-            />
-            <Path
-              d="M17,1.1 C25.6,1.1 32.5,8.1 32.5,16.6 C32.5,28.3 17,45.5 17,45.5 C17,45.5 1.5,28.3 1.5,16.7 C1.5,8.1 8.4,1.1 17,1.1 M17,0.1 C7.9,0.1 0.5,7.5 0.5,16.6 C0.5,21.6 3.2,28.2 8.4,36 C12.3,41.8 16.2,46.1 16.3,46.2 L17,47 L17.7,46.2 C18.3,45.5 33.5,28.6 33.5,16.7 C33.5,7.5 26.1,0.1 17,0.1 L17,0.1 Z"
-              id="Shape"
-              fill="#FFFFFF"
+              stroke="white"
             />
           </G>
           <G
