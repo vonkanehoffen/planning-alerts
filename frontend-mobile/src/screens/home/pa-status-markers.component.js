@@ -3,14 +3,17 @@ import { StyleSheet } from "react-native";
 import { Callout, Marker } from "react-native-maps";
 import * as queries from "../../data-layer/graphql-queries";
 import { useQuery } from "@apollo/react-hooks";
-import { subDays, formatISO } from "date-fns";
+import { subDays, formatISO, compareAsc, parseISO } from "date-fns";
 import { postGisToRNMapsLocation } from "../../utils";
-import { PaMarker } from "../../components/pa-marker.component";
+import {
+  PA_CLOSED, PA_NEW,
+  PA_OPEN,
+  PaMarker,
+} from '../../components/pa-marker.component';
 import { PaStatusDetails } from "../../components/pa-status-details-callout.component";
 
 export function PaStatusMarkers({ location, focusPa }) {
   const {
-    loading: openPaLoading,
     error: openPaError,
     data: openPaData
   } = useQuery(queries.GET_OPEN_PA_NEAR_POINT, {
@@ -21,29 +24,20 @@ export function PaStatusMarkers({ location, focusPa }) {
     // skip: !location
   });
 
-  const minDate = formatISO(subDays(new Date(), 3), { representation: "date" });
+  const minDate = subDays(new Date(), 8);
+  const minDateFormatted = formatISO(minDate, { representation: "date" });
   const {
-    loading: closedPaLoading,
     error: closedPaError,
     data: closedPaData
   } = useQuery(queries.GET_RECENT_CLOSED_PA_NEAR_POINT, {
     variables: {
       point: location,
       distance: 2000,
-      minDate: minDate
+      minDate: minDateFormatted
     }
   });
 
-  // // TODO: Loading and error display for this further up the tree.
-  // if (openPaLoading || closedPaLoading) {
-  //   return false;
-  //   // return (
-  //   //   <Layout>
-  //   //     <Spinner />
-  //   //   </Layout>
-  //   // );
-  // }
-  //
+  // // TODO: error display for this further up the tree.
   // if (openPaError || closedPaError) {
   //   return false;
   //   // return (
@@ -55,9 +49,8 @@ export function PaStatusMarkers({ location, focusPa }) {
   //   // );
   // }
 
-  // TODO: Marker performance: https://medium.com/@buchereli/performant-custom-map-markers-for-react-native-maps-ddc8d5a1eeb0
-  //  maybe just tracksViewChanges is ok?
   // console.log("PA STATUS MARKERS RESPONSES ---- ", JSON.stringify({openPaData, closedPaData}, null, 2));
+
   return (
     <>
       {closedPaData &&
@@ -71,7 +64,7 @@ export function PaStatusMarkers({ location, focusPa }) {
             }}
             tracksViewChanges={false}
           >
-            <PaMarker open={false} />
+            <PaMarker status={PA_CLOSED} />
             {/*<Callout>*/}
             {/*  <PaStatusDetails pa={pa} />*/}
             {/*</Callout>*/}
@@ -91,7 +84,7 @@ export function PaStatusMarkers({ location, focusPa }) {
             }}
             tracksViewChanges={false}
           >
-            <PaMarker open={true} />
+            <PaMarker status={compareAsc(parseISO(pa.updated_at), minDate) > -1 ? PA_NEW : PA_OPEN} />
           </Marker>
         ))}
     </>
