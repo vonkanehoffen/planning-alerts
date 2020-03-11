@@ -13,7 +13,8 @@
 import React, { useEffect } from "react";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
-import { mapping, light as theme } from "@eva-design/eva";
+import { mapping } from "@eva-design/eva";
+import theme from './theme'
 import { AppNavigator } from "./navigation/app.navigator";
 import { GraphQLProvider } from "./data-layer/graphql-provider.component";
 import { AuthProvider } from "./screens/auth/auth-provider.component";

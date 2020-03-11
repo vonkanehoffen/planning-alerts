@@ -1,27 +1,40 @@
-import React from 'react'
-import { StyleSheet } from "react-native";
+import React from "react";
+import { StyleSheet, ImageBackground, View } from "react-native";
 import { Button, Icon, Layout, Text } from "@ui-kitten/components";
+import { PaLogo } from "../../components/pa-logo.component";
 
-const HeartIcon = style => <Icon {...style} name="heart" />;
+const PeopleIcon = style => <Icon {...style} name="people-outline" />;
 
-export function WelcomeScreen ({ doLogin }) {
+export function WelcomeScreen({ doLogin }) {
   return (
-    <Layout style={styles.container}>
-      <Text>Welcome stuff here</Text>
-      <Button icon={HeartIcon} onPress={doLogin}>
-        Log In
+    <ImageBackground
+      source={require("../../../assets/intro-bg.jpg")}
+      style={styles.container}
+    >
+      <View>
+        <PaLogo/>
+        <Text category="h1" style={styles.text}>Welcome to Planning Alerts</Text>
+        <Text category="h2" style={styles.text}>It’s time you knew what’s happening in your neighbourhood.</Text>
+      </View>
+      <Button icon={PeopleIcon} onPress={doLogin} style={styles.button} size="giant">
+        Sign up / Login
       </Button>
-    </Layout>
-  )
-};
+    </ImageBackground>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    padding: 30
+  },
+  button: {
+    width: '100%'
   },
   text: {
-    textAlign: "center"
+    color: 'white',
+    paddingTop: 30
   }
 });
