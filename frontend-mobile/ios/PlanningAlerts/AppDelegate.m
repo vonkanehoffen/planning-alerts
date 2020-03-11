@@ -15,6 +15,8 @@
 #import <React/RCTLinkingManager.h>
 #import <GoogleMaps/GoogleMaps.h>
 
+#import "RNBootSplash.h"
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url
@@ -39,8 +41,14 @@
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];
   rootViewController.view = rootView;
+
+  [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView];
+
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+
+  [RNBootSplash initialShow];
+
   return YES;
 }
 

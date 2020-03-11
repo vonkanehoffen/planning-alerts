@@ -19,6 +19,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* PlanningAlertsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* PlanningAlertsTests.m */; };
 		37A0C4641595DEBF3BF853D7 /* libPods-PlanningAlertsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BB61A9990E8EF9562A13BF5 /* libPods-PlanningAlertsTests.a */; };
 		3829E27323F82EB200E0D4F7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3829E27223F82EB200E0D4F7 /* GoogleService-Info.plist */; };
+		384CDCA9241930B200E16A20 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 384CDCA8241930B200E16A20 /* BootSplash.storyboard */; };
 		B81C6D393B4EC3154B0076A4 /* libPods-PlanningAlerts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BB5D330DEB841DB424844B /* libPods-PlanningAlerts.a */; };
 		E50F34DA0673C6A9582DDA78 /* libPods-PlanningAlerts-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2420DB06039F18DB68DEB37D /* libPods-PlanningAlerts-tvOSTests.a */; };
 /* End PBXBuildFile section */
@@ -58,6 +59,7 @@
 		2D02E4901E0B4A5D006451C7 /* PlanningAlerts-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PlanningAlerts-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		381814E323F843360055DA21 /* PlanningAlerts.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = PlanningAlerts.entitlements; path = PlanningAlerts/PlanningAlerts.entitlements; sourceTree = "<group>"; };
 		3829E27223F82EB200E0D4F7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		384CDCA8241930B200E16A20 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = PlanningAlerts/BootSplash.storyboard; sourceTree = "<group>"; };
 		3BB61A9990E8EF9562A13BF5 /* libPods-PlanningAlertsTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PlanningAlertsTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49BB5D330DEB841DB424844B /* libPods-PlanningAlerts.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PlanningAlerts.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F4F8DF033C02B707461EE06 /* Pods-PlanningAlerts-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlanningAlerts-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-PlanningAlerts-tvOSTests/Pods-PlanningAlerts-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 			children = (
 				381814E323F843360055DA21 /* PlanningAlerts.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
+				384CDCA8241930B200E16A20 /* BootSplash.storyboard */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -349,6 +352,7 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				3829E27323F82EB200E0D4F7 /* GoogleService-Info.plist in Resources */,
+				384CDCA9241930B200E16A20 /* BootSplash.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

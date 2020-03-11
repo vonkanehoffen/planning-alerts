@@ -18,9 +18,11 @@ import { AppNavigator } from "./navigation/app.navigator";
 import { GraphQLProvider } from "./data-layer/graphql-provider.component";
 import { AuthProvider } from "./screens/auth/auth-provider.component";
 import messaging, { firebase } from "@react-native-firebase/messaging";
+import RNBootSplash from "react-native-bootsplash";
 
 export function App() {
   useEffect(() => {
+    RNBootSplash.hide();
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       console.log("FCM Message Data:", remoteMessage.data);
 
