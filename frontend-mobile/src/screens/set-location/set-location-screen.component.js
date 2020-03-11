@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
+import { View } from "react-native";
 import { Button, Icon, Layout, Spinner, Text } from "@ui-kitten/components";
 import { AuthContext } from "../auth/auth-provider.component";
 import { useMutation } from "@apollo/react-hooks";
 import * as queries from "../../data-layer/graphql-queries";
 import Geolocation from "react-native-geolocation-service";
 import { check, request, PERMISSIONS, RESULTS } from "react-native-permissions";
-import { Platform } from "react-native";
-import FullScreenLoader from '../../components/full-screen-loader.component';
+import { Platform, StyleSheet } from "react-native";
+import FullScreenLoader from "../../components/full-screen-loader.component";
 
 const NavigationIcon = style => <Icon {...style} name="navigation-2-outline" />;
 
@@ -65,15 +66,29 @@ export function SetLocationScreen({ navigation }) {
   if (loading) return <FullScreenLoader message="Setting Location" />;
   if (error) return <Text status="danger">{error.message}</Text>;
   return (
-    <Layout>
-      <Text category="h3">
-        Welcome to Planning Alerts. Alpha. This needs styling for a start.
-      </Text>
-      <Text category="h3">Let's get started!</Text>
-      <Button onPress={getLocation} icon={NavigationIcon}>
-        Get Location
-      </Button>
-      <Text>Data: {JSON.stringify(data, null, 2)}</Text>
+    <Layout style={styles.container}>
+      <View>
+        <Text category="h3" style={styles.intro}>
+          Welcome to Planning Alerts. It's time to get involved in your local area.
+        </Text>
+        <Text category="h3">Let's get started!</Text>
+      </View>
+      <View>
+        <Button onPress={getLocation} icon={NavigationIcon}>
+          Get Location
+        </Button>
+      </View>
     </Layout>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
+    padding: 20
+  },
+  intro: {
+    paddingBottom: 20
+  }
+});
