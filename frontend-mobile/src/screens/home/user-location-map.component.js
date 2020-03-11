@@ -63,7 +63,8 @@ export function UserLocationMap({ navigation }) {
     navigation.navigate("Set Location");
     return false;
   }
-
+  // Note: showsMyLocationButton={true} on MapView doesn't work reliably.
+  // This is a race condition bug: https://github.com/react-native-community/react-native-maps/issues/1033#issuecomment-284531196
   return (
     <View style={styles.container}>
       <MapView
@@ -77,6 +78,8 @@ export function UserLocationMap({ navigation }) {
         }}
         minZoomLevel={12}
         onRegionChangeComplete={handleRegionChange}
+        showsUserLocation={true}
+        showsMyLocationButton={true}
       >
         <Marker
           coordinate={postGisToRNMapsLocation(location)}
