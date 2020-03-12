@@ -7,7 +7,7 @@
         "url": "https://planning-alerts.herokuapp.com/v1/graphql",
         "headers": {
           "user-agent": "JS GraphQL",
-          "x-hasura-admin-secret": "7LyC7uCJ8jPP9YNhwkFJDTLR"
+          "x-hasura-admin-secret": "SECRET_HERE"
         },
         "introspect": true
       }
