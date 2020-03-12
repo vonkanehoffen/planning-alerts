@@ -1,7 +1,11 @@
 import React, { useContext, useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import * as queries from "../../data-layer/graphql-queries";
-import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, {
+  Marker,
+  PROVIDER_GOOGLE,
+  PROVIDER_DEFAULT
+} from "react-native-maps";
 import { Layout, Text, useTheme } from "@ui-kitten/components";
 import { TouchableOpacity } from "react-native";
 import { PaStatusMarkers } from "./pa-status-markers.component";
@@ -90,7 +94,7 @@ export function UserLocationMap({ navigation }) {
   return (
     <View style={styles.container}>
       <MapView
-        provider={PROVIDER_GOOGLE}
+        provider={PROVIDER_DEFAULT}
         style={styles.map}
         region={
           region ||
