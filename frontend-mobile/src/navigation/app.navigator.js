@@ -1,29 +1,55 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { Drawer as UIKittenDrawer, Layout, Text } from "@ui-kitten/components";
 import { HomeScreen } from "../screens/home/home-screen.component";
 import { SettingsScreen } from "../screens/settings/settings-screen.component";
 import { SetLocationScreen } from "../screens/set-location/set-location-screen.component";
-import { NavSpinnerIcon } from './nav-spinner-icon.component'
+import { NavSpinnerIcon } from "./nav-spinner-icon.component";
 
-const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
-export function AppNavigator() {
+function DrawerContent({ navigation, state }) {
+  const onSelect = index => {
+    navigation.navigate(state.routeNames[index]);
+  };
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            headerRight: () => <NavSpinnerIcon/>
-          }}
-        />
-        <Stack.Screen name="Settings" component={SettingsScreen} />
-        <Stack.Screen name="Set Location" component={SetLocationScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <UIKittenDrawer
+      data={[
+        { title: "Home" },
+        { title: "Settings" },
+        { title: "Set Location" }
+      ]}
+      selectedIndex={state.index}
+      onSelect={onSelect}
+    />
   );
 }
 
+export function DrawerNavigator() {
+  return (
+    <Drawer.Navigator
+      initialRouteName="Home"
+      drawerContent={props => <DrawerContent {...props} />}
+    >
+      <Drawer.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          headerRight: () => <NavSpinnerIcon />
+        }}
+      />
+      <Drawer.Screen name="Settings" component={SettingsScreen} />
+      <Drawer.Screen name="Set Location" component={SetLocationScreen} />
+    </Drawer.Navigator>
+  );
+}
+
+export function AppNavigator() {
+  return (
+    <NavigationContainer>
+      <DrawerNavigator />
+    </NavigationContainer>
+  );
+}
