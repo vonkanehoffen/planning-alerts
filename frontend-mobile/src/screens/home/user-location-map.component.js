@@ -19,6 +19,26 @@ import FullScreenLoader from "../../components/full-screen-loader.component";
 import { useFocusEffect } from "@react-navigation/native";
 import { PaLogo } from "../../components/pa-logo.component";
 
+/**
+ * Main map view
+ *
+ * Note there are quirks to react-native-maps
+ *
+ * showsMyLocationButton={true} on MapView doesn't work reliably.
+ * This is a race condition bug: https://github.com/react-native-community/react-native-maps/issues/1033#issuecomment-284531196
+ *
+ * Google Maps on iOS isn't happy with a controlled region,so it has to be Apple Maps on iOS (default):
+ * https://github.com/react-native-community/react-native-maps/issues/1704
+ *
+ * Initial region doesn't work for Apple Maps.
+ * https://github.com/react-native-community/react-native-maps/issues/1677
+ * https://github.com/react-native-community/react-native-maps/issues/1338#issuecomment-321532191
+ *
+ *
+ * @param navigation
+ * @returns {boolean|*}
+ * @constructor
+ */
 export function UserLocationMap({ navigation }) {
   const theme = useTheme();
   // Get user location
@@ -29,6 +49,7 @@ export function UserLocationMap({ navigation }) {
     }
   });
   const [region, setRegion] = useState(null);
+  const [mapReady, setMapReady] = useState(false);
 
   const [mapViewLocation, setMapViewLocation] = useState(null);
   const [focusedPa, setfocusedPa] = useState(null);
@@ -56,18 +77,20 @@ export function UserLocationMap({ navigation }) {
    * @param region
    */
   const handleRegionChange = newRegion => {
-    console.log("CHANEG", newRegion);
-    setRegion(newRegion);
-    setMapViewLocation({
-      type: "Point",
-      coordinates: [newRegion.latitude, newRegion.longitude]
-    });
+    if (mapReady) {
+      console.log("handleRegionChange", newRegion);
+      setRegion(newRegion);
+      setMapViewLocation({
+        type: "Point",
+        coordinates: [newRegion.latitude, newRegion.longitude]
+      });
+    }
   };
 
   const resetRegion = () => {
     console.log("doing reset");
     setRegion(
-      regionFrom(location.coordinates[0], location.coordinates[1], 5000)
+      regionFrom(userLocation.coordinates[0], userLocation.coordinates[1], 5000)
     );
   };
 
@@ -83,35 +106,36 @@ export function UserLocationMap({ navigation }) {
 
   const unFocusPa = () => setfocusedPa(null);
 
-  const location = _.get(data, "users[0].location");
+  const userLocation = _.get(data, "users[0].location");
 
-  if (!location) {
+  if (!userLocation) {
     navigation.navigate("Set Location");
     return false;
   }
-  // Note: showsMyLocationButton={true} on MapView doesn't work reliably.
-  // This is a race condition bug: https://github.com/react-native-community/react-native-maps/issues/1033#issuecomment-284531196
+
+  const _region =
+    region ||
+    regionFrom(userLocation.coordinates[0], userLocation.coordinates[1], 5000);
+  console.log("_region: ", _region);
   return (
     <View style={styles.container}>
       <MapView
         provider={PROVIDER_DEFAULT}
         style={styles.map}
-        region={
-          region ||
-          regionFrom(location.coordinates[0], location.coordinates[1], 5000)
-        }
+        region={_region}
+        onMapReady={() => setMapReady(true)}
         minZoomLevel={12}
         onRegionChangeComplete={handleRegionChange}
         showsUserLocation={true}
         showsMyLocationButton={true}
       >
         <PaStatusMarkers
-          location={mapViewLocation || location}
+          location={mapViewLocation || userLocation}
           focusPa={focusPa}
           focusedPa={focusedPa}
         />
         <Marker
-          coordinate={postGisToRNMapsLocation(location)}
+          coordinate={postGisToRNMapsLocation(userLocation)}
           title="You"
           tracksViewChanges={false}
         >
