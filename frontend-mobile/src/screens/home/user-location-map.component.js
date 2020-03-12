@@ -2,25 +2,38 @@ import React, { useContext, useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import * as queries from "../../data-layer/graphql-queries";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import { Layout, Text, Spinner } from "@ui-kitten/components";
+import { Layout, Text, useTheme } from "@ui-kitten/components";
+import { TouchableOpacity } from "react-native";
 import { PaStatusMarkers } from "./pa-status-markers.component";
 import _ from "lodash";
 import { AuthContext } from "../auth/auth-provider.component";
 import { StyleSheet, View } from "react-native";
-import { postGisToRNMapsLocation } from "../../utils";
+import { postGisToRNMapsLocation, regionFrom } from "../../utils";
 import { HomeMarker } from "../../components/home-marker.component";
 import { PaStatusDetails } from "../../components/pa-status-details-callout.component";
 import FullScreenLoader from "../../components/full-screen-loader.component";
+import { useFocusEffect } from "@react-navigation/native";
+import { PaLogo } from "../../components/pa-logo.component";
 
 export function UserLocationMap({ navigation }) {
+  const theme = useTheme();
+  // Get user location
   const { credentials } = useContext(AuthContext);
   const { loading, error, data } = useQuery(queries.GET_USER_LOCATION, {
     variables: {
       id: credentials.claims.sub
     }
   });
+  const [region, setRegion] = useState(null);
+
   const [mapViewLocation, setMapViewLocation] = useState(null);
   const [focusedPa, setfocusedPa] = useState(null);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log("FOCUSSSSS MAP");
+    }, [])
+  );
 
   if (loading) {
     return <FullScreenLoader message="Loading Map" />;
@@ -38,11 +51,20 @@ export function UserLocationMap({ navigation }) {
    * Update location gql query param with new map region, when dragged.
    * @param region
    */
-  const handleRegionChange = region => {
+  const handleRegionChange = newRegion => {
+    console.log("CHANEG", newRegion);
+    setRegion(newRegion);
     setMapViewLocation({
       type: "Point",
-      coordinates: [region.latitude, region.longitude]
+      coordinates: [newRegion.latitude, newRegion.longitude]
     });
+  };
+
+  const resetRegion = () => {
+    console.log("doing reset");
+    setRegion(
+      regionFrom(location.coordinates[0], location.coordinates[1], 5000)
+    );
   };
 
   /**
@@ -70,17 +92,20 @@ export function UserLocationMap({ navigation }) {
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.map}
-        initialRegion={{
-          latitude: location.coordinates[0],
-          longitude: location.coordinates[1],
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
-        }}
+        region={
+          region ||
+          regionFrom(location.coordinates[0], location.coordinates[1], 5000)
+        }
         minZoomLevel={12}
         onRegionChangeComplete={handleRegionChange}
         showsUserLocation={true}
         showsMyLocationButton={true}
       >
+        <PaStatusMarkers
+          location={mapViewLocation || location}
+          focusPa={focusPa}
+          focusedPa={focusedPa}
+        />
         <Marker
           coordinate={postGisToRNMapsLocation(location)}
           title="You"
@@ -88,15 +113,13 @@ export function UserLocationMap({ navigation }) {
         >
           <HomeMarker />
         </Marker>
-        <PaStatusMarkers
-          location={mapViewLocation || location}
-          focusPa={focusPa}
-          focusedPa={focusedPa}
-        />
       </MapView>
       {focusedPa !== null && (
         <PaStatusDetails pa={focusedPa} unFocusPa={unFocusPa} />
       )}
+      <TouchableOpacity style={styles.logo} onPress={resetRegion}>
+        <PaLogo size={40} color={theme["color-primary-900"]} />
+      </TouchableOpacity>
     </View>
   );
 }
@@ -111,5 +134,10 @@ const styles = StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject
+  },
+  logo: {
+    position: "absolute",
+    top: 10,
+    left: 10
   }
 });
