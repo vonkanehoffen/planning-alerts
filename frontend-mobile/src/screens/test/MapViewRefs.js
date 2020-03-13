@@ -17,31 +17,26 @@ const newRegion = {
   longitudeDelta: 0.06244310295477362
 };
 
-class MapViewRefs extends Component {
-  constructor(props) {
-    super(props);
-    this.setRegion = this.setRegion.bind(this);
-  }
+function MapViewRefs() {
+  let map;
 
-  setRegion() {
-    console.log("SETREGION:", this.mapRef);
-    this.map.animateToRegion(newRegion);
-  }
+  const setRegion = () => {
+    console.log("SETREGIONFN:", map);
+    map.animateToRegion(newRegion);
+  };
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <MapView
-          initialRegion={initialRegion}
-          style={styles.map}
-          ref={el => (this.map = el)}
-        />
-        <TouchableOpacity style={styles.logo} onPress={this.setRegion}>
-          <PaLogo size={40} color="#FF0000" />
-        </TouchableOpacity>
-      </View>
-    );
-  }
+  return (
+    <View style={styles.container}>
+      <MapView
+        initialRegion={initialRegion}
+        style={styles.map}
+        ref={el => (map = el)}
+      />
+      <TouchableOpacity style={styles.logo} onPress={setRegion}>
+        <PaLogo size={40} color="#FF0000" />
+      </TouchableOpacity>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
