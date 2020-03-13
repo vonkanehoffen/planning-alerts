@@ -9,8 +9,7 @@ import { SetLocationScreen } from "../screens/set-location/set-location-screen.c
 
 // Don't delete these... it f***** jinxes it.
 // import {MapTest} from '../screens/test/map-test.component';
-// import MyMapView from '../screens/test/MyMapView';
-import MapViewRefs from "../screens/test/MapViewRefs";
+// import MapViewRefs from "../screens/test/MapViewRefs";
 
 const BottomTab = createBottomTabNavigator();
 
@@ -25,7 +24,7 @@ const BottomTabBar = ({ navigation, state }) => {
         <BottomNavigationTab title="HOME" />
         <BottomNavigationTab title="SETTINGS" />
         <BottomNavigationTab title="SET LOCATION" />
-        <BottomNavigationTab title="TEST" />
+        {/*<BottomNavigationTab title="TEST" />*/}
       </BottomNavigation>
     </SafeAreaView>
   );
@@ -39,7 +38,7 @@ const TabNavigator = () => (
     <BottomTab.Screen name="Home" component={HomeScreen} />
     <BottomTab.Screen name="Settings" component={SettingsScreen} />
     <BottomTab.Screen name="Set Location" component={SetLocationScreen} />
-    <BottomTab.Screen name="Test" component={MapViewRefs} />
+    {/*<BottomTab.Screen name="Test" component={MapViewRefs} />*/}
   </BottomTab.Navigator>
 );
 
