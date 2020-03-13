@@ -50,17 +50,20 @@ export function UserLocationMap({ navigation }) {
       id: credentials.claims.sub
     }
   });
-  const [region, setRegion] = useState(null);
+  const userLocation = _.get(data, "users[0].location");
+
   const [mapReady, setMapReady] = useState(false);
 
   const [mapViewLocation, setMapViewLocation] = useState(null);
   const [focusedPa, setfocusedPa] = useState(null);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      console.log("FOCUSSSSS MAP");
-    }, [])
-  );
+  let map; // ref
+
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     console.log("FOCUSSSSS MAP");
+  //   }, [])
+  // );
 
   if (loading) {
     return <FullScreenLoader message="Loading Map" />;
@@ -74,6 +77,17 @@ export function UserLocationMap({ navigation }) {
     );
   }
 
+  if (!userLocation) {
+    navigation.navigate("Set Location");
+    return false;
+  }
+
+  const userRegion = regionFrom(
+    userLocation.coordinates[0],
+    userLocation.coordinates[1],
+    5000
+  );
+
   /**
    * Update location gql query param with new map region, when dragged.
    * @param region
@@ -81,7 +95,6 @@ export function UserLocationMap({ navigation }) {
   const handleRegionChange = newRegion => {
     if (mapReady) {
       console.log("handleRegionChange", newRegion);
-      setRegion(newRegion);
       setMapViewLocation({
         type: "Point",
         coordinates: [newRegion.latitude, newRegion.longitude]
@@ -91,9 +104,7 @@ export function UserLocationMap({ navigation }) {
 
   const resetRegion = () => {
     console.log("doing reset");
-    setRegion(
-      regionFrom(userLocation.coordinates[0], userLocation.coordinates[1], 5000)
-    );
+    map.animateToRegion(userRegion);
   };
 
   /**
@@ -108,23 +119,12 @@ export function UserLocationMap({ navigation }) {
 
   const unFocusPa = () => setfocusedPa(null);
 
-  const userLocation = _.get(data, "users[0].location");
-
-  if (!userLocation) {
-    navigation.navigate("Set Location");
-    return false;
-  }
-
-  const _region =
-    region ||
-    regionFrom(userLocation.coordinates[0], userLocation.coordinates[1], 5000);
-  console.log("_region: ", _region);
   return (
     <View style={styles.container}>
       <MapView
-        provider={PROVIDER_DEFAULT}
+        initialRegion={userRegion}
+        ref={el => (map = el)}
         style={styles.map}
-        region={_region}
         onMapReady={() => setMapReady(true)}
         minZoomLevel={12}
         onRegionChangeComplete={handleRegionChange}
