@@ -34,6 +34,8 @@ import { PaLogo } from "../../components/pa-logo.component";
  * https://github.com/react-native-community/react-native-maps/issues/1677
  * https://github.com/react-native-community/react-native-maps/issues/1338#issuecomment-321532191
  *
+ * TODO: So needs to be a class component so refs work and animateToRegion can be used.
+ * https://github.com/react-native-community/react-native-maps/issues/1338#issuecomment-351270046
  *
  * @param navigation
  * @returns {boolean|*}

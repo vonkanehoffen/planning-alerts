@@ -20,6 +20,7 @@ export function postGisToRNMapsLocation(location) {
  * @returns {{longitudeDelta: number, latitudeDelta: number, latitude: *, longitude: *}}
  */
 export function regionFrom(lat, lon, distance) {
+  console.log("regionFrom called");
   distance = distance / 2;
   const circumference = 40075;
   const oneDegreeOfLatitudeInMeters = 111.32 * 1000;
