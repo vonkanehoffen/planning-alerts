@@ -33,9 +33,12 @@ import { PaLogo } from "../../components/pa-logo.component";
  * Initial region doesn't work for Apple Maps.
  * https://github.com/react-native-community/react-native-maps/issues/1677
  * https://github.com/react-native-community/react-native-maps/issues/1338#issuecomment-321532191
+ * ... when minZoomLevel={12} is set anyway.
  *
- * TODO: So needs to be a class component so refs work and animateToRegion can be used.
+ *
+ * animateToRegion is way more reloiable than control via props.
  * https://github.com/react-native-community/react-native-maps/issues/1338#issuecomment-351270046
+ *
  *
  * @param navigation
  * @returns {boolean|*}
@@ -62,6 +65,7 @@ export function UserLocationMap({ navigation }) {
   // useFocusEffect(
   //   React.useCallback(() => {
   //     console.log("FOCUSSSSS MAP");
+  //     resetRegion();
   //   }, [])
   // );
 
@@ -93,17 +97,15 @@ export function UserLocationMap({ navigation }) {
    * @param region
    */
   const handleRegionChange = newRegion => {
-    if (mapReady) {
-      console.log("handleRegionChange", newRegion);
-      setMapViewLocation({
-        type: "Point",
-        coordinates: [newRegion.latitude, newRegion.longitude]
-      });
-    }
+    console.log("handleRegionChange", newRegion);
+    setMapViewLocation({
+      type: "Point",
+      coordinates: [newRegion.latitude, newRegion.longitude]
+    });
   };
 
   const resetRegion = () => {
-    console.log("doing reset");
+    console.log("doing reset", userRegion);
     map.animateToRegion(userRegion);
   };
 
@@ -119,14 +121,20 @@ export function UserLocationMap({ navigation }) {
 
   const unFocusPa = () => setfocusedPa(null);
 
+  // console.log("USER REGION: ", userRegion);
+
   return (
     <View style={styles.container}>
       <MapView
+        provider={PROVIDER_DEFAULT}
         initialRegion={userRegion}
         ref={el => (map = el)}
         style={styles.map}
-        onMapReady={() => setMapReady(true)}
-        minZoomLevel={12}
+        onMapReady={() => {
+          // setMapReady(true);
+          console.log("MAP READY");
+          resetRegion();
+        }}
         onRegionChangeComplete={handleRegionChange}
         showsUserLocation={true}
         showsMyLocationButton={true}
