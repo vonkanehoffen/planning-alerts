@@ -56,10 +56,13 @@ and [here](https://facebook.github.io/react-native/docs/signed-apk-android)
 
 #### Android:
 
-Make sure `frontend-mobile/android/app/pa-upload-key.keystore` exists.
+- Make sure `frontend-mobile/android/app/pa-upload-key.keystore` exists.
+- Bump versionCode & versionName in `frontend-mobile/android/app/build.gradle`
 
 ```
 npx react-native run-android --variant=release
+cd android
+./gradlew bundleRelease
 ```
 
 Upload the resulting bundle `frontend-mobile/android/app/build/outputs/bundle/release/app.aab` to Play console.
@@ -70,7 +73,8 @@ Enable App Transport Security - `NSExceptionDomains` in `ios/PlanningAlerts/Info
 
 In Xcode:
 
-- Switch profile to "Release"
+- Switch profile to "Release" (Product -> Scheme -> Edit Scheme...)
+- Choose "Generic iOS Device" as target
 - Product -> Build
 - Product -> Archive
 - Window -> Organizer (to see new archive)
