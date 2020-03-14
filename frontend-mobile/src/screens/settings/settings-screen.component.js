@@ -1,8 +1,11 @@
 import React from "react";
+import _ from "lodash";
 import { StyleSheet, View } from "react-native";
 import { Icon, Layout, ListItem, Text, useTheme } from "@ui-kitten/components";
 import { AuthContext } from "../auth/auth-provider.component";
 import { PaLogo } from "../../components/pa-logo.component";
+import { useQuery } from "@apollo/react-hooks";
+import * as queries from "../../data-layer/graphql-queries";
 
 const PersonIcon = style => <Icon {...style} name="person-outline" />;
 const LogoutIcon = style => <Icon {...style} name="log-out-outline" />;
@@ -14,6 +17,13 @@ export function SettingsScreen({ navigation }) {
     doLogout,
     credentials: { claims }
   } = React.useContext(AuthContext);
+  const { data } = useQuery(queries.GET_USER_LOCATION, {
+    variables: {
+      id: claims.sub
+    }
+  });
+  const userLocation = JSON.stringify(_.get(data, "users[0].location"));
+  console.log("USER LOC", userLocation);
 
   return (
     <Layout style={styles.container}>
@@ -30,6 +40,7 @@ export function SettingsScreen({ navigation }) {
       />
       <ListItem
         title="Set Location"
+        description={userLocation}
         onPress={() => navigation.navigate("Set Location")}
         icon={NavigationIcon}
       />
