@@ -64,7 +64,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-between",
-    padding: 20
+    padding: 20,
+    paddingTop: 60
   },
   intro: {
     paddingTop: 20,

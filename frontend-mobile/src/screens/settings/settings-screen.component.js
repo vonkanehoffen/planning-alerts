@@ -27,7 +27,7 @@ export function SettingsScreen({ navigation }) {
 
   return (
     <Layout style={styles.container}>
-      <View style={styles.header}>
+      <View style={styles.logo}>
         <PaLogo color={theme["color-primary-300"]} size={140} />
       </View>
       <Text category="h1" style={styles.header}>
@@ -52,6 +52,10 @@ export function SettingsScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1
+  },
+  logo: {
+    margin: 20,
+    marginTop: 60
   },
   header: {
     margin: 20

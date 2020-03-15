@@ -12,11 +12,20 @@ export function WelcomeScreen({ doLogin }) {
       style={styles.container}
     >
       <View>
-        <PaLogo/>
-        <Text category="h1" style={styles.text}>Welcome to Planning Alerts</Text>
-        <Text category="h2" style={styles.text}>It’s time you knew what’s happening in your neighbourhood.</Text>
+        <PaLogo />
+        <Text category="h1" style={styles.text}>
+          Welcome to Planning Alerts
+        </Text>
+        <Text category="h2" style={styles.text}>
+          It’s time you knew what’s happening in your neighbourhood.
+        </Text>
       </View>
-      <Button icon={PeopleIcon} onPress={doLogin} style={styles.button} size="giant">
+      <Button
+        icon={PeopleIcon}
+        onPress={doLogin}
+        style={styles.button}
+        size="giant"
+      >
         Sign up / Login
       </Button>
     </ImageBackground>
@@ -28,13 +37,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
     alignItems: "flex-start",
-    padding: 30
+    padding: 30,
+    paddingTop: 60
   },
   button: {
-    width: '100%'
+    width: "100%"
   },
   text: {
-    color: 'white',
+    color: "white",
     paddingTop: 30
   }
 });

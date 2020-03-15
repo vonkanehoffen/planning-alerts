@@ -7,7 +7,7 @@ import MapView, {
   PROVIDER_DEFAULT
 } from "react-native-maps";
 import { Layout, Text, useTheme } from "@ui-kitten/components";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, Platform } from "react-native";
 import { PaStatusMarkers } from "./pa-status-markers.component";
 import _ from "lodash";
 import { AuthContext } from "../auth/auth-provider.component";
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     position: "absolute",
-    top: 10,
+    top: Platform.OS === "ios" ? 50 : 10,
     left: 10
   }
 });
