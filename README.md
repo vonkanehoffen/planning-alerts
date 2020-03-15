@@ -2,7 +2,10 @@
 
 ### Informing people about council planning applications in their local area.
 
-This is the Hasura / GraphQL backed monorepo version. 
+This is a not-for-profit pet project. The Hasura / GraphQL backed monorepo version. 
+
+Get involved! Also [try the Android beta on the Play Store here](https://play.google.com/apps/testing/com.kanec.planningalerts)
+
 
 WIP
 
