@@ -14,7 +14,25 @@ export function SetLocationScreen({ navigation }) {
   const theme = useTheme();
   const { credentials } = useContext(AuthContext);
   const [updateUserLocationMutation, { loading, error, data }] = useMutation(
-    queries.UPDATE_USER_LOCATION
+    queries.UPDATE_USER_LOCATION,
+    {
+      update(
+        cache,
+        {
+          data: {
+            update_users: { returning }
+          }
+        }
+      ) {
+        cache.writeQuery({
+          query: queries.GET_USER_LOCATION,
+          variables: {
+            id: credentials.claims.sub
+          },
+          data: { users: returning }
+        });
+      }
+    }
   );
 
   const updateUserLocation = async coordinates => {
