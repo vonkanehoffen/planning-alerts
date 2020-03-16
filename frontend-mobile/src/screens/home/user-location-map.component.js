@@ -18,6 +18,7 @@ import { PaStatusDetails } from "../../components/pa-status-details-callout.comp
 import FullScreenLoader from "../../components/full-screen-loader.component";
 import { useFocusEffect } from "@react-navigation/native";
 import { PaLogo } from "../../components/pa-logo.component";
+import NoLocationWarning from "./no-location-warning.component";
 
 /**
  * Main map view
@@ -83,7 +84,7 @@ export function UserLocationMap({ navigation }) {
 
   if (!userLocation) {
     navigation.navigate("Set Location");
-    return false;
+    return <NoLocationWarning />;
   }
 
   const userRegion = regionFrom(
