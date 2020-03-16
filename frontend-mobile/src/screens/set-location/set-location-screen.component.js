@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { View } from "react-native";
+import { View, KeyboardAvoidingView } from "react-native";
 import { Layout, Text, useTheme } from "@ui-kitten/components";
 import { AuthContext } from "../auth/auth-provider.component";
 import { useMutation } from "@apollo/react-hooks";
@@ -49,13 +49,13 @@ export function SetLocationScreen({ navigation }) {
           We'll show you planning applications that have been made near you.
         </Text>
       </View>
-      <View>
+      <KeyboardAvoidingView behavior="padding">
         <PostcodeLookup updateUserLocation={updateUserLocation} />
         <Text category="h4" style={styles.or}>
           or
         </Text>
         <GetDeviceLocation updateUserLocation={updateUserLocation} />
-      </View>
+      </KeyboardAvoidingView>
     </Layout>
   );
 }
