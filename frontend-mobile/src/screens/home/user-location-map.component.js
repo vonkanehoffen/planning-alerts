@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/react-hooks";
 import * as queries from "../../data-layer/graphql-queries";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 import { Layout, Text, useTheme } from "@ui-kitten/components";
-import { TouchableOpacity, Platform } from "react-native";
+import { TouchableOpacity, Platform, InteractionManager } from "react-native";
 import { PaStatusMarkers } from "./pa-status-markers.component";
 import _ from "lodash";
 import { AuthContext } from "../auth/auth-provider.component";
@@ -53,50 +53,39 @@ export function UserLocationMap({ navigation }) {
     }
   });
   const userLocation = _.get(data, "users[0].location");
+  const userRegion =
+    userLocation &&
+    regionFrom(userLocation.coordinates[0], userLocation.coordinates[1], 5000);
 
+  // Local state
   const [mapReady, setMapReady] = useState(false);
-
   const [mapViewLocation, setMapViewLocation] = useState(null);
   const [focusedPa, setfocusedPa] = useState(null);
 
+  // Reset map region on view focus.
+  // TODO: Still really dodgy...
+  // Unreliable location marker & position updates across both platforms.
+  // Sometimes works when js is hot reloaded... not when fully. No idea.
+  // https://github.com/vonkanehoffen/planning-alerts/issues/22
   useFocusEffect(
     React.useCallback(() => {
+      // const task = InteractionManager.runAfterInteractions(() => {
       console.log("FOCUS MAP");
-      resetRegion && resetRegion();
+      resetRegion();
+      // });
+      // return () => task.cancel();
     }, [])
   );
 
+  // Actions
   const resetRegion = () => {
-    if (mapReady) {
+    if (userRegion && mapRef) {
       console.log("doing reset", userRegion);
       mapRef.animateToRegion(userRegion);
     } else {
       console.log("map not ready. Not resetting.");
     }
   };
-
-  if (loading) {
-    return <FullScreenLoader message="Loading Map" />;
-  }
-
-  if (error) {
-    return (
-      <Layout>
-        <Text status="danger">UserLocationMap error: {error.message}</Text>
-      </Layout>
-    );
-  }
-
-  if (!userLocation) {
-    navigation.navigate("Set Location");
-    return <NoLocationWarning />;
-  }
-
-  const userRegion = regionFrom(
-    userLocation.coordinates[0],
-    userLocation.coordinates[1],
-    5000
-  );
 
   /**
    * Update location gql query param with new map region, when dragged.
@@ -122,6 +111,23 @@ export function UserLocationMap({ navigation }) {
 
   const unFocusPa = () => setfocusedPa(null);
 
+  if (loading) {
+    return <FullScreenLoader message="Loading Map" />;
+  }
+
+  if (error) {
+    return (
+      <Layout>
+        <Text status="danger">UserLocationMap error: {error.message}</Text>
+      </Layout>
+    );
+  }
+
+  if (!userLocation) {
+    navigation.navigate("Set Location");
+    return <NoLocationWarning />;
+  }
+
   // console.log("USER REGION: ", userRegion);
 
   return (
@@ -135,7 +141,7 @@ export function UserLocationMap({ navigation }) {
           // setMapReady(true);
           console.log("MAP READY");
           setMapReady(true);
-          resetRegion();
+          // resetRegion();
         }}
         onRegionChangeComplete={handleRegionChange}
         showsUserLocation={true}
