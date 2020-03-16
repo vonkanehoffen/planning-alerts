@@ -1,11 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import * as queries from "../../data-layer/graphql-queries";
-import MapView, {
-  Marker,
-  PROVIDER_GOOGLE,
-  PROVIDER_DEFAULT
-} from "react-native-maps";
+import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 import { Layout, Text, useTheme } from "@ui-kitten/components";
 import { TouchableOpacity, Platform } from "react-native";
 import { PaStatusMarkers } from "./pa-status-markers.component";
@@ -19,6 +15,8 @@ import FullScreenLoader from "../../components/full-screen-loader.component";
 import { useFocusEffect } from "@react-navigation/native";
 import { PaLogo } from "../../components/pa-logo.component";
 import NoLocationWarning from "./no-location-warning.component";
+
+let mapRef;
 
 /**
  * Main map view
@@ -61,14 +59,21 @@ export function UserLocationMap({ navigation }) {
   const [mapViewLocation, setMapViewLocation] = useState(null);
   const [focusedPa, setfocusedPa] = useState(null);
 
-  let map; // ref
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log("FOCUS MAP");
+      resetRegion && resetRegion();
+    }, [])
+  );
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     console.log("FOCUSSSSS MAP");
-  //     resetRegion();
-  //   }, [])
-  // );
+  const resetRegion = () => {
+    if (mapReady) {
+      console.log("doing reset", userRegion);
+      mapRef.animateToRegion(userRegion);
+    } else {
+      console.log("map not ready. Not resetting.");
+    }
+  };
 
   if (loading) {
     return <FullScreenLoader message="Loading Map" />;
@@ -105,11 +110,6 @@ export function UserLocationMap({ navigation }) {
     });
   };
 
-  const resetRegion = () => {
-    console.log("doing reset", userRegion);
-    map.animateToRegion(userRegion);
-  };
-
   /**
    * Focus on a planning application
    * Opens details when map marker clicked
@@ -129,16 +129,16 @@ export function UserLocationMap({ navigation }) {
       <MapView
         provider={PROVIDER_DEFAULT}
         initialRegion={userRegion}
-        ref={el => (map = el)}
+        ref={el => (mapRef = el)}
         style={styles.map}
         onMapReady={() => {
           // setMapReady(true);
           console.log("MAP READY");
+          setMapReady(true);
           resetRegion();
         }}
         onRegionChangeComplete={handleRegionChange}
         showsUserLocation={true}
-        showsMyLocationButton={true}
       >
         <PaStatusMarkers
           location={mapViewLocation || userLocation}
