@@ -56,7 +56,11 @@ export const UPDATE_USER_LOCATION = gql`
  * @type {DocumentNode}
  */
 export const UPSERT_FCM_TOKEN = gql`
-  mutation upsert_fcm_token($token: String!, $user_id: String!, $device_id: String!) {
+  mutation upsert_fcm_token(
+    $token: String!
+    $user_id: String!
+    $device_id: String!
+  ) {
     insert_fcm_token(
       objects: [{ token: $token, user_id: $user_id, device_id: $device_id }]
       on_conflict: {
@@ -118,14 +122,19 @@ export const GET_RECENT_CLOSED_PA_NEAR_POINT = gql`
         updated_at: { _gte: $minDate }
       }
     ) {
-      id
-      location
-      proposal
       address
       application_validated
+      council
+      created_at
       decision
       decision_issued_date
+      id
+      location
+      open
+      proposal
+      status
       updated_at
+      url
     }
   }
 `;
