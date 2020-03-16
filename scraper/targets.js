@@ -15,7 +15,8 @@ exports.idox = [
 
   // Other councils
   "https://pa.sefton.gov.uk/online-applications",
-  "https://pa.cheshirewestandchester.gov.uk/online-applications"
+  "https://pa.cheshirewestandchester.gov.uk/online-applications",
+  "https://eplanning.derby.gov.uk/online-applications"
 ];
 
 // TODO: https://planning.blackburn.gov.uk/Northgate/PlanningExplorer/NewApplicationsSearch.aspx
