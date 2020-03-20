@@ -6,36 +6,36 @@ import { useQuery } from "@apollo/react-hooks";
 import { subDays, formatISO, compareAsc, parseISO } from "date-fns";
 import { postGisToRNMapsLocation } from "../../utils";
 import {
-  PA_CLOSED, PA_NEW,
+  PA_CLOSED,
+  PA_NEW,
   PA_OPEN,
-  PaMarker,
-} from '../../components/pa-marker.component';
-import { PaStatusDetails } from "../../components/pa-status-details-callout.component";
+  PaMarker
+} from "../../components/pa-marker.component";
 
 export function PaStatusMarkers({ location, focusPa, focusedPa }) {
-  const {
-    error: openPaError,
-    data: openPaData
-  } = useQuery(queries.GET_OPEN_PA_NEAR_POINT, {
-    variables: {
-      point: location,
-      distance: 2000
+  const { error: openPaError, data: openPaData } = useQuery(
+    queries.GET_OPEN_PA_NEAR_POINT,
+    {
+      variables: {
+        point: location,
+        distance: 2000
+      }
+      // skip: !location
     }
-    // skip: !location
-  });
+  );
 
   const minDate = subDays(new Date(), 8);
   const minDateFormatted = formatISO(minDate, { representation: "date" });
-  const {
-    error: closedPaError,
-    data: closedPaData
-  } = useQuery(queries.GET_RECENT_CLOSED_PA_NEAR_POINT, {
-    variables: {
-      point: location,
-      distance: 2000,
-      minDate: minDateFormatted
+  const { error: closedPaError, data: closedPaData } = useQuery(
+    queries.GET_RECENT_CLOSED_PA_NEAR_POINT,
+    {
+      variables: {
+        point: location,
+        distance: 2000,
+        minDate: minDateFormatted
+      }
     }
-  });
+  );
 
   // // TODO: error display for this further up the tree.
   // if (openPaError || closedPaError) {
@@ -84,7 +84,14 @@ export function PaStatusMarkers({ location, focusPa, focusedPa }) {
             }}
             tracksViewChanges={false}
           >
-            <PaMarker status={compareAsc(parseISO(pa.updated_at), minDate) > -1 ? PA_NEW : PA_OPEN} focused={pa.id === focusedPa?.id}/>
+            <PaMarker
+              status={
+                compareAsc(parseISO(pa.updated_at), minDate) > -1
+                  ? PA_NEW
+                  : PA_OPEN
+              }
+              focused={pa.id === focusedPa?.id}
+            />
           </Marker>
         ))}
     </>

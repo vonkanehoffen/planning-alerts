@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleSheet, View, Linking } from "react-native";
+import React, { useState, useLayoutEffect } from "react";
+import { StyleSheet, View, Linking, Animated } from "react-native";
 import {
   Button,
   Card,
@@ -17,13 +17,13 @@ const Header = ({ pa }) => (
   />
 );
 
-const Footer = ({ pa, unFocusPa }) => (
+const Footer = ({ pa, handleBackButton }) => (
   <View style={styles.footerContainer}>
     <Button
       style={styles.footerControl}
       size="small"
       status="basic"
-      onPress={unFocusPa}
+      onPress={handleBackButton}
     >
       BACK
     </Button>
@@ -47,13 +47,59 @@ function Meta({ icon, title, value }) {
   );
 }
 
+// TODO: Fix initial card flash with opacity?
 export function PaStatusDetails({ pa, unFocusPa }) {
   // console.log("PaStatusDetails ---- ", JSON.stringify(pa, null, 2));
+  const [cardTranslate, setCardTranslate] = useState(new Animated.Value(0));
+  const [cardHeight, setCardHeight] = useState(0);
+  useLayoutEffect(() => {
+    console.log("layouteffect", cardHeight, pa);
+    if (pa) {
+      cardTranslate.setValue(cardHeight);
+      Animated.spring(cardTranslate, {
+        toValue: 0,
+        useNativeDriver: true
+      }).start();
+    }
+  }, [pa]);
+
+  const handleBackButton = () =>
+    Animated.spring(cardTranslate, {
+      toValue: cardHeight,
+      useNativeDriver: true
+    }).start(unFocusPa);
+
+  if (!pa) return false;
+
   return (
     <Card
       header={() => <Header pa={pa} />}
-      footer={() => <Footer unFocusPa={unFocusPa} pa={pa} />}
-      style={styles.card}
+      footer={() => (
+        <Footer
+          unFocusPa={unFocusPa}
+          pa={pa}
+          handleBackButton={handleBackButton}
+        />
+      )}
+      onLayout={e => {
+        console.log("onLayout ani", e.nativeEvent.layout.height);
+        cardTranslate.setValue(e.nativeEvent.layout.height);
+        Animated.spring(cardTranslate, {
+          toValue: 0,
+          useNativeDriver: true
+        }).start();
+        setCardHeight(e.nativeEvent.layout.height);
+      }}
+      style={[
+        styles.card,
+        {
+          transform: [
+            {
+              translateY: cardTranslate
+            }
+          ]
+        }
+      ]}
     >
       <Meta title="Proposal" icon="briefcase-outline" value={pa.proposal} />
       <Meta
@@ -68,8 +114,6 @@ export function PaStatusDetails({ pa, unFocusPa }) {
 const styles = StyleSheet.create({
   card: {
     width: "90%"
-    // marginLeft: 20,
-    // marginRight: 20
   },
   footerContainer: {
     flexDirection: "row",

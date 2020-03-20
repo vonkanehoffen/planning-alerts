@@ -80,7 +80,7 @@ export function UserLocationMap({ navigation }) {
   // Actions
   const resetRegion = () => {
     if (userRegion && mapRef) {
-      console.log("doing reset", userRegion);
+      // console.log("doing reset", userRegion);
       mapRef.animateToRegion(userRegion);
     } else {
       console.log("map not ready. Not resetting.");
@@ -92,7 +92,7 @@ export function UserLocationMap({ navigation }) {
    * @param region
    */
   const handleRegionChange = newRegion => {
-    console.log("handleRegionChange", newRegion);
+    // console.log("handleRegionChange", newRegion);
     setMapViewLocation({
       type: "Point",
       coordinates: [newRegion.latitude, newRegion.longitude]
@@ -106,6 +106,7 @@ export function UserLocationMap({ navigation }) {
    * @param pa
    */
   const focusPa = pa => {
+    console.log("focusPa", pa);
     setfocusedPa(pa);
   };
 
@@ -159,9 +160,7 @@ export function UserLocationMap({ navigation }) {
           <HomeMarker />
         </Marker>
       </MapView>
-      {focusedPa !== null && (
-        <PaStatusDetails pa={focusedPa} unFocusPa={unFocusPa} />
-      )}
+      <PaStatusDetails pa={focusedPa} unFocusPa={unFocusPa} />
       <TouchableOpacity style={styles.logo} onPress={resetRegion}>
         <PaLogo size={40} color={theme["color-primary-900"]} />
       </TouchableOpacity>
