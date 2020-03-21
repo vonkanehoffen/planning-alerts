@@ -1,5 +1,11 @@
 import React, { useState, useLayoutEffect } from "react";
-import { StyleSheet, View, Linking, Animated } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Linking,
+  Animated,
+  TouchableOpacity
+} from "react-native";
 import {
   Button,
   Card,
@@ -8,6 +14,7 @@ import {
   Icon,
   ListItem
 } from "@ui-kitten/components";
+import { LogoFab } from "./logo-fab.component";
 import { formatDistance, parseISO } from "date-fns";
 
 const Header = ({ pa }) => (
@@ -48,7 +55,7 @@ function Meta({ icon, title, value }) {
 }
 
 // TODO: Fix initial card flash with opacity?
-export function PaStatusDetails({ pa, unFocusPa }) {
+export function PaStatusDetails({ pa, unFocusPa, resetRegion }) {
   // console.log("PaStatusDetails ---- ", JSON.stringify(pa, null, 2));
   const [cardTranslate, setCardTranslate] = useState(new Animated.Value(0));
   const [cardHeight, setCardHeight] = useState(0);
@@ -69,45 +76,52 @@ export function PaStatusDetails({ pa, unFocusPa }) {
       useNativeDriver: true
     }).start(unFocusPa);
 
-  if (!pa) return false;
+  console.log("card translate = ", cardTranslate);
 
   return (
-    <Card
-      header={() => <Header pa={pa} />}
-      footer={() => (
-        <Footer
-          unFocusPa={unFocusPa}
-          pa={pa}
-          handleBackButton={handleBackButton}
-        />
-      )}
-      onLayout={e => {
-        console.log("onLayout ani", e.nativeEvent.layout.height);
-        cardTranslate.setValue(e.nativeEvent.layout.height);
-        Animated.spring(cardTranslate, {
-          toValue: 0,
-          useNativeDriver: true
-        }).start();
-        setCardHeight(e.nativeEvent.layout.height);
-      }}
-      style={[
-        styles.card,
-        {
-          transform: [
+    <>
+      {pa && (
+        <Card
+          header={() => <Header pa={pa} />}
+          footer={() => (
+            <Footer
+              unFocusPa={unFocusPa}
+              pa={pa}
+              handleBackButton={handleBackButton}
+            />
+          )}
+          onLayout={e => {
+            console.log("onLayout ani", e.nativeEvent.layout.height);
+            cardTranslate.setValue(e.nativeEvent.layout.height);
+            Animated.spring(cardTranslate, {
+              toValue: 0,
+              useNativeDriver: true
+            }).start();
+            setCardHeight(e.nativeEvent.layout.height);
+          }}
+          style={[
+            styles.card,
             {
-              translateY: cardTranslate
+              transform: [
+                {
+                  translateY: cardTranslate
+                }
+              ]
             }
-          ]
-        }
-      ]}
-    >
-      <Meta title="Proposal" icon="briefcase-outline" value={pa.proposal} />
-      <Meta
-        title="Last Update"
-        icon="calendar-outline"
-        value={`${formatDistance(parseISO(pa.updated_at), new Date())} ago`}
-      />
-    </Card>
+          ]}
+        >
+          <Meta title="Proposal" icon="briefcase-outline" value={pa.proposal} />
+          <Meta
+            title="Last Update"
+            icon="calendar-outline"
+            value={`${formatDistance(parseISO(pa.updated_at), new Date())} ago`}
+          />
+        </Card>
+      )}
+      <TouchableOpacity style={[styles.fab]} onPress={resetRegion}>
+        <LogoFab />
+      </TouchableOpacity>
+    </>
   );
 }
 
@@ -121,5 +135,10 @@ const styles = StyleSheet.create({
   },
   footerControl: {
     marginHorizontal: 4
+  },
+  fab: {
+    position: "absolute",
+    right: 20,
+    bottom: 20
   }
 });

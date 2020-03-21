@@ -2,8 +2,8 @@ import React, { useContext, useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import * as queries from "../../data-layer/graphql-queries";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
-import { Layout, Text, useTheme } from "@ui-kitten/components";
-import { TouchableOpacity, Platform, InteractionManager } from "react-native";
+import { Layout, Text } from "@ui-kitten/components";
+import { Platform } from "react-native";
 import { PaStatusMarkers } from "./pa-status-markers.component";
 import _ from "lodash";
 import { AuthContext } from "../auth/auth-provider.component";
@@ -13,7 +13,6 @@ import { HomeMarker } from "../../components/home-marker.component";
 import { PaStatusDetails } from "../../components/pa-status-details-callout.component";
 import FullScreenLoader from "../../components/full-screen-loader.component";
 import { useFocusEffect } from "@react-navigation/native";
-import { PaLogo } from "../../components/pa-logo.component";
 import NoLocationWarning from "./no-location-warning.component";
 
 let mapRef;
@@ -44,7 +43,6 @@ let mapRef;
  * @constructor
  */
 export function UserLocationMap({ navigation }) {
-  const theme = useTheme();
   // Get user location
   const { credentials } = useContext(AuthContext);
   const { loading, error, data } = useQuery(queries.GET_USER_LOCATION, {
@@ -160,10 +158,11 @@ export function UserLocationMap({ navigation }) {
           <HomeMarker />
         </Marker>
       </MapView>
-      <PaStatusDetails pa={focusedPa} unFocusPa={unFocusPa} />
-      <TouchableOpacity style={styles.logo} onPress={resetRegion}>
-        <PaLogo size={40} color={theme["color-primary-900"]} />
-      </TouchableOpacity>
+      <PaStatusDetails
+        pa={focusedPa}
+        unFocusPa={unFocusPa}
+        resetRegion={resetRegion}
+      />
     </View>
   );
 }
