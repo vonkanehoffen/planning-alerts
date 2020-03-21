@@ -17,39 +17,12 @@ import {
 import { LogoFab } from "./logo-fab.component";
 import { formatDistance, parseISO } from "date-fns";
 
-const Header = ({ pa }) => (
-  <CardHeader
-    title={`${pa.open ? "Open" : "Closed"} Planning Application`}
-    description={pa.address}
-  />
-);
-
-const Footer = ({ pa, handleBackButton }) => (
-  <View style={styles.footerContainer}>
-    <Button
-      style={styles.footerControl}
-      size="small"
-      status="basic"
-      onPress={handleBackButton}
-    >
-      BACK
-    </Button>
-    <Button
-      style={styles.footerControl}
-      size="small"
-      onPress={() => Linking.openURL(pa.url)}
-    >
-      MORE INFO
-    </Button>
-  </View>
-);
-
 function Meta({ icon, title, value }) {
   return (
     <ListItem
       title={title}
       description={value}
-      icon={() => <Icon name={icon} />}
+      icon={icon ? () => <Icon name={icon} /> : false}
     />
   );
 }
@@ -63,6 +36,7 @@ export function PaStatusDetails({ pa, unFocusPa, resetRegion }) {
     console.log("layouteffect", cardHeight, pa);
     if (pa) {
       cardTranslate.setValue(cardHeight);
+      // TODO: Not fuckin twice! In onLayout too.
       Animated.spring(cardTranslate, {
         toValue: 0,
         useNativeDriver: true
@@ -78,47 +52,65 @@ export function PaStatusDetails({ pa, unFocusPa, resetRegion }) {
 
   console.log("card translate = ", cardTranslate);
 
+  console.log("PA in PaStatsDetails", pa);
   return (
     <>
-      {pa && (
-        <Card
-          header={() => <Header pa={pa} />}
-          footer={() => (
-            <Footer
-              unFocusPa={unFocusPa}
-              pa={pa}
-              handleBackButton={handleBackButton}
+      <Card
+        onLayout={e => {
+          console.log("onLayout ani", e.nativeEvent.layout.height);
+          setCardHeight(e.nativeEvent.layout.height);
+        }}
+        style={[
+          styles.card,
+          {
+            transform: [
+              {
+                translateY: cardTranslate
+              }
+            ]
+          }
+        ]}
+      >
+        {pa && (
+          <>
+            <Meta
+              title={`${pa.open ? "Open" : "Closed"} Planning Application`}
+              subtitle={pa.address}
             />
-          )}
-          onLayout={e => {
-            console.log("onLayout ani", e.nativeEvent.layout.height);
-            cardTranslate.setValue(e.nativeEvent.layout.height);
-            Animated.spring(cardTranslate, {
-              toValue: 0,
-              useNativeDriver: true
-            }).start();
-            setCardHeight(e.nativeEvent.layout.height);
-          }}
-          style={[
-            styles.card,
-            {
-              transform: [
-                {
-                  translateY: cardTranslate
-                }
-              ]
-            }
-          ]}
-        >
-          <Meta title="Proposal" icon="briefcase-outline" value={pa.proposal} />
-          <Meta
-            title="Last Update"
-            icon="calendar-outline"
-            value={`${formatDistance(parseISO(pa.updated_at), new Date())} ago`}
-          />
-        </Card>
-      )}
-      <TouchableOpacity style={[styles.fab]} onPress={resetRegion}>
+            <Meta
+              title="Proposal"
+              icon="briefcase-outline"
+              value={pa.proposal}
+            />
+            <Meta
+              title="Last Update"
+              icon="calendar-outline"
+              value={`${formatDistance(
+                parseISO(pa.updated_at),
+                new Date()
+              )} ago`}
+            />
+            <View style={styles.footerContainer}>
+              <Button
+                style={styles.footerControl}
+                size="small"
+                status="basic"
+                onPress={handleBackButton}
+              >
+                BACK
+              </Button>
+              <Button
+                style={styles.footerControl}
+                size="small"
+                onPress={() => Linking.openURL(pa.url)}
+              >
+                MORE INFO
+              </Button>
+            </View>
+          </>
+        )}
+      </Card>
+      <TouchableOpacity style={styles.fab} onPress={resetRegion}>
         <LogoFab />
       </TouchableOpacity>
     </>
@@ -127,18 +119,21 @@ export function PaStatusDetails({ pa, unFocusPa, resetRegion }) {
 
 const styles = StyleSheet.create({
   card: {
-    width: "90%"
+    width: "90%",
+    backgroundColor: "#ffffff",
+    position: "relative"
   },
   footerContainer: {
     flexDirection: "row",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
+    marginTop: 10
   },
   footerControl: {
     marginHorizontal: 4
   },
   fab: {
     position: "absolute",
-    right: 20,
-    bottom: 20
+    right: 10,
+    top: 10
   }
 });

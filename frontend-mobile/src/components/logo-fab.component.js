@@ -3,7 +3,7 @@ import Svg, { G, Path, Circle } from "react-native-svg";
 
 export function LogoFab() {
   return (
-    <Svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1">
+    <Svg width={70} height={70} viewBox="0 0 100 100" version="1.1">
       <G
         id="logo-fab"
         stroke="none"
