@@ -1,25 +1,39 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Auth0Provider } from './react-auth0-spa'
+import { GraphQLProvider } from './GraphQLProvider'
+import { MuiThemeProvider, CssBaseline } from '@material-ui/core'
 import './App.css';
+import { theme } from './theme'
+import history from "./utils/history";
+import config from './config.json';
+import { NavBar } from './components/NavBar'
+
+// A function that routes the user to the right place
+// after login
+function onRedirectCallback(appState?: any): void {
+  history.push(
+    appState && appState.targetUrl
+      ? appState.targetUrl
+      : window.location.pathname
+  );
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Auth0Provider
+      domain={config.domain}
+      client_id={config.clientId}
+      redirect_uri={window.location.origin}
+      onRedirectCallback={onRedirectCallback}
+      audience={config.audience}
+    >
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        <GraphQLProvider>
+          <NavBar/>
+        </GraphQLProvider>
+      </MuiThemeProvider>
+    </Auth0Provider>
   );
 }
 
