@@ -6,7 +6,104 @@ schema {
   subscription: subscription_root
 }
 
+"columns and relationships of \"council\""
+type council {
+  council_type: String!
+  id: Int!
+  portal_url: String
+  scraper: String
+  title: String!
+}
+
+"aggregated selection of \"council\""
+type council_aggregate {
+  aggregate: council_aggregate_fields
+  nodes: [council!]!
+}
+
+"aggregate fields of \"council\""
+type council_aggregate_fields {
+  avg: council_avg_fields
+  count(columns: [council_select_column!], distinct: Boolean): Int
+  max: council_max_fields
+  min: council_min_fields
+  stddev: council_stddev_fields
+  stddev_pop: council_stddev_pop_fields
+  stddev_samp: council_stddev_samp_fields
+  sum: council_sum_fields
+  var_pop: council_var_pop_fields
+  var_samp: council_var_samp_fields
+  variance: council_variance_fields
+}
+
+"aggregate avg on columns"
+type council_avg_fields {
+  id: Float
+}
+
+"aggregate max on columns"
+type council_max_fields {
+  council_type: String
+  id: Int
+  portal_url: String
+  scraper: String
+  title: String
+}
+
+"aggregate min on columns"
+type council_min_fields {
+  council_type: String
+  id: Int
+  portal_url: String
+  scraper: String
+  title: String
+}
+
+"response of any mutation on the table \"council\""
+type council_mutation_response {
+  "number of affected rows by the mutation"
+  affected_rows: Int!
+  "data of the affected rows by the mutation"
+  returning: [council!]!
+}
+
+"aggregate stddev on columns"
+type council_stddev_fields {
+  id: Float
+}
+
+"aggregate stddev_pop on columns"
+type council_stddev_pop_fields {
+  id: Float
+}
+
+"aggregate stddev_samp on columns"
+type council_stddev_samp_fields {
+  id: Float
+}
+
+"aggregate sum on columns"
+type council_sum_fields {
+  id: Int
+}
+
+"aggregate var_pop on columns"
+type council_var_pop_fields {
+  id: Float
+}
+
+"aggregate var_samp on columns"
+type council_var_samp_fields {
+  id: Float
+}
+
+"aggregate variance on columns"
+type council_variance_fields {
+  id: Float
+}
+
 """
+
 FCM device tokens for users
 
 
@@ -60,123 +157,144 @@ type fcm_token_mutation_response {
 
 "mutation root"
 type mutation_root {
+  "delete data from the table: \"council\""
+  delete_council(
+    "filter the rows which have to be deleted"
+    where: council_bool_exp!
+  ): council_mutation_response
   "delete data from the table: \"fcm_token\""
   delete_fcm_token(
-    #filter the rows which have to be deleted
+    "filter the rows which have to be deleted"
     where: fcm_token_bool_exp!
   ): fcm_token_mutation_response
   "delete data from the table: \"pa_scrape\""
   delete_pa_scrape(
-    #filter the rows which have to be deleted
+    "filter the rows which have to be deleted"
     where: pa_scrape_bool_exp!
   ): pa_scrape_mutation_response
   "delete data from the table: \"pa_status\""
   delete_pa_status(
-    #filter the rows which have to be deleted
+    "filter the rows which have to be deleted"
     where: pa_status_bool_exp!
   ): pa_status_mutation_response
   "delete data from the table: \"scrape_log\""
   delete_scrape_log(
-    #filter the rows which have to be deleted
+    "filter the rows which have to be deleted"
     where: scrape_log_bool_exp!
   ): scrape_log_mutation_response
   "delete data from the table: \"users\""
   delete_users(
-    #filter the rows which have to be deleted
+    "filter the rows which have to be deleted"
     where: users_bool_exp!
   ): users_mutation_response
+  "insert data into the table: \"council\""
+  insert_council(
+    "the rows to be inserted"
+    objects: [council_insert_input!]!,
+    "on conflict condition"
+    on_conflict: council_on_conflict
+  ): council_mutation_response
   "insert data into the table: \"fcm_token\""
   insert_fcm_token(
-    #the rows to be inserted
+    "the rows to be inserted"
     objects: [fcm_token_insert_input!]!,
-    #on conflict condition
+    "on conflict condition"
     on_conflict: fcm_token_on_conflict
   ): fcm_token_mutation_response
   "insert data into the table: \"pa_scrape\""
   insert_pa_scrape(
-    #the rows to be inserted
+    "the rows to be inserted"
     objects: [pa_scrape_insert_input!]!,
-    #on conflict condition
+    "on conflict condition"
     on_conflict: pa_scrape_on_conflict
   ): pa_scrape_mutation_response
   "insert data into the table: \"pa_status\""
   insert_pa_status(
-    #the rows to be inserted
+    "the rows to be inserted"
     objects: [pa_status_insert_input!]!,
-    #on conflict condition
+    "on conflict condition"
     on_conflict: pa_status_on_conflict
   ): pa_status_mutation_response
   "insert data into the table: \"scrape_log\""
   insert_scrape_log(
-    #the rows to be inserted
+    "the rows to be inserted"
     objects: [scrape_log_insert_input!]!,
-    #on conflict condition
+    "on conflict condition"
     on_conflict: scrape_log_on_conflict
   ): scrape_log_mutation_response
   "insert data into the table: \"users\""
   insert_users(
-    #the rows to be inserted
+    "the rows to be inserted"
     objects: [users_insert_input!]!,
-    #on conflict condition
+    "on conflict condition"
     on_conflict: users_on_conflict
   ): users_mutation_response
+  "update data of the table: \"council\""
+  update_council(
+    "increments the integer columns with given value of the filtered values"
+    _inc: council_inc_input,
+    "sets the columns of the filtered rows to the given values"
+    _set: council_set_input,
+    "filter the rows which have to be updated"
+    where: council_bool_exp!
+  ): council_mutation_response
   "update data of the table: \"fcm_token\""
   update_fcm_token(
-    #sets the columns of the filtered rows to the given values
+    "sets the columns of the filtered rows to the given values"
     _set: fcm_token_set_input,
-    #filter the rows which have to be updated
+    "filter the rows which have to be updated"
     where: fcm_token_bool_exp!
   ): fcm_token_mutation_response
   "update data of the table: \"pa_scrape\""
   update_pa_scrape(
-    #append existing jsonb value of filtered columns with new jsonb value
+    "append existing jsonb value of filtered columns with new jsonb value"
     _append: pa_scrape_append_input,
-    #delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    "delete the field or element with specified path (for JSON arrays, negative integers count from the end)"
     _delete_at_path: pa_scrape_delete_at_path_input,
-    #delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    "delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array"
     _delete_elem: pa_scrape_delete_elem_input,
-    #delete key/value pair or string element. key/value pairs are matched based on their key value
+    "delete key/value pair or string element. key/value pairs are matched based on their key value"
     _delete_key: pa_scrape_delete_key_input,
-    #increments the integer columns with given value of the filtered values
+    "increments the integer columns with given value of the filtered values"
     _inc: pa_scrape_inc_input,
-    #prepend existing jsonb value of filtered columns with new jsonb value
+    "prepend existing jsonb value of filtered columns with new jsonb value"
     _prepend: pa_scrape_prepend_input,
-    #sets the columns of the filtered rows to the given values
+    "sets the columns of the filtered rows to the given values"
     _set: pa_scrape_set_input,
-    #filter the rows which have to be updated
+    "filter the rows which have to be updated"
     where: pa_scrape_bool_exp!
   ): pa_scrape_mutation_response
   "update data of the table: \"pa_status\""
   update_pa_status(
-    #sets the columns of the filtered rows to the given values
+    "sets the columns of the filtered rows to the given values"
     _set: pa_status_set_input,
-    #filter the rows which have to be updated
+    "filter the rows which have to be updated"
     where: pa_status_bool_exp!
   ): pa_status_mutation_response
   "update data of the table: \"scrape_log\""
   update_scrape_log(
-    #append existing jsonb value of filtered columns with new jsonb value
+    "append existing jsonb value of filtered columns with new jsonb value"
     _append: scrape_log_append_input,
-    #delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    "delete the field or element with specified path (for JSON arrays, negative integers count from the end)"
     _delete_at_path: scrape_log_delete_at_path_input,
-    #delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    "delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array"
     _delete_elem: scrape_log_delete_elem_input,
-    #delete key/value pair or string element. key/value pairs are matched based on their key value
+    "delete key/value pair or string element. key/value pairs are matched based on their key value"
     _delete_key: scrape_log_delete_key_input,
-    #increments the integer columns with given value of the filtered values
+    "increments the integer columns with given value of the filtered values"
     _inc: scrape_log_inc_input,
-    #prepend existing jsonb value of filtered columns with new jsonb value
+    "prepend existing jsonb value of filtered columns with new jsonb value"
     _prepend: scrape_log_prepend_input,
-    #sets the columns of the filtered rows to the given values
+    "sets the columns of the filtered rows to the given values"
     _set: scrape_log_set_input,
-    #filter the rows which have to be updated
+    "filter the rows which have to be updated"
     where: scrape_log_bool_exp!
   ): scrape_log_mutation_response
   "update data of the table: \"users\""
   update_users(
-    #sets the columns of the filtered rows to the given values
+    "sets the columns of the filtered rows to the given values"
     _set: users_set_input,
-    #filter the rows which have to be updated
+    "filter the rows which have to be updated"
     where: users_bool_exp!
   ): users_mutation_response
 }
@@ -184,16 +302,16 @@ type mutation_root {
 "columns and relationships of \"pa_scrape\""
 type pa_scrape {
   contacts(
-    #JSON select path
+    "JSON select path"
     path: String
   ): jsonb
   further_information(
-    #JSON select path
+    "JSON select path"
     path: String
   ): jsonb
   id: Int!
   important_dates(
-    #JSON select path
+    "JSON select path"
     path: String
   ): jsonb
   list_type: String!
@@ -203,7 +321,7 @@ type pa_scrape {
   scraped_at: timestamptz!
   scraper: String!
   summary(
-    #JSON select path
+    "JSON select path"
     path: String
   ): jsonb
   url: String!
@@ -311,28 +429,28 @@ type pa_status {
   open: Boolean!
   "An array relationship"
   pa_scrapes(
-    #distinct select on columns
+    "distinct select on columns"
     distinct_on: [pa_scrape_select_column!],
-    #limit the number of rows returned
+    "limit the number of rows returned"
     limit: Int,
-    #skip the first n rows. Use only with order_by
+    "skip the first n rows. Use only with order_by"
     offset: Int,
-    #sort the rows by one or more columns
+    "sort the rows by one or more columns"
     order_by: [pa_scrape_order_by!],
-    #filter the rows returned
+    "filter the rows returned"
     where: pa_scrape_bool_exp
   ): [pa_scrape!]!
   "An aggregated array relationship"
   pa_scrapes_aggregate(
-    #distinct select on columns
+    "distinct select on columns"
     distinct_on: [pa_scrape_select_column!],
-    #limit the number of rows returned
+    "limit the number of rows returned"
     limit: Int,
-    #skip the first n rows. Use only with order_by
+    "skip the first n rows. Use only with order_by"
     offset: Int,
-    #sort the rows by one or more columns
+    "sort the rows by one or more columns"
     order_by: [pa_scrape_order_by!],
-    #filter the rows returned
+    "filter the rows returned"
     where: pa_scrape_bool_exp
   ): pa_scrape_aggregate!
   proposal: String!
@@ -394,142 +512,170 @@ type pa_status_mutation_response {
 
 "query root"
 type query_root {
+  "fetch data from the table: \"council\""
+  council(
+    "distinct select on columns"
+    distinct_on: [council_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [council_order_by!],
+    "filter the rows returned"
+    where: council_bool_exp
+  ): [council!]!
+  "fetch aggregated fields from the table: \"council\""
+  council_aggregate(
+    "distinct select on columns"
+    distinct_on: [council_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [council_order_by!],
+    "filter the rows returned"
+    where: council_bool_exp
+  ): council_aggregate!
+  "fetch data from the table: \"council\" using primary key columns"
+  council_by_pk(id: Int!): council
   "fetch data from the table: \"fcm_token\""
   fcm_token(
-    #distinct select on columns
+    "distinct select on columns"
     distinct_on: [fcm_token_select_column!],
-    #limit the number of rows returned
+    "limit the number of rows returned"
     limit: Int,
-    #skip the first n rows. Use only with order_by
+    "skip the first n rows. Use only with order_by"
     offset: Int,
-    #sort the rows by one or more columns
+    "sort the rows by one or more columns"
     order_by: [fcm_token_order_by!],
-    #filter the rows returned
+    "filter the rows returned"
     where: fcm_token_bool_exp
   ): [fcm_token!]!
   "fetch aggregated fields from the table: \"fcm_token\""
   fcm_token_aggregate(
-    #distinct select on columns
+    "distinct select on columns"
     distinct_on: [fcm_token_select_column!],
-    #limit the number of rows returned
+    "limit the number of rows returned"
     limit: Int,
-    #skip the first n rows. Use only with order_by
+    "skip the first n rows. Use only with order_by"
     offset: Int,
-    #sort the rows by one or more columns
+    "sort the rows by one or more columns"
     order_by: [fcm_token_order_by!],
-    #filter the rows returned
+    "filter the rows returned"
     where: fcm_token_bool_exp
   ): fcm_token_aggregate!
   "fetch data from the table: \"fcm_token\" using primary key columns"
   fcm_token_by_pk(device_id: String!): fcm_token
   "fetch data from the table: \"pa_scrape\""
   pa_scrape(
-    #distinct select on columns
+    "distinct select on columns"
     distinct_on: [pa_scrape_select_column!],
-    #limit the number of rows returned
+    "limit the number of rows returned"
     limit: Int,
-    #skip the first n rows. Use only with order_by
+    "skip the first n rows. Use only with order_by"
     offset: Int,
-    #sort the rows by one or more columns
+    "sort the rows by one or more columns"
     order_by: [pa_scrape_order_by!],
-    #filter the rows returned
+    "filter the rows returned"
     where: pa_scrape_bool_exp
   ): [pa_scrape!]!
   "fetch aggregated fields from the table: \"pa_scrape\""
   pa_scrape_aggregate(
-    #distinct select on columns
+    "distinct select on columns"
     distinct_on: [pa_scrape_select_column!],
-    #limit the number of rows returned
+    "limit the number of rows returned"
     limit: Int,
-    #skip the first n rows. Use only with order_by
+    "skip the first n rows. Use only with order_by"
     offset: Int,
-    #sort the rows by one or more columns
+    "sort the rows by one or more columns"
     order_by: [pa_scrape_order_by!],
-    #filter the rows returned
+    "filter the rows returned"
     where: pa_scrape_bool_exp
   ): pa_scrape_aggregate!
   "fetch data from the table: \"pa_scrape\" using primary key columns"
   pa_scrape_by_pk(id: Int!): pa_scrape
   "fetch data from the table: \"pa_status\""
   pa_status(
-    #distinct select on columns
+    "distinct select on columns"
     distinct_on: [pa_status_select_column!],
-    #limit the number of rows returned
+    "limit the number of rows returned"
     limit: Int,
-    #skip the first n rows. Use only with order_by
+    "skip the first n rows. Use only with order_by"
     offset: Int,
-    #sort the rows by one or more columns
+    "sort the rows by one or more columns"
     order_by: [pa_status_order_by!],
-    #filter the rows returned
+    "filter the rows returned"
     where: pa_status_bool_exp
   ): [pa_status!]!
   "fetch aggregated fields from the table: \"pa_status\""
   pa_status_aggregate(
-    #distinct select on columns
+    "distinct select on columns"
     distinct_on: [pa_status_select_column!],
-    #limit the number of rows returned
+    "limit the number of rows returned"
     limit: Int,
-    #skip the first n rows. Use only with order_by
+    "skip the first n rows. Use only with order_by"
     offset: Int,
-    #sort the rows by one or more columns
+    "sort the rows by one or more columns"
     order_by: [pa_status_order_by!],
-    #filter the rows returned
+    "filter the rows returned"
     where: pa_status_bool_exp
   ): pa_status_aggregate!
   "fetch data from the table: \"pa_status\" using primary key columns"
   pa_status_by_pk(id: String!): pa_status
   "fetch data from the table: \"scrape_log\""
   scrape_log(
-    #distinct select on columns
+    "distinct select on columns"
     distinct_on: [scrape_log_select_column!],
-    #limit the number of rows returned
+    "limit the number of rows returned"
     limit: Int,
-    #skip the first n rows. Use only with order_by
+    "skip the first n rows. Use only with order_by"
     offset: Int,
-    #sort the rows by one or more columns
+    "sort the rows by one or more columns"
     order_by: [scrape_log_order_by!],
-    #filter the rows returned
+    "filter the rows returned"
     where: scrape_log_bool_exp
   ): [scrape_log!]!
   "fetch aggregated fields from the table: \"scrape_log\""
   scrape_log_aggregate(
-    #distinct select on columns
+    "distinct select on columns"
     distinct_on: [scrape_log_select_column!],
-    #limit the number of rows returned
+    "limit the number of rows returned"
     limit: Int,
-    #skip the first n rows. Use only with order_by
+    "skip the first n rows. Use only with order_by"
     offset: Int,
-    #sort the rows by one or more columns
+    "sort the rows by one or more columns"
     order_by: [scrape_log_order_by!],
-    #filter the rows returned
+    "filter the rows returned"
     where: scrape_log_bool_exp
   ): scrape_log_aggregate!
   "fetch data from the table: \"scrape_log\" using primary key columns"
   scrape_log_by_pk(id: Int!): scrape_log
   "fetch data from the table: \"users\""
   users(
-    #distinct select on columns
+    "distinct select on columns"
     distinct_on: [users_select_column!],
-    #limit the number of rows returned
+    "limit the number of rows returned"
     limit: Int,
-    #skip the first n rows. Use only with order_by
+    "skip the first n rows. Use only with order_by"
     offset: Int,
-    #sort the rows by one or more columns
+    "sort the rows by one or more columns"
     order_by: [users_order_by!],
-    #filter the rows returned
+    "filter the rows returned"
     where: users_bool_exp
   ): [users!]!
   "fetch aggregated fields from the table: \"users\""
   users_aggregate(
-    #distinct select on columns
+    "distinct select on columns"
     distinct_on: [users_select_column!],
-    #limit the number of rows returned
+    "limit the number of rows returned"
     limit: Int,
-    #skip the first n rows. Use only with order_by
+    "skip the first n rows. Use only with order_by"
     offset: Int,
-    #sort the rows by one or more columns
+    "sort the rows by one or more columns"
     order_by: [users_order_by!],
-    #filter the rows returned
+    "filter the rows returned"
     where: users_bool_exp
   ): users_aggregate!
   "fetch data from the table: \"users\" using primary key columns"
@@ -541,7 +687,7 @@ type scrape_log {
   event: String!
   id: Int!
   meta(
-    #JSON select path
+    "JSON select path"
     path: String
   ): jsonb!
   scraper: String!
@@ -635,142 +781,170 @@ type scrape_log_variance_fields {
 
 "subscription root"
 type subscription_root {
+  "fetch data from the table: \"council\""
+  council(
+    "distinct select on columns"
+    distinct_on: [council_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [council_order_by!],
+    "filter the rows returned"
+    where: council_bool_exp
+  ): [council!]!
+  "fetch aggregated fields from the table: \"council\""
+  council_aggregate(
+    "distinct select on columns"
+    distinct_on: [council_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [council_order_by!],
+    "filter the rows returned"
+    where: council_bool_exp
+  ): council_aggregate!
+  "fetch data from the table: \"council\" using primary key columns"
+  council_by_pk(id: Int!): council
   "fetch data from the table: \"fcm_token\""
   fcm_token(
-    #distinct select on columns
+    "distinct select on columns"
     distinct_on: [fcm_token_select_column!],
-    #limit the number of rows returned
+    "limit the number of rows returned"
     limit: Int,
-    #skip the first n rows. Use only with order_by
+    "skip the first n rows. Use only with order_by"
     offset: Int,
-    #sort the rows by one or more columns
+    "sort the rows by one or more columns"
     order_by: [fcm_token_order_by!],
-    #filter the rows returned
+    "filter the rows returned"
     where: fcm_token_bool_exp
   ): [fcm_token!]!
   "fetch aggregated fields from the table: \"fcm_token\""
   fcm_token_aggregate(
-    #distinct select on columns
+    "distinct select on columns"
     distinct_on: [fcm_token_select_column!],
-    #limit the number of rows returned
+    "limit the number of rows returned"
     limit: Int,
-    #skip the first n rows. Use only with order_by
+    "skip the first n rows. Use only with order_by"
     offset: Int,
-    #sort the rows by one or more columns
+    "sort the rows by one or more columns"
     order_by: [fcm_token_order_by!],
-    #filter the rows returned
+    "filter the rows returned"
     where: fcm_token_bool_exp
   ): fcm_token_aggregate!
   "fetch data from the table: \"fcm_token\" using primary key columns"
   fcm_token_by_pk(device_id: String!): fcm_token
   "fetch data from the table: \"pa_scrape\""
   pa_scrape(
-    #distinct select on columns
+    "distinct select on columns"
     distinct_on: [pa_scrape_select_column!],
-    #limit the number of rows returned
+    "limit the number of rows returned"
     limit: Int,
-    #skip the first n rows. Use only with order_by
+    "skip the first n rows. Use only with order_by"
     offset: Int,
-    #sort the rows by one or more columns
+    "sort the rows by one or more columns"
     order_by: [pa_scrape_order_by!],
-    #filter the rows returned
+    "filter the rows returned"
     where: pa_scrape_bool_exp
   ): [pa_scrape!]!
   "fetch aggregated fields from the table: \"pa_scrape\""
   pa_scrape_aggregate(
-    #distinct select on columns
+    "distinct select on columns"
     distinct_on: [pa_scrape_select_column!],
-    #limit the number of rows returned
+    "limit the number of rows returned"
     limit: Int,
-    #skip the first n rows. Use only with order_by
+    "skip the first n rows. Use only with order_by"
     offset: Int,
-    #sort the rows by one or more columns
+    "sort the rows by one or more columns"
     order_by: [pa_scrape_order_by!],
-    #filter the rows returned
+    "filter the rows returned"
     where: pa_scrape_bool_exp
   ): pa_scrape_aggregate!
   "fetch data from the table: \"pa_scrape\" using primary key columns"
   pa_scrape_by_pk(id: Int!): pa_scrape
   "fetch data from the table: \"pa_status\""
   pa_status(
-    #distinct select on columns
+    "distinct select on columns"
     distinct_on: [pa_status_select_column!],
-    #limit the number of rows returned
+    "limit the number of rows returned"
     limit: Int,
-    #skip the first n rows. Use only with order_by
+    "skip the first n rows. Use only with order_by"
     offset: Int,
-    #sort the rows by one or more columns
+    "sort the rows by one or more columns"
     order_by: [pa_status_order_by!],
-    #filter the rows returned
+    "filter the rows returned"
     where: pa_status_bool_exp
   ): [pa_status!]!
   "fetch aggregated fields from the table: \"pa_status\""
   pa_status_aggregate(
-    #distinct select on columns
+    "distinct select on columns"
     distinct_on: [pa_status_select_column!],
-    #limit the number of rows returned
+    "limit the number of rows returned"
     limit: Int,
-    #skip the first n rows. Use only with order_by
+    "skip the first n rows. Use only with order_by"
     offset: Int,
-    #sort the rows by one or more columns
+    "sort the rows by one or more columns"
     order_by: [pa_status_order_by!],
-    #filter the rows returned
+    "filter the rows returned"
     where: pa_status_bool_exp
   ): pa_status_aggregate!
   "fetch data from the table: \"pa_status\" using primary key columns"
   pa_status_by_pk(id: String!): pa_status
   "fetch data from the table: \"scrape_log\""
   scrape_log(
-    #distinct select on columns
+    "distinct select on columns"
     distinct_on: [scrape_log_select_column!],
-    #limit the number of rows returned
+    "limit the number of rows returned"
     limit: Int,
-    #skip the first n rows. Use only with order_by
+    "skip the first n rows. Use only with order_by"
     offset: Int,
-    #sort the rows by one or more columns
+    "sort the rows by one or more columns"
     order_by: [scrape_log_order_by!],
-    #filter the rows returned
+    "filter the rows returned"
     where: scrape_log_bool_exp
   ): [scrape_log!]!
   "fetch aggregated fields from the table: \"scrape_log\""
   scrape_log_aggregate(
-    #distinct select on columns
+    "distinct select on columns"
     distinct_on: [scrape_log_select_column!],
-    #limit the number of rows returned
+    "limit the number of rows returned"
     limit: Int,
-    #skip the first n rows. Use only with order_by
+    "skip the first n rows. Use only with order_by"
     offset: Int,
-    #sort the rows by one or more columns
+    "sort the rows by one or more columns"
     order_by: [scrape_log_order_by!],
-    #filter the rows returned
+    "filter the rows returned"
     where: scrape_log_bool_exp
   ): scrape_log_aggregate!
   "fetch data from the table: \"scrape_log\" using primary key columns"
   scrape_log_by_pk(id: Int!): scrape_log
   "fetch data from the table: \"users\""
   users(
-    #distinct select on columns
+    "distinct select on columns"
     distinct_on: [users_select_column!],
-    #limit the number of rows returned
+    "limit the number of rows returned"
     limit: Int,
-    #skip the first n rows. Use only with order_by
+    "skip the first n rows. Use only with order_by"
     offset: Int,
-    #sort the rows by one or more columns
+    "sort the rows by one or more columns"
     order_by: [users_order_by!],
-    #filter the rows returned
+    "filter the rows returned"
     where: users_bool_exp
   ): [users!]!
   "fetch aggregated fields from the table: \"users\""
   users_aggregate(
-    #distinct select on columns
+    "distinct select on columns"
     distinct_on: [users_select_column!],
-    #limit the number of rows returned
+    "limit the number of rows returned"
     limit: Int,
-    #skip the first n rows. Use only with order_by
+    "skip the first n rows. Use only with order_by"
     offset: Int,
-    #sort the rows by one or more columns
+    "sort the rows by one or more columns"
     order_by: [users_order_by!],
-    #filter the rows returned
+    "filter the rows returned"
     where: users_bool_exp
   ): users_aggregate!
   "fetch data from the table: \"users\" using primary key columns"
@@ -783,28 +957,28 @@ type users {
   email: String
   "An array relationship"
   fcm_tokens(
-    #distinct select on columns
+    "distinct select on columns"
     distinct_on: [fcm_token_select_column!],
-    #limit the number of rows returned
+    "limit the number of rows returned"
     limit: Int,
-    #skip the first n rows. Use only with order_by
+    "skip the first n rows. Use only with order_by"
     offset: Int,
-    #sort the rows by one or more columns
+    "sort the rows by one or more columns"
     order_by: [fcm_token_order_by!],
-    #filter the rows returned
+    "filter the rows returned"
     where: fcm_token_bool_exp
   ): [fcm_token!]!
   "An aggregated array relationship"
   fcm_tokens_aggregate(
-    #distinct select on columns
+    "distinct select on columns"
     distinct_on: [fcm_token_select_column!],
-    #limit the number of rows returned
+    "limit the number of rows returned"
     limit: Int,
-    #skip the first n rows. Use only with order_by
+    "skip the first n rows. Use only with order_by"
     offset: Int,
-    #sort the rows by one or more columns
+    "sort the rows by one or more columns"
     order_by: [fcm_token_order_by!],
-    #filter the rows returned
+    "filter the rows returned"
     where: fcm_token_bool_exp
   ): fcm_token_aggregate!
   id: String!
@@ -849,239 +1023,277 @@ type users_mutation_response {
   returning: [users!]!
 }
 
+"unique or primary key constraints on table \"council\""
+enum council_constraint {
+  "unique or primary key constraint"
+  council_pkey
+  "unique or primary key constraint"
+  council_portal_url_key
+  "unique or primary key constraint"
+  council_title_key
+}
+
+"select columns of table \"council\""
+enum council_select_column {
+  "column name"
+  council_type
+  "column name"
+  id
+  "column name"
+  portal_url
+  "column name"
+  scraper
+  "column name"
+  title
+}
+
+"update columns of table \"council\""
+enum council_update_column {
+  "column name"
+  council_type
+  "column name"
+  id
+  "column name"
+  portal_url
+  "column name"
+  scraper
+  "column name"
+  title
+}
+
 "unique or primary key constraints on table \"fcm_token\""
 enum fcm_token_constraint {
-  #unique or primary key constraint
+  "unique or primary key constraint"
   fcm_token_device_id_key
-  #unique or primary key constraint
+  "unique or primary key constraint"
   fcm_token_pkey
 }
 
 "select columns of table \"fcm_token\""
 enum fcm_token_select_column {
-  #column name
+  "column name"
   created_at
-  #column name
+  "column name"
   device_id
-  #column name
+  "column name"
   token
-  #column name
+  "column name"
   user_id
 }
 
 "update columns of table \"fcm_token\""
 enum fcm_token_update_column {
-  #column name
+  "column name"
   created_at
-  #column name
+  "column name"
   device_id
-  #column name
+  "column name"
   token
-  #column name
+  "column name"
   user_id
 }
 
 "column ordering options"
 enum order_by {
-  #in the ascending order, nulls last
+  "in the ascending order, nulls last"
   asc
-  #in the ascending order, nulls first
+  "in the ascending order, nulls first"
   asc_nulls_first
-  #in the ascending order, nulls last
+  "in the ascending order, nulls last"
   asc_nulls_last
-  #in the descending order, nulls first
+  "in the descending order, nulls first"
   desc
-  #in the descending order, nulls first
+  "in the descending order, nulls first"
   desc_nulls_first
-  #in the descending order, nulls last
+  "in the descending order, nulls last"
   desc_nulls_last
 }
 
 "unique or primary key constraints on table \"pa_scrape\""
 enum pa_scrape_constraint {
-  #unique or primary key constraint
+  "unique or primary key constraint"
   pa_scrape_decided_pkey
 }
 
 "select columns of table \"pa_scrape\""
 enum pa_scrape_select_column {
-  #column name
+  "column name"
   contacts
-  #column name
+  "column name"
   further_information
-  #column name
+  "column name"
   id
-  #column name
+  "column name"
   important_dates
-  #column name
+  "column name"
   list_type
-  #column name
+  "column name"
   reference
-  #column name
+  "column name"
   scraped_at
-  #column name
+  "column name"
   scraper
-  #column name
+  "column name"
   summary
-  #column name
+  "column name"
   url
 }
 
 "update columns of table \"pa_scrape\""
 enum pa_scrape_update_column {
-  #column name
+  "column name"
   contacts
-  #column name
+  "column name"
   further_information
-  #column name
+  "column name"
   id
-  #column name
+  "column name"
   important_dates
-  #column name
+  "column name"
   list_type
-  #column name
+  "column name"
   reference
-  #column name
+  "column name"
   scraped_at
-  #column name
+  "column name"
   scraper
-  #column name
+  "column name"
   summary
-  #column name
+  "column name"
   url
 }
 
 "unique or primary key constraints on table \"pa_status\""
 enum pa_status_constraint {
-  #unique or primary key constraint
+  "unique or primary key constraint"
   pa_status_pkey
 }
 
 "select columns of table \"pa_status\""
 enum pa_status_select_column {
-  #column name
+  "column name"
   address
-  #column name
+  "column name"
   application_validated
-  #column name
+  "column name"
   council
-  #column name
+  "column name"
   created_at
-  #column name
+  "column name"
   decision
-  #column name
+  "column name"
   decision_issued_date
-  #column name
+  "column name"
   id
-  #column name
+  "column name"
   location
-  #column name
+  "column name"
   open
-  #column name
+  "column name"
   proposal
-  #column name
+  "column name"
   status
-  #column name
+  "column name"
   updated_at
-  #column name
+  "column name"
   url
 }
 
 "update columns of table \"pa_status\""
 enum pa_status_update_column {
-  #column name
+  "column name"
   address
-  #column name
+  "column name"
   application_validated
-  #column name
+  "column name"
   council
-  #column name
+  "column name"
   created_at
-  #column name
+  "column name"
   decision
-  #column name
+  "column name"
   decision_issued_date
-  #column name
+  "column name"
   id
-  #column name
+  "column name"
   location
-  #column name
+  "column name"
   open
-  #column name
+  "column name"
   proposal
-  #column name
+  "column name"
   status
-  #column name
+  "column name"
   updated_at
-  #column name
+  "column name"
   url
 }
 
 "unique or primary key constraints on table \"scrape_log\""
 enum scrape_log_constraint {
-  #unique or primary key constraint
+  "unique or primary key constraint"
   scrape_log_pkey
 }
 
 "select columns of table \"scrape_log\""
 enum scrape_log_select_column {
-  #column name
+  "column name"
   event
-  #column name
+  "column name"
   id
-  #column name
+  "column name"
   meta
-  #column name
+  "column name"
   scraper
-  #column name
+  "column name"
   ts
 }
 
 "update columns of table \"scrape_log\""
 enum scrape_log_update_column {
-  #column name
+  "column name"
   event
-  #column name
+  "column name"
   id
-  #column name
+  "column name"
   meta
-  #column name
+  "column name"
   scraper
-  #column name
+  "column name"
   ts
 }
 
 "unique or primary key constraints on table \"users\""
 enum users_constraint {
-  #unique or primary key constraint
+  "unique or primary key constraint"
   users_pkey
 }
 
 "select columns of table \"users\""
 enum users_select_column {
-  #column name
+  "column name"
   created_at
-  #column name
+  "column name"
   email
-  #column name
+  "column name"
   id
-  #column name
+  "column name"
   location
-  #column name
+  "column name"
   name
 }
 
 "update columns of table \"users\""
 enum users_update_column {
-  #column name
+  "column name"
   created_at
-  #column name
+  "column name"
   email
-  #column name
+  "column name"
   id
-  #column name
+  "column name"
   location
-  #column name
+  "column name"
   name
 }
 
@@ -1128,6 +1340,142 @@ input String_comparison_exp {
   _nlike: String
   _nsimilar: String
   _similar: String
+}
+
+"order by aggregate values of table \"council\""
+input council_aggregate_order_by {
+  avg: council_avg_order_by
+  count: order_by
+  max: council_max_order_by
+  min: council_min_order_by
+  stddev: council_stddev_order_by
+  stddev_pop: council_stddev_pop_order_by
+  stddev_samp: council_stddev_samp_order_by
+  sum: council_sum_order_by
+  var_pop: council_var_pop_order_by
+  var_samp: council_var_samp_order_by
+  variance: council_variance_order_by
+}
+
+"input type for inserting array relation for remote table \"council\""
+input council_arr_rel_insert_input {
+  data: [council_insert_input!]!
+  on_conflict: council_on_conflict
+}
+
+"order by avg() on columns of table \"council\""
+input council_avg_order_by {
+  id: order_by
+}
+
+"Boolean expression to filter rows from the table \"council\". All fields are combined with a logical 'AND'."
+input council_bool_exp {
+  _and: [council_bool_exp]
+  _not: council_bool_exp
+  _or: [council_bool_exp]
+  council_type: String_comparison_exp
+  id: Int_comparison_exp
+  portal_url: String_comparison_exp
+  scraper: String_comparison_exp
+  title: String_comparison_exp
+}
+
+"input type for incrementing integer columne in table \"council\""
+input council_inc_input {
+  id: Int
+}
+
+"input type for inserting data into table \"council\""
+input council_insert_input {
+  council_type: String
+  id: Int
+  portal_url: String
+  scraper: String
+  title: String
+}
+
+"order by max() on columns of table \"council\""
+input council_max_order_by {
+  council_type: order_by
+  id: order_by
+  portal_url: order_by
+  scraper: order_by
+  title: order_by
+}
+
+"order by min() on columns of table \"council\""
+input council_min_order_by {
+  council_type: order_by
+  id: order_by
+  portal_url: order_by
+  scraper: order_by
+  title: order_by
+}
+
+"input type for inserting object relation for remote table \"council\""
+input council_obj_rel_insert_input {
+  data: council_insert_input!
+  on_conflict: council_on_conflict
+}
+
+"on conflict condition type for table \"council\""
+input council_on_conflict {
+  constraint: council_constraint!
+  update_columns: [council_update_column!]!
+  where: council_bool_exp
+}
+
+"ordering options when selecting data from \"council\""
+input council_order_by {
+  council_type: order_by
+  id: order_by
+  portal_url: order_by
+  scraper: order_by
+  title: order_by
+}
+
+"input type for updating data in table \"council\""
+input council_set_input {
+  council_type: String
+  id: Int
+  portal_url: String
+  scraper: String
+  title: String
+}
+
+"order by stddev() on columns of table \"council\""
+input council_stddev_order_by {
+  id: order_by
+}
+
+"order by stddev_pop() on columns of table \"council\""
+input council_stddev_pop_order_by {
+  id: order_by
+}
+
+"order by stddev_samp() on columns of table \"council\""
+input council_stddev_samp_order_by {
+  id: order_by
+}
+
+"order by sum() on columns of table \"council\""
+input council_sum_order_by {
+  id: order_by
+}
+
+"order by var_pop() on columns of table \"council\""
+input council_var_pop_order_by {
+  id: order_by
+}
+
+"order by var_samp() on columns of table \"council\""
+input council_var_samp_order_by {
+  id: order_by
+}
+
+"order by variance() on columns of table \"council\""
+input council_variance_order_by {
+  id: order_by
 }
 
 "order by aggregate values of table \"fcm_token\""
