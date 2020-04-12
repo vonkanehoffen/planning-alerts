@@ -90,10 +90,10 @@ PODS:
   - GoogleDataTransportCCTSupport (1.4.0):
     - GoogleDataTransport (~> 4.0)
     - nanopb (~> 0.3.901)
-  - GoogleMaps (3.2.0):
-    - GoogleMaps/Maps (= 3.2.0)
-  - GoogleMaps/Base (3.2.0)
-  - GoogleMaps/Maps (3.2.0):
+  - GoogleMaps (3.5.0):
+    - GoogleMaps/Maps (= 3.5.0)
+  - GoogleMaps/Base (3.5.0)
+  - GoogleMaps/Maps (3.5.0):
     - GoogleMaps/Base
   - GoogleUtilities/AppDelegateSwizzler (6.5.1):
     - GoogleUtilities/Environment
@@ -288,11 +288,11 @@ PODS:
   - React-jsinspector (0.61.5)
   - react-native-geolocation (1.4.2):
     - React
-  - react-native-google-maps (0.26.1):
+  - react-native-google-maps (0.27.1):
     - Google-Maps-iOS-Utils (= 2.1.0)
-    - GoogleMaps (= 3.2.0)
+    - GoogleMaps (= 3.5.0)
     - React
-  - react-native-maps (0.26.1):
+  - react-native-maps (0.27.1):
     - React
   - react-native-safe-area-context (0.7.2):
     - React
@@ -541,7 +541,7 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: dfe55efa543e899d906309eaaac6ca26d249862f
   GoogleDataTransport: 47fe3b8e1673e5187dfd615656a3c5034f150d69
   GoogleDataTransportCCTSupport: 36f69887fd212db6d7ef4dd45ba44523717a434e
-  GoogleMaps: 5046d7edfe381c1a0b20fdaf293915a375c3122b
+  GoogleMaps: 32ca02de09de357a10ac773f2c70f1986751392d
   GoogleUtilities: 06eb53bb579efe7099152735900dd04bf09e7275
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   Permission-LocationWhenInUse: f5dd8f5c9a0412db5eddd299ae208d6268b595b1
@@ -557,8 +557,8 @@ SPEC CHECKSUMS:
   React-jsiexecutor: d5525f9ed5f782fdbacb64b9b01a43a9323d2386
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
   react-native-geolocation: 79c743ad7a2e86617811ef23f49308824e92520c
-  react-native-google-maps: 2e2e697dab576abd5809d78cd74e775865b62bf7
-  react-native-maps: 6e499eee4eabf422ba8b6f94e993cc768bf35153
+  react-native-google-maps: 0a989abda71059db2caa98b9dacca7a8f38a47d0
+  react-native-maps: f4b89da81626ad7f151a8bfcb79733295d31ce5c
   react-native-safe-area-context: d227bd5ef6776683c330f44187351dc138b2a4cb
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76
   React-RCTAnimation: 791a87558389c80908ed06cc5dfc5e7920dfa360
