@@ -1,0 +1,44 @@
+mutation add_councils {
+  insert_council(objects: [
+    {title:"Barnsley Borough Council", council_type: "en_metro_district"},
+    {title:"Birmingham City Council", council_type: "en_metro_district"},
+    {title:"Bolton Borough Council", council_type: "en_metro_district"},
+    {title:"Bradford City Council", council_type: "en_metro_district"},
+    {title:"Bury Borough Council", council_type: "en_metro_district"},
+    {title:"Calderdale Borough Council", council_type: "en_metro_district"},
+    {title:"Coventry City Council", council_type: "en_metro_district"},
+    {title:"Doncaster Borough Council", council_type: "en_metro_district"},
+    {title:"Dudley Borough Council", council_type: "en_metro_district"},
+    {title:"Gateshead Borough Council", council_type: "en_metro_district"},
+    {title:"Kirklees Borough Council", council_type: "en_metro_district"},
+    {title:"Knowsley Borough Council", council_type: "en_metro_district"},
+    {title:"Leeds City Council", council_type: "en_metro_district"},
+    {title:"Liverpool City Council", council_type: "en_metro_district"},
+    {title:"Manchester City Council", council_type: "en_metro_district"},
+    {title:"North Tyneside Borough Council", council_type: "en_metro_district"},
+    {title:"Newcastle Upon Tyne City Council", council_type: "en_metro_district"},
+    {title:"Oldham Borough Council", council_type: "en_metro_district"},
+    {title:"Rochdale Borough Council", council_type: "en_metro_district"},
+    {title:"Rotherham Borough Council", council_type: "en_metro_district"},
+    {title:"South Tyneside Borough Council", council_type: "en_metro_district"},
+    {title:"Salford City Council", council_type: "en_metro_district"},
+    {title:"Sandwell Borough Council", council_type: "en_metro_district"},
+    {title:"Sefton Borough Council", council_type: "en_metro_district"},
+    {title:"Sheffield City Council", council_type: "en_metro_district"},
+    {title:"Solihull Borough Council", council_type: "en_metro_district"},
+    {title:"St Helens Borough Council", council_type: "en_metro_district"},
+    {title:"Stockport Borough Council", council_type: "en_metro_district"},
+    {title:"Sunderland City Council", council_type: "en_metro_district"},
+    {title:"Tameside Borough Council", council_type: "en_metro_district"},
+    {title:"Trafford Borough Council", council_type: "en_metro_district"},
+    {title:"Wakefield City Council", council_type: "en_metro_district"},
+    {title:"Walsall Borough Council", council_type: "en_metro_district"},
+    {title:"Wigan Borough Council", council_type: "en_metro_district"},
+    {title:"Wirral Borough Council", council_type: "en_metro_district"},
+    {title:"Wolverhampton City Council", council_type: "en_metro_district"},
+
+
+  ]) {
+    affected_rows
+  }
+}
