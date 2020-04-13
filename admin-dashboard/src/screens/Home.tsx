@@ -85,7 +85,8 @@ export const Home: React.FC = () => {
     },
     {
       name: "scraper",
-      label: "Scraper"
+      label: "Scraper",
+      editable: true
     },
     {
       name: "council_type",
