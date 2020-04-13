@@ -7,6 +7,7 @@ import { theme } from './theme'
 import history from "./utils/history";
 import config from './config.json';
 import { NavBar } from './components/NavBar'
+import { AppRouter } from './screens/AppRouter'
 
 // A function that routes the user to the right place
 // after login
@@ -30,7 +31,7 @@ function App() {
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
         <GraphQLProvider>
-          <NavBar/>
+          <AppRouter/>
         </GraphQLProvider>
       </MuiThemeProvider>
     </Auth0Provider>
