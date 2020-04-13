@@ -115,15 +115,16 @@ export const Home: React.FC = () => {
                           <TextField
                             defaultValue={row[column.name as keyof Council]}
                             fullWidth
-                            onKeyPress={(ev: any) => {
-                              // console.log(`Pressed keyCode ${ev.key}`, ev.target.value);
+                            onKeyPress={(ev: React.KeyboardEvent) => {
+                              const target = ev.target as HTMLInputElement;
+                              console.log(`Pressed keyCode ${ev.key}`, target.value);
                               if (ev.key === "Enter") {
                                 // Do code here
                                 const update = {
                                   variables: {
                                     id: row.id,
                                     changes: {
-                                      [column.name]: ev.target.value
+                                      [column.name]: target.value
                                     }
                                   }
                                 };
