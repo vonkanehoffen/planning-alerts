@@ -16,23 +16,18 @@ import {
 import { Error } from "../components/Error";
 // import MUIDataTable from "mui-datatables";
 // import { TableEditField } from "../components/TableEditField";
-
-interface ColumnConfig {
-  name: string,
-  label: string,
-  editable?: boolean
-}
+import { TableEditRow, ColumnConfig } from "../components/TableEditRow";
 
 interface Council {
-  id: number
-  title: string
-  portal_url: string
-  scraper: string
-  council_type: string
+  id: number;
+  title: string;
+  portal_url: string;
+  scraper: string;
+  council_type: string;
 }
 
 interface CouncilData {
-  council: Council[]
+  council: Council[];
 }
 
 const GET_COUNCILS = gql`
@@ -96,6 +91,9 @@ export const Home: React.FC = () => {
 
   return (
     <Paper>
+      {updateError && (
+        <Error message={updateError.message}/>
+      )}
       <TableContainer>
         <Table>
           <TableHead>
@@ -106,50 +104,16 @@ export const Home: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data && data.council.map((row, i) => (
-              <TableRow key={i}>
-                {columns.map((column: ColumnConfig, i) => {
-                  return (
-                    <TableCell key={i}>
-                      {column.editable ? (
-                        <Box display="flex">
-                          <TextField
-                            defaultValue={row[column.name as keyof Council]}
-                            fullWidth
-                            onKeyPress={(ev: React.KeyboardEvent) => {
-                              const target = ev.target as HTMLInputElement;
-                              console.log(`Pressed keyCode ${ev.key}`, target.value);
-                              if (ev.key === "Enter") {
-                                // Do code here
-                                const update = {
-                                  variables: {
-                                    id: row.id,
-                                    changes: {
-                                      [column.name]: target.value
-                                    }
-                                  }
-                                };
-                                setSelectedId(row.id);
-                                updateCouncil(update);
-                                ev.preventDefault();
-                              }
-                            }}
-                          />
-                          {updateLoading && row.id === selectedId && (
-                            <CircularProgress />
-                          )}
-                          {updateError && row.id === selectedId && (
-                            <Error message={updateError.message}/>
-                          )}
-                        </Box>
-                      ) : (
-                        <div>{row[column.name as keyof Council]}</div>
-                      )}
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-            ))}
+            {data &&
+              data.council.map((row, i) => (
+                <TableEditRow
+                  row={row}
+                  columns={columns}
+                  update={updateCouncil}
+                  loading={updateLoading}
+                  key={i}
+                />
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
