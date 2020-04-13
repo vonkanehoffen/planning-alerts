@@ -17,6 +17,24 @@ import { Error } from "../components/Error";
 // import MUIDataTable from "mui-datatables";
 // import { TableEditField } from "../components/TableEditField";
 
+interface ColumnConfig {
+  name: string,
+  label: string,
+  editable?: boolean
+}
+
+interface Council {
+  id: number
+  title: string
+  portal_url: string
+  scraper: string
+  council_type: string
+}
+
+interface CouncilData {
+  council: Council[]
+}
+
 const GET_COUNCILS = gql`
   query get_councils {
     council {
@@ -45,16 +63,16 @@ const UPDATE_COUNCIL = gql`
 `;
 
 export const Home: React.FC = () => {
-  const { loading, error, data } = useQuery(GET_COUNCILS);
+  const { loading, error, data } = useQuery<CouncilData>(GET_COUNCILS);
   const [
     updateCouncil,
     { loading: updateLoading, error: updateError }
   ] = useMutation(UPDATE_COUNCIL);
-  const [selectedId, setSelectedId] = useState(null);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
   if (loading) return <CircularProgress />;
   if (error) return <Error message={error.message} />;
 
-  const columns = [
+  const columns: Array<ColumnConfig> = [
     {
       name: "title",
       label: "Title"
@@ -87,15 +105,15 @@ export const Home: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.council.map((row: any, i: number) => (
+            {data && data.council.map((row, i) => (
               <TableRow key={i}>
-                {columns.map((column: any, i) => {
+                {columns.map((column: ColumnConfig, i) => {
                   return (
                     <TableCell key={i}>
                       {column.editable ? (
                         <Box display="flex">
                           <TextField
-                            defaultValue={row[column.name]}
+                            defaultValue={row[column.name as keyof Council]}
                             fullWidth
                             onKeyPress={(ev: any) => {
                               // console.log(`Pressed keyCode ${ev.key}`, ev.target.value);
@@ -123,7 +141,7 @@ export const Home: React.FC = () => {
                           )}
                         </Box>
                       ) : (
-                        <div>{row[column.name]}</div>
+                        <div>{row[column.name as keyof Council]}</div>
                       )}
                     </TableCell>
                   );
