@@ -101,6 +101,7 @@ export const Home: React.FC = () => {
               {columns.map((c, i) => (
                 <TableCell key={i}>{c.label}</TableCell>
               ))}
+              <TableCell/>
             </TableRow>
           </TableHead>
           <TableBody>

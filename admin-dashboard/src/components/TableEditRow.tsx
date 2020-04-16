@@ -79,20 +79,10 @@ export class TableEditRow extends React.Component<
                     }}
                     onKeyPress={(ev: React.KeyboardEvent) => {
                       // const target = ev.target as HTMLInputElement;
-                      // console.log(`Pressed keyCode ${ev.key}`, target.value);
-                      // if (ev.key === "Enter") {
-                      //   // Do code here
-                      //   const args = {
-                      //     variables: {
-                      //       id: row.id,
-                      //       changes: {
-                      //         [column.name]: target.value
-                      //       }
-                      //     }
-                      //   };
-                      //   update(args);
-                      //   ev.preventDefault();
-                      // }
+                      if (ev.key === "Enter") {
+                        this.doUpdate();
+                        ev.preventDefault();
+                      }
                     }}
                   />
                 </Box>
@@ -102,11 +92,13 @@ export class TableEditRow extends React.Component<
             </TableCell>
           );
         })}
+        <TableCell>
         {this.state.showSave && (
           <IconButton onClick={this.doUpdate}>
             <Save />
           </IconButton>
         )}
+        </TableCell>
       </TableRow>
     );
   }
