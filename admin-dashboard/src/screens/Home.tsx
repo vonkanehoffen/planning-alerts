@@ -14,9 +14,10 @@ import {
   Box
 } from "@material-ui/core";
 import { Error } from "../components/Error";
-// import MUIDataTable from "mui-datatables";
+import MUIDataTable from "mui-datatables";
 // import { TableEditField } from "../components/TableEditField";
 import { TableEditRow, ColumnConfig } from "../components/TableEditRow";
+import { DataTableEditRow } from "../components/DataTableEditRow";
 
 interface Council {
   id: number;
@@ -63,11 +64,15 @@ export const Home: React.FC = () => {
     updateCouncil,
     { loading: updateLoading, error: updateError }
   ] = useMutation(UPDATE_COUNCIL);
-  const [selectedId, setSelectedId] = useState<number | null>(null);
+
   if (loading) return <CircularProgress />;
   if (error) return <Error message={error.message} />;
 
   const columns: Array<ColumnConfig> = [
+    {
+      name: "id",
+      label: "ID"
+    },
     {
       name: "title",
       label: "Title"
@@ -75,7 +80,6 @@ export const Home: React.FC = () => {
     {
       name: "portal_url",
       label: "Portal URL",
-      // render: TableEditField
       editable: true
     },
     {
@@ -90,34 +94,24 @@ export const Home: React.FC = () => {
   ];
 
   return (
-    <Paper>
-      {updateError && (
-        <Error message={updateError.message}/>
-      )}
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              {columns.map((c, i) => (
-                <TableCell key={i}>{c.label}</TableCell>
-              ))}
-              <TableCell/>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data &&
-              data.council.map((row, i) => (
-                <TableEditRow
-                  row={row}
-                  columns={columns}
-                  update={updateCouncil}
-                  loading={updateLoading}
-                  key={i}
-                />
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Paper>
+    <MUIDataTable
+      columns={columns}
+      // @ts-ignore
+      data={data.council}
+      title="Councils"
+      // @ts-ignore
+      options={{
+        customRowRender: (data, dataIndex, rowIndex) => (
+          <DataTableEditRow
+            data={data}
+            dataIndex={dataIndex}
+            rowIndex={rowIndex}
+            columns={columns}
+            update={updateCouncil}
+            rowId={0}
+          />
+        )
+      }}
+    />
   );
 };

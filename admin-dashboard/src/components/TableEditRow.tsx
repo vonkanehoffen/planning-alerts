@@ -20,10 +20,9 @@ export interface ColumnConfig {
 }
 
 interface TableEditRowProps {
-  row: any;
+  data: Array<any>;
   columns: Array<ColumnConfig>;
   update: (changes: object) => any;
-  loading: boolean;
 }
 
 type TableEditRowState = {
@@ -42,41 +41,49 @@ export class TableEditRow extends React.Component<
   };
 
   doUpdate = () => {
-    this.props.update({
-      variables: {
-        id: this.props.row.id,
-        changes: this.state.changes
-      }
-    });
+    console.log('would udatye', this.props.data[0], this.state.changes);
+    // this.props.update({
+    //   variables: {
+    //     id: this.props.row.id,
+    //     changes: this.state.changes
+    //   }
+    // });
   };
+
   render() {
-    const { row, columns, loading } = this.props;
+    const { data, columns } = this.props;
+    console.log("TR", this.props);
+
     return (
       <TableRow>
-        {columns.map((column: ColumnConfig, i) => {
+        <TableCell/>
+        {data.map((cell, i) => {
+          const colName = columns[i].name
           let value = "";
-          if (this.state.changes.hasOwnProperty(column.name)) {
-            value = this.state.changes[column.name as keyof object];
+          if (this.state.changes.hasOwnProperty(colName)) {
+            value = this.state.changes[colName as keyof object];
           } else {
-            value = row[column.name];
+            value = cell;
           }
+
+          const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+            this.setState({
+              changes: {
+                ...this.state.changes,
+                [colName]: e.target.value
+              },
+              showSave: true
+            });
+          };
+
           return (
             <TableCell key={i}>
-              {column.editable ? (
+              {columns[i].editable ? (
                 <Box display="flex">
                   <TextField
                     value={value}
                     fullWidth
-                    disabled={loading}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      this.setState({
-                        changes: {
-                          ...this.state.changes,
-                          [column.name]: e.target.value
-                        },
-                        showSave: true
-                      });
-                    }}
+                    onChange={handleChange}
                     onKeyPress={(ev: React.KeyboardEvent) => {
                       // const target = ev.target as HTMLInputElement;
                       if (ev.key === "Enter") {
@@ -87,7 +94,7 @@ export class TableEditRow extends React.Component<
                   />
                 </Box>
               ) : (
-                <div>{row[column.name as keyof object]}</div>
+                <div>{cell}</div>
               )}
             </TableCell>
           );
