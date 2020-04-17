@@ -22,7 +22,6 @@ export class DataTableEditRow extends React.Component<DataTableEditRowProps> {
       id: this.props.data[0],
       changes: this.state.changes
     };
-    console.log("doUpdate", variables);
     this.props.update({
       variables
     });
@@ -30,7 +29,6 @@ export class DataTableEditRow extends React.Component<DataTableEditRowProps> {
   };
   render() {
     const { data, columns } = this.props;
-    console.log(data);
     const hasUpdate = Object.keys(this.state.changes).length > 0;
     return (
       <TableRow>
@@ -44,7 +42,7 @@ export class DataTableEditRow extends React.Component<DataTableEditRowProps> {
           if (!columns[i].editable)
             return (
               // return (
-              <TableCell>{cell}</TableCell>
+              <TableCell key={i}>{cell}</TableCell>
             );
 
           // @ts-ignore
@@ -64,10 +62,16 @@ export class DataTableEditRow extends React.Component<DataTableEditRowProps> {
           }
 
           return (
-            <TableCell>
+            <TableCell key={i}>
               <TextField
                 value={value || ""}
                 onChange={handleChange}
+                onKeyPress={(ev: React.KeyboardEvent) => {
+                  if (ev.key === "Enter") {
+                    this.doUpdate();
+                    ev.preventDefault();
+                  }
+                }}
                 fullWidth
               />
               {/*<pre>cell = {cell}</pre>*/}
