@@ -18,7 +18,7 @@ import MUIDataTable from "mui-datatables";
 // import { TableEditField } from "../components/TableEditField";
 import { TableEditRow, ColumnConfig } from "../components/TableEditRow";
 import { DataTableEditRow } from "../components/DataTableEditRow";
-import { CouncilCount } from "../components/CouncilCount";
+import { AggregateCountChip } from "../components/AggregateCountChip";
 
 interface Council {
   id: number;
@@ -96,8 +96,25 @@ export const Home: React.FC = () => {
 
   return (
     <div>
-      <CouncilCount />
-
+      <Box display="flex">
+        <AggregateCountChip
+          label="Idox"
+          condition={{ scraper: { _eq: "idox" } }}
+        />
+        <AggregateCountChip
+          label="Swift"
+          condition={{ scraper: { _eq: "swift" } }}
+        />
+        <AggregateCountChip
+          label="Unknown scraper"
+          condition={{ scraper: { _is_null: true } }}
+        />
+        <AggregateCountChip
+          label="Unknown portal"
+          condition={{ portal_url: { _is_null: true } }}
+        />
+        <AggregateCountChip label="Total councils" condition={{ title: {} }} />
+      </Box>
       <MUIDataTable
         columns={columns}
         // @ts-ignore
