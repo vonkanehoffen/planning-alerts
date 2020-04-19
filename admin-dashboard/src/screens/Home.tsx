@@ -18,6 +18,7 @@ import MUIDataTable from "mui-datatables";
 // import { TableEditField } from "../components/TableEditField";
 import { TableEditRow, ColumnConfig } from "../components/TableEditRow";
 import { DataTableEditRow } from "../components/DataTableEditRow";
+import { CouncilCount } from "../components/CouncilCount";
 
 interface Council {
   id: number;
@@ -94,24 +95,28 @@ export const Home: React.FC = () => {
   ];
 
   return (
-    <MUIDataTable
-      columns={columns}
-      // @ts-ignore
-      data={data.council}
-      title="Councils"
-      // @ts-ignore
-      options={{
-        customRowRender: (data, dataIndex, rowIndex) => (
-          <DataTableEditRow
-            data={data}
-            dataIndex={dataIndex}
-            rowIndex={rowIndex}
-            columns={columns}
-            update={updateCouncil}
-            rowId={0}
-          />
-        )
-      }}
-    />
+    <div>
+      <CouncilCount />
+
+      <MUIDataTable
+        columns={columns}
+        // @ts-ignore
+        data={data.council}
+        title="Councils"
+        // @ts-ignore
+        options={{
+          customRowRender: (data, dataIndex, rowIndex) => (
+            <DataTableEditRow
+              data={data}
+              dataIndex={dataIndex}
+              rowIndex={rowIndex}
+              columns={columns}
+              update={updateCouncil}
+              rowId={0}
+            />
+          )
+        }}
+      />
+    </div>
   );
 };
