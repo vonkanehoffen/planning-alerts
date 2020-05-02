@@ -7,6 +7,7 @@ import { Error } from "./Error";
 interface AggregateCountChipProps {
   label: string;
   condition: object;
+  color?: "primary" | "secondary"
 }
 
 const COUNT_QUERY = gql`
@@ -21,7 +22,8 @@ const COUNT_QUERY = gql`
 
 export const AggregateCountChip: React.FC<AggregateCountChipProps> = ({
   label,
-  condition
+  condition,
+  color = "primary"
 }) => {
   const { loading, error, data } = useQuery(COUNT_QUERY, {
     variables: {
@@ -37,7 +39,7 @@ export const AggregateCountChip: React.FC<AggregateCountChipProps> = ({
     return (
       <Box m={1}>
         <Chip
-          color="primary"
+          color={color}
           label={
             <span>
             {label} <b>{data.council_aggregate.aggregate.totalCount} total</b>

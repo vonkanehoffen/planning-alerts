@@ -81,7 +81,9 @@ export const Home: React.FC = () => {
     {
       name: "portal_url",
       label: "Portal URL",
-      editable: true
+      editable: true,
+      // @ts-ignore
+      options: { sortDirection: 'asc' }
     },
     {
       name: "scraper",
@@ -100,14 +102,29 @@ export const Home: React.FC = () => {
         <AggregateCountChip
           label="Idox"
           condition={{ scraper: { _eq: "idox" } }}
+          color="secondary"
         />
         <AggregateCountChip
           label="Swift"
           condition={{ scraper: { _eq: "swift" } }}
+          color="secondary"
+        />
+        <AggregateCountChip
+          label="Northgate"
+          condition={{ scraper: { _eq: "northgate" } }}
+          color="secondary"
+        />
+        <AggregateCountChip
+          label="Ocella"
+          condition={{ scraper: { _eq: "ocella" } }}
+          color="secondary"
         />
         <AggregateCountChip
           label="Unknown scraper"
-          condition={{ scraper: { _is_null: true } }}
+          condition={{
+            scraper: { _is_null: true },
+            portal_url: { _is_null: false }
+          }}
         />
         <AggregateCountChip
           label="Unknown portal"
