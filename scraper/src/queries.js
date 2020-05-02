@@ -59,6 +59,16 @@ exports.UPDATE_PA_STATUS = gql`
     }
   }
 `;
+
+exports.GET_SCRAPE_TARGETS_BY_TYPE = gql`
+  query get_scrape_targets_by_type($scraper: String) {
+    council(where: { scraper: { _eq: $scraper}}) {
+      id
+      portal_url
+    }
+  }
+`;
+
 /**
  * Check of a status record for a particular app ref exists
  * @type {DocumentNode}
