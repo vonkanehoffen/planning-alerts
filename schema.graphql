@@ -10,6 +10,32 @@ schema {
 type council {
   council_type: String!
   id: Int!
+  "An array relationship"
+  pa_statuses(
+    "distinct select on columns"
+    distinct_on: [pa_status_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [pa_status_order_by!],
+    "filter the rows returned"
+    where: pa_status_bool_exp
+  ): [pa_status!]!
+  "An aggregated array relationship"
+  pa_statuses_aggregate(
+    "distinct select on columns"
+    distinct_on: [pa_status_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [pa_status_order_by!],
+    "filter the rows returned"
+    where: pa_status_bool_exp
+  ): pa_status_aggregate!
   portal_url: String
   scraper: String
   title: String!
@@ -266,6 +292,8 @@ type mutation_root {
   ): pa_scrape_mutation_response
   "update data of the table: \"pa_status\""
   update_pa_status(
+    "increments the integer columns with given value of the filtered values"
+    _inc: pa_status_inc_input,
     "sets the columns of the filtered rows to the given values"
     _set: pa_status_set_input,
     "filter the rows which have to be updated"
@@ -420,7 +448,10 @@ type pa_scrape_variance_fields {
 type pa_status {
   address: String!
   application_validated: timestamptz
-  council: String!
+  "An object relationship"
+  council: council
+  council_id: Int
+  council_name: String!
   created_at: timestamptz!
   decision: String
   decision_issued_date: timestamptz
@@ -467,16 +498,30 @@ type pa_status_aggregate {
 
 "aggregate fields of \"pa_status\""
 type pa_status_aggregate_fields {
+  avg: pa_status_avg_fields
   count(columns: [pa_status_select_column!], distinct: Boolean): Int
   max: pa_status_max_fields
   min: pa_status_min_fields
+  stddev: pa_status_stddev_fields
+  stddev_pop: pa_status_stddev_pop_fields
+  stddev_samp: pa_status_stddev_samp_fields
+  sum: pa_status_sum_fields
+  var_pop: pa_status_var_pop_fields
+  var_samp: pa_status_var_samp_fields
+  variance: pa_status_variance_fields
+}
+
+"aggregate avg on columns"
+type pa_status_avg_fields {
+  council_id: Float
 }
 
 "aggregate max on columns"
 type pa_status_max_fields {
   address: String
   application_validated: timestamptz
-  council: String
+  council_id: Int
+  council_name: String
   created_at: timestamptz
   decision: String
   decision_issued_date: timestamptz
@@ -491,7 +536,8 @@ type pa_status_max_fields {
 type pa_status_min_fields {
   address: String
   application_validated: timestamptz
-  council: String
+  council_id: Int
+  council_name: String
   created_at: timestamptz
   decision: String
   decision_issued_date: timestamptz
@@ -508,6 +554,41 @@ type pa_status_mutation_response {
   affected_rows: Int!
   "data of the affected rows by the mutation"
   returning: [pa_status!]!
+}
+
+"aggregate stddev on columns"
+type pa_status_stddev_fields {
+  council_id: Float
+}
+
+"aggregate stddev_pop on columns"
+type pa_status_stddev_pop_fields {
+  council_id: Float
+}
+
+"aggregate stddev_samp on columns"
+type pa_status_stddev_samp_fields {
+  council_id: Float
+}
+
+"aggregate sum on columns"
+type pa_status_sum_fields {
+  council_id: Int
+}
+
+"aggregate var_pop on columns"
+type pa_status_var_pop_fields {
+  council_id: Float
+}
+
+"aggregate var_samp on columns"
+type pa_status_var_samp_fields {
+  council_id: Float
+}
+
+"aggregate variance on columns"
+type pa_status_variance_fields {
+  council_id: Float
 }
 
 "query root"
@@ -1176,7 +1257,9 @@ enum pa_status_select_column {
   "column name"
   application_validated
   "column name"
-  council
+  council_id
+  "column name"
+  council_name
   "column name"
   created_at
   "column name"
@@ -1206,7 +1289,9 @@ enum pa_status_update_column {
   "column name"
   application_validated
   "column name"
-  council
+  council_id
+  "column name"
+  council_name
   "column name"
   created_at
   "column name"
@@ -1375,6 +1460,7 @@ input council_bool_exp {
   _or: [council_bool_exp]
   council_type: String_comparison_exp
   id: Int_comparison_exp
+  pa_statuses: pa_status_bool_exp
   portal_url: String_comparison_exp
   scraper: String_comparison_exp
   title: String_comparison_exp
@@ -1389,6 +1475,7 @@ input council_inc_input {
 input council_insert_input {
   council_type: String
   id: Int
+  pa_statuses: pa_status_arr_rel_insert_input
   portal_url: String
   scraper: String
   title: String
@@ -1429,6 +1516,7 @@ input council_on_conflict {
 input council_order_by {
   council_type: order_by
   id: order_by
+  pa_statuses_aggregate: pa_status_aggregate_order_by
   portal_url: order_by
   scraper: order_by
   title: order_by
@@ -1842,15 +1930,28 @@ input pa_scrape_variance_order_by {
 
 "order by aggregate values of table \"pa_status\""
 input pa_status_aggregate_order_by {
+  avg: pa_status_avg_order_by
   count: order_by
   max: pa_status_max_order_by
   min: pa_status_min_order_by
+  stddev: pa_status_stddev_order_by
+  stddev_pop: pa_status_stddev_pop_order_by
+  stddev_samp: pa_status_stddev_samp_order_by
+  sum: pa_status_sum_order_by
+  var_pop: pa_status_var_pop_order_by
+  var_samp: pa_status_var_samp_order_by
+  variance: pa_status_variance_order_by
 }
 
 "input type for inserting array relation for remote table \"pa_status\""
 input pa_status_arr_rel_insert_input {
   data: [pa_status_insert_input!]!
   on_conflict: pa_status_on_conflict
+}
+
+"order by avg() on columns of table \"pa_status\""
+input pa_status_avg_order_by {
+  council_id: order_by
 }
 
 "Boolean expression to filter rows from the table \"pa_status\". All fields are combined with a logical 'AND'."
@@ -1860,7 +1961,9 @@ input pa_status_bool_exp {
   _or: [pa_status_bool_exp]
   address: String_comparison_exp
   application_validated: timestamptz_comparison_exp
-  council: String_comparison_exp
+  council: council_bool_exp
+  council_id: Int_comparison_exp
+  council_name: String_comparison_exp
   created_at: timestamptz_comparison_exp
   decision: String_comparison_exp
   decision_issued_date: timestamptz_comparison_exp
@@ -1874,11 +1977,18 @@ input pa_status_bool_exp {
   url: String_comparison_exp
 }
 
+"input type for incrementing integer columne in table \"pa_status\""
+input pa_status_inc_input {
+  council_id: Int
+}
+
 "input type for inserting data into table \"pa_status\""
 input pa_status_insert_input {
   address: String
   application_validated: timestamptz
-  council: String
+  council: council_obj_rel_insert_input
+  council_id: Int
+  council_name: String
   created_at: timestamptz
   decision: String
   decision_issued_date: timestamptz
@@ -1896,7 +2006,8 @@ input pa_status_insert_input {
 input pa_status_max_order_by {
   address: order_by
   application_validated: order_by
-  council: order_by
+  council_id: order_by
+  council_name: order_by
   created_at: order_by
   decision: order_by
   decision_issued_date: order_by
@@ -1911,7 +2022,8 @@ input pa_status_max_order_by {
 input pa_status_min_order_by {
   address: order_by
   application_validated: order_by
-  council: order_by
+  council_id: order_by
+  council_name: order_by
   created_at: order_by
   decision: order_by
   decision_issued_date: order_by
@@ -1939,7 +2051,9 @@ input pa_status_on_conflict {
 input pa_status_order_by {
   address: order_by
   application_validated: order_by
-  council: order_by
+  council: council_order_by
+  council_id: order_by
+  council_name: order_by
   created_at: order_by
   decision: order_by
   decision_issued_date: order_by
@@ -1957,7 +2071,8 @@ input pa_status_order_by {
 input pa_status_set_input {
   address: String
   application_validated: timestamptz
-  council: String
+  council_id: Int
+  council_name: String
   created_at: timestamptz
   decision: String
   decision_issued_date: timestamptz
@@ -1968,6 +2083,41 @@ input pa_status_set_input {
   status: String
   updated_at: timestamptz
   url: String
+}
+
+"order by stddev() on columns of table \"pa_status\""
+input pa_status_stddev_order_by {
+  council_id: order_by
+}
+
+"order by stddev_pop() on columns of table \"pa_status\""
+input pa_status_stddev_pop_order_by {
+  council_id: order_by
+}
+
+"order by stddev_samp() on columns of table \"pa_status\""
+input pa_status_stddev_samp_order_by {
+  council_id: order_by
+}
+
+"order by sum() on columns of table \"pa_status\""
+input pa_status_sum_order_by {
+  council_id: order_by
+}
+
+"order by var_pop() on columns of table \"pa_status\""
+input pa_status_var_pop_order_by {
+  council_id: order_by
+}
+
+"order by var_samp() on columns of table \"pa_status\""
+input pa_status_var_samp_order_by {
+  council_id: order_by
+}
+
+"order by variance() on columns of table \"pa_status\""
+input pa_status_variance_order_by {
+  council_id: order_by
 }
 
 "order by aggregate values of table \"scrape_log\""
