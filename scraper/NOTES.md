@@ -23,3 +23,12 @@ commercial eg offices or shops
 
 (they;re district concerns)
 
+## How about national parks?
+Chichester district council covers South Downs but:
+https://www.chichester.gov.uk/viewplanningapplications
+https://www.southdowns.gov.uk/planning/south-downs-local-plan_2019/
+
+
+RSS feeds?
+https://www.torridge.gov.uk/planningdata
+Is this stock idox?
