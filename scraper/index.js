@@ -2,7 +2,7 @@ const Sentry = require("@sentry/node");
 const { scrapeWeekly } = require("./src/idox/scrapeWeekly.js");
 const { pushNotify } = require("./src/lib/pushNotify");
 const config = require("./config");
-const targets = require("./targets");
+const { getTargets } = require("./src/getTargets")
 
 Sentry.init({ dsn: config.sentryDSN, debug: true });
 
@@ -12,6 +12,8 @@ Sentry.init({ dsn: config.sentryDSN, debug: true });
  * @returns {Promise<void>}
  */
 async function scrapeAll() {
+  // TODO
+  const idoxTargets = await getTargets('idox');
   for (let rootURL of targets.idox) {
     await scrapeWeekly(rootURL);
     await pushNotify(rootURL);
