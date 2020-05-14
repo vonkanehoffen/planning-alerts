@@ -1,0 +1,21 @@
+{
+  "name": "planningalerts-hasura",
+  "version": "1.0.0",
+  "description": "Stuff related to the Hasura back end",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "graphql-codegen": "graphql-codegen --config codegen.yml"
+  },
+  "author": "Kane Clover",
+  "license": "ISC",
+  "dependencies": {
+    "graphql": "^15.0.0"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "1.13.5",
+    "@graphql-codegen/typescript": "^1.13.5",
+    "@graphql-codegen/typescript-graphql-files-modules": "1.13.5",
+    "@graphql-codegen/typescript-operations": "^1.13.5",
+    "@graphql-codegen/typescript-react-apollo": "^1.13.5"
+  }
+}
