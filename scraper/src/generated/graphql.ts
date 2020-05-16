@@ -2597,6 +2597,19 @@ export type Users_Set_Input = {
 
 
 
+export type Get_Scrape_Targets_By_TypeQueryVariables = {
+  scraper?: Maybe<Scalars['String']>;
+};
+
+
+export type Get_Scrape_Targets_By_TypeQuery = (
+  { __typename?: 'query_root' }
+  & { council: Array<(
+    { __typename?: 'council' }
+    & Pick<Council, 'id' | 'portal_url'>
+  )> }
+);
+
 export type Get_User_LocationQueryVariables = {
   id: Scalars['String'];
 };
@@ -2629,6 +2642,14 @@ export type Update_User_LocationMutation = (
 );
 
 
+export const Get_Scrape_Targets_By_TypeDocument = gql`
+    query get_scrape_targets_by_type($scraper: String) {
+  council(where: {scraper: {_eq: $scraper}}) {
+    id
+    portal_url
+  }
+}
+    `;
 export const Get_User_LocationDocument = gql`
     query get_user_location($id: String!) {
   users(where: {id: {_eq: $id}}) {
@@ -2655,6 +2676,9 @@ export type SdkFunctionWrapper = <T>(action: () => Promise<T>) => Promise<T>;
 const defaultWrapper: SdkFunctionWrapper = sdkFunction => sdkFunction();
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    get_scrape_targets_by_type(variables?: Get_Scrape_Targets_By_TypeQueryVariables): Promise<Get_Scrape_Targets_By_TypeQuery> {
+      return withWrapper(() => client.request<Get_Scrape_Targets_By_TypeQuery>(print(Get_Scrape_Targets_By_TypeDocument), variables));
+    },
     get_user_location(variables: Get_User_LocationQueryVariables): Promise<Get_User_LocationQuery> {
       return withWrapper(() => client.request<Get_User_LocationQuery>(print(Get_User_LocationDocument), variables));
     },

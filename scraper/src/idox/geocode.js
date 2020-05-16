@@ -1,5 +1,5 @@
 const { hasuraRequest } = require("../lib/hasuraRequest");
-const config = require("../../config");
+const config = require("../config");
 const fetch = require("node-fetch");
 const querystring = require("querystring");
 const queries = require("../queries");

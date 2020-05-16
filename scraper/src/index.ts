@@ -13,7 +13,7 @@ import { getTargets } from "./getTargets";
  */
 async function scrapeAll(): Promise<void> {
   const idoxTargets = await getTargets('idox');
-  console.log(idoxTargets);
+  console.log("idox = ", idoxTargets);
   // for (let target of idoxTargets) {
   //   await scrapeWeekly(target);
   //   await pushNotify(target);

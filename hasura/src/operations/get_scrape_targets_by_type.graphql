@@ -1,0 +1,6 @@
+query get_scrape_targets_by_type($scraper: String) {
+  council(where: { scraper: { _eq: $scraper}}) {
+    id
+    portal_url
+  }
+}

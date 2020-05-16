@@ -2600,6 +2600,19 @@ export type Users_Set_Input = {
 
 
 
+export type Get_Scrape_Targets_By_TypeQueryVariables = {
+  scraper?: Maybe<Scalars['String']>;
+};
+
+
+export type Get_Scrape_Targets_By_TypeQuery = (
+  { __typename?: 'query_root' }
+  & { council: Array<(
+    { __typename?: 'council' }
+    & Pick<Council, 'id' | 'portal_url'>
+  )> }
+);
+
 export type Get_User_LocationQueryVariables = {
   id: Scalars['String'];
 };
@@ -2632,6 +2645,34 @@ export type Update_User_LocationMutation = (
 );
 
 
+export const Get_Scrape_Targets_By_TypeDocument = gql`
+    query get_scrape_targets_by_type($scraper: String) {
+  council(where: {scraper: {_eq: $scraper}}) {
+    id
+    portal_url
+  }
+}
+    `;
+export type Get_Scrape_Targets_By_TypeComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<Get_Scrape_Targets_By_TypeQuery, Get_Scrape_Targets_By_TypeQueryVariables>, 'query'>;
+
+    export const Get_Scrape_Targets_By_TypeComponent = (props: Get_Scrape_Targets_By_TypeComponentProps) => (
+      <ApolloReactComponents.Query<Get_Scrape_Targets_By_TypeQuery, Get_Scrape_Targets_By_TypeQueryVariables> query={Get_Scrape_Targets_By_TypeDocument} {...props} />
+    );
+    
+export type Get_Scrape_Targets_By_TypeProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<Get_Scrape_Targets_By_TypeQuery, Get_Scrape_Targets_By_TypeQueryVariables>
+    } & TChildProps;
+export function withGet_Scrape_Targets_By_Type<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  Get_Scrape_Targets_By_TypeQuery,
+  Get_Scrape_Targets_By_TypeQueryVariables,
+  Get_Scrape_Targets_By_TypeProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, Get_Scrape_Targets_By_TypeQuery, Get_Scrape_Targets_By_TypeQueryVariables, Get_Scrape_Targets_By_TypeProps<TChildProps, TDataName>>(Get_Scrape_Targets_By_TypeDocument, {
+      alias: 'getScrapeTargetsByType',
+      ...operationOptions
+    });
+};
+export type Get_Scrape_Targets_By_TypeQueryResult = ApolloReactCommon.QueryResult<Get_Scrape_Targets_By_TypeQuery, Get_Scrape_Targets_By_TypeQueryVariables>;
 export const Get_User_LocationDocument = gql`
     query get_user_location($id: String!) {
   users(where: {id: {_eq: $id}}) {
