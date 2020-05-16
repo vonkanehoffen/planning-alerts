@@ -2600,6 +2600,32 @@ export type Users_Set_Input = {
 
 
 
+export type Get_Existing_LocationQueryVariables = {
+  address: Scalars['String'];
+};
+
+
+export type Get_Existing_LocationQuery = (
+  { __typename?: 'query_root' }
+  & { pa_status: Array<(
+    { __typename?: 'pa_status' }
+    & Pick<Pa_Status, 'id' | 'location'>
+  )> }
+);
+
+export type Get_Pa_Status_ExistsQueryVariables = {
+  id: Scalars['String'];
+};
+
+
+export type Get_Pa_Status_ExistsQuery = (
+  { __typename?: 'query_root' }
+  & { pa_status_by_pk?: Maybe<(
+    { __typename?: 'pa_status' }
+    & Pick<Pa_Status, 'id'>
+  )> }
+);
+
 export type Get_Scrape_Targets_By_TypeQueryVariables = {
   scraper?: Maybe<Scalars['String']>;
 };
@@ -2626,6 +2652,22 @@ export type Get_User_LocationQuery = (
   )> }
 );
 
+export type Insert_Scrape_LogMutationVariables = {
+  objects: Array<Scrape_Log_Insert_Input>;
+};
+
+
+export type Insert_Scrape_LogMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_scrape_log?: Maybe<(
+    { __typename?: 'scrape_log_mutation_response' }
+    & { returning: Array<(
+      { __typename?: 'scrape_log' }
+      & Pick<Scrape_Log, 'id' | 'ts'>
+    )> }
+  )> }
+);
+
 export type Update_User_LocationMutationVariables = {
   id: Scalars['String'];
   location: Scalars['geography'];
@@ -2645,6 +2687,61 @@ export type Update_User_LocationMutation = (
 );
 
 
+export const Get_Existing_LocationDocument = gql`
+    query get_existing_location($address: String!) {
+  pa_status(where: {address: {_eq: $address}}) {
+    id
+    location
+  }
+}
+    `;
+export type Get_Existing_LocationComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<Get_Existing_LocationQuery, Get_Existing_LocationQueryVariables>, 'query'> & ({ variables: Get_Existing_LocationQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const Get_Existing_LocationComponent = (props: Get_Existing_LocationComponentProps) => (
+      <ApolloReactComponents.Query<Get_Existing_LocationQuery, Get_Existing_LocationQueryVariables> query={Get_Existing_LocationDocument} {...props} />
+    );
+    
+export type Get_Existing_LocationProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<Get_Existing_LocationQuery, Get_Existing_LocationQueryVariables>
+    } & TChildProps;
+export function withGet_Existing_Location<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  Get_Existing_LocationQuery,
+  Get_Existing_LocationQueryVariables,
+  Get_Existing_LocationProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, Get_Existing_LocationQuery, Get_Existing_LocationQueryVariables, Get_Existing_LocationProps<TChildProps, TDataName>>(Get_Existing_LocationDocument, {
+      alias: 'getExistingLocation',
+      ...operationOptions
+    });
+};
+export type Get_Existing_LocationQueryResult = ApolloReactCommon.QueryResult<Get_Existing_LocationQuery, Get_Existing_LocationQueryVariables>;
+export const Get_Pa_Status_ExistsDocument = gql`
+    query get_pa_status_exists($id: String!) {
+  pa_status_by_pk(id: $id) {
+    id
+  }
+}
+    `;
+export type Get_Pa_Status_ExistsComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<Get_Pa_Status_ExistsQuery, Get_Pa_Status_ExistsQueryVariables>, 'query'> & ({ variables: Get_Pa_Status_ExistsQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const Get_Pa_Status_ExistsComponent = (props: Get_Pa_Status_ExistsComponentProps) => (
+      <ApolloReactComponents.Query<Get_Pa_Status_ExistsQuery, Get_Pa_Status_ExistsQueryVariables> query={Get_Pa_Status_ExistsDocument} {...props} />
+    );
+    
+export type Get_Pa_Status_ExistsProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<Get_Pa_Status_ExistsQuery, Get_Pa_Status_ExistsQueryVariables>
+    } & TChildProps;
+export function withGet_Pa_Status_Exists<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  Get_Pa_Status_ExistsQuery,
+  Get_Pa_Status_ExistsQueryVariables,
+  Get_Pa_Status_ExistsProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, Get_Pa_Status_ExistsQuery, Get_Pa_Status_ExistsQueryVariables, Get_Pa_Status_ExistsProps<TChildProps, TDataName>>(Get_Pa_Status_ExistsDocument, {
+      alias: 'getPaStatusExists',
+      ...operationOptions
+    });
+};
+export type Get_Pa_Status_ExistsQueryResult = ApolloReactCommon.QueryResult<Get_Pa_Status_ExistsQuery, Get_Pa_Status_ExistsQueryVariables>;
 export const Get_Scrape_Targets_By_TypeDocument = gql`
     query get_scrape_targets_by_type($scraper: String) {
   council(where: {scraper: {_eq: $scraper}}) {
@@ -2701,6 +2798,38 @@ export function withGet_User_Location<TProps, TChildProps = {}, TDataName extend
     });
 };
 export type Get_User_LocationQueryResult = ApolloReactCommon.QueryResult<Get_User_LocationQuery, Get_User_LocationQueryVariables>;
+export const Insert_Scrape_LogDocument = gql`
+    mutation insert_scrape_log($objects: [scrape_log_insert_input!]!) {
+  insert_scrape_log(objects: $objects) {
+    returning {
+      id
+      ts
+    }
+  }
+}
+    `;
+export type Insert_Scrape_LogMutationFn = ApolloReactCommon.MutationFunction<Insert_Scrape_LogMutation, Insert_Scrape_LogMutationVariables>;
+export type Insert_Scrape_LogComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<Insert_Scrape_LogMutation, Insert_Scrape_LogMutationVariables>, 'mutation'>;
+
+    export const Insert_Scrape_LogComponent = (props: Insert_Scrape_LogComponentProps) => (
+      <ApolloReactComponents.Mutation<Insert_Scrape_LogMutation, Insert_Scrape_LogMutationVariables> mutation={Insert_Scrape_LogDocument} {...props} />
+    );
+    
+export type Insert_Scrape_LogProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: ApolloReactCommon.MutationFunction<Insert_Scrape_LogMutation, Insert_Scrape_LogMutationVariables>
+    } & TChildProps;
+export function withInsert_Scrape_Log<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  Insert_Scrape_LogMutation,
+  Insert_Scrape_LogMutationVariables,
+  Insert_Scrape_LogProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, Insert_Scrape_LogMutation, Insert_Scrape_LogMutationVariables, Insert_Scrape_LogProps<TChildProps, TDataName>>(Insert_Scrape_LogDocument, {
+      alias: 'insertScrapeLog',
+      ...operationOptions
+    });
+};
+export type Insert_Scrape_LogMutationResult = ApolloReactCommon.MutationResult<Insert_Scrape_LogMutation>;
+export type Insert_Scrape_LogMutationOptions = ApolloReactCommon.BaseMutationOptions<Insert_Scrape_LogMutation, Insert_Scrape_LogMutationVariables>;
 export const Update_User_LocationDocument = gql`
     mutation update_user_location($id: String!, $location: geography!) {
   update_users(where: {id: {_eq: $id}}, _set: {location: $location}) {

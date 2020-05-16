@@ -1,0 +1,6 @@
+query get_existing_location($address: String!) {
+  pa_status(where: { address: { _eq: $address } }) {
+    id
+    location
+  }
+}
