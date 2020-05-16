@@ -7,3 +7,8 @@ generates:
       - "typescript"
       - "typescript-operations"
       - "typescript-react-apollo"
+  src/generated/graphql.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-graphql-request"
