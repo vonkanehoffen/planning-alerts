@@ -1,0 +1,28 @@
+query get_pa_status_exists($id: String!) {
+  pa_status_by_pk(id: $id) {
+    id
+  }
+}
+
+query get_existing_location($address: String!) {
+  pa_status(where: { address: { _eq: $address } }) {
+    id
+    location
+  }
+}
+
+query get_scrape_targets_by_type($scraper: String) {
+  council(where: { scraper: { _eq: $scraper}}) {
+    id
+    portal_url
+  }
+}
+
+mutation insert_scrape_log($objects: [scrape_log_insert_input!]!) {
+  insert_scrape_log(objects: $objects) {
+    returning {
+      id
+      ts
+    }
+  }
+}

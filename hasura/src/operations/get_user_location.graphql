@@ -1,6 +1,0 @@
-query get_user_location($id: String!) {
-  users(where: { id: { _eq: $id } }) {
-    id
-    location
-  }
-}

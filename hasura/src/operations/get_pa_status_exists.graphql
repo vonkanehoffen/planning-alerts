@@ -1,5 +1,0 @@
-query get_pa_status_exists($id: String!) {
-  pa_status_by_pk(id: $id) {
-    id
-  }
-}

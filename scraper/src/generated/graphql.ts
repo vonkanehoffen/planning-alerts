@@ -2597,45 +2597,6 @@ export type Users_Set_Input = {
 
 
 
-export type Get_Existing_LocationQueryVariables = {
-  address: Scalars['String'];
-};
-
-
-export type Get_Existing_LocationQuery = (
-  { __typename?: 'query_root' }
-  & { pa_status: Array<(
-    { __typename?: 'pa_status' }
-    & Pick<Pa_Status, 'id' | 'location'>
-  )> }
-);
-
-export type Get_Pa_Status_ExistsQueryVariables = {
-  id: Scalars['String'];
-};
-
-
-export type Get_Pa_Status_ExistsQuery = (
-  { __typename?: 'query_root' }
-  & { pa_status_by_pk?: Maybe<(
-    { __typename?: 'pa_status' }
-    & Pick<Pa_Status, 'id'>
-  )> }
-);
-
-export type Get_Scrape_Targets_By_TypeQueryVariables = {
-  scraper?: Maybe<Scalars['String']>;
-};
-
-
-export type Get_Scrape_Targets_By_TypeQuery = (
-  { __typename?: 'query_root' }
-  & { council: Array<(
-    { __typename?: 'council' }
-    & Pick<Council, 'id' | 'portal_url'>
-  )> }
-);
-
 export type Get_User_LocationQueryVariables = {
   id: Scalars['String'];
 };
@@ -2646,22 +2607,6 @@ export type Get_User_LocationQuery = (
   & { users: Array<(
     { __typename?: 'users' }
     & Pick<Users, 'id' | 'location'>
-  )> }
-);
-
-export type Insert_Scrape_LogMutationVariables = {
-  objects: Array<Scrape_Log_Insert_Input>;
-};
-
-
-export type Insert_Scrape_LogMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_scrape_log?: Maybe<(
-    { __typename?: 'scrape_log_mutation_response' }
-    & { returning: Array<(
-      { __typename?: 'scrape_log' }
-      & Pick<Scrape_Log, 'id' | 'ts'>
-    )> }
   )> }
 );
 
@@ -2683,45 +2628,67 @@ export type Update_User_LocationMutation = (
   )> }
 );
 
+export type Get_Pa_Status_ExistsQueryVariables = {
+  id: Scalars['String'];
+};
 
-export const Get_Existing_LocationDocument = gql`
-    query get_existing_location($address: String!) {
-  pa_status(where: {address: {_eq: $address}}) {
-    id
-    location
-  }
-}
-    `;
-export const Get_Pa_Status_ExistsDocument = gql`
-    query get_pa_status_exists($id: String!) {
-  pa_status_by_pk(id: $id) {
-    id
-  }
-}
-    `;
-export const Get_Scrape_Targets_By_TypeDocument = gql`
-    query get_scrape_targets_by_type($scraper: String) {
-  council(where: {scraper: {_eq: $scraper}}) {
-    id
-    portal_url
-  }
-}
-    `;
+
+export type Get_Pa_Status_ExistsQuery = (
+  { __typename?: 'query_root' }
+  & { pa_status_by_pk?: Maybe<(
+    { __typename?: 'pa_status' }
+    & Pick<Pa_Status, 'id'>
+  )> }
+);
+
+export type Get_Existing_LocationQueryVariables = {
+  address: Scalars['String'];
+};
+
+
+export type Get_Existing_LocationQuery = (
+  { __typename?: 'query_root' }
+  & { pa_status: Array<(
+    { __typename?: 'pa_status' }
+    & Pick<Pa_Status, 'id' | 'location'>
+  )> }
+);
+
+export type Get_Scrape_Targets_By_TypeQueryVariables = {
+  scraper?: Maybe<Scalars['String']>;
+};
+
+
+export type Get_Scrape_Targets_By_TypeQuery = (
+  { __typename?: 'query_root' }
+  & { council: Array<(
+    { __typename?: 'council' }
+    & Pick<Council, 'id' | 'portal_url'>
+  )> }
+);
+
+export type Insert_Scrape_LogMutationVariables = {
+  objects: Array<Scrape_Log_Insert_Input>;
+};
+
+
+export type Insert_Scrape_LogMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_scrape_log?: Maybe<(
+    { __typename?: 'scrape_log_mutation_response' }
+    & { returning: Array<(
+      { __typename?: 'scrape_log' }
+      & Pick<Scrape_Log, 'id' | 'ts'>
+    )> }
+  )> }
+);
+
+
 export const Get_User_LocationDocument = gql`
     query get_user_location($id: String!) {
   users(where: {id: {_eq: $id}}) {
     id
     location
-  }
-}
-    `;
-export const Insert_Scrape_LogDocument = gql`
-    mutation insert_scrape_log($objects: [scrape_log_insert_input!]!) {
-  insert_scrape_log(objects: $objects) {
-    returning {
-      id
-      ts
-    }
   }
 }
     `;
@@ -2736,6 +2703,39 @@ export const Update_User_LocationDocument = gql`
   }
 }
     `;
+export const Get_Pa_Status_ExistsDocument = gql`
+    query get_pa_status_exists($id: String!) {
+  pa_status_by_pk(id: $id) {
+    id
+  }
+}
+    `;
+export const Get_Existing_LocationDocument = gql`
+    query get_existing_location($address: String!) {
+  pa_status(where: {address: {_eq: $address}}) {
+    id
+    location
+  }
+}
+    `;
+export const Get_Scrape_Targets_By_TypeDocument = gql`
+    query get_scrape_targets_by_type($scraper: String) {
+  council(where: {scraper: {_eq: $scraper}}) {
+    id
+    portal_url
+  }
+}
+    `;
+export const Insert_Scrape_LogDocument = gql`
+    mutation insert_scrape_log($objects: [scrape_log_insert_input!]!) {
+  insert_scrape_log(objects: $objects) {
+    returning {
+      id
+      ts
+    }
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: () => Promise<T>) => Promise<T>;
 
@@ -2743,23 +2743,23 @@ export type SdkFunctionWrapper = <T>(action: () => Promise<T>) => Promise<T>;
 const defaultWrapper: SdkFunctionWrapper = sdkFunction => sdkFunction();
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    get_existing_location(variables: Get_Existing_LocationQueryVariables): Promise<Get_Existing_LocationQuery> {
-      return withWrapper(() => client.request<Get_Existing_LocationQuery>(print(Get_Existing_LocationDocument), variables));
+    get_user_location(variables: Get_User_LocationQueryVariables): Promise<Get_User_LocationQuery> {
+      return withWrapper(() => client.request<Get_User_LocationQuery>(print(Get_User_LocationDocument), variables));
+    },
+    update_user_location(variables: Update_User_LocationMutationVariables): Promise<Update_User_LocationMutation> {
+      return withWrapper(() => client.request<Update_User_LocationMutation>(print(Update_User_LocationDocument), variables));
     },
     get_pa_status_exists(variables: Get_Pa_Status_ExistsQueryVariables): Promise<Get_Pa_Status_ExistsQuery> {
       return withWrapper(() => client.request<Get_Pa_Status_ExistsQuery>(print(Get_Pa_Status_ExistsDocument), variables));
     },
+    get_existing_location(variables: Get_Existing_LocationQueryVariables): Promise<Get_Existing_LocationQuery> {
+      return withWrapper(() => client.request<Get_Existing_LocationQuery>(print(Get_Existing_LocationDocument), variables));
+    },
     get_scrape_targets_by_type(variables?: Get_Scrape_Targets_By_TypeQueryVariables): Promise<Get_Scrape_Targets_By_TypeQuery> {
       return withWrapper(() => client.request<Get_Scrape_Targets_By_TypeQuery>(print(Get_Scrape_Targets_By_TypeDocument), variables));
     },
-    get_user_location(variables: Get_User_LocationQueryVariables): Promise<Get_User_LocationQuery> {
-      return withWrapper(() => client.request<Get_User_LocationQuery>(print(Get_User_LocationDocument), variables));
-    },
     insert_scrape_log(variables: Insert_Scrape_LogMutationVariables): Promise<Insert_Scrape_LogMutation> {
       return withWrapper(() => client.request<Insert_Scrape_LogMutation>(print(Insert_Scrape_LogDocument), variables));
-    },
-    update_user_location(variables: Update_User_LocationMutationVariables): Promise<Update_User_LocationMutation> {
-      return withWrapper(() => client.request<Update_User_LocationMutation>(print(Update_User_LocationDocument), variables));
     }
   };
 }

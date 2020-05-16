@@ -1,3 +1,10 @@
+query get_user_location($id: String!) {
+  users(where: { id: { _eq: $id } }) {
+    id
+    location
+  }
+}
+
 mutation update_user_location($id: String!, $location: geography!) {
   update_users(where: { id: { _eq: $id } }, _set: { location: $location }) {
     affected_rows
