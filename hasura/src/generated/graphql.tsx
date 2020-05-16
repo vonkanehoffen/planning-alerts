@@ -2686,6 +2686,89 @@ export type Insert_Scrape_LogMutation = (
   )> }
 );
 
+export type Update_Pa_StatusMutationVariables = {
+  id: Scalars['String'];
+  set: Pa_Status_Set_Input;
+};
+
+
+export type Update_Pa_StatusMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_pa_status?: Maybe<(
+    { __typename?: 'pa_status_mutation_response' }
+    & { returning: Array<(
+      { __typename?: 'pa_status' }
+      & Pick<Pa_Status, 'id' | 'created_at' | 'updated_at'>
+    )> }
+  )> }
+);
+
+export type Insert_Pa_StatusMutationVariables = {
+  objects: Array<Pa_Status_Insert_Input>;
+};
+
+
+export type Insert_Pa_StatusMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_pa_status?: Maybe<(
+    { __typename?: 'pa_status_mutation_response' }
+    & { returning: Array<(
+      { __typename?: 'pa_status' }
+      & Pick<Pa_Status, 'id' | 'created_at'>
+    )> }
+  )> }
+);
+
+export type Insert_Pa_ScrapeMutationVariables = {
+  objects: Array<Pa_Scrape_Insert_Input>;
+};
+
+
+export type Insert_Pa_ScrapeMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_pa_scrape?: Maybe<(
+    { __typename?: 'pa_scrape_mutation_response' }
+    & { returning: Array<(
+      { __typename?: 'pa_scrape' }
+      & Pick<Pa_Scrape, 'id' | 'scraped_at'>
+    )> }
+  )> }
+);
+
+export type Get_New_Planning_Apps_NearQueryVariables = {
+  point: Scalars['geography'];
+  distance: Scalars['Float'];
+  date: Scalars['timestamptz'];
+  council_id: Scalars['Int'];
+};
+
+
+export type Get_New_Planning_Apps_NearQuery = (
+  { __typename?: 'query_root' }
+  & { pa_status: Array<(
+    { __typename?: 'pa_status' }
+    & Pick<Pa_Status, 'id'>
+  )> }
+);
+
+export type Get_UsersQueryVariables = {
+  limit: Scalars['Int'];
+  offset: Scalars['Int'];
+};
+
+
+export type Get_UsersQuery = (
+  { __typename?: 'query_root' }
+  & { users: Array<(
+    { __typename?: 'users' }
+    & Pick<Users, 'id' | 'name' | 'location'>
+    & { fcm_tokens: Array<(
+      { __typename?: 'fcm_token' }
+      & Pick<Fcm_Token, 'token'>
+    )> }
+  )> }
+);
+
 
 export const Get_User_LocationDocument = gql`
     query get_user_location($id: String!) {
@@ -2863,3 +2946,159 @@ export function withInsert_Scrape_Log<TProps, TChildProps = {}, TDataName extend
 };
 export type Insert_Scrape_LogMutationResult = ApolloReactCommon.MutationResult<Insert_Scrape_LogMutation>;
 export type Insert_Scrape_LogMutationOptions = ApolloReactCommon.BaseMutationOptions<Insert_Scrape_LogMutation, Insert_Scrape_LogMutationVariables>;
+export const Update_Pa_StatusDocument = gql`
+    mutation update_pa_status($id: String!, $set: pa_status_set_input!) {
+  update_pa_status(where: {id: {_eq: $id}}, _set: $set) {
+    returning {
+      id
+      created_at
+      updated_at
+    }
+  }
+}
+    `;
+export type Update_Pa_StatusMutationFn = ApolloReactCommon.MutationFunction<Update_Pa_StatusMutation, Update_Pa_StatusMutationVariables>;
+export type Update_Pa_StatusComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<Update_Pa_StatusMutation, Update_Pa_StatusMutationVariables>, 'mutation'>;
+
+    export const Update_Pa_StatusComponent = (props: Update_Pa_StatusComponentProps) => (
+      <ApolloReactComponents.Mutation<Update_Pa_StatusMutation, Update_Pa_StatusMutationVariables> mutation={Update_Pa_StatusDocument} {...props} />
+    );
+    
+export type Update_Pa_StatusProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: ApolloReactCommon.MutationFunction<Update_Pa_StatusMutation, Update_Pa_StatusMutationVariables>
+    } & TChildProps;
+export function withUpdate_Pa_Status<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  Update_Pa_StatusMutation,
+  Update_Pa_StatusMutationVariables,
+  Update_Pa_StatusProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, Update_Pa_StatusMutation, Update_Pa_StatusMutationVariables, Update_Pa_StatusProps<TChildProps, TDataName>>(Update_Pa_StatusDocument, {
+      alias: 'updatePaStatus',
+      ...operationOptions
+    });
+};
+export type Update_Pa_StatusMutationResult = ApolloReactCommon.MutationResult<Update_Pa_StatusMutation>;
+export type Update_Pa_StatusMutationOptions = ApolloReactCommon.BaseMutationOptions<Update_Pa_StatusMutation, Update_Pa_StatusMutationVariables>;
+export const Insert_Pa_StatusDocument = gql`
+    mutation insert_pa_status($objects: [pa_status_insert_input!]!) {
+  insert_pa_status(objects: $objects) {
+    returning {
+      id
+      created_at
+    }
+  }
+}
+    `;
+export type Insert_Pa_StatusMutationFn = ApolloReactCommon.MutationFunction<Insert_Pa_StatusMutation, Insert_Pa_StatusMutationVariables>;
+export type Insert_Pa_StatusComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<Insert_Pa_StatusMutation, Insert_Pa_StatusMutationVariables>, 'mutation'>;
+
+    export const Insert_Pa_StatusComponent = (props: Insert_Pa_StatusComponentProps) => (
+      <ApolloReactComponents.Mutation<Insert_Pa_StatusMutation, Insert_Pa_StatusMutationVariables> mutation={Insert_Pa_StatusDocument} {...props} />
+    );
+    
+export type Insert_Pa_StatusProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: ApolloReactCommon.MutationFunction<Insert_Pa_StatusMutation, Insert_Pa_StatusMutationVariables>
+    } & TChildProps;
+export function withInsert_Pa_Status<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  Insert_Pa_StatusMutation,
+  Insert_Pa_StatusMutationVariables,
+  Insert_Pa_StatusProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, Insert_Pa_StatusMutation, Insert_Pa_StatusMutationVariables, Insert_Pa_StatusProps<TChildProps, TDataName>>(Insert_Pa_StatusDocument, {
+      alias: 'insertPaStatus',
+      ...operationOptions
+    });
+};
+export type Insert_Pa_StatusMutationResult = ApolloReactCommon.MutationResult<Insert_Pa_StatusMutation>;
+export type Insert_Pa_StatusMutationOptions = ApolloReactCommon.BaseMutationOptions<Insert_Pa_StatusMutation, Insert_Pa_StatusMutationVariables>;
+export const Insert_Pa_ScrapeDocument = gql`
+    mutation insert_pa_scrape($objects: [pa_scrape_insert_input!]!) {
+  insert_pa_scrape(objects: $objects) {
+    returning {
+      id
+      scraped_at
+    }
+  }
+}
+    `;
+export type Insert_Pa_ScrapeMutationFn = ApolloReactCommon.MutationFunction<Insert_Pa_ScrapeMutation, Insert_Pa_ScrapeMutationVariables>;
+export type Insert_Pa_ScrapeComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<Insert_Pa_ScrapeMutation, Insert_Pa_ScrapeMutationVariables>, 'mutation'>;
+
+    export const Insert_Pa_ScrapeComponent = (props: Insert_Pa_ScrapeComponentProps) => (
+      <ApolloReactComponents.Mutation<Insert_Pa_ScrapeMutation, Insert_Pa_ScrapeMutationVariables> mutation={Insert_Pa_ScrapeDocument} {...props} />
+    );
+    
+export type Insert_Pa_ScrapeProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: ApolloReactCommon.MutationFunction<Insert_Pa_ScrapeMutation, Insert_Pa_ScrapeMutationVariables>
+    } & TChildProps;
+export function withInsert_Pa_Scrape<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  Insert_Pa_ScrapeMutation,
+  Insert_Pa_ScrapeMutationVariables,
+  Insert_Pa_ScrapeProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, Insert_Pa_ScrapeMutation, Insert_Pa_ScrapeMutationVariables, Insert_Pa_ScrapeProps<TChildProps, TDataName>>(Insert_Pa_ScrapeDocument, {
+      alias: 'insertPaScrape',
+      ...operationOptions
+    });
+};
+export type Insert_Pa_ScrapeMutationResult = ApolloReactCommon.MutationResult<Insert_Pa_ScrapeMutation>;
+export type Insert_Pa_ScrapeMutationOptions = ApolloReactCommon.BaseMutationOptions<Insert_Pa_ScrapeMutation, Insert_Pa_ScrapeMutationVariables>;
+export const Get_New_Planning_Apps_NearDocument = gql`
+    query get_new_planning_apps_near($point: geography!, $distance: Float!, $date: timestamptz!, $council_id: Int!) {
+  pa_status(where: {location: {_st_d_within: {distance: $distance, from: $point}}, created_at: {_gte: $date}, council_id: {_eq: $council_id}}) {
+    id
+  }
+}
+    `;
+export type Get_New_Planning_Apps_NearComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<Get_New_Planning_Apps_NearQuery, Get_New_Planning_Apps_NearQueryVariables>, 'query'> & ({ variables: Get_New_Planning_Apps_NearQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const Get_New_Planning_Apps_NearComponent = (props: Get_New_Planning_Apps_NearComponentProps) => (
+      <ApolloReactComponents.Query<Get_New_Planning_Apps_NearQuery, Get_New_Planning_Apps_NearQueryVariables> query={Get_New_Planning_Apps_NearDocument} {...props} />
+    );
+    
+export type Get_New_Planning_Apps_NearProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<Get_New_Planning_Apps_NearQuery, Get_New_Planning_Apps_NearQueryVariables>
+    } & TChildProps;
+export function withGet_New_Planning_Apps_Near<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  Get_New_Planning_Apps_NearQuery,
+  Get_New_Planning_Apps_NearQueryVariables,
+  Get_New_Planning_Apps_NearProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, Get_New_Planning_Apps_NearQuery, Get_New_Planning_Apps_NearQueryVariables, Get_New_Planning_Apps_NearProps<TChildProps, TDataName>>(Get_New_Planning_Apps_NearDocument, {
+      alias: 'getNewPlanningAppsNear',
+      ...operationOptions
+    });
+};
+export type Get_New_Planning_Apps_NearQueryResult = ApolloReactCommon.QueryResult<Get_New_Planning_Apps_NearQuery, Get_New_Planning_Apps_NearQueryVariables>;
+export const Get_UsersDocument = gql`
+    query get_users($limit: Int!, $offset: Int!) {
+  users(limit: $limit, offset: $offset) {
+    id
+    name
+    location
+    fcm_tokens {
+      token
+    }
+  }
+}
+    `;
+export type Get_UsersComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<Get_UsersQuery, Get_UsersQueryVariables>, 'query'> & ({ variables: Get_UsersQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const Get_UsersComponent = (props: Get_UsersComponentProps) => (
+      <ApolloReactComponents.Query<Get_UsersQuery, Get_UsersQueryVariables> query={Get_UsersDocument} {...props} />
+    );
+    
+export type Get_UsersProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<Get_UsersQuery, Get_UsersQueryVariables>
+    } & TChildProps;
+export function withGet_Users<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  Get_UsersQuery,
+  Get_UsersQueryVariables,
+  Get_UsersProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, Get_UsersQuery, Get_UsersQueryVariables, Get_UsersProps<TChildProps, TDataName>>(Get_UsersDocument, {
+      alias: 'getUsers',
+      ...operationOptions
+    });
+};
+export type Get_UsersQueryResult = ApolloReactCommon.QueryResult<Get_UsersQuery, Get_UsersQueryVariables>;

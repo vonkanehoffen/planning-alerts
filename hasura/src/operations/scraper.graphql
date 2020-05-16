@@ -12,7 +12,7 @@ query get_existing_location($address: String!) {
 }
 
 query get_scrape_targets_by_type($scraper: String) {
-  council(where: { scraper: { _eq: $scraper}}) {
+  council(where: { scraper: { _eq: $scraper } }) {
     id
     portal_url
   }
@@ -23,6 +23,76 @@ mutation insert_scrape_log($objects: [scrape_log_insert_input!]!) {
     returning {
       id
       ts
+    }
+  }
+}
+
+mutation update_pa_status($id: String!, $set: pa_status_set_input!) {
+  update_pa_status(where: { id: { _eq: $id } }, _set: $set) {
+    returning {
+      id
+      created_at
+      updated_at
+    }
+  }
+}
+
+mutation insert_pa_status($objects: [pa_status_insert_input!]!) {
+  insert_pa_status(objects: $objects) {
+    returning {
+      id
+      created_at
+    }
+  }
+}
+
+mutation insert_pa_scrape($objects: [pa_scrape_insert_input!]!) {
+  insert_pa_scrape(objects: $objects) {
+    returning {
+      id
+      scraped_at
+    }
+  }
+}
+
+# Get planning apps
+# - within a specified distance (km) of a point
+# - Scraped after a certain time
+# - From a certain council
+# This is for the push notifications
+# eg.
+# $point: {
+#       type: "Point",
+#       coordinates: [ 53.4443108,-2.2754739 ]
+#     }
+# $distance: 1000
+# $date: "2020-02-06"
+# $council: "pa.manchester.gov.uk"
+
+query get_new_planning_apps_near(
+  $point: geography!
+  $distance: Float!
+  $date: timestamptz!
+  $council_id: Int!
+) {
+  pa_status(
+    where: {
+      location: { _st_d_within: { distance: $distance, from: $point } }
+      created_at: { _gte: $date }
+      council_id: { _eq: $council_id }
+    }
+  ) {
+    id
+  }
+}
+
+query get_users($limit: Int!, $offset: Int!) {
+  users( limit: $limit, offset: $offset) {
+    id
+    name
+    location
+    fcm_tokens {
+      token
     }
   }
 }

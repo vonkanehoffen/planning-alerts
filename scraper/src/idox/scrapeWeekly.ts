@@ -1,45 +1,51 @@
-import { request }  from "../lib/request";
-import { snakeCase }  from "change-case";
-import cheerio  from "cheerio";
-import { storeScrape, storeScrapeLog }  from "../lib/hasura";
+import { request } from "../lib/request";
+import { snakeCase } from "change-case";
+import cheerio from "cheerio";
+import { storeScrape, storeScrapeLog } from "../lib/hasura";
+import { Council } from "../generated/graphql";
 
 /**
  * Scrape weekly planning lists from a council's idox system
- * @param rootURL - eg https://idoxpa.westminster.gov.uk/online-applications
+ * @param council - portal url eg https://idoxpa.westminster.gov.uk/online-applications
  */
-export async function scrapeWeekly(rootURL: string) {
-  console.log(`Starting idox scrape: ${rootURL}`);
-  await storeScrapeLog("idox", "START_SCRAPE_WEEKLY", { rootURL });
-  await scrapeFullList(rootURL, ListType.DC_Validated);
-  await scrapeFullList(rootURL, ListType.DC_Decided);
-  await storeScrapeLog("idox", "END_SCRAPE_WEEKLY", { rootURL });
+export async function scrapeWeekly(
+  council: Pick<Council, "id" | "portal_url">
+) {
+  console.log(`Starting idox scrape: ${council.portal_url}`);
+  await storeScrapeLog("idox", "START_SCRAPE_WEEKLY", {
+    rootUrl: council.portal_url
+  });
+  await scrapeFullList(council, ListType.DC_Validated);
+  await scrapeFullList(council, ListType.DC_Decided);
+  await storeScrapeLog("idox", "END_SCRAPE_WEEKLY", {
+    rootUrl: council.portal_url
+  });
 }
 
 enum ListType {
-  DC_Validated= "DC_Validated",
+  DC_Validated = "DC_Validated",
   DC_Decided = "DC_Decided"
 }
 
 export interface Scrape {
-  list_type: ListType
-  scraper: string
-  url: string
-  reference: string
-  summary: tableData
-  further_information?: tableData
-  important_dates?:tableData
+  list_type: ListType;
+  scraper: string;
+  url: string;
+  reference: string;
+  summary: tableData;
+  further_information?: tableData;
+  important_dates?: tableData;
 }
 
 /**
  * Scrape a full weekly planning list data set
  * Iterates over pages etc.
- *
- * @param root
- * @param listType {('DC_Validated'|'DC_Decided')}
- * @returns {Promise<Array>}
  */
-async function scrapeFullList(root: string, listType:ListType) {
-  const rootURL = new URL(root);
+async function scrapeFullList(
+  council: Pick<Council, "id" | "portal_url">,
+  listType: ListType
+) {
+  const rootURL = new URL(council.portal_url);
 
   try {
     // Get latest list date
@@ -68,8 +74,7 @@ async function scrapeFullList(root: string, listType:ListType) {
       method: "POST",
       body: params
     });
-    let detailURLs = [];
-    detailURLs = getDetailURLs(listPage);
+    let detailURLs = getDetailURLs(listPage);
     if (detailURLs.length < 1) {
       console.log("Single app only");
       detailURLs = [firstUri];
@@ -125,7 +130,7 @@ async function scrapeFullList(root: string, listType:ListType) {
         //  Also do we need it? Agent name is on Further info tab, so this is just email addresses.
 
         console.log("scrape:", scrape);
-        await storeScrape(scrape);
+        await storeScrape(scrape, council.id);
       }
 
       // Get next page of the list
@@ -143,7 +148,7 @@ async function scrapeFullList(root: string, listType:ListType) {
     }
   } catch (e) {
     await storeScrapeLog("idox", "SCRAPE_LIST_ERROR", {
-      root,
+      root: council.portal_url,
       listType,
       message: e.message
     });
@@ -168,7 +173,7 @@ function getDetailURLs(page) {
 type tableData = {
   // reference: string
   [key: string]: any;
-}
+};
 
 function scrapeTableData(page: CheerioAPI): tableData {
   let scrape = {};
@@ -187,4 +192,3 @@ function scrapeTableData(page: CheerioAPI): tableData {
   });
   return scrape;
 }
-

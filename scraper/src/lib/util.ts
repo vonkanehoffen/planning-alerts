@@ -3,7 +3,7 @@
  * @param s
  * @returns {string|undefined}
  */
-function stringToISODate(s) {
+export function stringToISODate(s) {
   if (s) {
     try {
       const d = new Date(s);
@@ -22,9 +22,6 @@ function stringToISODate(s) {
  * @param url
  * @returns {string}
  */
-function getHostname(url) {
+export function getHostname(url) {
   return new URL(url).hostname;
 }
-
-exports.stringToISODate = stringToISODate;
-exports.getHostname = getHostname;

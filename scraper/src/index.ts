@@ -2,7 +2,7 @@ import Sentry from "@sentry/node";
 import { scrapeWeekly } from "./idox/scrapeWeekly";
 import { pushNotify } from "./lib/pushNotify";
 import config from "./config"
-import { getTargets } from "./getTargets";
+import { sdk } from "./lib/hasuraSdk";
 
 // Sentry.init({ dsn: config.sentryDSN, debug: true });
 
@@ -12,12 +12,11 @@ import { getTargets } from "./getTargets";
  * @returns {Promise<void>}
  */
 async function scrapeAll(): Promise<void> {
-  const idoxTargets = await getTargets('idox');
-  console.log("idox = ", idoxTargets);
-  // for (let target of idoxTargets) {
-  //   await scrapeWeekly(target);
-  //   await pushNotify(target);
-  // }
+  const targets = await sdk.get_scrape_targets_by_type({scraper: 'idox'});
+  for (let council of targets.council) {
+    await scrapeWeekly(council);
+    // await pushNotify(council);
+  }
 }
 
 scrapeAll();

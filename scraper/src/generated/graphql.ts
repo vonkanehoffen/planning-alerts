@@ -2683,6 +2683,89 @@ export type Insert_Scrape_LogMutation = (
   )> }
 );
 
+export type Update_Pa_StatusMutationVariables = {
+  id: Scalars['String'];
+  set: Pa_Status_Set_Input;
+};
+
+
+export type Update_Pa_StatusMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_pa_status?: Maybe<(
+    { __typename?: 'pa_status_mutation_response' }
+    & { returning: Array<(
+      { __typename?: 'pa_status' }
+      & Pick<Pa_Status, 'id' | 'created_at' | 'updated_at'>
+    )> }
+  )> }
+);
+
+export type Insert_Pa_StatusMutationVariables = {
+  objects: Array<Pa_Status_Insert_Input>;
+};
+
+
+export type Insert_Pa_StatusMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_pa_status?: Maybe<(
+    { __typename?: 'pa_status_mutation_response' }
+    & { returning: Array<(
+      { __typename?: 'pa_status' }
+      & Pick<Pa_Status, 'id' | 'created_at'>
+    )> }
+  )> }
+);
+
+export type Insert_Pa_ScrapeMutationVariables = {
+  objects: Array<Pa_Scrape_Insert_Input>;
+};
+
+
+export type Insert_Pa_ScrapeMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_pa_scrape?: Maybe<(
+    { __typename?: 'pa_scrape_mutation_response' }
+    & { returning: Array<(
+      { __typename?: 'pa_scrape' }
+      & Pick<Pa_Scrape, 'id' | 'scraped_at'>
+    )> }
+  )> }
+);
+
+export type Get_New_Planning_Apps_NearQueryVariables = {
+  point: Scalars['geography'];
+  distance: Scalars['Float'];
+  date: Scalars['timestamptz'];
+  council_id: Scalars['Int'];
+};
+
+
+export type Get_New_Planning_Apps_NearQuery = (
+  { __typename?: 'query_root' }
+  & { pa_status: Array<(
+    { __typename?: 'pa_status' }
+    & Pick<Pa_Status, 'id'>
+  )> }
+);
+
+export type Get_UsersQueryVariables = {
+  limit: Scalars['Int'];
+  offset: Scalars['Int'];
+};
+
+
+export type Get_UsersQuery = (
+  { __typename?: 'query_root' }
+  & { users: Array<(
+    { __typename?: 'users' }
+    & Pick<Users, 'id' | 'name' | 'location'>
+    & { fcm_tokens: Array<(
+      { __typename?: 'fcm_token' }
+      & Pick<Fcm_Token, 'token'>
+    )> }
+  )> }
+);
+
 
 export const Get_User_LocationDocument = gql`
     query get_user_location($id: String!) {
@@ -2736,6 +2819,56 @@ export const Insert_Scrape_LogDocument = gql`
   }
 }
     `;
+export const Update_Pa_StatusDocument = gql`
+    mutation update_pa_status($id: String!, $set: pa_status_set_input!) {
+  update_pa_status(where: {id: {_eq: $id}}, _set: $set) {
+    returning {
+      id
+      created_at
+      updated_at
+    }
+  }
+}
+    `;
+export const Insert_Pa_StatusDocument = gql`
+    mutation insert_pa_status($objects: [pa_status_insert_input!]!) {
+  insert_pa_status(objects: $objects) {
+    returning {
+      id
+      created_at
+    }
+  }
+}
+    `;
+export const Insert_Pa_ScrapeDocument = gql`
+    mutation insert_pa_scrape($objects: [pa_scrape_insert_input!]!) {
+  insert_pa_scrape(objects: $objects) {
+    returning {
+      id
+      scraped_at
+    }
+  }
+}
+    `;
+export const Get_New_Planning_Apps_NearDocument = gql`
+    query get_new_planning_apps_near($point: geography!, $distance: Float!, $date: timestamptz!, $council_id: Int!) {
+  pa_status(where: {location: {_st_d_within: {distance: $distance, from: $point}}, created_at: {_gte: $date}, council_id: {_eq: $council_id}}) {
+    id
+  }
+}
+    `;
+export const Get_UsersDocument = gql`
+    query get_users($limit: Int!, $offset: Int!) {
+  users(limit: $limit, offset: $offset) {
+    id
+    name
+    location
+    fcm_tokens {
+      token
+    }
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: () => Promise<T>) => Promise<T>;
 
@@ -2760,6 +2893,21 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     insert_scrape_log(variables: Insert_Scrape_LogMutationVariables): Promise<Insert_Scrape_LogMutation> {
       return withWrapper(() => client.request<Insert_Scrape_LogMutation>(print(Insert_Scrape_LogDocument), variables));
+    },
+    update_pa_status(variables: Update_Pa_StatusMutationVariables): Promise<Update_Pa_StatusMutation> {
+      return withWrapper(() => client.request<Update_Pa_StatusMutation>(print(Update_Pa_StatusDocument), variables));
+    },
+    insert_pa_status(variables: Insert_Pa_StatusMutationVariables): Promise<Insert_Pa_StatusMutation> {
+      return withWrapper(() => client.request<Insert_Pa_StatusMutation>(print(Insert_Pa_StatusDocument), variables));
+    },
+    insert_pa_scrape(variables: Insert_Pa_ScrapeMutationVariables): Promise<Insert_Pa_ScrapeMutation> {
+      return withWrapper(() => client.request<Insert_Pa_ScrapeMutation>(print(Insert_Pa_ScrapeDocument), variables));
+    },
+    get_new_planning_apps_near(variables: Get_New_Planning_Apps_NearQueryVariables): Promise<Get_New_Planning_Apps_NearQuery> {
+      return withWrapper(() => client.request<Get_New_Planning_Apps_NearQuery>(print(Get_New_Planning_Apps_NearDocument), variables));
+    },
+    get_users(variables: Get_UsersQueryVariables): Promise<Get_UsersQuery> {
+      return withWrapper(() => client.request<Get_UsersQuery>(print(Get_UsersDocument), variables));
     }
   };
 }

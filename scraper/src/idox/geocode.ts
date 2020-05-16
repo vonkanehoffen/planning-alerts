@@ -1,8 +1,7 @@
-const { hasuraRequest } = require("../lib/hasuraRequest");
-const config = require("../config");
-const fetch = require("node-fetch");
-const querystring = require("querystring");
-const queries = require("../queries");
+import { sdk } from "../lib/hasuraSdk";
+import config from "../config";
+import nodeFetch from "node-fetch";
+import querystring from "querystring";
 
 /**
  * Get geocoded location
@@ -11,15 +10,12 @@ const queries = require("../queries");
  * @param address
  * @returns {Promise<{}|boolean>}
  */
-async function getGeocodedLocation(address) {
-  const existingQuery = await hasuraRequest({
-    query: queries.GET_EXISTING_LOCATION,
-    variables: {
-      address: address
-    }
+export async function getGeocodedLocation(address) {
+  const existingQuery = await sdk.get_existing_location({
+    address: address
   });
 
-  const match = existingQuery.data.pa_status[0];
+  const match = existingQuery.pa_status[0];
   if (match) {
     console.log("getGeocodedLocation from existing pa_status, id:", match.id);
     return match.location;
@@ -44,7 +40,7 @@ async function getGeocodedLocation(address) {
  * @returns {Promise<void>}
  */
 async function geocodeAddress(address) {
-  const response = await fetch(
+  const response = await nodeFetch(
     `https://maps.googleapis.com/maps/api/geocode/json?${querystring.stringify({
       address: address,
       key: config.geocodingAPIKey
@@ -120,5 +116,3 @@ let result_eg = {
   ],
   status: "OK"
 };
-
-exports.getGeocodedLocation = getGeocodedLocation;
