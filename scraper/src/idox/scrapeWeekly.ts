@@ -1,18 +1,33 @@
-const { request } = require("../lib/request");
-const { snakeCase } = require("change-case");
-const cheerio = require("cheerio");
-const { storeScrape, storeScrapeLog } = require("../lib/hasura");
+import { request }  from "../lib/request";
+import { snakeCase }  from "change-case";
+import cheerio  from "cheerio";
+import { storeScrape, storeScrapeLog }  from "../lib/hasura";
 
 /**
  * Scrape weekly planning lists from a council's idox system
  * @param rootURL - eg https://idoxpa.westminster.gov.uk/online-applications
  */
-async function scrapeWeekly(rootURL) {
+export async function scrapeWeekly(rootURL: string) {
   console.log(`Starting idox scrape: ${rootURL}`);
   await storeScrapeLog("idox", "START_SCRAPE_WEEKLY", { rootURL });
-  await scrapeFullList(rootURL, "DC_Validated");
-  await scrapeFullList(rootURL, "DC_Decided");
+  await scrapeFullList(rootURL, ListType.DC_Validated);
+  await scrapeFullList(rootURL, ListType.DC_Decided);
   await storeScrapeLog("idox", "END_SCRAPE_WEEKLY", { rootURL });
+}
+
+enum ListType {
+  DC_Validated= "DC_Validated",
+  DC_Decided = "DC_Decided"
+}
+
+export interface Scrape {
+  list_type: ListType
+  scraper: string
+  url: string
+  reference: string
+  summary: tableData
+  further_information?: tableData
+  important_dates?:tableData
 }
 
 /**
@@ -23,7 +38,7 @@ async function scrapeWeekly(rootURL) {
  * @param listType {('DC_Validated'|'DC_Decided')}
  * @returns {Promise<Array>}
  */
-async function scrapeFullList(root, listType) {
+async function scrapeFullList(root: string, listType:ListType) {
   const rootURL = new URL(root);
 
   try {
@@ -66,10 +81,12 @@ async function scrapeFullList(root, listType) {
     while (detailURLs.length > 0) {
       for (const detailURL of detailURLs) {
         const uri = `${rootURL.origin}${detailURL}`;
-        let scrape = {
+        let scrape: Scrape = {
           list_type: listType,
           scraper: "idox",
-          url: uri
+          url: uri,
+          summary: {},
+          reference: ""
         };
 
         // Scrape summary
@@ -148,7 +165,12 @@ function getDetailURLs(page) {
   return urls;
 }
 
-function scrapeTableData(page) {
+type tableData = {
+  // reference: string
+  [key: string]: any;
+}
+
+function scrapeTableData(page: CheerioAPI): tableData {
   let scrape = {};
   page(".tabcontainer tr").each((i, v) => {
     // console.log("EACH: ", i, v);
@@ -166,4 +188,3 @@ function scrapeTableData(page) {
   return scrape;
 }
 
-exports.scrapeWeekly = scrapeWeekly;

@@ -1,6 +1,6 @@
-var rp = require("request-promise");
-var cheerio = require("cheerio"); // Basically jQuery for node.js
-var config = require("../../config");
+import rp from "request-promise";
+import cheerio from "cheerio"; // Basically jQuery for node.js
+import config from "../config";
 
 if (config.debug) {
   // require('request-debug')(rp);
@@ -8,7 +8,7 @@ if (config.debug) {
 }
 
 const j = rp.jar();
-var request = rp.defaults({
+export const request = rp.defaults({
   transform: function(body) {
     return cheerio.load(body);
   },
@@ -20,5 +20,3 @@ var request = rp.defaults({
   jar: j,
   followAllRedirects: true // follow non-GET HTTP 3xx responses as redirects
 });
-
-exports.request = request;

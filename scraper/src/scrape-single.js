@@ -1,5 +1,5 @@
 const { scrapeWeekly } = require("./src/idox/scrapeWeekly.js");
-const { pushNotify } = require("./src/lib/pushNotify");
+const { pushNotify } = require("./lib/pushNotify");
 
 const target = process.argv[2];
 

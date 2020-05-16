@@ -1,7 +1,7 @@
-const { hasuraRequest } = require("./lib/hasuraRequest");
-const queries = require("./queries");
+import { hasuraRequest } from "./lib/hasuraRequest";
+import * as queries from "./queries";
 
-async function getTargets(scraper) {
+export async function getTargets(scraper) {
   const res = await hasuraRequest({
     query: queries.GET_SCRAPE_TARGETS_BY_TYPE,
     variables: {
@@ -13,6 +13,3 @@ async function getTargets(scraper) {
 
 getTargets('idox');
 
-exports = {
-  getTargets
-};

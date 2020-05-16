@@ -1,9 +1,9 @@
-const { hasuraRequest } = require("../lib/hasuraRequest");
+const { hasuraRequest } = require("./hasuraRequest");
 const { getHostname } = require("./util");
 const { subDays, formatISO } = require("date-fns");
 const queries = require("../queries");
 const admin = require("firebase-admin");
-const config = require("../../config");
+const config = require("../config");
 
 admin.initializeApp({
   credential: admin.credential.cert(config.firebaseServiceAccountKey),

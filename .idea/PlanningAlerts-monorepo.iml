@@ -3,6 +3,7 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/frontend-mobile/android/app/build" />
+      <excludeFolder url="file://$MODULE_DIR$/scraper/dist" />
       <excludeFolder url="file://$MODULE_DIR$/scraper/dummyData" />
     </content>
     <orderEntry type="inheritedJdk" />

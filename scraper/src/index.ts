@@ -1,23 +1,23 @@
-const Sentry = require("@sentry/node");
-const { scrapeWeekly } = require("./src/idox/scrapeWeekly.js");
-const { pushNotify } = require("./src/lib/pushNotify");
-const config = require("./config");
-const { getTargets } = require("./src/getTargets")
+import Sentry from "@sentry/node";
+import { scrapeWeekly } from "./idox/scrapeWeekly";
+import { pushNotify } from "./lib/pushNotify";
+import config from "./config"
+import { getTargets } from "./getTargets";
 
-Sentry.init({ dsn: config.sentryDSN, debug: true });
+// Sentry.init({ dsn: config.sentryDSN, debug: true });
 
 /**
  * Scrape all idox councils...
  * TODO: Run notifier after each scrape
  * @returns {Promise<void>}
  */
-async function scrapeAll() {
-  // TODO
+async function scrapeAll(): Promise<void> {
   const idoxTargets = await getTargets('idox');
-  for (let rootURL of targets.idox) {
-    await scrapeWeekly(rootURL);
-    await pushNotify(rootURL);
-  }
+  console.log(idoxTargets);
+  // for (let target of idoxTargets) {
+  //   await scrapeWeekly(target);
+  //   await pushNotify(target);
+  // }
 }
 
 scrapeAll();
