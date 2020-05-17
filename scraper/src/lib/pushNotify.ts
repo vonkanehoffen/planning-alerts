@@ -1,11 +1,11 @@
-const { hasuraRequest } = require("./hasuraRequest");
-const { getHostname } = require("./util");
-const { subDays, formatISO } = require("date-fns");
-const queries = require("../queries");
-const admin = require("firebase-admin");
-const config = require("../config");
+import { subDays, formatISO } from "date-fns";
+import { sdk } from "./hasuraSdk";
+import admin from "firebase-admin";
+import config from "../config";
+import { Council } from "../generated/graphql";
 
 admin.initializeApp({
+  // @ts-ignore
   credential: admin.credential.cert(config.firebaseServiceAccountKey),
   databaseURL: "https://planning-alerts.firebaseio.com"
 });
@@ -13,12 +13,9 @@ admin.initializeApp({
 /**
  * Send push notifications to users for new and updated planning apps
  * from a selected council (following scrape finish)
- * @param rootURL
- * @returns {Promise<void>}
  */
-async function pushNotify(rootURL) {
-  const council = getHostname(rootURL);
-  console.log("PUSH NOTIFY --------", council);
+export async function pushNotify(council: Pick<Council, 'id' | 'title'>) {
+  console.log("PUSH NOTIFY --------", council.title);
 
   const limit = 10;
   let offset = 0;
@@ -26,28 +23,22 @@ async function pushNotify(rootURL) {
 
   do {
     console.log("GETTING USERS");
-    users = await hasuraRequest({
-      query: queries.GET_USERS,
-      variables: {
-        limit,
-        offset
-      }
+    users = await sdk.get_users({
+      limit,
+      offset
     });
     offset += limit;
 
-    for (let user of users.data.users) {
+    for (let user of users.users) {
       if (user.location && user.fcm_tokens.length > 0) {
         console.log("NOTIFYING USER", user.name);
-        const newPAs = await hasuraRequest({
-          query: queries.GET_NEW_PLANNING_APPS_NEAR,
-          variables: {
-            point: user.location,
-            distance: 5000,
-            date: formatISO(subDays(new Date(), 3), { representation: "date" }),
-            council
-          }
+        const newPAs = await sdk.get_new_planning_apps_near({
+          point: user.location,
+          distance: 5000,
+          date: formatISO(subDays(new Date(), 3), { representation: "date" }),
+          council_id: council.id
         });
-        const newPaIds = newPAs.data.pa_status.map(pa => pa.id);
+        const newPaIds = newPAs.pa_status.map(pa => pa.id);
         console.log("NEW PAs FOR", user.name, newPaIds);
 
         if (newPaIds.length > 0) {
@@ -66,8 +57,7 @@ async function pushNotify(rootURL) {
         console.log("SKIPPING USER", user.name, "No new PAs nearby");
       }
     }
-  } while (users.data.users.length > 0);
-
+  } while (users.users.length > 0);
 }
 
 async function sendFcm(token, title, body, data) {
@@ -94,6 +84,7 @@ async function sendFcm(token, title, body, data) {
     token
   };
   try {
+    // @ts-ignore
     const response = await admin.messaging().send(message);
     console.log("Successfully sent message:", response);
   } catch (error) {
@@ -102,4 +93,3 @@ async function sendFcm(token, title, body, data) {
 }
 
 // pushNotify("https://pa.manchester.gov.uk/online-applications");
-exports.pushNotify = pushNotify;

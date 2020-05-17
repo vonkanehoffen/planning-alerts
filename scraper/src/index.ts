@@ -15,7 +15,8 @@ async function scrapeAll(): Promise<void> {
   const targets = await sdk.get_scrape_targets_by_type({scraper: 'idox'});
   for (let council of targets.council) {
     await scrapeWeekly(council);
-    // await pushNotify(council);
+    await pushNotify(council);
+
   }
 }
 

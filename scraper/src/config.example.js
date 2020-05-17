@@ -1,4 +1,4 @@
-module.exports = {
+export default  {
   hasuraApi: "https://planning-alerts.herokuapp.com/v1/graphql",
   hasuraAdminSecret: "SECRET",
   geocodingAPIKey: "API_KEY",

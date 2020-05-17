@@ -15,6 +15,7 @@ query get_scrape_targets_by_type($scraper: String) {
   council(where: { scraper: { _eq: $scraper } }) {
     id
     portal_url
+    title
   }
 }
 
@@ -67,7 +68,7 @@ mutation insert_pa_scrape($objects: [pa_scrape_insert_input!]!) {
 #     }
 # $distance: 1000
 # $date: "2020-02-06"
-# $council: "pa.manchester.gov.uk"
+# $council_id: 123
 
 query get_new_planning_apps_near(
   $point: geography!

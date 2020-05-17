@@ -2725,7 +2725,7 @@ export type Get_Scrape_Targets_By_TypeQuery = (
   { __typename?: 'query_root' }
   & { council: Array<(
     { __typename?: 'council' }
-    & Pick<Council, 'id' | 'portal_url'>
+    & Pick<Council, 'id' | 'portal_url' | 'title'>
   )> }
 );
 
@@ -2868,6 +2868,7 @@ export const Get_Scrape_Targets_By_TypeDocument = gql`
   council(where: {scraper: {_eq: $scraper}}) {
     id
     portal_url
+    title
   }
 }
     `;
