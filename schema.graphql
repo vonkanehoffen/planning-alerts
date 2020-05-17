@@ -37,6 +37,32 @@ type council {
     where: pa_status_bool_exp
   ): pa_status_aggregate!
   portal_url: String
+  "An array relationship"
+  scrape_logs(
+    "distinct select on columns"
+    distinct_on: [scrape_log_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [scrape_log_order_by!],
+    "filter the rows returned"
+    where: scrape_log_bool_exp
+  ): [scrape_log!]!
+  "An aggregated array relationship"
+  scrape_logs_aggregate(
+    "distinct select on columns"
+    distinct_on: [scrape_log_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [scrape_log_order_by!],
+    "filter the rows returned"
+    where: scrape_log_bool_exp
+  ): scrape_log_aggregate!
   scraper: String
   title: String!
 }
@@ -765,6 +791,9 @@ type query_root {
 
 "columns and relationships of \"scrape_log\""
 type scrape_log {
+  "An object relationship"
+  council: council
+  council_id: Int
   event: String!
   id: Int!
   meta(
@@ -798,11 +827,13 @@ type scrape_log_aggregate_fields {
 
 "aggregate avg on columns"
 type scrape_log_avg_fields {
+  council_id: Float
   id: Float
 }
 
 "aggregate max on columns"
 type scrape_log_max_fields {
+  council_id: Int
   event: String
   id: Int
   scraper: String
@@ -811,6 +842,7 @@ type scrape_log_max_fields {
 
 "aggregate min on columns"
 type scrape_log_min_fields {
+  council_id: Int
   event: String
   id: Int
   scraper: String
@@ -827,36 +859,43 @@ type scrape_log_mutation_response {
 
 "aggregate stddev on columns"
 type scrape_log_stddev_fields {
+  council_id: Float
   id: Float
 }
 
 "aggregate stddev_pop on columns"
 type scrape_log_stddev_pop_fields {
+  council_id: Float
   id: Float
 }
 
 "aggregate stddev_samp on columns"
 type scrape_log_stddev_samp_fields {
+  council_id: Float
   id: Float
 }
 
 "aggregate sum on columns"
 type scrape_log_sum_fields {
+  council_id: Int
   id: Int
 }
 
 "aggregate var_pop on columns"
 type scrape_log_var_pop_fields {
+  council_id: Float
   id: Float
 }
 
 "aggregate var_samp on columns"
 type scrape_log_var_samp_fields {
+  council_id: Float
   id: Float
 }
 
 "aggregate variance on columns"
 type scrape_log_variance_fields {
+  council_id: Float
   id: Float
 }
 
@@ -1323,6 +1362,8 @@ enum scrape_log_constraint {
 "select columns of table \"scrape_log\""
 enum scrape_log_select_column {
   "column name"
+  council_id
+  "column name"
   event
   "column name"
   id
@@ -1336,6 +1377,8 @@ enum scrape_log_select_column {
 
 "update columns of table \"scrape_log\""
 enum scrape_log_update_column {
+  "column name"
+  council_id
   "column name"
   event
   "column name"
@@ -1462,6 +1505,7 @@ input council_bool_exp {
   id: Int_comparison_exp
   pa_statuses: pa_status_bool_exp
   portal_url: String_comparison_exp
+  scrape_logs: scrape_log_bool_exp
   scraper: String_comparison_exp
   title: String_comparison_exp
 }
@@ -1477,6 +1521,7 @@ input council_insert_input {
   id: Int
   pa_statuses: pa_status_arr_rel_insert_input
   portal_url: String
+  scrape_logs: scrape_log_arr_rel_insert_input
   scraper: String
   title: String
 }
@@ -1518,6 +1563,7 @@ input council_order_by {
   id: order_by
   pa_statuses_aggregate: pa_status_aggregate_order_by
   portal_url: order_by
+  scrape_logs_aggregate: scrape_log_aggregate_order_by
   scraper: order_by
   title: order_by
 }
@@ -2148,6 +2194,7 @@ input scrape_log_arr_rel_insert_input {
 
 "order by avg() on columns of table \"scrape_log\""
 input scrape_log_avg_order_by {
+  council_id: order_by
   id: order_by
 }
 
@@ -2156,6 +2203,8 @@ input scrape_log_bool_exp {
   _and: [scrape_log_bool_exp]
   _not: scrape_log_bool_exp
   _or: [scrape_log_bool_exp]
+  council: council_bool_exp
+  council_id: Int_comparison_exp
   event: String_comparison_exp
   id: Int_comparison_exp
   meta: jsonb_comparison_exp
@@ -2180,11 +2229,14 @@ input scrape_log_delete_key_input {
 
 "input type for incrementing integer columne in table \"scrape_log\""
 input scrape_log_inc_input {
+  council_id: Int
   id: Int
 }
 
 "input type for inserting data into table \"scrape_log\""
 input scrape_log_insert_input {
+  council: council_obj_rel_insert_input
+  council_id: Int
   event: String
   id: Int
   meta: jsonb
@@ -2194,6 +2246,7 @@ input scrape_log_insert_input {
 
 "order by max() on columns of table \"scrape_log\""
 input scrape_log_max_order_by {
+  council_id: order_by
   event: order_by
   id: order_by
   scraper: order_by
@@ -2202,6 +2255,7 @@ input scrape_log_max_order_by {
 
 "order by min() on columns of table \"scrape_log\""
 input scrape_log_min_order_by {
+  council_id: order_by
   event: order_by
   id: order_by
   scraper: order_by
@@ -2223,6 +2277,8 @@ input scrape_log_on_conflict {
 
 "ordering options when selecting data from \"scrape_log\""
 input scrape_log_order_by {
+  council: council_order_by
+  council_id: order_by
   event: order_by
   id: order_by
   meta: order_by
@@ -2237,6 +2293,7 @@ input scrape_log_prepend_input {
 
 "input type for updating data in table \"scrape_log\""
 input scrape_log_set_input {
+  council_id: Int
   event: String
   id: Int
   meta: jsonb
@@ -2246,36 +2303,43 @@ input scrape_log_set_input {
 
 "order by stddev() on columns of table \"scrape_log\""
 input scrape_log_stddev_order_by {
+  council_id: order_by
   id: order_by
 }
 
 "order by stddev_pop() on columns of table \"scrape_log\""
 input scrape_log_stddev_pop_order_by {
+  council_id: order_by
   id: order_by
 }
 
 "order by stddev_samp() on columns of table \"scrape_log\""
 input scrape_log_stddev_samp_order_by {
+  council_id: order_by
   id: order_by
 }
 
 "order by sum() on columns of table \"scrape_log\""
 input scrape_log_sum_order_by {
+  council_id: order_by
   id: order_by
 }
 
 "order by var_pop() on columns of table \"scrape_log\""
 input scrape_log_var_pop_order_by {
+  council_id: order_by
   id: order_by
 }
 
 "order by var_samp() on columns of table \"scrape_log\""
 input scrape_log_var_samp_order_by {
+  council_id: order_by
   id: order_by
 }
 
 "order by variance() on columns of table \"scrape_log\""
 input scrape_log_variance_order_by {
+  council_id: order_by
   id: order_by
 }
 

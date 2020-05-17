@@ -21,7 +21,7 @@ export async function storeScrape(scrape: Scrape, council_id: number) {
     application_validated: stringToISODate(
       scrape.summary.application_validated
     ),
-    council_id,
+    council_id, // todo: this needs updating elsewhere too?
     decision: scrape.summary.decision,
     decision_issued_date: stringToISODate(scrape.summary.decision_issued_date),
     id: scrape.summary.reference, // ID because that's what Apollo Client likes...

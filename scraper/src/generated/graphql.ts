@@ -25,6 +25,10 @@ export type Council = {
   /** An aggregated array relationship */
   pa_statuses_aggregate: Pa_Status_Aggregate;
   portal_url?: Maybe<Scalars['String']>;
+  /** An array relationship */
+  scrape_logs: Array<Scrape_Log>;
+  /** An aggregated array relationship */
+  scrape_logs_aggregate: Scrape_Log_Aggregate;
   scraper?: Maybe<Scalars['String']>;
   title: Scalars['String'];
 };
@@ -47,6 +51,26 @@ export type CouncilPa_Statuses_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Pa_Status_Order_By>>;
   where?: Maybe<Pa_Status_Bool_Exp>;
+};
+
+
+/** columns and relationships of "council" */
+export type CouncilScrape_LogsArgs = {
+  distinct_on?: Maybe<Array<Scrape_Log_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Scrape_Log_Order_By>>;
+  where?: Maybe<Scrape_Log_Bool_Exp>;
+};
+
+
+/** columns and relationships of "council" */
+export type CouncilScrape_Logs_AggregateArgs = {
+  distinct_on?: Maybe<Array<Scrape_Log_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Scrape_Log_Order_By>>;
+  where?: Maybe<Scrape_Log_Bool_Exp>;
 };
 
 /** aggregated selection of "council" */
@@ -912,6 +936,9 @@ export type Query_RootUsers_By_PkArgs = {
 /** columns and relationships of "scrape_log" */
 export type Scrape_Log = {
    __typename?: 'scrape_log';
+  /** An object relationship */
+  council?: Maybe<Council>;
+  council_id?: Maybe<Scalars['Int']>;
   event: Scalars['String'];
   id: Scalars['Int'];
   meta: Scalars['jsonb'];
@@ -958,12 +985,14 @@ export type Scrape_Log_Aggregate_FieldsCountArgs = {
 /** aggregate avg on columns */
 export type Scrape_Log_Avg_Fields = {
    __typename?: 'scrape_log_avg_fields';
+  council_id?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate max on columns */
 export type Scrape_Log_Max_Fields = {
    __typename?: 'scrape_log_max_fields';
+  council_id?: Maybe<Scalars['Int']>;
   event?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
   scraper?: Maybe<Scalars['String']>;
@@ -973,6 +1002,7 @@ export type Scrape_Log_Max_Fields = {
 /** aggregate min on columns */
 export type Scrape_Log_Min_Fields = {
    __typename?: 'scrape_log_min_fields';
+  council_id?: Maybe<Scalars['Int']>;
   event?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
   scraper?: Maybe<Scalars['String']>;
@@ -991,42 +1021,49 @@ export type Scrape_Log_Mutation_Response = {
 /** aggregate stddev on columns */
 export type Scrape_Log_Stddev_Fields = {
    __typename?: 'scrape_log_stddev_fields';
+  council_id?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate stddev_pop on columns */
 export type Scrape_Log_Stddev_Pop_Fields = {
    __typename?: 'scrape_log_stddev_pop_fields';
+  council_id?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate stddev_samp on columns */
 export type Scrape_Log_Stddev_Samp_Fields = {
    __typename?: 'scrape_log_stddev_samp_fields';
+  council_id?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate sum on columns */
 export type Scrape_Log_Sum_Fields = {
    __typename?: 'scrape_log_sum_fields';
+  council_id?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
 };
 
 /** aggregate var_pop on columns */
 export type Scrape_Log_Var_Pop_Fields = {
    __typename?: 'scrape_log_var_pop_fields';
+  council_id?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate var_samp on columns */
 export type Scrape_Log_Var_Samp_Fields = {
    __typename?: 'scrape_log_var_samp_fields';
+  council_id?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate variance on columns */
 export type Scrape_Log_Variance_Fields = {
    __typename?: 'scrape_log_variance_fields';
+  council_id?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
 };
 
@@ -1529,6 +1566,8 @@ export enum Scrape_Log_Constraint {
 /** select columns of table "scrape_log" */
 export enum Scrape_Log_Select_Column {
   /** column name */
+  CouncilId = 'council_id',
+  /** column name */
   Event = 'event',
   /** column name */
   Id = 'id',
@@ -1542,6 +1581,8 @@ export enum Scrape_Log_Select_Column {
 
 /** update columns of table "scrape_log" */
 export enum Scrape_Log_Update_Column {
+  /** column name */
+  CouncilId = 'council_id',
   /** column name */
   Event = 'event',
   /** column name */
@@ -1668,6 +1709,7 @@ export type Council_Bool_Exp = {
   id?: Maybe<Int_Comparison_Exp>;
   pa_statuses?: Maybe<Pa_Status_Bool_Exp>;
   portal_url?: Maybe<String_Comparison_Exp>;
+  scrape_logs?: Maybe<Scrape_Log_Bool_Exp>;
   scraper?: Maybe<String_Comparison_Exp>;
   title?: Maybe<String_Comparison_Exp>;
 };
@@ -1683,6 +1725,7 @@ export type Council_Insert_Input = {
   id?: Maybe<Scalars['Int']>;
   pa_statuses?: Maybe<Pa_Status_Arr_Rel_Insert_Input>;
   portal_url?: Maybe<Scalars['String']>;
+  scrape_logs?: Maybe<Scrape_Log_Arr_Rel_Insert_Input>;
   scraper?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
 };
@@ -1724,6 +1767,7 @@ export type Council_Order_By = {
   id?: Maybe<Order_By>;
   pa_statuses_aggregate?: Maybe<Pa_Status_Aggregate_Order_By>;
   portal_url?: Maybe<Order_By>;
+  scrape_logs_aggregate?: Maybe<Scrape_Log_Aggregate_Order_By>;
   scraper?: Maybe<Order_By>;
   title?: Maybe<Order_By>;
 };
@@ -2354,6 +2398,7 @@ export type Scrape_Log_Arr_Rel_Insert_Input = {
 
 /** order by avg() on columns of table "scrape_log" */
 export type Scrape_Log_Avg_Order_By = {
+  council_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
 };
 
@@ -2362,6 +2407,8 @@ export type Scrape_Log_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Scrape_Log_Bool_Exp>>>;
   _not?: Maybe<Scrape_Log_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Scrape_Log_Bool_Exp>>>;
+  council?: Maybe<Council_Bool_Exp>;
+  council_id?: Maybe<Int_Comparison_Exp>;
   event?: Maybe<String_Comparison_Exp>;
   id?: Maybe<Int_Comparison_Exp>;
   meta?: Maybe<Jsonb_Comparison_Exp>;
@@ -2386,11 +2433,14 @@ export type Scrape_Log_Delete_Key_Input = {
 
 /** input type for incrementing integer columne in table "scrape_log" */
 export type Scrape_Log_Inc_Input = {
+  council_id?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
 };
 
 /** input type for inserting data into table "scrape_log" */
 export type Scrape_Log_Insert_Input = {
+  council?: Maybe<Council_Obj_Rel_Insert_Input>;
+  council_id?: Maybe<Scalars['Int']>;
   event?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
   meta?: Maybe<Scalars['jsonb']>;
@@ -2400,6 +2450,7 @@ export type Scrape_Log_Insert_Input = {
 
 /** order by max() on columns of table "scrape_log" */
 export type Scrape_Log_Max_Order_By = {
+  council_id?: Maybe<Order_By>;
   event?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   scraper?: Maybe<Order_By>;
@@ -2408,6 +2459,7 @@ export type Scrape_Log_Max_Order_By = {
 
 /** order by min() on columns of table "scrape_log" */
 export type Scrape_Log_Min_Order_By = {
+  council_id?: Maybe<Order_By>;
   event?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   scraper?: Maybe<Order_By>;
@@ -2429,6 +2481,8 @@ export type Scrape_Log_On_Conflict = {
 
 /** ordering options when selecting data from "scrape_log" */
 export type Scrape_Log_Order_By = {
+  council?: Maybe<Council_Order_By>;
+  council_id?: Maybe<Order_By>;
   event?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   meta?: Maybe<Order_By>;
@@ -2443,6 +2497,7 @@ export type Scrape_Log_Prepend_Input = {
 
 /** input type for updating data in table "scrape_log" */
 export type Scrape_Log_Set_Input = {
+  council_id?: Maybe<Scalars['Int']>;
   event?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
   meta?: Maybe<Scalars['jsonb']>;
@@ -2452,36 +2507,43 @@ export type Scrape_Log_Set_Input = {
 
 /** order by stddev() on columns of table "scrape_log" */
 export type Scrape_Log_Stddev_Order_By = {
+  council_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
 };
 
 /** order by stddev_pop() on columns of table "scrape_log" */
 export type Scrape_Log_Stddev_Pop_Order_By = {
+  council_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
 };
 
 /** order by stddev_samp() on columns of table "scrape_log" */
 export type Scrape_Log_Stddev_Samp_Order_By = {
+  council_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
 };
 
 /** order by sum() on columns of table "scrape_log" */
 export type Scrape_Log_Sum_Order_By = {
+  council_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
 };
 
 /** order by var_pop() on columns of table "scrape_log" */
 export type Scrape_Log_Var_Pop_Order_By = {
+  council_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
 };
 
 /** order by var_samp() on columns of table "scrape_log" */
 export type Scrape_Log_Var_Samp_Order_By = {
+  council_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
 };
 
 /** order by variance() on columns of table "scrape_log" */
 export type Scrape_Log_Variance_Order_By = {
+  council_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
 };
 
