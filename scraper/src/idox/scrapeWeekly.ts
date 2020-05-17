@@ -12,12 +12,12 @@ export async function scrapeWeekly(
   council: Pick<Council, "id" | "portal_url">
 ) {
   console.log(`Starting idox scrape: ${council.portal_url}`);
-  await storeScrapeLog("idox", "START_SCRAPE_WEEKLY", {
+  await storeScrapeLog("idox", council.id, "START_SCRAPE_WEEKLY", {
     rootUrl: council.portal_url
   });
   await scrapeFullList(council, ListType.DC_Validated);
   await scrapeFullList(council, ListType.DC_Decided);
-  await storeScrapeLog("idox", "END_SCRAPE_WEEKLY", {
+  await storeScrapeLog("idox", council.id, "END_SCRAPE_WEEKLY", {
     rootUrl: council.portal_url
   });
 }
@@ -104,7 +104,7 @@ async function scrapeFullList(
         // If there's no reference, something's gone wrong...
         // TODO: This needs to handle 302 / network errors as well. Currently blows...
         if (!scrape.reference) {
-          await storeScrapeLog("idox", "NO_SCRAPED_REFERENCE", {
+          await storeScrapeLog("idox", council.id, "NO_SCRAPED_REFERENCE", {
             scrape,
             html: summaryPage.html()
           });
@@ -147,7 +147,7 @@ async function scrapeFullList(
       }
     }
   } catch (e) {
-    await storeScrapeLog("idox", "SCRAPE_LIST_ERROR", {
+    await storeScrapeLog("idox", council.id, "SCRAPE_LIST_ERROR", {
       root: council.portal_url,
       listType,
       message: e.message
@@ -184,11 +184,10 @@ function scrapeTableData(page: CheerioAPI): tableData {
       .first()
       .text()
       .trim();
-    const val = el("td")
+    scrape[snakeCase(key)] = el("td")
       .first()
       .text()
       .trim();
-    scrape[snakeCase(key)] = val;
   });
   return scrape;
 }

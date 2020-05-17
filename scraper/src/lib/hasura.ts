@@ -1,6 +1,6 @@
 import { sdk } from "./hasuraSdk";
 import { getGeocodedLocation } from "../idox/geocode";
-import { stringToISODate, getHostname } from "./util";
+import { stringToISODate } from "./util";
 import { Pa_Status_Insert_Input } from '../generated/graphql'
 import { Scrape } from '../idox/scrapeWeekly'
 
@@ -61,16 +61,13 @@ export async function storeScrape(scrape: Scrape, council_id: number) {
 /**
  * Store a log entry
  * TODO: Also post to Slack with config.slackWebHookURL
- * @param scraper {string}
- * @param event {string}
- * @param meta {object}
- * @returns {Promise<void>}
  */
-export async function storeScrapeLog(scraper, event, meta) {
+export async function storeScrapeLog(scraper, council_id, event, meta) {
   await sdk.insert_scrape_log({
     objects: [
       {
         scraper,
+        council_id,
         event,
         meta
       }
