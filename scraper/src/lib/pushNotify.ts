@@ -34,12 +34,12 @@ export async function pushNotify(council: Pick<Council, 'id' | 'title'>) {
         console.log("NOTIFYING USER", user.name);
         const newPAs = await sdk.get_new_planning_apps_near({
           point: user.location,
-          distance: 5000,
+          distance: 3000, // TODO: User distance selection
           date: formatISO(subDays(new Date(), 3), { representation: "date" }),
           council_id: council.id
         });
         const newPaIds = newPAs.pa_status.map(pa => pa.id);
-        console.log("NEW PAs FOR", user.name, newPaIds);
+        console.log("New PA results for", user.name, newPaIds);
 
         if (newPaIds.length > 0) {
           for (let token of user.fcm_tokens) {
@@ -54,7 +54,7 @@ export async function pushNotify(council: Pick<Council, 'id' | 'title'>) {
           }
         }
       } else {
-        console.log("SKIPPING USER", user.name, "No new PAs nearby");
+        console.log("SKIPPING USER", user.name, "No location / FCM token");
       }
     }
   } while (users.users.length > 0);
