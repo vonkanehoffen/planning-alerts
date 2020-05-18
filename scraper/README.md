@@ -26,7 +26,7 @@ then to update:
 
 ```bash
 git pull
-npm i
+npm i && npm run build
 pm2 reload ecosystem.config.js
 ```
 
