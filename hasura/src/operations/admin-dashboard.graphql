@@ -1,0 +1,11 @@
+query scrape_log($offset: Int) {
+  scrape_log(limit: 50, offset: $offset, order_by: {ts: desc}) {
+    council {
+      title
+    }
+    event
+    meta
+    ts
+    scraper
+  }
+}

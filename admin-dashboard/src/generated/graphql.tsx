@@ -1,6 +1,6 @@
-import { GraphQLClient } from 'graphql-request';
-import { print } from 'graphql';
 import gql from 'graphql-tag';
+import * as ApolloReactCommon from '@apollo/react-common';
+import * as ApolloReactHooks from '@apollo/react-hooks';
 export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -3122,6 +3122,32 @@ export const Scrape_LogDocument = gql`
   }
 }
     `;
+
+/**
+ * __useScrape_LogQuery__
+ *
+ * To run a query within a React component, call `useScrape_LogQuery` and pass it any options that fit your needs.
+ * When your component renders, `useScrape_LogQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useScrape_LogQuery({
+ *   variables: {
+ *      offset: // value for 'offset'
+ *   },
+ * });
+ */
+export function useScrape_LogQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Scrape_LogQuery, Scrape_LogQueryVariables>) {
+        return ApolloReactHooks.useQuery<Scrape_LogQuery, Scrape_LogQueryVariables>(Scrape_LogDocument, baseOptions);
+      }
+export function useScrape_LogLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Scrape_LogQuery, Scrape_LogQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<Scrape_LogQuery, Scrape_LogQueryVariables>(Scrape_LogDocument, baseOptions);
+        }
+export type Scrape_LogQueryHookResult = ReturnType<typeof useScrape_LogQuery>;
+export type Scrape_LogLazyQueryHookResult = ReturnType<typeof useScrape_LogLazyQuery>;
+export type Scrape_LogQueryResult = ApolloReactCommon.QueryResult<Scrape_LogQuery, Scrape_LogQueryVariables>;
 export const Get_User_LocationDocument = gql`
     query get_user_location($id: String!) {
   users(where: {id: {_eq: $id}}) {
@@ -3130,6 +3156,32 @@ export const Get_User_LocationDocument = gql`
   }
 }
     `;
+
+/**
+ * __useGet_User_LocationQuery__
+ *
+ * To run a query within a React component, call `useGet_User_LocationQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGet_User_LocationQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGet_User_LocationQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGet_User_LocationQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Get_User_LocationQuery, Get_User_LocationQueryVariables>) {
+        return ApolloReactHooks.useQuery<Get_User_LocationQuery, Get_User_LocationQueryVariables>(Get_User_LocationDocument, baseOptions);
+      }
+export function useGet_User_LocationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Get_User_LocationQuery, Get_User_LocationQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<Get_User_LocationQuery, Get_User_LocationQueryVariables>(Get_User_LocationDocument, baseOptions);
+        }
+export type Get_User_LocationQueryHookResult = ReturnType<typeof useGet_User_LocationQuery>;
+export type Get_User_LocationLazyQueryHookResult = ReturnType<typeof useGet_User_LocationLazyQuery>;
+export type Get_User_LocationQueryResult = ApolloReactCommon.QueryResult<Get_User_LocationQuery, Get_User_LocationQueryVariables>;
 export const Update_User_LocationDocument = gql`
     mutation update_user_location($id: String!, $location: geography!) {
   update_users(where: {id: {_eq: $id}}, _set: {location: $location}) {
@@ -3141,6 +3193,32 @@ export const Update_User_LocationDocument = gql`
   }
 }
     `;
+export type Update_User_LocationMutationFn = ApolloReactCommon.MutationFunction<Update_User_LocationMutation, Update_User_LocationMutationVariables>;
+
+/**
+ * __useUpdate_User_LocationMutation__
+ *
+ * To run a mutation, you first call `useUpdate_User_LocationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdate_User_LocationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserLocationMutation, { data, loading, error }] = useUpdate_User_LocationMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      location: // value for 'location'
+ *   },
+ * });
+ */
+export function useUpdate_User_LocationMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Update_User_LocationMutation, Update_User_LocationMutationVariables>) {
+        return ApolloReactHooks.useMutation<Update_User_LocationMutation, Update_User_LocationMutationVariables>(Update_User_LocationDocument, baseOptions);
+      }
+export type Update_User_LocationMutationHookResult = ReturnType<typeof useUpdate_User_LocationMutation>;
+export type Update_User_LocationMutationResult = ApolloReactCommon.MutationResult<Update_User_LocationMutation>;
+export type Update_User_LocationMutationOptions = ApolloReactCommon.BaseMutationOptions<Update_User_LocationMutation, Update_User_LocationMutationVariables>;
 export const Get_Pa_Status_ExistsDocument = gql`
     query get_pa_status_exists($id: String!) {
   pa_status_by_pk(id: $id) {
@@ -3148,6 +3226,32 @@ export const Get_Pa_Status_ExistsDocument = gql`
   }
 }
     `;
+
+/**
+ * __useGet_Pa_Status_ExistsQuery__
+ *
+ * To run a query within a React component, call `useGet_Pa_Status_ExistsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGet_Pa_Status_ExistsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGet_Pa_Status_ExistsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGet_Pa_Status_ExistsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Get_Pa_Status_ExistsQuery, Get_Pa_Status_ExistsQueryVariables>) {
+        return ApolloReactHooks.useQuery<Get_Pa_Status_ExistsQuery, Get_Pa_Status_ExistsQueryVariables>(Get_Pa_Status_ExistsDocument, baseOptions);
+      }
+export function useGet_Pa_Status_ExistsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Get_Pa_Status_ExistsQuery, Get_Pa_Status_ExistsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<Get_Pa_Status_ExistsQuery, Get_Pa_Status_ExistsQueryVariables>(Get_Pa_Status_ExistsDocument, baseOptions);
+        }
+export type Get_Pa_Status_ExistsQueryHookResult = ReturnType<typeof useGet_Pa_Status_ExistsQuery>;
+export type Get_Pa_Status_ExistsLazyQueryHookResult = ReturnType<typeof useGet_Pa_Status_ExistsLazyQuery>;
+export type Get_Pa_Status_ExistsQueryResult = ApolloReactCommon.QueryResult<Get_Pa_Status_ExistsQuery, Get_Pa_Status_ExistsQueryVariables>;
 export const Get_Existing_LocationDocument = gql`
     query get_existing_location($address: String!) {
   pa_status(where: {address: {_eq: $address}}) {
@@ -3156,6 +3260,32 @@ export const Get_Existing_LocationDocument = gql`
   }
 }
     `;
+
+/**
+ * __useGet_Existing_LocationQuery__
+ *
+ * To run a query within a React component, call `useGet_Existing_LocationQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGet_Existing_LocationQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGet_Existing_LocationQuery({
+ *   variables: {
+ *      address: // value for 'address'
+ *   },
+ * });
+ */
+export function useGet_Existing_LocationQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Get_Existing_LocationQuery, Get_Existing_LocationQueryVariables>) {
+        return ApolloReactHooks.useQuery<Get_Existing_LocationQuery, Get_Existing_LocationQueryVariables>(Get_Existing_LocationDocument, baseOptions);
+      }
+export function useGet_Existing_LocationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Get_Existing_LocationQuery, Get_Existing_LocationQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<Get_Existing_LocationQuery, Get_Existing_LocationQueryVariables>(Get_Existing_LocationDocument, baseOptions);
+        }
+export type Get_Existing_LocationQueryHookResult = ReturnType<typeof useGet_Existing_LocationQuery>;
+export type Get_Existing_LocationLazyQueryHookResult = ReturnType<typeof useGet_Existing_LocationLazyQuery>;
+export type Get_Existing_LocationQueryResult = ApolloReactCommon.QueryResult<Get_Existing_LocationQuery, Get_Existing_LocationQueryVariables>;
 export const Get_Scrape_Targets_By_TypeDocument = gql`
     query get_scrape_targets_by_type($scraper: String) {
   council(where: {scraper: {_eq: $scraper}}) {
@@ -3165,6 +3295,32 @@ export const Get_Scrape_Targets_By_TypeDocument = gql`
   }
 }
     `;
+
+/**
+ * __useGet_Scrape_Targets_By_TypeQuery__
+ *
+ * To run a query within a React component, call `useGet_Scrape_Targets_By_TypeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGet_Scrape_Targets_By_TypeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGet_Scrape_Targets_By_TypeQuery({
+ *   variables: {
+ *      scraper: // value for 'scraper'
+ *   },
+ * });
+ */
+export function useGet_Scrape_Targets_By_TypeQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Get_Scrape_Targets_By_TypeQuery, Get_Scrape_Targets_By_TypeQueryVariables>) {
+        return ApolloReactHooks.useQuery<Get_Scrape_Targets_By_TypeQuery, Get_Scrape_Targets_By_TypeQueryVariables>(Get_Scrape_Targets_By_TypeDocument, baseOptions);
+      }
+export function useGet_Scrape_Targets_By_TypeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Get_Scrape_Targets_By_TypeQuery, Get_Scrape_Targets_By_TypeQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<Get_Scrape_Targets_By_TypeQuery, Get_Scrape_Targets_By_TypeQueryVariables>(Get_Scrape_Targets_By_TypeDocument, baseOptions);
+        }
+export type Get_Scrape_Targets_By_TypeQueryHookResult = ReturnType<typeof useGet_Scrape_Targets_By_TypeQuery>;
+export type Get_Scrape_Targets_By_TypeLazyQueryHookResult = ReturnType<typeof useGet_Scrape_Targets_By_TypeLazyQuery>;
+export type Get_Scrape_Targets_By_TypeQueryResult = ApolloReactCommon.QueryResult<Get_Scrape_Targets_By_TypeQuery, Get_Scrape_Targets_By_TypeQueryVariables>;
 export const Insert_Scrape_LogDocument = gql`
     mutation insert_scrape_log($objects: [scrape_log_insert_input!]!) {
   insert_scrape_log(objects: $objects) {
@@ -3175,6 +3331,31 @@ export const Insert_Scrape_LogDocument = gql`
   }
 }
     `;
+export type Insert_Scrape_LogMutationFn = ApolloReactCommon.MutationFunction<Insert_Scrape_LogMutation, Insert_Scrape_LogMutationVariables>;
+
+/**
+ * __useInsert_Scrape_LogMutation__
+ *
+ * To run a mutation, you first call `useInsert_Scrape_LogMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsert_Scrape_LogMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertScrapeLogMutation, { data, loading, error }] = useInsert_Scrape_LogMutation({
+ *   variables: {
+ *      objects: // value for 'objects'
+ *   },
+ * });
+ */
+export function useInsert_Scrape_LogMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Insert_Scrape_LogMutation, Insert_Scrape_LogMutationVariables>) {
+        return ApolloReactHooks.useMutation<Insert_Scrape_LogMutation, Insert_Scrape_LogMutationVariables>(Insert_Scrape_LogDocument, baseOptions);
+      }
+export type Insert_Scrape_LogMutationHookResult = ReturnType<typeof useInsert_Scrape_LogMutation>;
+export type Insert_Scrape_LogMutationResult = ApolloReactCommon.MutationResult<Insert_Scrape_LogMutation>;
+export type Insert_Scrape_LogMutationOptions = ApolloReactCommon.BaseMutationOptions<Insert_Scrape_LogMutation, Insert_Scrape_LogMutationVariables>;
 export const Update_Pa_StatusDocument = gql`
     mutation update_pa_status($id: String!, $set: pa_status_set_input!) {
   update_pa_status(where: {id: {_eq: $id}}, _set: $set) {
@@ -3186,6 +3367,32 @@ export const Update_Pa_StatusDocument = gql`
   }
 }
     `;
+export type Update_Pa_StatusMutationFn = ApolloReactCommon.MutationFunction<Update_Pa_StatusMutation, Update_Pa_StatusMutationVariables>;
+
+/**
+ * __useUpdate_Pa_StatusMutation__
+ *
+ * To run a mutation, you first call `useUpdate_Pa_StatusMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdate_Pa_StatusMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePaStatusMutation, { data, loading, error }] = useUpdate_Pa_StatusMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      set: // value for 'set'
+ *   },
+ * });
+ */
+export function useUpdate_Pa_StatusMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Update_Pa_StatusMutation, Update_Pa_StatusMutationVariables>) {
+        return ApolloReactHooks.useMutation<Update_Pa_StatusMutation, Update_Pa_StatusMutationVariables>(Update_Pa_StatusDocument, baseOptions);
+      }
+export type Update_Pa_StatusMutationHookResult = ReturnType<typeof useUpdate_Pa_StatusMutation>;
+export type Update_Pa_StatusMutationResult = ApolloReactCommon.MutationResult<Update_Pa_StatusMutation>;
+export type Update_Pa_StatusMutationOptions = ApolloReactCommon.BaseMutationOptions<Update_Pa_StatusMutation, Update_Pa_StatusMutationVariables>;
 export const Insert_Pa_StatusDocument = gql`
     mutation insert_pa_status($objects: [pa_status_insert_input!]!) {
   insert_pa_status(objects: $objects) {
@@ -3196,6 +3403,31 @@ export const Insert_Pa_StatusDocument = gql`
   }
 }
     `;
+export type Insert_Pa_StatusMutationFn = ApolloReactCommon.MutationFunction<Insert_Pa_StatusMutation, Insert_Pa_StatusMutationVariables>;
+
+/**
+ * __useInsert_Pa_StatusMutation__
+ *
+ * To run a mutation, you first call `useInsert_Pa_StatusMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsert_Pa_StatusMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertPaStatusMutation, { data, loading, error }] = useInsert_Pa_StatusMutation({
+ *   variables: {
+ *      objects: // value for 'objects'
+ *   },
+ * });
+ */
+export function useInsert_Pa_StatusMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Insert_Pa_StatusMutation, Insert_Pa_StatusMutationVariables>) {
+        return ApolloReactHooks.useMutation<Insert_Pa_StatusMutation, Insert_Pa_StatusMutationVariables>(Insert_Pa_StatusDocument, baseOptions);
+      }
+export type Insert_Pa_StatusMutationHookResult = ReturnType<typeof useInsert_Pa_StatusMutation>;
+export type Insert_Pa_StatusMutationResult = ApolloReactCommon.MutationResult<Insert_Pa_StatusMutation>;
+export type Insert_Pa_StatusMutationOptions = ApolloReactCommon.BaseMutationOptions<Insert_Pa_StatusMutation, Insert_Pa_StatusMutationVariables>;
 export const Insert_Pa_ScrapeDocument = gql`
     mutation insert_pa_scrape($objects: [pa_scrape_insert_input!]!) {
   insert_pa_scrape(objects: $objects) {
@@ -3206,6 +3438,31 @@ export const Insert_Pa_ScrapeDocument = gql`
   }
 }
     `;
+export type Insert_Pa_ScrapeMutationFn = ApolloReactCommon.MutationFunction<Insert_Pa_ScrapeMutation, Insert_Pa_ScrapeMutationVariables>;
+
+/**
+ * __useInsert_Pa_ScrapeMutation__
+ *
+ * To run a mutation, you first call `useInsert_Pa_ScrapeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsert_Pa_ScrapeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertPaScrapeMutation, { data, loading, error }] = useInsert_Pa_ScrapeMutation({
+ *   variables: {
+ *      objects: // value for 'objects'
+ *   },
+ * });
+ */
+export function useInsert_Pa_ScrapeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Insert_Pa_ScrapeMutation, Insert_Pa_ScrapeMutationVariables>) {
+        return ApolloReactHooks.useMutation<Insert_Pa_ScrapeMutation, Insert_Pa_ScrapeMutationVariables>(Insert_Pa_ScrapeDocument, baseOptions);
+      }
+export type Insert_Pa_ScrapeMutationHookResult = ReturnType<typeof useInsert_Pa_ScrapeMutation>;
+export type Insert_Pa_ScrapeMutationResult = ApolloReactCommon.MutationResult<Insert_Pa_ScrapeMutation>;
+export type Insert_Pa_ScrapeMutationOptions = ApolloReactCommon.BaseMutationOptions<Insert_Pa_ScrapeMutation, Insert_Pa_ScrapeMutationVariables>;
 export const Get_New_Planning_Apps_NearDocument = gql`
     query get_new_planning_apps_near($point: geography!, $distance: Float!, $date: timestamptz!, $council_id: Int!) {
   pa_status(where: {location: {_st_d_within: {distance: $distance, from: $point}}, created_at: {_gte: $date}, council_id: {_eq: $council_id}}) {
@@ -3213,6 +3470,35 @@ export const Get_New_Planning_Apps_NearDocument = gql`
   }
 }
     `;
+
+/**
+ * __useGet_New_Planning_Apps_NearQuery__
+ *
+ * To run a query within a React component, call `useGet_New_Planning_Apps_NearQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGet_New_Planning_Apps_NearQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGet_New_Planning_Apps_NearQuery({
+ *   variables: {
+ *      point: // value for 'point'
+ *      distance: // value for 'distance'
+ *      date: // value for 'date'
+ *      council_id: // value for 'council_id'
+ *   },
+ * });
+ */
+export function useGet_New_Planning_Apps_NearQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Get_New_Planning_Apps_NearQuery, Get_New_Planning_Apps_NearQueryVariables>) {
+        return ApolloReactHooks.useQuery<Get_New_Planning_Apps_NearQuery, Get_New_Planning_Apps_NearQueryVariables>(Get_New_Planning_Apps_NearDocument, baseOptions);
+      }
+export function useGet_New_Planning_Apps_NearLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Get_New_Planning_Apps_NearQuery, Get_New_Planning_Apps_NearQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<Get_New_Planning_Apps_NearQuery, Get_New_Planning_Apps_NearQueryVariables>(Get_New_Planning_Apps_NearDocument, baseOptions);
+        }
+export type Get_New_Planning_Apps_NearQueryHookResult = ReturnType<typeof useGet_New_Planning_Apps_NearQuery>;
+export type Get_New_Planning_Apps_NearLazyQueryHookResult = ReturnType<typeof useGet_New_Planning_Apps_NearLazyQuery>;
+export type Get_New_Planning_Apps_NearQueryResult = ApolloReactCommon.QueryResult<Get_New_Planning_Apps_NearQuery, Get_New_Planning_Apps_NearQueryVariables>;
 export const Get_UsersDocument = gql`
     query get_users($limit: Int!, $offset: Int!) {
   users(limit: $limit, offset: $offset) {
@@ -3226,48 +3512,29 @@ export const Get_UsersDocument = gql`
 }
     `;
 
-export type SdkFunctionWrapper = <T>(action: () => Promise<T>) => Promise<T>;
-
-
-const defaultWrapper: SdkFunctionWrapper = sdkFunction => sdkFunction();
-export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
-  return {
-    scrape_log(variables?: Scrape_LogQueryVariables): Promise<Scrape_LogQuery> {
-      return withWrapper(() => client.request<Scrape_LogQuery>(print(Scrape_LogDocument), variables));
-    },
-    get_user_location(variables: Get_User_LocationQueryVariables): Promise<Get_User_LocationQuery> {
-      return withWrapper(() => client.request<Get_User_LocationQuery>(print(Get_User_LocationDocument), variables));
-    },
-    update_user_location(variables: Update_User_LocationMutationVariables): Promise<Update_User_LocationMutation> {
-      return withWrapper(() => client.request<Update_User_LocationMutation>(print(Update_User_LocationDocument), variables));
-    },
-    get_pa_status_exists(variables: Get_Pa_Status_ExistsQueryVariables): Promise<Get_Pa_Status_ExistsQuery> {
-      return withWrapper(() => client.request<Get_Pa_Status_ExistsQuery>(print(Get_Pa_Status_ExistsDocument), variables));
-    },
-    get_existing_location(variables: Get_Existing_LocationQueryVariables): Promise<Get_Existing_LocationQuery> {
-      return withWrapper(() => client.request<Get_Existing_LocationQuery>(print(Get_Existing_LocationDocument), variables));
-    },
-    get_scrape_targets_by_type(variables?: Get_Scrape_Targets_By_TypeQueryVariables): Promise<Get_Scrape_Targets_By_TypeQuery> {
-      return withWrapper(() => client.request<Get_Scrape_Targets_By_TypeQuery>(print(Get_Scrape_Targets_By_TypeDocument), variables));
-    },
-    insert_scrape_log(variables: Insert_Scrape_LogMutationVariables): Promise<Insert_Scrape_LogMutation> {
-      return withWrapper(() => client.request<Insert_Scrape_LogMutation>(print(Insert_Scrape_LogDocument), variables));
-    },
-    update_pa_status(variables: Update_Pa_StatusMutationVariables): Promise<Update_Pa_StatusMutation> {
-      return withWrapper(() => client.request<Update_Pa_StatusMutation>(print(Update_Pa_StatusDocument), variables));
-    },
-    insert_pa_status(variables: Insert_Pa_StatusMutationVariables): Promise<Insert_Pa_StatusMutation> {
-      return withWrapper(() => client.request<Insert_Pa_StatusMutation>(print(Insert_Pa_StatusDocument), variables));
-    },
-    insert_pa_scrape(variables: Insert_Pa_ScrapeMutationVariables): Promise<Insert_Pa_ScrapeMutation> {
-      return withWrapper(() => client.request<Insert_Pa_ScrapeMutation>(print(Insert_Pa_ScrapeDocument), variables));
-    },
-    get_new_planning_apps_near(variables: Get_New_Planning_Apps_NearQueryVariables): Promise<Get_New_Planning_Apps_NearQuery> {
-      return withWrapper(() => client.request<Get_New_Planning_Apps_NearQuery>(print(Get_New_Planning_Apps_NearDocument), variables));
-    },
-    get_users(variables: Get_UsersQueryVariables): Promise<Get_UsersQuery> {
-      return withWrapper(() => client.request<Get_UsersQuery>(print(Get_UsersDocument), variables));
-    }
-  };
-}
-export type Sdk = ReturnType<typeof getSdk>;
+/**
+ * __useGet_UsersQuery__
+ *
+ * To run a query within a React component, call `useGet_UsersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGet_UsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGet_UsersQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
+ *   },
+ * });
+ */
+export function useGet_UsersQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Get_UsersQuery, Get_UsersQueryVariables>) {
+        return ApolloReactHooks.useQuery<Get_UsersQuery, Get_UsersQueryVariables>(Get_UsersDocument, baseOptions);
+      }
+export function useGet_UsersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Get_UsersQuery, Get_UsersQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<Get_UsersQuery, Get_UsersQueryVariables>(Get_UsersDocument, baseOptions);
+        }
+export type Get_UsersQueryHookResult = ReturnType<typeof useGet_UsersQuery>;
+export type Get_UsersLazyQueryHookResult = ReturnType<typeof useGet_UsersLazyQuery>;
+export type Get_UsersQueryResult = ApolloReactCommon.QueryResult<Get_UsersQuery, Get_UsersQueryVariables>;
