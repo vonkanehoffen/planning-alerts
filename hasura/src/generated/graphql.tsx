@@ -24,6 +24,10 @@ export type Council = {
   council_type: Scalars['String'];
   id: Scalars['Int'];
   /** An array relationship */
+  pa_scrapes: Array<Pa_Scrape>;
+  /** An aggregated array relationship */
+  pa_scrapes_aggregate: Pa_Scrape_Aggregate;
+  /** An array relationship */
   pa_statuses: Array<Pa_Status>;
   /** An aggregated array relationship */
   pa_statuses_aggregate: Pa_Status_Aggregate;
@@ -34,6 +38,26 @@ export type Council = {
   scrape_logs_aggregate: Scrape_Log_Aggregate;
   scraper?: Maybe<Scalars['String']>;
   title: Scalars['String'];
+};
+
+
+/** columns and relationships of "council" */
+export type CouncilPa_ScrapesArgs = {
+  distinct_on?: Maybe<Array<Pa_Scrape_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Pa_Scrape_Order_By>>;
+  where?: Maybe<Pa_Scrape_Bool_Exp>;
+};
+
+
+/** columns and relationships of "council" */
+export type CouncilPa_Scrapes_AggregateArgs = {
+  distinct_on?: Maybe<Array<Pa_Scrape_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Pa_Scrape_Order_By>>;
+  where?: Maybe<Pa_Scrape_Bool_Exp>;
 };
 
 
@@ -253,40 +277,76 @@ export type Mutation_Root = {
    __typename?: 'mutation_root';
   /** delete data from the table: "council" */
   delete_council?: Maybe<Council_Mutation_Response>;
+  /** delete single row from the table: "council" */
+  delete_council_by_pk?: Maybe<Council>;
   /** delete data from the table: "fcm_token" */
   delete_fcm_token?: Maybe<Fcm_Token_Mutation_Response>;
+  /** delete single row from the table: "fcm_token" */
+  delete_fcm_token_by_pk?: Maybe<Fcm_Token>;
   /** delete data from the table: "pa_scrape" */
   delete_pa_scrape?: Maybe<Pa_Scrape_Mutation_Response>;
+  /** delete single row from the table: "pa_scrape" */
+  delete_pa_scrape_by_pk?: Maybe<Pa_Scrape>;
   /** delete data from the table: "pa_status" */
   delete_pa_status?: Maybe<Pa_Status_Mutation_Response>;
+  /** delete single row from the table: "pa_status" */
+  delete_pa_status_by_pk?: Maybe<Pa_Status>;
   /** delete data from the table: "scrape_log" */
   delete_scrape_log?: Maybe<Scrape_Log_Mutation_Response>;
+  /** delete single row from the table: "scrape_log" */
+  delete_scrape_log_by_pk?: Maybe<Scrape_Log>;
   /** delete data from the table: "users" */
   delete_users?: Maybe<Users_Mutation_Response>;
+  /** delete single row from the table: "users" */
+  delete_users_by_pk?: Maybe<Users>;
   /** insert data into the table: "council" */
   insert_council?: Maybe<Council_Mutation_Response>;
+  /** insert a single row into the table: "council" */
+  insert_council_one?: Maybe<Council>;
   /** insert data into the table: "fcm_token" */
   insert_fcm_token?: Maybe<Fcm_Token_Mutation_Response>;
+  /** insert a single row into the table: "fcm_token" */
+  insert_fcm_token_one?: Maybe<Fcm_Token>;
   /** insert data into the table: "pa_scrape" */
   insert_pa_scrape?: Maybe<Pa_Scrape_Mutation_Response>;
+  /** insert a single row into the table: "pa_scrape" */
+  insert_pa_scrape_one?: Maybe<Pa_Scrape>;
   /** insert data into the table: "pa_status" */
   insert_pa_status?: Maybe<Pa_Status_Mutation_Response>;
+  /** insert a single row into the table: "pa_status" */
+  insert_pa_status_one?: Maybe<Pa_Status>;
   /** insert data into the table: "scrape_log" */
   insert_scrape_log?: Maybe<Scrape_Log_Mutation_Response>;
+  /** insert a single row into the table: "scrape_log" */
+  insert_scrape_log_one?: Maybe<Scrape_Log>;
   /** insert data into the table: "users" */
   insert_users?: Maybe<Users_Mutation_Response>;
+  /** insert a single row into the table: "users" */
+  insert_users_one?: Maybe<Users>;
   /** update data of the table: "council" */
   update_council?: Maybe<Council_Mutation_Response>;
+  /** update single row of the table: "council" */
+  update_council_by_pk?: Maybe<Council>;
   /** update data of the table: "fcm_token" */
   update_fcm_token?: Maybe<Fcm_Token_Mutation_Response>;
+  /** update single row of the table: "fcm_token" */
+  update_fcm_token_by_pk?: Maybe<Fcm_Token>;
   /** update data of the table: "pa_scrape" */
   update_pa_scrape?: Maybe<Pa_Scrape_Mutation_Response>;
+  /** update single row of the table: "pa_scrape" */
+  update_pa_scrape_by_pk?: Maybe<Pa_Scrape>;
   /** update data of the table: "pa_status" */
   update_pa_status?: Maybe<Pa_Status_Mutation_Response>;
+  /** update single row of the table: "pa_status" */
+  update_pa_status_by_pk?: Maybe<Pa_Status>;
   /** update data of the table: "scrape_log" */
   update_scrape_log?: Maybe<Scrape_Log_Mutation_Response>;
+  /** update single row of the table: "scrape_log" */
+  update_scrape_log_by_pk?: Maybe<Scrape_Log>;
   /** update data of the table: "users" */
   update_users?: Maybe<Users_Mutation_Response>;
+  /** update single row of the table: "users" */
+  update_users_by_pk?: Maybe<Users>;
 };
 
 
@@ -297,8 +357,20 @@ export type Mutation_RootDelete_CouncilArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_Council_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_Fcm_TokenArgs = {
   where: Fcm_Token_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Fcm_Token_By_PkArgs = {
+  device_id: Scalars['String'];
 };
 
 
@@ -309,8 +381,20 @@ export type Mutation_RootDelete_Pa_ScrapeArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_Pa_Scrape_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_Pa_StatusArgs = {
   where: Pa_Status_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Pa_Status_By_PkArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -321,14 +405,33 @@ export type Mutation_RootDelete_Scrape_LogArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_Scrape_Log_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_UsersArgs = {
   where: Users_Bool_Exp;
 };
 
 
 /** mutation root */
+export type Mutation_RootDelete_Users_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_CouncilArgs = {
   objects: Array<Council_Insert_Input>;
+  on_conflict?: Maybe<Council_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Council_OneArgs = {
+  object: Council_Insert_Input;
   on_conflict?: Maybe<Council_On_Conflict>;
 };
 
@@ -341,8 +444,22 @@ export type Mutation_RootInsert_Fcm_TokenArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_Fcm_Token_OneArgs = {
+  object: Fcm_Token_Insert_Input;
+  on_conflict?: Maybe<Fcm_Token_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_Pa_ScrapeArgs = {
   objects: Array<Pa_Scrape_Insert_Input>;
+  on_conflict?: Maybe<Pa_Scrape_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Pa_Scrape_OneArgs = {
+  object: Pa_Scrape_Insert_Input;
   on_conflict?: Maybe<Pa_Scrape_On_Conflict>;
 };
 
@@ -355,6 +472,13 @@ export type Mutation_RootInsert_Pa_StatusArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_Pa_Status_OneArgs = {
+  object: Pa_Status_Insert_Input;
+  on_conflict?: Maybe<Pa_Status_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_Scrape_LogArgs = {
   objects: Array<Scrape_Log_Insert_Input>;
   on_conflict?: Maybe<Scrape_Log_On_Conflict>;
@@ -362,8 +486,22 @@ export type Mutation_RootInsert_Scrape_LogArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_Scrape_Log_OneArgs = {
+  object: Scrape_Log_Insert_Input;
+  on_conflict?: Maybe<Scrape_Log_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_UsersArgs = {
   objects: Array<Users_Insert_Input>;
+  on_conflict?: Maybe<Users_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Users_OneArgs = {
+  object: Users_Insert_Input;
   on_conflict?: Maybe<Users_On_Conflict>;
 };
 
@@ -377,9 +515,24 @@ export type Mutation_RootUpdate_CouncilArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Council_By_PkArgs = {
+  _inc?: Maybe<Council_Inc_Input>;
+  _set?: Maybe<Council_Set_Input>;
+  pk_columns: Council_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Fcm_TokenArgs = {
   _set?: Maybe<Fcm_Token_Set_Input>;
   where: Fcm_Token_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Fcm_Token_By_PkArgs = {
+  _set?: Maybe<Fcm_Token_Set_Input>;
+  pk_columns: Fcm_Token_Pk_Columns_Input;
 };
 
 
@@ -397,10 +550,31 @@ export type Mutation_RootUpdate_Pa_ScrapeArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Pa_Scrape_By_PkArgs = {
+  _append?: Maybe<Pa_Scrape_Append_Input>;
+  _delete_at_path?: Maybe<Pa_Scrape_Delete_At_Path_Input>;
+  _delete_elem?: Maybe<Pa_Scrape_Delete_Elem_Input>;
+  _delete_key?: Maybe<Pa_Scrape_Delete_Key_Input>;
+  _inc?: Maybe<Pa_Scrape_Inc_Input>;
+  _prepend?: Maybe<Pa_Scrape_Prepend_Input>;
+  _set?: Maybe<Pa_Scrape_Set_Input>;
+  pk_columns: Pa_Scrape_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Pa_StatusArgs = {
   _inc?: Maybe<Pa_Status_Inc_Input>;
   _set?: Maybe<Pa_Status_Set_Input>;
   where: Pa_Status_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Pa_Status_By_PkArgs = {
+  _inc?: Maybe<Pa_Status_Inc_Input>;
+  _set?: Maybe<Pa_Status_Set_Input>;
+  pk_columns: Pa_Status_Pk_Columns_Input;
 };
 
 
@@ -418,15 +592,38 @@ export type Mutation_RootUpdate_Scrape_LogArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Scrape_Log_By_PkArgs = {
+  _append?: Maybe<Scrape_Log_Append_Input>;
+  _delete_at_path?: Maybe<Scrape_Log_Delete_At_Path_Input>;
+  _delete_elem?: Maybe<Scrape_Log_Delete_Elem_Input>;
+  _delete_key?: Maybe<Scrape_Log_Delete_Key_Input>;
+  _inc?: Maybe<Scrape_Log_Inc_Input>;
+  _prepend?: Maybe<Scrape_Log_Prepend_Input>;
+  _set?: Maybe<Scrape_Log_Set_Input>;
+  pk_columns: Scrape_Log_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_UsersArgs = {
   _set?: Maybe<Users_Set_Input>;
   where: Users_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Users_By_PkArgs = {
+  _set?: Maybe<Users_Set_Input>;
+  pk_columns: Users_Pk_Columns_Input;
 };
 
 /** columns and relationships of "pa_scrape" */
 export type Pa_Scrape = {
    __typename?: 'pa_scrape';
   contacts?: Maybe<Scalars['jsonb']>;
+  /** An object relationship */
+  council?: Maybe<Council>;
+  council_id?: Maybe<Scalars['Int']>;
   further_information?: Maybe<Scalars['jsonb']>;
   id: Scalars['Int'];
   important_dates?: Maybe<Scalars['jsonb']>;
@@ -497,12 +694,14 @@ export type Pa_Scrape_Aggregate_FieldsCountArgs = {
 /** aggregate avg on columns */
 export type Pa_Scrape_Avg_Fields = {
    __typename?: 'pa_scrape_avg_fields';
+  council_id?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate max on columns */
 export type Pa_Scrape_Max_Fields = {
    __typename?: 'pa_scrape_max_fields';
+  council_id?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
   list_type?: Maybe<Scalars['String']>;
   reference?: Maybe<Scalars['String']>;
@@ -514,6 +713,7 @@ export type Pa_Scrape_Max_Fields = {
 /** aggregate min on columns */
 export type Pa_Scrape_Min_Fields = {
    __typename?: 'pa_scrape_min_fields';
+  council_id?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
   list_type?: Maybe<Scalars['String']>;
   reference?: Maybe<Scalars['String']>;
@@ -534,42 +734,49 @@ export type Pa_Scrape_Mutation_Response = {
 /** aggregate stddev on columns */
 export type Pa_Scrape_Stddev_Fields = {
    __typename?: 'pa_scrape_stddev_fields';
+  council_id?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate stddev_pop on columns */
 export type Pa_Scrape_Stddev_Pop_Fields = {
    __typename?: 'pa_scrape_stddev_pop_fields';
+  council_id?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate stddev_samp on columns */
 export type Pa_Scrape_Stddev_Samp_Fields = {
    __typename?: 'pa_scrape_stddev_samp_fields';
+  council_id?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate sum on columns */
 export type Pa_Scrape_Sum_Fields = {
    __typename?: 'pa_scrape_sum_fields';
+  council_id?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
 };
 
 /** aggregate var_pop on columns */
 export type Pa_Scrape_Var_Pop_Fields = {
    __typename?: 'pa_scrape_var_pop_fields';
+  council_id?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate var_samp on columns */
 export type Pa_Scrape_Var_Samp_Fields = {
    __typename?: 'pa_scrape_var_samp_fields';
+  council_id?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate variance on columns */
 export type Pa_Scrape_Variance_Fields = {
    __typename?: 'pa_scrape_variance_fields';
+  council_id?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
 };
 
@@ -581,7 +788,8 @@ export type Pa_Status = {
   /** An object relationship */
   council?: Maybe<Council>;
   council_id?: Maybe<Scalars['Int']>;
-  council_name: Scalars['String'];
+  /** depreciated */
+  council_name?: Maybe<Scalars['String']>;
   created_at: Scalars['timestamptz'];
   decision?: Maybe<Scalars['String']>;
   decision_issued_date?: Maybe<Scalars['timestamptz']>;
@@ -1447,6 +1655,8 @@ export enum Pa_Scrape_Select_Column {
   /** column name */
   Contacts = 'contacts',
   /** column name */
+  CouncilId = 'council_id',
+  /** column name */
   FurtherInformation = 'further_information',
   /** column name */
   Id = 'id',
@@ -1470,6 +1680,8 @@ export enum Pa_Scrape_Select_Column {
 export enum Pa_Scrape_Update_Column {
   /** column name */
   Contacts = 'contacts',
+  /** column name */
+  CouncilId = 'council_id',
   /** column name */
   FurtherInformation = 'further_information',
   /** column name */
@@ -1710,6 +1922,7 @@ export type Council_Bool_Exp = {
   _or?: Maybe<Array<Maybe<Council_Bool_Exp>>>;
   council_type?: Maybe<String_Comparison_Exp>;
   id?: Maybe<Int_Comparison_Exp>;
+  pa_scrapes?: Maybe<Pa_Scrape_Bool_Exp>;
   pa_statuses?: Maybe<Pa_Status_Bool_Exp>;
   portal_url?: Maybe<String_Comparison_Exp>;
   scrape_logs?: Maybe<Scrape_Log_Bool_Exp>;
@@ -1717,7 +1930,7 @@ export type Council_Bool_Exp = {
   title?: Maybe<String_Comparison_Exp>;
 };
 
-/** input type for incrementing integer columne in table "council" */
+/** input type for incrementing integer column in table "council" */
 export type Council_Inc_Input = {
   id?: Maybe<Scalars['Int']>;
 };
@@ -1726,6 +1939,7 @@ export type Council_Inc_Input = {
 export type Council_Insert_Input = {
   council_type?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
+  pa_scrapes?: Maybe<Pa_Scrape_Arr_Rel_Insert_Input>;
   pa_statuses?: Maybe<Pa_Status_Arr_Rel_Insert_Input>;
   portal_url?: Maybe<Scalars['String']>;
   scrape_logs?: Maybe<Scrape_Log_Arr_Rel_Insert_Input>;
@@ -1768,11 +1982,17 @@ export type Council_On_Conflict = {
 export type Council_Order_By = {
   council_type?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  pa_scrapes_aggregate?: Maybe<Pa_Scrape_Aggregate_Order_By>;
   pa_statuses_aggregate?: Maybe<Pa_Status_Aggregate_Order_By>;
   portal_url?: Maybe<Order_By>;
   scrape_logs_aggregate?: Maybe<Scrape_Log_Aggregate_Order_By>;
   scraper?: Maybe<Order_By>;
   title?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "council" */
+export type Council_Pk_Columns_Input = {
+  id: Scalars['Int'];
 };
 
 /** input type for updating data in table "council" */
@@ -1889,6 +2109,11 @@ export type Fcm_Token_Order_By = {
   token?: Maybe<Order_By>;
   user?: Maybe<Users_Order_By>;
   user_id?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "fcm_token" */
+export type Fcm_Token_Pk_Columns_Input = {
+  device_id: Scalars['String'];
 };
 
 /** input type for updating data in table "fcm_token" */
@@ -2011,6 +2236,7 @@ export type Pa_Scrape_Arr_Rel_Insert_Input = {
 
 /** order by avg() on columns of table "pa_scrape" */
 export type Pa_Scrape_Avg_Order_By = {
+  council_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
 };
 
@@ -2020,6 +2246,8 @@ export type Pa_Scrape_Bool_Exp = {
   _not?: Maybe<Pa_Scrape_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Pa_Scrape_Bool_Exp>>>;
   contacts?: Maybe<Jsonb_Comparison_Exp>;
+  council?: Maybe<Council_Bool_Exp>;
+  council_id?: Maybe<Int_Comparison_Exp>;
   further_information?: Maybe<Jsonb_Comparison_Exp>;
   id?: Maybe<Int_Comparison_Exp>;
   important_dates?: Maybe<Jsonb_Comparison_Exp>;
@@ -2056,14 +2284,17 @@ export type Pa_Scrape_Delete_Key_Input = {
   summary?: Maybe<Scalars['String']>;
 };
 
-/** input type for incrementing integer columne in table "pa_scrape" */
+/** input type for incrementing integer column in table "pa_scrape" */
 export type Pa_Scrape_Inc_Input = {
+  council_id?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
 };
 
 /** input type for inserting data into table "pa_scrape" */
 export type Pa_Scrape_Insert_Input = {
   contacts?: Maybe<Scalars['jsonb']>;
+  council?: Maybe<Council_Obj_Rel_Insert_Input>;
+  council_id?: Maybe<Scalars['Int']>;
   further_information?: Maybe<Scalars['jsonb']>;
   id?: Maybe<Scalars['Int']>;
   important_dates?: Maybe<Scalars['jsonb']>;
@@ -2078,6 +2309,7 @@ export type Pa_Scrape_Insert_Input = {
 
 /** order by max() on columns of table "pa_scrape" */
 export type Pa_Scrape_Max_Order_By = {
+  council_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   list_type?: Maybe<Order_By>;
   reference?: Maybe<Order_By>;
@@ -2088,6 +2320,7 @@ export type Pa_Scrape_Max_Order_By = {
 
 /** order by min() on columns of table "pa_scrape" */
 export type Pa_Scrape_Min_Order_By = {
+  council_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   list_type?: Maybe<Order_By>;
   reference?: Maybe<Order_By>;
@@ -2112,6 +2345,8 @@ export type Pa_Scrape_On_Conflict = {
 /** ordering options when selecting data from "pa_scrape" */
 export type Pa_Scrape_Order_By = {
   contacts?: Maybe<Order_By>;
+  council?: Maybe<Council_Order_By>;
+  council_id?: Maybe<Order_By>;
   further_information?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   important_dates?: Maybe<Order_By>;
@@ -2122,6 +2357,11 @@ export type Pa_Scrape_Order_By = {
   scraper?: Maybe<Order_By>;
   summary?: Maybe<Order_By>;
   url?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "pa_scrape" */
+export type Pa_Scrape_Pk_Columns_Input = {
+  id: Scalars['Int'];
 };
 
 /** prepend existing jsonb value of filtered columns with new jsonb value */
@@ -2135,6 +2375,7 @@ export type Pa_Scrape_Prepend_Input = {
 /** input type for updating data in table "pa_scrape" */
 export type Pa_Scrape_Set_Input = {
   contacts?: Maybe<Scalars['jsonb']>;
+  council_id?: Maybe<Scalars['Int']>;
   further_information?: Maybe<Scalars['jsonb']>;
   id?: Maybe<Scalars['Int']>;
   important_dates?: Maybe<Scalars['jsonb']>;
@@ -2148,36 +2389,43 @@ export type Pa_Scrape_Set_Input = {
 
 /** order by stddev() on columns of table "pa_scrape" */
 export type Pa_Scrape_Stddev_Order_By = {
+  council_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
 };
 
 /** order by stddev_pop() on columns of table "pa_scrape" */
 export type Pa_Scrape_Stddev_Pop_Order_By = {
+  council_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
 };
 
 /** order by stddev_samp() on columns of table "pa_scrape" */
 export type Pa_Scrape_Stddev_Samp_Order_By = {
+  council_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
 };
 
 /** order by sum() on columns of table "pa_scrape" */
 export type Pa_Scrape_Sum_Order_By = {
+  council_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
 };
 
 /** order by var_pop() on columns of table "pa_scrape" */
 export type Pa_Scrape_Var_Pop_Order_By = {
+  council_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
 };
 
 /** order by var_samp() on columns of table "pa_scrape" */
 export type Pa_Scrape_Var_Samp_Order_By = {
+  council_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
 };
 
 /** order by variance() on columns of table "pa_scrape" */
 export type Pa_Scrape_Variance_Order_By = {
+  council_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
 };
 
@@ -2230,7 +2478,7 @@ export type Pa_Status_Bool_Exp = {
   url?: Maybe<String_Comparison_Exp>;
 };
 
-/** input type for incrementing integer columne in table "pa_status" */
+/** input type for incrementing integer column in table "pa_status" */
 export type Pa_Status_Inc_Input = {
   council_id?: Maybe<Scalars['Int']>;
 };
@@ -2318,6 +2566,11 @@ export type Pa_Status_Order_By = {
   status?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   url?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "pa_status" */
+export type Pa_Status_Pk_Columns_Input = {
+  id: Scalars['String'];
 };
 
 /** input type for updating data in table "pa_status" */
@@ -2434,7 +2687,7 @@ export type Scrape_Log_Delete_Key_Input = {
   meta?: Maybe<Scalars['String']>;
 };
 
-/** input type for incrementing integer columne in table "scrape_log" */
+/** input type for incrementing integer column in table "scrape_log" */
 export type Scrape_Log_Inc_Input = {
   council_id?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
@@ -2491,6 +2744,11 @@ export type Scrape_Log_Order_By = {
   meta?: Maybe<Order_By>;
   scraper?: Maybe<Order_By>;
   ts?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "scrape_log" */
+export type Scrape_Log_Pk_Columns_Input = {
+  id: Scalars['Int'];
 };
 
 /** prepend existing jsonb value of filtered columns with new jsonb value */
@@ -2647,6 +2905,11 @@ export type Users_Order_By = {
   id?: Maybe<Order_By>;
   location?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "users" */
+export type Users_Pk_Columns_Input = {
+  id: Scalars['String'];
 };
 
 /** input type for updating data in table "users" */
