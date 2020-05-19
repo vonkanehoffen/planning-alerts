@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: "planning-alerts-scraper",
-      script: "dist/index.js",
+      script: "./dist/index.js",
 
       // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
       args: "",
