@@ -2922,12 +2922,12 @@ export type Users_Set_Input = {
 
 
 
-export type Scrape_LogQueryVariables = {
+export type Get_Scrape_LogQueryVariables = {
   offset?: Maybe<Scalars['Int']>;
 };
 
 
-export type Scrape_LogQuery = (
+export type Get_Scrape_LogQuery = (
   { __typename?: 'query_root' }
   & { scrape_log: Array<(
     { __typename?: 'scrape_log' }
@@ -3109,8 +3109,8 @@ export type Get_UsersQuery = (
 );
 
 
-export const Scrape_LogDocument = gql`
-    query scrape_log($offset: Int) {
+export const Get_Scrape_LogDocument = gql`
+    query get_scrape_log($offset: Int) {
   scrape_log(limit: 50, offset: $offset, order_by: {ts: desc}) {
     council {
       title
@@ -3232,8 +3232,8 @@ export type SdkFunctionWrapper = <T>(action: () => Promise<T>) => Promise<T>;
 const defaultWrapper: SdkFunctionWrapper = sdkFunction => sdkFunction();
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    scrape_log(variables?: Scrape_LogQueryVariables): Promise<Scrape_LogQuery> {
-      return withWrapper(() => client.request<Scrape_LogQuery>(print(Scrape_LogDocument), variables));
+    get_scrape_log(variables?: Get_Scrape_LogQueryVariables): Promise<Get_Scrape_LogQuery> {
+      return withWrapper(() => client.request<Get_Scrape_LogQuery>(print(Get_Scrape_LogDocument), variables));
     },
     get_user_location(variables: Get_User_LocationQueryVariables): Promise<Get_User_LocationQuery> {
       return withWrapper(() => client.request<Get_User_LocationQuery>(print(Get_User_LocationDocument), variables));

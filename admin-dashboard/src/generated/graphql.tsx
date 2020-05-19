@@ -2922,12 +2922,12 @@ export type Users_Set_Input = {
 
 
 
-export type Scrape_LogQueryVariables = {
+export type Get_Scrape_LogQueryVariables = {
   offset?: Maybe<Scalars['Int']>;
 };
 
 
-export type Scrape_LogQuery = (
+export type Get_Scrape_LogQuery = (
   { __typename?: 'query_root' }
   & { scrape_log: Array<(
     { __typename?: 'scrape_log' }
@@ -3109,8 +3109,8 @@ export type Get_UsersQuery = (
 );
 
 
-export const Scrape_LogDocument = gql`
-    query scrape_log($offset: Int) {
+export const Get_Scrape_LogDocument = gql`
+    query get_scrape_log($offset: Int) {
   scrape_log(limit: 50, offset: $offset, order_by: {ts: desc}) {
     council {
       title
@@ -3124,30 +3124,30 @@ export const Scrape_LogDocument = gql`
     `;
 
 /**
- * __useScrape_LogQuery__
+ * __useGet_Scrape_LogQuery__
  *
- * To run a query within a React component, call `useScrape_LogQuery` and pass it any options that fit your needs.
- * When your component renders, `useScrape_LogQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGet_Scrape_LogQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGet_Scrape_LogQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useScrape_LogQuery({
+ * const { data, loading, error } = useGet_Scrape_LogQuery({
  *   variables: {
  *      offset: // value for 'offset'
  *   },
  * });
  */
-export function useScrape_LogQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Scrape_LogQuery, Scrape_LogQueryVariables>) {
-        return ApolloReactHooks.useQuery<Scrape_LogQuery, Scrape_LogQueryVariables>(Scrape_LogDocument, baseOptions);
+export function useGet_Scrape_LogQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Get_Scrape_LogQuery, Get_Scrape_LogQueryVariables>) {
+        return ApolloReactHooks.useQuery<Get_Scrape_LogQuery, Get_Scrape_LogQueryVariables>(Get_Scrape_LogDocument, baseOptions);
       }
-export function useScrape_LogLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Scrape_LogQuery, Scrape_LogQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<Scrape_LogQuery, Scrape_LogQueryVariables>(Scrape_LogDocument, baseOptions);
+export function useGet_Scrape_LogLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Get_Scrape_LogQuery, Get_Scrape_LogQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<Get_Scrape_LogQuery, Get_Scrape_LogQueryVariables>(Get_Scrape_LogDocument, baseOptions);
         }
-export type Scrape_LogQueryHookResult = ReturnType<typeof useScrape_LogQuery>;
-export type Scrape_LogLazyQueryHookResult = ReturnType<typeof useScrape_LogLazyQuery>;
-export type Scrape_LogQueryResult = ApolloReactCommon.QueryResult<Scrape_LogQuery, Scrape_LogQueryVariables>;
+export type Get_Scrape_LogQueryHookResult = ReturnType<typeof useGet_Scrape_LogQuery>;
+export type Get_Scrape_LogLazyQueryHookResult = ReturnType<typeof useGet_Scrape_LogLazyQuery>;
+export type Get_Scrape_LogQueryResult = ApolloReactCommon.QueryResult<Get_Scrape_LogQuery, Get_Scrape_LogQueryVariables>;
 export const Get_User_LocationDocument = gql`
     query get_user_location($id: String!) {
   users(where: {id: {_eq: $id}}) {

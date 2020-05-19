@@ -59,7 +59,7 @@ const UPDATE_COUNCIL = gql`
   }
 `;
 
-export const Home: React.FC = () => {
+export const Councils: React.FC = () => {
   const { loading, error, data } = useQuery<CouncilData>(GET_COUNCILS);
   const [
     updateCouncil,

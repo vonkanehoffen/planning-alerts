@@ -3,7 +3,8 @@ import { useAuth0 } from '../react-auth0-spa'
 import { NoAuthWelcome } from './NoAuthWelcome'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { NavBar } from '../components/NavBar'
-import { Home } from './Home'
+import { Councils } from './Councils'
+import { ScrapeLog } from './ScrapeLog'
 
 export const AppRouter: React.FC = () => {
   const { isAuthenticated } = useAuth0();
@@ -15,7 +16,10 @@ export const AppRouter: React.FC = () => {
       <NavBar/>
       <Switch>
         <Route path="/">
-          <Home/>
+          <ScrapeLog />
+        </Route>
+        <Route path="/councils">
+          <Councils/>
         </Route>
       </Switch>
     </Router>
