@@ -21,7 +21,7 @@ export async function storeScrape(scrape: Scrape, council_id: number) {
     application_validated: stringToISODate(
       scrape.summary.application_validated
     ),
-    council_id, // todo: this needs updating elsewhere too?
+    council_id,
     decision: scrape.summary.decision,
     decision_issued_date: stringToISODate(scrape.summary.decision_issued_date),
     id: scrape.summary.reference, // ID because that's what Apollo Client likes...
@@ -54,7 +54,10 @@ export async function storeScrape(scrape: Scrape, council_id: number) {
 
   // Store raw scraoe data
   await sdk.insert_pa_scrape({
-      objects: [scrape]
+      objects: [{
+        ...scrape,
+        council_id
+      }]
   });
 }
 

@@ -11,6 +11,32 @@ type council {
   council_type: String!
   id: Int!
   "An array relationship"
+  pa_scrapes(
+    "distinct select on columns"
+    distinct_on: [pa_scrape_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [pa_scrape_order_by!],
+    "filter the rows returned"
+    where: pa_scrape_bool_exp
+  ): [pa_scrape!]!
+  "An aggregated array relationship"
+  pa_scrapes_aggregate(
+    "distinct select on columns"
+    distinct_on: [pa_scrape_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [pa_scrape_order_by!],
+    "filter the rows returned"
+    where: pa_scrape_bool_exp
+  ): pa_scrape_aggregate!
+  "An array relationship"
   pa_statuses(
     "distinct select on columns"
     distinct_on: [pa_status_select_column!],
@@ -214,31 +240,43 @@ type mutation_root {
     "filter the rows which have to be deleted"
     where: council_bool_exp!
   ): council_mutation_response
+  "delete single row from the table: \"council\""
+  delete_council_by_pk(id: Int!): council
   "delete data from the table: \"fcm_token\""
   delete_fcm_token(
     "filter the rows which have to be deleted"
     where: fcm_token_bool_exp!
   ): fcm_token_mutation_response
+  "delete single row from the table: \"fcm_token\""
+  delete_fcm_token_by_pk(device_id: String!): fcm_token
   "delete data from the table: \"pa_scrape\""
   delete_pa_scrape(
     "filter the rows which have to be deleted"
     where: pa_scrape_bool_exp!
   ): pa_scrape_mutation_response
+  "delete single row from the table: \"pa_scrape\""
+  delete_pa_scrape_by_pk(id: Int!): pa_scrape
   "delete data from the table: \"pa_status\""
   delete_pa_status(
     "filter the rows which have to be deleted"
     where: pa_status_bool_exp!
   ): pa_status_mutation_response
+  "delete single row from the table: \"pa_status\""
+  delete_pa_status_by_pk(id: String!): pa_status
   "delete data from the table: \"scrape_log\""
   delete_scrape_log(
     "filter the rows which have to be deleted"
     where: scrape_log_bool_exp!
   ): scrape_log_mutation_response
+  "delete single row from the table: \"scrape_log\""
+  delete_scrape_log_by_pk(id: Int!): scrape_log
   "delete data from the table: \"users\""
   delete_users(
     "filter the rows which have to be deleted"
     where: users_bool_exp!
   ): users_mutation_response
+  "delete single row from the table: \"users\""
+  delete_users_by_pk(id: String!): users
   "insert data into the table: \"council\""
   insert_council(
     "the rows to be inserted"
@@ -246,6 +284,13 @@ type mutation_root {
     "on conflict condition"
     on_conflict: council_on_conflict
   ): council_mutation_response
+  "insert a single row into the table: \"council\""
+  insert_council_one(
+    "the row to be inserted"
+    object: council_insert_input!,
+    "on conflict condition"
+    on_conflict: council_on_conflict
+  ): council
   "insert data into the table: \"fcm_token\""
   insert_fcm_token(
     "the rows to be inserted"
@@ -253,6 +298,13 @@ type mutation_root {
     "on conflict condition"
     on_conflict: fcm_token_on_conflict
   ): fcm_token_mutation_response
+  "insert a single row into the table: \"fcm_token\""
+  insert_fcm_token_one(
+    "the row to be inserted"
+    object: fcm_token_insert_input!,
+    "on conflict condition"
+    on_conflict: fcm_token_on_conflict
+  ): fcm_token
   "insert data into the table: \"pa_scrape\""
   insert_pa_scrape(
     "the rows to be inserted"
@@ -260,6 +312,13 @@ type mutation_root {
     "on conflict condition"
     on_conflict: pa_scrape_on_conflict
   ): pa_scrape_mutation_response
+  "insert a single row into the table: \"pa_scrape\""
+  insert_pa_scrape_one(
+    "the row to be inserted"
+    object: pa_scrape_insert_input!,
+    "on conflict condition"
+    on_conflict: pa_scrape_on_conflict
+  ): pa_scrape
   "insert data into the table: \"pa_status\""
   insert_pa_status(
     "the rows to be inserted"
@@ -267,6 +326,13 @@ type mutation_root {
     "on conflict condition"
     on_conflict: pa_status_on_conflict
   ): pa_status_mutation_response
+  "insert a single row into the table: \"pa_status\""
+  insert_pa_status_one(
+    "the row to be inserted"
+    object: pa_status_insert_input!,
+    "on conflict condition"
+    on_conflict: pa_status_on_conflict
+  ): pa_status
   "insert data into the table: \"scrape_log\""
   insert_scrape_log(
     "the rows to be inserted"
@@ -274,6 +340,13 @@ type mutation_root {
     "on conflict condition"
     on_conflict: scrape_log_on_conflict
   ): scrape_log_mutation_response
+  "insert a single row into the table: \"scrape_log\""
+  insert_scrape_log_one(
+    "the row to be inserted"
+    object: scrape_log_insert_input!,
+    "on conflict condition"
+    on_conflict: scrape_log_on_conflict
+  ): scrape_log
   "insert data into the table: \"users\""
   insert_users(
     "the rows to be inserted"
@@ -281,6 +354,13 @@ type mutation_root {
     "on conflict condition"
     on_conflict: users_on_conflict
   ): users_mutation_response
+  "insert a single row into the table: \"users\""
+  insert_users_one(
+    "the row to be inserted"
+    object: users_insert_input!,
+    "on conflict condition"
+    on_conflict: users_on_conflict
+  ): users
   "update data of the table: \"council\""
   update_council(
     "increments the integer columns with given value of the filtered values"
@@ -290,6 +370,14 @@ type mutation_root {
     "filter the rows which have to be updated"
     where: council_bool_exp!
   ): council_mutation_response
+  "update single row of the table: \"council\""
+  update_council_by_pk(
+    "increments the integer columns with given value of the filtered values"
+    _inc: council_inc_input,
+    "sets the columns of the filtered rows to the given values"
+    _set: council_set_input,
+    pk_columns: council_pk_columns_input!
+  ): council
   "update data of the table: \"fcm_token\""
   update_fcm_token(
     "sets the columns of the filtered rows to the given values"
@@ -297,6 +385,12 @@ type mutation_root {
     "filter the rows which have to be updated"
     where: fcm_token_bool_exp!
   ): fcm_token_mutation_response
+  "update single row of the table: \"fcm_token\""
+  update_fcm_token_by_pk(
+    "sets the columns of the filtered rows to the given values"
+    _set: fcm_token_set_input,
+    pk_columns: fcm_token_pk_columns_input!
+  ): fcm_token
   "update data of the table: \"pa_scrape\""
   update_pa_scrape(
     "append existing jsonb value of filtered columns with new jsonb value"
@@ -316,6 +410,24 @@ type mutation_root {
     "filter the rows which have to be updated"
     where: pa_scrape_bool_exp!
   ): pa_scrape_mutation_response
+  "update single row of the table: \"pa_scrape\""
+  update_pa_scrape_by_pk(
+    "append existing jsonb value of filtered columns with new jsonb value"
+    _append: pa_scrape_append_input,
+    "delete the field or element with specified path (for JSON arrays, negative integers count from the end)"
+    _delete_at_path: pa_scrape_delete_at_path_input,
+    "delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array"
+    _delete_elem: pa_scrape_delete_elem_input,
+    "delete key/value pair or string element. key/value pairs are matched based on their key value"
+    _delete_key: pa_scrape_delete_key_input,
+    "increments the integer columns with given value of the filtered values"
+    _inc: pa_scrape_inc_input,
+    "prepend existing jsonb value of filtered columns with new jsonb value"
+    _prepend: pa_scrape_prepend_input,
+    "sets the columns of the filtered rows to the given values"
+    _set: pa_scrape_set_input,
+    pk_columns: pa_scrape_pk_columns_input!
+  ): pa_scrape
   "update data of the table: \"pa_status\""
   update_pa_status(
     "increments the integer columns with given value of the filtered values"
@@ -325,6 +437,14 @@ type mutation_root {
     "filter the rows which have to be updated"
     where: pa_status_bool_exp!
   ): pa_status_mutation_response
+  "update single row of the table: \"pa_status\""
+  update_pa_status_by_pk(
+    "increments the integer columns with given value of the filtered values"
+    _inc: pa_status_inc_input,
+    "sets the columns of the filtered rows to the given values"
+    _set: pa_status_set_input,
+    pk_columns: pa_status_pk_columns_input!
+  ): pa_status
   "update data of the table: \"scrape_log\""
   update_scrape_log(
     "append existing jsonb value of filtered columns with new jsonb value"
@@ -344,6 +464,24 @@ type mutation_root {
     "filter the rows which have to be updated"
     where: scrape_log_bool_exp!
   ): scrape_log_mutation_response
+  "update single row of the table: \"scrape_log\""
+  update_scrape_log_by_pk(
+    "append existing jsonb value of filtered columns with new jsonb value"
+    _append: scrape_log_append_input,
+    "delete the field or element with specified path (for JSON arrays, negative integers count from the end)"
+    _delete_at_path: scrape_log_delete_at_path_input,
+    "delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array"
+    _delete_elem: scrape_log_delete_elem_input,
+    "delete key/value pair or string element. key/value pairs are matched based on their key value"
+    _delete_key: scrape_log_delete_key_input,
+    "increments the integer columns with given value of the filtered values"
+    _inc: scrape_log_inc_input,
+    "prepend existing jsonb value of filtered columns with new jsonb value"
+    _prepend: scrape_log_prepend_input,
+    "sets the columns of the filtered rows to the given values"
+    _set: scrape_log_set_input,
+    pk_columns: scrape_log_pk_columns_input!
+  ): scrape_log
   "update data of the table: \"users\""
   update_users(
     "sets the columns of the filtered rows to the given values"
@@ -351,6 +489,12 @@ type mutation_root {
     "filter the rows which have to be updated"
     where: users_bool_exp!
   ): users_mutation_response
+  "update single row of the table: \"users\""
+  update_users_by_pk(
+    "sets the columns of the filtered rows to the given values"
+    _set: users_set_input,
+    pk_columns: users_pk_columns_input!
+  ): users
 }
 
 "columns and relationships of \"pa_scrape\""
@@ -359,6 +503,9 @@ type pa_scrape {
     "JSON select path"
     path: String
   ): jsonb
+  "An object relationship"
+  council: council
+  council_id: Int
   further_information(
     "JSON select path"
     path: String
@@ -404,11 +551,13 @@ type pa_scrape_aggregate_fields {
 
 "aggregate avg on columns"
 type pa_scrape_avg_fields {
+  council_id: Float
   id: Float
 }
 
 "aggregate max on columns"
 type pa_scrape_max_fields {
+  council_id: Int
   id: Int
   list_type: String
   reference: String
@@ -419,6 +568,7 @@ type pa_scrape_max_fields {
 
 "aggregate min on columns"
 type pa_scrape_min_fields {
+  council_id: Int
   id: Int
   list_type: String
   reference: String
@@ -437,36 +587,43 @@ type pa_scrape_mutation_response {
 
 "aggregate stddev on columns"
 type pa_scrape_stddev_fields {
+  council_id: Float
   id: Float
 }
 
 "aggregate stddev_pop on columns"
 type pa_scrape_stddev_pop_fields {
+  council_id: Float
   id: Float
 }
 
 "aggregate stddev_samp on columns"
 type pa_scrape_stddev_samp_fields {
+  council_id: Float
   id: Float
 }
 
 "aggregate sum on columns"
 type pa_scrape_sum_fields {
+  council_id: Int
   id: Int
 }
 
 "aggregate var_pop on columns"
 type pa_scrape_var_pop_fields {
+  council_id: Float
   id: Float
 }
 
 "aggregate var_samp on columns"
 type pa_scrape_var_samp_fields {
+  council_id: Float
   id: Float
 }
 
 "aggregate variance on columns"
 type pa_scrape_variance_fields {
+  council_id: Float
   id: Float
 }
 
@@ -477,7 +634,8 @@ type pa_status {
   "An object relationship"
   council: council
   council_id: Int
-  council_name: String!
+  "depreciated"
+  council_name: String
   created_at: timestamptz!
   decision: String
   decision_issued_date: timestamptz
@@ -1240,6 +1398,8 @@ enum pa_scrape_select_column {
   "column name"
   contacts
   "column name"
+  council_id
+  "column name"
   further_information
   "column name"
   id
@@ -1263,6 +1423,8 @@ enum pa_scrape_select_column {
 enum pa_scrape_update_column {
   "column name"
   contacts
+  "column name"
+  council_id
   "column name"
   further_information
   "column name"
@@ -1503,6 +1665,7 @@ input council_bool_exp {
   _or: [council_bool_exp]
   council_type: String_comparison_exp
   id: Int_comparison_exp
+  pa_scrapes: pa_scrape_bool_exp
   pa_statuses: pa_status_bool_exp
   portal_url: String_comparison_exp
   scrape_logs: scrape_log_bool_exp
@@ -1510,7 +1673,7 @@ input council_bool_exp {
   title: String_comparison_exp
 }
 
-"input type for incrementing integer columne in table \"council\""
+"input type for incrementing integer column in table \"council\""
 input council_inc_input {
   id: Int
 }
@@ -1519,6 +1682,7 @@ input council_inc_input {
 input council_insert_input {
   council_type: String
   id: Int
+  pa_scrapes: pa_scrape_arr_rel_insert_input
   pa_statuses: pa_status_arr_rel_insert_input
   portal_url: String
   scrape_logs: scrape_log_arr_rel_insert_input
@@ -1561,11 +1725,17 @@ input council_on_conflict {
 input council_order_by {
   council_type: order_by
   id: order_by
+  pa_scrapes_aggregate: pa_scrape_aggregate_order_by
   pa_statuses_aggregate: pa_status_aggregate_order_by
   portal_url: order_by
   scrape_logs_aggregate: scrape_log_aggregate_order_by
   scraper: order_by
   title: order_by
+}
+
+"primary key columns input for table: \"council\""
+input council_pk_columns_input {
+  id: Int!
 }
 
 "input type for updating data in table \"council\""
@@ -1682,6 +1852,11 @@ input fcm_token_order_by {
   token: order_by
   user: users_order_by
   user_id: order_by
+}
+
+"primary key columns input for table: \"fcm_token\""
+input fcm_token_pk_columns_input {
+  device_id: String!
 }
 
 "input type for updating data in table \"fcm_token\""
@@ -1804,6 +1979,7 @@ input pa_scrape_arr_rel_insert_input {
 
 "order by avg() on columns of table \"pa_scrape\""
 input pa_scrape_avg_order_by {
+  council_id: order_by
   id: order_by
 }
 
@@ -1813,6 +1989,8 @@ input pa_scrape_bool_exp {
   _not: pa_scrape_bool_exp
   _or: [pa_scrape_bool_exp]
   contacts: jsonb_comparison_exp
+  council: council_bool_exp
+  council_id: Int_comparison_exp
   further_information: jsonb_comparison_exp
   id: Int_comparison_exp
   important_dates: jsonb_comparison_exp
@@ -1849,14 +2027,17 @@ input pa_scrape_delete_key_input {
   summary: String
 }
 
-"input type for incrementing integer columne in table \"pa_scrape\""
+"input type for incrementing integer column in table \"pa_scrape\""
 input pa_scrape_inc_input {
+  council_id: Int
   id: Int
 }
 
 "input type for inserting data into table \"pa_scrape\""
 input pa_scrape_insert_input {
   contacts: jsonb
+  council: council_obj_rel_insert_input
+  council_id: Int
   further_information: jsonb
   id: Int
   important_dates: jsonb
@@ -1871,6 +2052,7 @@ input pa_scrape_insert_input {
 
 "order by max() on columns of table \"pa_scrape\""
 input pa_scrape_max_order_by {
+  council_id: order_by
   id: order_by
   list_type: order_by
   reference: order_by
@@ -1881,6 +2063,7 @@ input pa_scrape_max_order_by {
 
 "order by min() on columns of table \"pa_scrape\""
 input pa_scrape_min_order_by {
+  council_id: order_by
   id: order_by
   list_type: order_by
   reference: order_by
@@ -1905,6 +2088,8 @@ input pa_scrape_on_conflict {
 "ordering options when selecting data from \"pa_scrape\""
 input pa_scrape_order_by {
   contacts: order_by
+  council: council_order_by
+  council_id: order_by
   further_information: order_by
   id: order_by
   important_dates: order_by
@@ -1915,6 +2100,11 @@ input pa_scrape_order_by {
   scraper: order_by
   summary: order_by
   url: order_by
+}
+
+"primary key columns input for table: \"pa_scrape\""
+input pa_scrape_pk_columns_input {
+  id: Int!
 }
 
 "prepend existing jsonb value of filtered columns with new jsonb value"
@@ -1928,6 +2118,7 @@ input pa_scrape_prepend_input {
 "input type for updating data in table \"pa_scrape\""
 input pa_scrape_set_input {
   contacts: jsonb
+  council_id: Int
   further_information: jsonb
   id: Int
   important_dates: jsonb
@@ -1941,36 +2132,43 @@ input pa_scrape_set_input {
 
 "order by stddev() on columns of table \"pa_scrape\""
 input pa_scrape_stddev_order_by {
+  council_id: order_by
   id: order_by
 }
 
 "order by stddev_pop() on columns of table \"pa_scrape\""
 input pa_scrape_stddev_pop_order_by {
+  council_id: order_by
   id: order_by
 }
 
 "order by stddev_samp() on columns of table \"pa_scrape\""
 input pa_scrape_stddev_samp_order_by {
+  council_id: order_by
   id: order_by
 }
 
 "order by sum() on columns of table \"pa_scrape\""
 input pa_scrape_sum_order_by {
+  council_id: order_by
   id: order_by
 }
 
 "order by var_pop() on columns of table \"pa_scrape\""
 input pa_scrape_var_pop_order_by {
+  council_id: order_by
   id: order_by
 }
 
 "order by var_samp() on columns of table \"pa_scrape\""
 input pa_scrape_var_samp_order_by {
+  council_id: order_by
   id: order_by
 }
 
 "order by variance() on columns of table \"pa_scrape\""
 input pa_scrape_variance_order_by {
+  council_id: order_by
   id: order_by
 }
 
@@ -2023,7 +2221,7 @@ input pa_status_bool_exp {
   url: String_comparison_exp
 }
 
-"input type for incrementing integer columne in table \"pa_status\""
+"input type for incrementing integer column in table \"pa_status\""
 input pa_status_inc_input {
   council_id: Int
 }
@@ -2111,6 +2309,11 @@ input pa_status_order_by {
   status: order_by
   updated_at: order_by
   url: order_by
+}
+
+"primary key columns input for table: \"pa_status\""
+input pa_status_pk_columns_input {
+  id: String!
 }
 
 "input type for updating data in table \"pa_status\""
@@ -2227,7 +2430,7 @@ input scrape_log_delete_key_input {
   meta: String
 }
 
-"input type for incrementing integer columne in table \"scrape_log\""
+"input type for incrementing integer column in table \"scrape_log\""
 input scrape_log_inc_input {
   council_id: Int
   id: Int
@@ -2284,6 +2487,11 @@ input scrape_log_order_by {
   meta: order_by
   scraper: order_by
   ts: order_by
+}
+
+"primary key columns input for table: \"scrape_log\""
+input scrape_log_pk_columns_input {
+  id: Int!
 }
 
 "prepend existing jsonb value of filtered columns with new jsonb value"
@@ -2440,6 +2648,11 @@ input users_order_by {
   id: order_by
   location: order_by
   name: order_by
+}
+
+"primary key columns input for table: \"users\""
+input users_pk_columns_input {
+  id: String!
 }
 
 "input type for updating data in table \"users\""
