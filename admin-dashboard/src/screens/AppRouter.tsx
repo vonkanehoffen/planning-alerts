@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { NavBar } from '../components/NavBar'
 import { Councils } from './Councils'
 import { ScrapeLog } from './ScrapeLog'
+import { Home } from './Home'
 
 export const AppRouter: React.FC = () => {
   const { isAuthenticated } = useAuth0();
@@ -15,7 +16,10 @@ export const AppRouter: React.FC = () => {
     <Router>
       <NavBar/>
       <Switch>
-        <Route path="/">
+        <Route path="/" exact>
+          <Home/>
+        </Route>
+        <Route path="/scrape-log">
           <ScrapeLog />
         </Route>
         <Route path="/councils">
