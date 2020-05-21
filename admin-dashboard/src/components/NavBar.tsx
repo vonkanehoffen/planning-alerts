@@ -37,6 +37,7 @@ export function NavBar() {
           </Typography>
           <Button onClick={() => history.push("/councils")} color="inherit">Councils</Button>
           <Button onClick={() => history.push("/scrape-log")} color="inherit">Scrape Log</Button>
+          <Button onClick={() => history.push("/pa-status")} color="inherit">PA Status</Button>
           {isAuthenticated ?
             <Button
               variant="outlined"

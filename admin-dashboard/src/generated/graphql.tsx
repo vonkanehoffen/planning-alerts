@@ -2939,6 +2939,21 @@ export type Get_Scrape_LogQuery = (
   )> }
 );
 
+export type Recent_Pa_StatusQueryVariables = {};
+
+
+export type Recent_Pa_StatusQuery = (
+  { __typename?: 'query_root' }
+  & { pa_status: Array<(
+    { __typename?: 'pa_status' }
+    & Pick<Pa_Status, 'address' | 'proposal' | 'created_at'>
+    & { council?: Maybe<(
+      { __typename?: 'council' }
+      & Pick<Council, 'title'>
+    )> }
+  )> }
+);
+
 export type Get_User_LocationQueryVariables = {
   id: Scalars['String'];
 };
@@ -3148,6 +3163,43 @@ export function useGet_Scrape_LogLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type Get_Scrape_LogQueryHookResult = ReturnType<typeof useGet_Scrape_LogQuery>;
 export type Get_Scrape_LogLazyQueryHookResult = ReturnType<typeof useGet_Scrape_LogLazyQuery>;
 export type Get_Scrape_LogQueryResult = ApolloReactCommon.QueryResult<Get_Scrape_LogQuery, Get_Scrape_LogQueryVariables>;
+export const Recent_Pa_StatusDocument = gql`
+    query recent_pa_status {
+  pa_status(limit: 50, order_by: {created_at: desc}) {
+    council {
+      title
+    }
+    address
+    proposal
+    created_at
+  }
+}
+    `;
+
+/**
+ * __useRecent_Pa_StatusQuery__
+ *
+ * To run a query within a React component, call `useRecent_Pa_StatusQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRecent_Pa_StatusQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRecent_Pa_StatusQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useRecent_Pa_StatusQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Recent_Pa_StatusQuery, Recent_Pa_StatusQueryVariables>) {
+        return ApolloReactHooks.useQuery<Recent_Pa_StatusQuery, Recent_Pa_StatusQueryVariables>(Recent_Pa_StatusDocument, baseOptions);
+      }
+export function useRecent_Pa_StatusLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Recent_Pa_StatusQuery, Recent_Pa_StatusQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<Recent_Pa_StatusQuery, Recent_Pa_StatusQueryVariables>(Recent_Pa_StatusDocument, baseOptions);
+        }
+export type Recent_Pa_StatusQueryHookResult = ReturnType<typeof useRecent_Pa_StatusQuery>;
+export type Recent_Pa_StatusLazyQueryHookResult = ReturnType<typeof useRecent_Pa_StatusLazyQuery>;
+export type Recent_Pa_StatusQueryResult = ApolloReactCommon.QueryResult<Recent_Pa_StatusQuery, Recent_Pa_StatusQueryVariables>;
 export const Get_User_LocationDocument = gql`
     query get_user_location($id: String!) {
   users(where: {id: {_eq: $id}}) {

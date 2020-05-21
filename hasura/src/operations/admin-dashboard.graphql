@@ -9,3 +9,14 @@ query get_scrape_log($offset: Int) {
     scraper
   }
 }
+
+query recent_pa_status {
+  pa_status(limit: 50, order_by: { created_at: desc }) {
+    council {
+      title
+    }
+    address
+    proposal
+    created_at
+  }
+}

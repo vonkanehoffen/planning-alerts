@@ -2939,6 +2939,21 @@ export type Get_Scrape_LogQuery = (
   )> }
 );
 
+export type Recent_Pa_StatusQueryVariables = {};
+
+
+export type Recent_Pa_StatusQuery = (
+  { __typename?: 'query_root' }
+  & { pa_status: Array<(
+    { __typename?: 'pa_status' }
+    & Pick<Pa_Status, 'address' | 'proposal' | 'created_at'>
+    & { council?: Maybe<(
+      { __typename?: 'council' }
+      & Pick<Council, 'title'>
+    )> }
+  )> }
+);
+
 export type Get_User_LocationQueryVariables = {
   id: Scalars['String'];
 };
@@ -3122,6 +3137,18 @@ export const Get_Scrape_LogDocument = gql`
   }
 }
     `;
+export const Recent_Pa_StatusDocument = gql`
+    query recent_pa_status {
+  pa_status(limit: 50, order_by: {created_at: desc}) {
+    council {
+      title
+    }
+    address
+    proposal
+    created_at
+  }
+}
+    `;
 export const Get_User_LocationDocument = gql`
     query get_user_location($id: String!) {
   users(where: {id: {_eq: $id}}) {
@@ -3234,6 +3261,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   return {
     get_scrape_log(variables?: Get_Scrape_LogQueryVariables): Promise<Get_Scrape_LogQuery> {
       return withWrapper(() => client.request<Get_Scrape_LogQuery>(print(Get_Scrape_LogDocument), variables));
+    },
+    recent_pa_status(variables?: Recent_Pa_StatusQueryVariables): Promise<Recent_Pa_StatusQuery> {
+      return withWrapper(() => client.request<Recent_Pa_StatusQuery>(print(Recent_Pa_StatusDocument), variables));
     },
     get_user_location(variables: Get_User_LocationQueryVariables): Promise<Get_User_LocationQuery> {
       return withWrapper(() => client.request<Get_User_LocationQuery>(print(Get_User_LocationDocument), variables));

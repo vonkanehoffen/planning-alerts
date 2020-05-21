@@ -6,6 +6,7 @@ import { NavBar } from '../components/NavBar'
 import { Councils } from './Councils'
 import { ScrapeLog } from './ScrapeLog'
 import { Home } from './Home'
+import { PaStatus } from './PaStatus'
 
 export const AppRouter: React.FC = () => {
   const { isAuthenticated } = useAuth0();
@@ -24,6 +25,9 @@ export const AppRouter: React.FC = () => {
         </Route>
         <Route path="/councils">
           <Councils/>
+        </Route>
+        <Route path="/pa-status">
+          <PaStatus />
         </Route>
       </Switch>
     </Router>
