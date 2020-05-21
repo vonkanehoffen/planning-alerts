@@ -17,7 +17,7 @@ export async function getGeocodedLocation(address) {
 
   const match = existingQuery.pa_status[0];
   if (match) {
-    console.log("getGeocodedLocation from existing pa_status, id:", match.id);
+    console.log("Geocoded Location matched from existing pa_status id:", match.id);
     return match.location;
   }
 
@@ -47,7 +47,7 @@ async function geocodeAddress(address) {
     })}`
   );
   const geocode = await response.json();
-  console.log("geocodeAddress: ", address, geocode);
+  console.log(`Geocode API called. Status: ${geocode.status} Address: ${address}`);
   return geocode;
 }
 

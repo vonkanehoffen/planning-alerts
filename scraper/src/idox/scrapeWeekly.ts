@@ -56,7 +56,7 @@ async function scrapeFullList(
     const latestListDate = searchForm("select#week option")
       .first()
       .attr("value");
-    console.log(latestListDate);
+    console.log("Scraping list date: ", latestListDate);
 
     // Get request args from the form
 
@@ -64,8 +64,7 @@ async function scrapeFullList(
     const firstPageUri = `${rootURL.origin}${firstUri}`;
     let params = searchForm("form[name=searchCriteriaForm]").serialize();
     params = params.replace(/dateType=.*&/, `dateType=${listType}&`);
-    console.log(params);
-    console.log("URI: ", firstPageUri);
+    console.log("Scraping first page, URL: ", firstPageUri);
 
     // Get first page of the chosen list type
 
@@ -76,11 +75,10 @@ async function scrapeFullList(
     });
     let detailURLs = getDetailURLs(listPage);
     if (detailURLs.length < 1) {
-      console.log("Single app only");
       detailURLs = [firstUri];
     }
 
-    console.log(detailURLs);
+    console.log("Scraping detail URLs: ", detailURLs);
 
     // Scrape PA detail, looping over pagination
     while (detailURLs.length > 0) {
@@ -129,7 +127,6 @@ async function scrapeFullList(
         // TODO: Needs different scrape and is on main tab (but always blank?) for westminster
         //  Also do we need it? Agent name is on Further info tab, so this is just email addresses.
 
-        console.log("scrape:", scrape);
         await storeScrape(scrape, council.id);
       }
 
@@ -138,7 +135,7 @@ async function scrapeFullList(
         .first()
         .attr("href");
       if (nextLink) {
-        console.log("Next page: ", nextLink);
+        console.log("Scraping next page, URL: ", nextLink);
         listPage = await request({ uri: `${rootURL.origin}${nextLink}` });
         detailURLs = getDetailURLs(listPage);
       } else {
@@ -178,7 +175,6 @@ type tableData = {
 function scrapeTableData(page: CheerioAPI): tableData {
   let scrape = {};
   page(".tabcontainer tr").each((i, v) => {
-    // console.log("EACH: ", i, v);
     const el = cheerio.load(v);
     const key = el("th")
       .first()

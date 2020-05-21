@@ -13,6 +13,7 @@ import { sdk } from "./lib/hasuraSdk";
  */
 async function scrapeAll(): Promise<void> {
   const targets = await sdk.get_scrape_targets_by_type({scraper: 'idox'});
+  console.log(`Scraping ${targets.council.length} idox councils`);
   for (let council of targets.council) {
     await scrapeWeekly(council);
     await pushNotify(council);

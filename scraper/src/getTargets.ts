@@ -1,4 +1,3 @@
-import { hasuraRequest } from "./lib/hasuraRequest";
 import { sdk } from "./lib/hasuraSdk";
 
 export async function getTargets(scraper) {

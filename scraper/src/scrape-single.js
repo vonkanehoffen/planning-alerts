@@ -13,7 +13,7 @@ if (!target) {
 async function scrape() {
   await scrapeWeekly(target);
   await pushNotify(target);
-  console.log("Done!");
+  console.log("Singe scrape done!");
 }
 
 scrape();

@@ -15,14 +15,13 @@ admin.initializeApp({
  * from a selected council (following scrape finish)
  */
 export async function pushNotify(council: Pick<Council, 'id' | 'title'>) {
-  console.log("PUSH NOTIFY --------", council.title);
+  console.log("Push Notifying for council:", council.title);
 
   const limit = 10;
   let offset = 0;
   let users;
 
   do {
-    console.log("GETTING USERS");
     users = await sdk.get_users({
       limit,
       offset
@@ -31,7 +30,6 @@ export async function pushNotify(council: Pick<Council, 'id' | 'title'>) {
 
     for (let user of users.users) {
       if (user.location && user.fcm_tokens.length > 0) {
-        console.log("NOTIFYING USER", user.name);
         const newPAs = await sdk.get_new_planning_apps_near({
           point: user.location,
           distance: 3000, // TODO: User distance selection
@@ -39,8 +37,6 @@ export async function pushNotify(council: Pick<Council, 'id' | 'title'>) {
           council_id: council.id
         });
         const newPaIds = newPAs.pa_status.map(pa => pa.id);
-        console.log("New PA results for", user.name, newPaIds);
-
         if (newPaIds.length > 0) {
           for (let token of user.fcm_tokens) {
             sendFcm(
@@ -49,19 +45,19 @@ export async function pushNotify(council: Pick<Council, 'id' | 'title'>) {
               "Click here to see details",
               {
                 newPaIds: JSON.stringify(newPaIds)
-              }
+              },
+              user.name
             );
           }
         }
       } else {
-        console.log("SKIPPING USER", user.name, "No location / FCM token");
+        console.log(`Skipping user: ${user.name}, No location / FCM token`);
       }
     }
   } while (users.users.length > 0);
 }
 
-async function sendFcm(token, title, body, data) {
-  console.log("Sending FCM", { token, title, body, data });
+async function sendFcm(token, title, body, data, username) {
   const message = {
     notification: {
       title,
@@ -86,9 +82,9 @@ async function sendFcm(token, title, body, data) {
   try {
     // @ts-ignore
     const response = await admin.messaging().send(message);
-    console.log("Successfully sent message:", response);
+    console.log(`FCM sent to user: ${username}, title: ${title}, body: ${body}, data: `, data, "response:", response);
   } catch (error) {
-    console.log("Error sending message:", error);
+    console.log(`Error sending FCM to user: ${username} response:`, error);
   }
 }
 
