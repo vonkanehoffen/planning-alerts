@@ -94,7 +94,7 @@ export const GET_OPEN_PA_NEAR_POINT = gql`
     ) {
       address
       application_validated
-      council
+      #      council TODO: New query shape
       created_at
       decision
       decision_issued_date
