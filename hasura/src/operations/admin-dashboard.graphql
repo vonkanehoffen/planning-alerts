@@ -10,7 +10,7 @@ query get_scrape_log($offset: Int) {
   }
 }
 
-query recent_pa_status {
+subscription recent_pa_status {
   pa_status(limit: 50, order_by: { created_at: desc }) {
     council {
       title

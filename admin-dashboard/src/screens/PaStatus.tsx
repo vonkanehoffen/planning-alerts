@@ -1,5 +1,5 @@
 import React from "react";
-import { useRecent_Pa_StatusQuery } from "../generated/graphql";
+import { useRecent_Pa_StatusSubscription } from '../generated/graphql'
 import { CircularProgress } from "@material-ui/core";
 import { Error } from "../components/Error";
 import MUIDataTable from "mui-datatables";
@@ -8,7 +8,7 @@ import { formatDistance, parseISO } from "date-fns";
 interface PaStatusProps {}
 
 export const PaStatus: React.FC<PaStatusProps> = ({}) => {
-  const { loading, error, data } = useRecent_Pa_StatusQuery();
+  const { loading, error, data } = useRecent_Pa_StatusSubscription();
 
   if (loading) return <CircularProgress />;
   if (error) return <Error message={error.message} />;

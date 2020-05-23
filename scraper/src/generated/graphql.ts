@@ -2939,11 +2939,11 @@ export type Get_Scrape_LogQuery = (
   )> }
 );
 
-export type Recent_Pa_StatusQueryVariables = {};
+export type Recent_Pa_StatusSubscriptionVariables = {};
 
 
-export type Recent_Pa_StatusQuery = (
-  { __typename?: 'query_root' }
+export type Recent_Pa_StatusSubscription = (
+  { __typename?: 'subscription_root' }
   & { pa_status: Array<(
     { __typename?: 'pa_status' }
     & Pick<Pa_Status, 'address' | 'proposal' | 'created_at'>
@@ -3138,7 +3138,7 @@ export const Get_Scrape_LogDocument = gql`
 }
     `;
 export const Recent_Pa_StatusDocument = gql`
-    query recent_pa_status {
+    subscription recent_pa_status {
   pa_status(limit: 50, order_by: {created_at: desc}) {
     council {
       title
@@ -3262,8 +3262,8 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     get_scrape_log(variables?: Get_Scrape_LogQueryVariables): Promise<Get_Scrape_LogQuery> {
       return withWrapper(() => client.request<Get_Scrape_LogQuery>(print(Get_Scrape_LogDocument), variables));
     },
-    recent_pa_status(variables?: Recent_Pa_StatusQueryVariables): Promise<Recent_Pa_StatusQuery> {
-      return withWrapper(() => client.request<Recent_Pa_StatusQuery>(print(Recent_Pa_StatusDocument), variables));
+    recent_pa_status(variables?: Recent_Pa_StatusSubscriptionVariables): Promise<Recent_Pa_StatusSubscription> {
+      return withWrapper(() => client.request<Recent_Pa_StatusSubscription>(print(Recent_Pa_StatusDocument), variables));
     },
     get_user_location(variables: Get_User_LocationQueryVariables): Promise<Get_User_LocationQuery> {
       return withWrapper(() => client.request<Get_User_LocationQuery>(print(Get_User_LocationDocument), variables));
