@@ -7,7 +7,7 @@ import { onError } from 'apollo-link-error';
 import { withClientState } from 'apollo-link-state';
 import { ApolloLink, Observable } from 'apollo-link';
 import config from "../../config.json";
-import { AuthContext } from "../screens/auth/auth-provider.component";
+import { AuthContext } from "../screens/auth/AuthProvider";
 import {ApolloNetworkStatusProvider} from 'react-apollo-network-status';
 
 /**
@@ -17,7 +17,8 @@ import {ApolloNetworkStatusProvider} from 'react-apollo-network-status';
  * @returns {*}
  * @constructor
  */
-export const GraphQLProvider = ({ children }) => {
+export const GraphQLProvider: React.FC = ({ children }) => {
+  // @ts-ignore
   const { getIdTokenSilently } = useContext(AuthContext);
 
   const cache = new InMemoryCache({
@@ -29,7 +30,7 @@ export const GraphQLProvider = ({ children }) => {
     // }
   });
 
-  const request = async (operation) => {
+  const request = async (operation: any) => {
     const token = await getIdTokenSilently();
     operation.setContext({
       headers: {
@@ -43,6 +44,7 @@ export const GraphQLProvider = ({ children }) => {
 
   const requestLink = new ApolloLink((operation, forward) =>
     new Observable(observer => {
+      // @ts-ignore
       let handle;
       Promise.resolve(operation)
         .then(oper => request(oper))
@@ -56,6 +58,7 @@ export const GraphQLProvider = ({ children }) => {
         .catch(observer.error.bind(observer));
 
       return () => {
+        // @ts-ignore
         if (handle) handle.unsubscribe();
       };
     })
@@ -78,6 +81,7 @@ export const GraphQLProvider = ({ children }) => {
         },
         resolvers: {
           Mutation: {
+            // @ts-ignore
             updateNetworkStatus: (_, { isConnected }, { cache }) => {
               cache.writeData({ data: { isConnected }});
               return null;

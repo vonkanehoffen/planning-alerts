@@ -14,14 +14,14 @@ import React, { useEffect } from "react";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { mapping } from "@eva-design/eva";
-import theme from './theme'
-import { AppNavigator } from "./navigation/app.navigator";
-import { GraphQLProvider } from "./data-layer/graphql-provider.component";
-import { AuthProvider } from "./screens/auth/auth-provider.component";
-import messaging, { firebase } from "@react-native-firebase/messaging";
+import theme from "./src/theme.json";
+import { AppNavigator } from "./src/navigation/app.navigator";
+import { GraphQLProvider } from "./src/data-layer/GraphQLProvider";
+import { AuthProvider } from "./src/screens/auth/AuthProvider";
+import messaging from "@react-native-firebase/messaging";
 import RNBootSplash from "react-native-bootsplash";
 
-export function App() {
+export function App(): React.ReactFragment {
   useEffect(() => {
     RNBootSplash.hide();
     const unsubscribe = messaging().onMessage(async remoteMessage => {

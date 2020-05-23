@@ -6,7 +6,7 @@ import { Layout, Text } from "@ui-kitten/components";
 import { Platform } from "react-native";
 import { PaStatusMarkers } from "./pa-status-markers.component";
 import _ from "lodash";
-import { AuthContext } from "../auth/auth-provider.component";
+import { AuthContext } from "../auth/AuthProvider";
 import { StyleSheet, View } from "react-native";
 import { postGisToRNMapsLocation, regionFrom } from "../../utils";
 import { HomeMarker } from "../../components/home-marker.component";

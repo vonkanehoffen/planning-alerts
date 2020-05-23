@@ -2,7 +2,7 @@ import React from "react";
 import _ from "lodash";
 import { StyleSheet, View } from "react-native";
 import { Icon, Layout, ListItem, Text, useTheme } from "@ui-kitten/components";
-import { AuthContext } from "../auth/auth-provider.component";
+import { AuthContext } from "../auth/AuthProvider";
 import { PaLogo } from "../../components/pa-logo.component";
 import { useQuery } from "@apollo/react-hooks";
 import * as queries from "../../data-layer/graphql-queries";

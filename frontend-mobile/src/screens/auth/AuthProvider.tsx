@@ -1,8 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import * as Keychain from "react-native-keychain";
-import { Spinner } from "@ui-kitten/components";
 import Auth0 from "react-native-auth0";
-import config from "../../../config";
+import config from "../../../config.json";
 import jwtDecode from 'jwt-decode'
 import { WelcomeScreen } from './welcome-screen.component'
 import { addSeconds, isPast, parseISO } from 'date-fns'
@@ -23,7 +22,7 @@ export const AuthContext = createContext(null);
  * @returns {*}
  * @constructor
  */
-export function AuthProvider({ children }) {
+export const AuthProvider: React.FC = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const initialState = {
     refreshToken: null,
@@ -89,6 +88,7 @@ export function AuthProvider({ children }) {
   const doLogout = async () => {
     console.log('doing logout');
     try {
+      // @ts-ignore
       const response = await auth0.webAuth.clearSession({})
       console.log('logged out ', response);
       Alert.alert("Logged out!");
@@ -105,11 +105,13 @@ export function AuthProvider({ children }) {
    * @param forceRefresh {boolean} TODO: Bad token should force refresh somehow.
    * @returns {Promise<void>}
    */
-  const getIdTokenSilently = async (forceRefresh) => {
+  const getIdTokenSilently = async (forceRefresh: boolean) => {
+    // @ts-ignore
     const expiryDate = parseISO(credentials.expiryDate);
     if(isPast(expiryDate) || forceRefresh) {
       console.log('getIdTokenSilently - refreshing', forceRefresh && 'forced');
       const response = await auth0.auth.refreshToken({
+        // @ts-ignore
         refreshToken: credentials.refreshToken
       });
 
@@ -135,6 +137,7 @@ export function AuthProvider({ children }) {
 
   // All authenticated? Show the app
   return (
+    // @ts-ignore
     <AuthContext.Provider value={{ getIdTokenSilently, credentials, doLogout }}>
       {children}
     </AuthContext.Provider>

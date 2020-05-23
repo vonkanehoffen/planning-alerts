@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { View, KeyboardAvoidingView } from "react-native";
 import { Layout, Text, useTheme } from "@ui-kitten/components";
-import { AuthContext } from "../auth/auth-provider.component";
+import { AuthContext } from "../auth/AuthProvider";
 import { useMutation } from "@apollo/react-hooks";
 import * as queries from "../../data-layer/graphql-queries";
 import { StyleSheet } from "react-native";

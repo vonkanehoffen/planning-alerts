@@ -3,10 +3,10 @@ import { Text } from "@ui-kitten/components";
 import messaging, { firebase } from "@react-native-firebase/messaging";
 import { requestNotifications } from "react-native-permissions";
 import { useMutation } from "@apollo/react-hooks";
-import { AuthContext } from "../screens/auth/auth-provider.component";
+import { AuthContext } from "../screens/auth/AuthProvider";
 import * as queries from "./graphql-queries";
-import Snackbar from 'react-native-snackbar';
-import DeviceInfo from 'react-native-device-info';
+import Snackbar from "react-native-snackbar";
+import DeviceInfo from "react-native-device-info";
 
 /**
  * Get FCM token and store with user record in Hasura
@@ -29,7 +29,7 @@ export function FCMSetup() {
       //  Look at https://github.com/react-native-community/react-native-device-info
       console.log("DOING registerForPushNotifications");
       const device_id = DeviceInfo.getUniqueId();
-      console.log('unique ID = ', device_id);
+      console.log("unique ID = ", device_id);
       try {
         console.log("DOING requestPermission");
         await messaging().requestPermission();
