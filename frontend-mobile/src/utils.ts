@@ -3,6 +3,7 @@
  * @param location
  * @returns {{latitude: (*|LatLng), longitude: (*|LatLng)}}
  */
+// @ts-ignore
 export function postGisToRNMapsLocation(location) {
   return {
     latitude: location.coordinates[0],
@@ -19,6 +20,7 @@ export function postGisToRNMapsLocation(location) {
  * @param distance
  * @returns {{longitudeDelta: number, latitudeDelta: number, latitude: *, longitude: *}}
  */
+// @ts-ignore
 export function regionFrom(lat, lon, distance) {
   distance = distance / 2;
   const circumference = 40075;
@@ -46,6 +48,7 @@ export function regionFrom(lat, lon, distance) {
  * @param postcode
  * @returns {boolean}
  */
+// @ts-ignore
 export function isValidPostcode(postcode) {
   // const postcodeRegEx = /^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([AZa-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$/;
   const postcodeRegEx = /[A-Z]{1,2}[0-9][0-9A-Z]?\s?[0-9][A-Z]{2}/i;

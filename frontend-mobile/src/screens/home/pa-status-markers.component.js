@@ -1,8 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
 import { Callout, Marker } from "react-native-maps";
-import * as queries from "../../data-layer/graphql-queries";
-import { useQuery } from "@apollo/react-hooks";
 import { subDays, formatISO, compareAsc, parseISO } from "date-fns";
 import { postGisToRNMapsLocation } from "../../utils";
 import {
@@ -11,31 +8,35 @@ import {
   PA_OPEN,
   PaMarker
 } from "../../components/pa-marker.component";
+import {
+  useGet_Open_Pa_Near_PointQuery,
+  useGet_Recent_Closed_Pa_Near_PointQuery
+} from "../../generated/graphql";
 
 export function PaStatusMarkers({ location, focusPa, focusedPa }) {
-  const { error: openPaError, data: openPaData } = useQuery(
-    queries.GET_OPEN_PA_NEAR_POINT,
-    {
-      variables: {
-        point: location,
-        distance: 2000
-      }
-      // skip: !location
+  const {
+    error: openPaError,
+    data: openPaData
+  } = useGet_Open_Pa_Near_PointQuery({
+    variables: {
+      point: location,
+      distance: 2000
     }
-  );
+    // skip: !location
+  });
 
   const minDate = subDays(new Date(), 8);
   const minDateFormatted = formatISO(minDate, { representation: "date" });
-  const { error: closedPaError, data: closedPaData } = useQuery(
-    queries.GET_RECENT_CLOSED_PA_NEAR_POINT,
-    {
-      variables: {
-        point: location,
-        distance: 2000,
-        minDate: minDateFormatted
-      }
+  const {
+    error: closedPaError,
+    data: closedPaData
+  } = useGet_Recent_Closed_Pa_Near_PointQuery({
+    variables: {
+      point: location,
+      distance: 2000,
+      minDate: minDateFormatted
     }
-  );
+  });
 
   // // TODO: error display for this further up the tree.
   // if (openPaError || closedPaError) {

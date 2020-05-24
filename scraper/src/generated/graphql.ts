@@ -3014,14 +3014,14 @@ export type Get_Open_Pa_Near_PointQuery = (
   )> }
 );
 
-export type Get_Open_And_Recent_Pa_Near_PointQueryVariables = {
+export type Get_Recent_Closed_Pa_Near_PointQueryVariables = {
   point: Scalars['geography'];
   distance: Scalars['Float'];
   minDate: Scalars['timestamptz'];
 };
 
 
-export type Get_Open_And_Recent_Pa_Near_PointQuery = (
+export type Get_Recent_Closed_Pa_Near_PointQuery = (
   { __typename?: 'query_root' }
   & { pa_status: Array<(
     { __typename?: 'pa_status' }
@@ -3237,8 +3237,8 @@ export const Get_Open_Pa_Near_PointDocument = gql`
   }
 }
     `;
-export const Get_Open_And_Recent_Pa_Near_PointDocument = gql`
-    query get_open_and_recent_pa_near_point($point: geography!, $distance: Float!, $minDate: timestamptz!) {
+export const Get_Recent_Closed_Pa_Near_PointDocument = gql`
+    query get_recent_closed_pa_near_point($point: geography!, $distance: Float!, $minDate: timestamptz!) {
   pa_status(where: {location: {_st_d_within: {distance: $distance, from: $point}}, open: {_eq: false}, updated_at: {_gte: $minDate}}) {
     address
     application_validated
@@ -3364,8 +3364,8 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     get_open_pa_near_point(variables: Get_Open_Pa_Near_PointQueryVariables): Promise<Get_Open_Pa_Near_PointQuery> {
       return withWrapper(() => client.request<Get_Open_Pa_Near_PointQuery>(print(Get_Open_Pa_Near_PointDocument), variables));
     },
-    get_open_and_recent_pa_near_point(variables: Get_Open_And_Recent_Pa_Near_PointQueryVariables): Promise<Get_Open_And_Recent_Pa_Near_PointQuery> {
-      return withWrapper(() => client.request<Get_Open_And_Recent_Pa_Near_PointQuery>(print(Get_Open_And_Recent_Pa_Near_PointDocument), variables));
+    get_recent_closed_pa_near_point(variables: Get_Recent_Closed_Pa_Near_PointQueryVariables): Promise<Get_Recent_Closed_Pa_Near_PointQuery> {
+      return withWrapper(() => client.request<Get_Recent_Closed_Pa_Near_PointQuery>(print(Get_Recent_Closed_Pa_Near_PointDocument), variables));
     },
     get_pa_status_exists(variables: Get_Pa_Status_ExistsQueryVariables): Promise<Get_Pa_Status_ExistsQuery> {
       return withWrapper(() => client.request<Get_Pa_Status_ExistsQuery>(print(Get_Pa_Status_ExistsDocument), variables));

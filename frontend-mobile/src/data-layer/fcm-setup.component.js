@@ -1,12 +1,10 @@
 import React, { useEffect, useContext } from "react";
-import { Text } from "@ui-kitten/components";
-import messaging, { firebase } from "@react-native-firebase/messaging";
+import messaging from "@react-native-firebase/messaging";
 import { requestNotifications } from "react-native-permissions";
-import { useMutation } from "@apollo/react-hooks";
 import { AuthContext } from "../screens/auth/AuthProvider";
-import * as queries from "./graphql-queries";
 import Snackbar from "react-native-snackbar";
 import DeviceInfo from "react-native-device-info";
+import { useUpsert_Fcm_TokenMutation } from "../generated/graphql";
 
 /**
  * Get FCM token and store with user record in Hasura
@@ -17,7 +15,7 @@ import DeviceInfo from "react-native-device-info";
  */
 export function FCMSetup() {
   const { credentials } = useContext(AuthContext);
-  const [upsertFCMToken, { data }] = useMutation(queries.UPSERT_FCM_TOKEN);
+  const [upsertFCMToken, { data }] = useUpsert_Fcm_TokenMutation();
   useEffect(() => {
     async function registerForPushNotifications() {
       // TODO: Is this still a bit shaky on iOS? Seems ok on fresh install, but saw error on second run:

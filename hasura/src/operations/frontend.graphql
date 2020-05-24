@@ -62,7 +62,7 @@ query get_open_pa_near_point($point: geography!, $distance: Float!) {
   }
 }
 
-query get_open_and_recent_pa_near_point(
+query get_recent_closed_pa_near_point(
   $point: geography!
   $distance: Float!
   $minDate: timestamptz!

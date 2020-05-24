@@ -3014,14 +3014,14 @@ export type Get_Open_Pa_Near_PointQuery = (
   )> }
 );
 
-export type Get_Open_And_Recent_Pa_Near_PointQueryVariables = {
+export type Get_Recent_Closed_Pa_Near_PointQueryVariables = {
   point: Scalars['geography'];
   distance: Scalars['Float'];
   minDate: Scalars['timestamptz'];
 };
 
 
-export type Get_Open_And_Recent_Pa_Near_PointQuery = (
+export type Get_Recent_Closed_Pa_Near_PointQuery = (
   { __typename?: 'query_root' }
   & { pa_status: Array<(
     { __typename?: 'pa_status' }
@@ -3390,8 +3390,8 @@ export function useGet_Open_Pa_Near_PointLazyQuery(baseOptions?: ApolloReactHook
 export type Get_Open_Pa_Near_PointQueryHookResult = ReturnType<typeof useGet_Open_Pa_Near_PointQuery>;
 export type Get_Open_Pa_Near_PointLazyQueryHookResult = ReturnType<typeof useGet_Open_Pa_Near_PointLazyQuery>;
 export type Get_Open_Pa_Near_PointQueryResult = ApolloReactCommon.QueryResult<Get_Open_Pa_Near_PointQuery, Get_Open_Pa_Near_PointQueryVariables>;
-export const Get_Open_And_Recent_Pa_Near_PointDocument = gql`
-    query get_open_and_recent_pa_near_point($point: geography!, $distance: Float!, $minDate: timestamptz!) {
+export const Get_Recent_Closed_Pa_Near_PointDocument = gql`
+    query get_recent_closed_pa_near_point($point: geography!, $distance: Float!, $minDate: timestamptz!) {
   pa_status(where: {location: {_st_d_within: {distance: $distance, from: $point}}, open: {_eq: false}, updated_at: {_gte: $minDate}}) {
     address
     application_validated
@@ -3410,16 +3410,16 @@ export const Get_Open_And_Recent_Pa_Near_PointDocument = gql`
     `;
 
 /**
- * __useGet_Open_And_Recent_Pa_Near_PointQuery__
+ * __useGet_Recent_Closed_Pa_Near_PointQuery__
  *
- * To run a query within a React component, call `useGet_Open_And_Recent_Pa_Near_PointQuery` and pass it any options that fit your needs.
- * When your component renders, `useGet_Open_And_Recent_Pa_Near_PointQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGet_Recent_Closed_Pa_Near_PointQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGet_Recent_Closed_Pa_Near_PointQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGet_Open_And_Recent_Pa_Near_PointQuery({
+ * const { data, loading, error } = useGet_Recent_Closed_Pa_Near_PointQuery({
  *   variables: {
  *      point: // value for 'point'
  *      distance: // value for 'distance'
@@ -3427,15 +3427,15 @@ export const Get_Open_And_Recent_Pa_Near_PointDocument = gql`
  *   },
  * });
  */
-export function useGet_Open_And_Recent_Pa_Near_PointQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Get_Open_And_Recent_Pa_Near_PointQuery, Get_Open_And_Recent_Pa_Near_PointQueryVariables>) {
-        return ApolloReactHooks.useQuery<Get_Open_And_Recent_Pa_Near_PointQuery, Get_Open_And_Recent_Pa_Near_PointQueryVariables>(Get_Open_And_Recent_Pa_Near_PointDocument, baseOptions);
+export function useGet_Recent_Closed_Pa_Near_PointQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Get_Recent_Closed_Pa_Near_PointQuery, Get_Recent_Closed_Pa_Near_PointQueryVariables>) {
+        return ApolloReactHooks.useQuery<Get_Recent_Closed_Pa_Near_PointQuery, Get_Recent_Closed_Pa_Near_PointQueryVariables>(Get_Recent_Closed_Pa_Near_PointDocument, baseOptions);
       }
-export function useGet_Open_And_Recent_Pa_Near_PointLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Get_Open_And_Recent_Pa_Near_PointQuery, Get_Open_And_Recent_Pa_Near_PointQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<Get_Open_And_Recent_Pa_Near_PointQuery, Get_Open_And_Recent_Pa_Near_PointQueryVariables>(Get_Open_And_Recent_Pa_Near_PointDocument, baseOptions);
+export function useGet_Recent_Closed_Pa_Near_PointLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Get_Recent_Closed_Pa_Near_PointQuery, Get_Recent_Closed_Pa_Near_PointQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<Get_Recent_Closed_Pa_Near_PointQuery, Get_Recent_Closed_Pa_Near_PointQueryVariables>(Get_Recent_Closed_Pa_Near_PointDocument, baseOptions);
         }
-export type Get_Open_And_Recent_Pa_Near_PointQueryHookResult = ReturnType<typeof useGet_Open_And_Recent_Pa_Near_PointQuery>;
-export type Get_Open_And_Recent_Pa_Near_PointLazyQueryHookResult = ReturnType<typeof useGet_Open_And_Recent_Pa_Near_PointLazyQuery>;
-export type Get_Open_And_Recent_Pa_Near_PointQueryResult = ApolloReactCommon.QueryResult<Get_Open_And_Recent_Pa_Near_PointQuery, Get_Open_And_Recent_Pa_Near_PointQueryVariables>;
+export type Get_Recent_Closed_Pa_Near_PointQueryHookResult = ReturnType<typeof useGet_Recent_Closed_Pa_Near_PointQuery>;
+export type Get_Recent_Closed_Pa_Near_PointLazyQueryHookResult = ReturnType<typeof useGet_Recent_Closed_Pa_Near_PointLazyQuery>;
+export type Get_Recent_Closed_Pa_Near_PointQueryResult = ApolloReactCommon.QueryResult<Get_Recent_Closed_Pa_Near_PointQuery, Get_Recent_Closed_Pa_Near_PointQueryVariables>;
 export const Get_Pa_Status_ExistsDocument = gql`
     query get_pa_status_exists($id: String!) {
   pa_status_by_pk(id: $id) {

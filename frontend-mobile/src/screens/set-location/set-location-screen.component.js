@@ -2,38 +2,40 @@ import React, { useContext } from "react";
 import { View, KeyboardAvoidingView } from "react-native";
 import { Layout, Text, useTheme } from "@ui-kitten/components";
 import { AuthContext } from "../auth/AuthProvider";
-import { useMutation } from "@apollo/react-hooks";
-import * as queries from "../../data-layer/graphql-queries";
 import { StyleSheet } from "react-native";
 import { PostcodeLookup } from "./postcode-lookup.component";
 import { GetDeviceLocation } from "./get-device-location.component";
 import Snackbar from "react-native-snackbar";
 import { PaLogo } from "../../components/pa-logo.component";
+import {
+  Get_User_LocationDocument,
+  useUpdate_User_LocationMutation
+} from "../../generated/graphql";
 
 export function SetLocationScreen({ navigation }) {
   const theme = useTheme();
   const { credentials } = useContext(AuthContext);
-  const [updateUserLocationMutation, { loading, error, data }] = useMutation(
-    queries.UPDATE_USER_LOCATION,
-    {
-      update(
-        cache,
-        {
-          data: {
-            update_users: { returning }
-          }
+  const [
+    updateUserLocationMutation,
+    { loading, error, data }
+  ] = useUpdate_User_LocationMutation({
+    update(
+      cache,
+      {
+        data: {
+          update_users: { returning }
         }
-      ) {
-        cache.writeQuery({
-          query: queries.GET_USER_LOCATION,
-          variables: {
-            id: credentials.claims.sub
-          },
-          data: { users: returning }
-        });
       }
+    ) {
+      cache.writeQuery({
+        query: Get_User_LocationDocument,
+        variables: {
+          id: credentials.claims.sub
+        },
+        data: { users: returning }
+      });
     }
-  );
+  });
 
   const updateUserLocation = async coordinates => {
     await updateUserLocationMutation({

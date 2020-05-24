@@ -1,6 +1,4 @@
 import React, { useContext, useState } from "react";
-import { useQuery } from "@apollo/react-hooks";
-import * as queries from "../../data-layer/graphql-queries";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 import { Layout, Text } from "@ui-kitten/components";
 import { Platform } from "react-native";
@@ -14,6 +12,7 @@ import { PaStatusDetails } from "../../components/pa-status-details-callout.comp
 import FullScreenLoader from "../../components/full-screen-loader.component";
 import { useFocusEffect } from "@react-navigation/native";
 import NoLocationWarning from "./no-location-warning.component";
+import { useGet_User_LocationQuery } from "../../generated/graphql";
 
 let mapRef;
 
@@ -45,7 +44,7 @@ let mapRef;
 export function UserLocationMap({ navigation }) {
   // Get user location
   const { credentials } = useContext(AuthContext);
-  const { loading, error, data } = useQuery(queries.GET_USER_LOCATION, {
+  const { loading, error, data } = useGet_User_LocationQuery({
     variables: {
       id: credentials.claims.sub
     }

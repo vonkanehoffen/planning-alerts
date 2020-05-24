@@ -4,8 +4,7 @@ import { StyleSheet, View } from "react-native";
 import { Icon, Layout, ListItem, Text, useTheme } from "@ui-kitten/components";
 import { AuthContext } from "../auth/AuthProvider";
 import { PaLogo } from "../../components/pa-logo.component";
-import { useQuery } from "@apollo/react-hooks";
-import * as queries from "../../data-layer/graphql-queries";
+import { useGet_User_LocationQuery } from "../../generated/graphql";
 
 const PersonIcon = style => <Icon {...style} name="person-outline" />;
 const LogoutIcon = style => <Icon {...style} name="log-out-outline" />;
@@ -17,7 +16,7 @@ export function SettingsScreen({ navigation }) {
     doLogout,
     credentials: { claims }
   } = React.useContext(AuthContext);
-  const { data } = useQuery(queries.GET_USER_LOCATION, {
+  const { data } = useGet_User_LocationQuery({
     variables: {
       id: claims.sub
     }
