@@ -14,3 +14,78 @@ mutation update_user_location($id: String!, $location: geography!) {
     }
   }
 }
+
+mutation upsert_fcm_token(
+  $token: String!
+  $user_id: String!
+  $device_id: String!
+) {
+  insert_fcm_token(
+    objects: [{ token: $token, user_id: $user_id, device_id: $device_id }]
+    on_conflict: {
+      constraint: fcm_token_pkey
+      update_columns: [token, user_id, device_id]
+    }
+  ) {
+    affected_rows
+  }
+}
+
+# Get planning apps near a point
+# vars like:
+# {
+#   "point": {
+#     "type": "Point",
+#     "coordinates": [53.5184479,-2.6761717]
+#   }
+# }
+query get_open_pa_near_point($point: geography!, $distance: Float!) {
+  pa_status(
+    where: {
+      location: { _st_d_within: { distance: $distance, from: $point } }
+      open: { _eq: true }
+    }
+  ) {
+    address
+    application_validated
+    #      council TODO: New query shape
+    created_at
+    decision
+    decision_issued_date
+    id
+    location
+    open
+    proposal
+    status
+    updated_at
+    url
+  }
+}
+
+query get_open_and_recent_pa_near_point(
+  $point: geography!
+  $distance: Float!
+  $minDate: timestamptz!
+) {
+  pa_status(
+    where: {
+      location: { _st_d_within: { distance: $distance, from: $point } }
+      open: { _eq: false }
+      updated_at: { _gte: $minDate }
+    }
+  ) {
+    address
+    application_validated
+#    council TODO: New query shape
+    created_at
+    decision
+    decision_issued_date
+    id
+    location
+    open
+    proposal
+    status
+    updated_at
+    url
+  }
+}

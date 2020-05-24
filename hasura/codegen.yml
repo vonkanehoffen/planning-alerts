@@ -11,6 +11,15 @@ generates:
       - "typescript"
       - "typescript-operations"
       - "typescript-react-apollo"
+  ../frontend-mobile/src/generated/graphql.tsx:
+    config:
+      withHooks: true
+      withComponent: false
+      withHOC: false
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
   ../scraper/src/generated/graphql.ts:
     plugins:
       - "typescript"

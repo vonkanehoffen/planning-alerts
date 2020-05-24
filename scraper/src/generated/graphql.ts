@@ -2985,6 +2985,50 @@ export type Update_User_LocationMutation = (
   )> }
 );
 
+export type Upsert_Fcm_TokenMutationVariables = {
+  token: Scalars['String'];
+  user_id: Scalars['String'];
+  device_id: Scalars['String'];
+};
+
+
+export type Upsert_Fcm_TokenMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_fcm_token?: Maybe<(
+    { __typename?: 'fcm_token_mutation_response' }
+    & Pick<Fcm_Token_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
+export type Get_Open_Pa_Near_PointQueryVariables = {
+  point: Scalars['geography'];
+  distance: Scalars['Float'];
+};
+
+
+export type Get_Open_Pa_Near_PointQuery = (
+  { __typename?: 'query_root' }
+  & { pa_status: Array<(
+    { __typename?: 'pa_status' }
+    & Pick<Pa_Status, 'address' | 'application_validated' | 'created_at' | 'decision' | 'decision_issued_date' | 'id' | 'location' | 'open' | 'proposal' | 'status' | 'updated_at' | 'url'>
+  )> }
+);
+
+export type Get_Open_And_Recent_Pa_Near_PointQueryVariables = {
+  point: Scalars['geography'];
+  distance: Scalars['Float'];
+  minDate: Scalars['timestamptz'];
+};
+
+
+export type Get_Open_And_Recent_Pa_Near_PointQuery = (
+  { __typename?: 'query_root' }
+  & { pa_status: Array<(
+    { __typename?: 'pa_status' }
+    & Pick<Pa_Status, 'address' | 'application_validated' | 'created_at' | 'decision' | 'decision_issued_date' | 'id' | 'location' | 'open' | 'proposal' | 'status' | 'updated_at' | 'url'>
+  )> }
+);
+
 export type Get_Pa_Status_ExistsQueryVariables = {
   id: Scalars['String'];
 };
@@ -3168,6 +3212,49 @@ export const Update_User_LocationDocument = gql`
   }
 }
     `;
+export const Upsert_Fcm_TokenDocument = gql`
+    mutation upsert_fcm_token($token: String!, $user_id: String!, $device_id: String!) {
+  insert_fcm_token(objects: [{token: $token, user_id: $user_id, device_id: $device_id}], on_conflict: {constraint: fcm_token_pkey, update_columns: [token, user_id, device_id]}) {
+    affected_rows
+  }
+}
+    `;
+export const Get_Open_Pa_Near_PointDocument = gql`
+    query get_open_pa_near_point($point: geography!, $distance: Float!) {
+  pa_status(where: {location: {_st_d_within: {distance: $distance, from: $point}}, open: {_eq: true}}) {
+    address
+    application_validated
+    created_at
+    decision
+    decision_issued_date
+    id
+    location
+    open
+    proposal
+    status
+    updated_at
+    url
+  }
+}
+    `;
+export const Get_Open_And_Recent_Pa_Near_PointDocument = gql`
+    query get_open_and_recent_pa_near_point($point: geography!, $distance: Float!, $minDate: timestamptz!) {
+  pa_status(where: {location: {_st_d_within: {distance: $distance, from: $point}}, open: {_eq: false}, updated_at: {_gte: $minDate}}) {
+    address
+    application_validated
+    created_at
+    decision
+    decision_issued_date
+    id
+    location
+    open
+    proposal
+    status
+    updated_at
+    url
+  }
+}
+    `;
 export const Get_Pa_Status_ExistsDocument = gql`
     query get_pa_status_exists($id: String!) {
   pa_status_by_pk(id: $id) {
@@ -3270,6 +3357,15 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     update_user_location(variables: Update_User_LocationMutationVariables): Promise<Update_User_LocationMutation> {
       return withWrapper(() => client.request<Update_User_LocationMutation>(print(Update_User_LocationDocument), variables));
+    },
+    upsert_fcm_token(variables: Upsert_Fcm_TokenMutationVariables): Promise<Upsert_Fcm_TokenMutation> {
+      return withWrapper(() => client.request<Upsert_Fcm_TokenMutation>(print(Upsert_Fcm_TokenDocument), variables));
+    },
+    get_open_pa_near_point(variables: Get_Open_Pa_Near_PointQueryVariables): Promise<Get_Open_Pa_Near_PointQuery> {
+      return withWrapper(() => client.request<Get_Open_Pa_Near_PointQuery>(print(Get_Open_Pa_Near_PointDocument), variables));
+    },
+    get_open_and_recent_pa_near_point(variables: Get_Open_And_Recent_Pa_Near_PointQueryVariables): Promise<Get_Open_And_Recent_Pa_Near_PointQuery> {
+      return withWrapper(() => client.request<Get_Open_And_Recent_Pa_Near_PointQuery>(print(Get_Open_And_Recent_Pa_Near_PointDocument), variables));
     },
     get_pa_status_exists(variables: Get_Pa_Status_ExistsQueryVariables): Promise<Get_Pa_Status_ExistsQuery> {
       return withWrapper(() => client.request<Get_Pa_Status_ExistsQuery>(print(Get_Pa_Status_ExistsDocument), variables));
