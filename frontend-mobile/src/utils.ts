@@ -3,8 +3,7 @@
  * @param location
  * @returns {{latitude: (*|LatLng), longitude: (*|LatLng)}}
  */
-// @ts-ignore
-export function postGisToRNMapsLocation(location) {
+export function postGisToRNMapsLocation(location: geography) {
   return {
     latitude: location.coordinates[0],
     longitude: location.coordinates[1]
