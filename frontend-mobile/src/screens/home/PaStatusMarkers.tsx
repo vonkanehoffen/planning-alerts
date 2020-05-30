@@ -2,18 +2,18 @@ import React from "react";
 import { Callout, Marker } from "react-native-maps";
 import { subDays, formatISO, compareAsc, parseISO } from "date-fns";
 import { postGisToRNMapsLocation } from "../../utils";
-import {
-  PA_CLOSED,
-  PA_NEW,
-  PA_OPEN,
-  PaMarker
-} from "../../components/pa-marker.component";
+import { PaMarker } from "../../components/PaMarker";
 import {
   useGet_Open_Pa_Near_PointQuery,
   useGet_Recent_Closed_Pa_Near_PointQuery
 } from "../../generated/graphql";
 
-export function PaStatusMarkers({ location, focusPa, focusedPa }) {
+interface PaStatusMarkersProps {
+  location: geography;
+  focusPa: (pa: any) => void; // TODO: Use pa type from gql somehow?
+  focusedPa: any
+}
+export function PaStatusMarkers({ location, focusPa, focusedPa }: PaStatusMarkersProps) {
   const {
     error: openPaError,
     data: openPaData
@@ -65,7 +65,7 @@ export function PaStatusMarkers({ location, focusPa, focusedPa }) {
             }}
             tracksViewChanges={false}
           >
-            <PaMarker status={PA_CLOSED} />
+            <PaMarker status="closed" />
             {/*<Callout>*/}
             {/*  <PaStatusDetails pa={pa} />*/}
             {/*</Callout>*/}
@@ -88,8 +88,8 @@ export function PaStatusMarkers({ location, focusPa, focusedPa }) {
             <PaMarker
               status={
                 compareAsc(parseISO(pa.updated_at), minDate) > -1
-                  ? PA_NEW
-                  : PA_OPEN
+                  ? "new"
+                  : "open"
               }
               focused={pa.id === focusedPa?.id}
             />

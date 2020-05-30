@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { Layout, useTheme, Spinner } from "@ui-kitten/components";
-import { UserLocationMap } from "./user-location-map.component";
-import { FCMSetup } from "../../data-layer/fcm-setup.component";
+import { UserLocationMap } from "./UserLocationMap";
+import { FCMSetup } from "../../data-layer/FCMSetup";
 import { useApolloNetworkStatus } from "react-apollo-network-status";
 
-export function HomeScreen({ navigation }) {
+export function HomeScreen({ navigation }: any) { // TODO: can this be useNavigation?
   const status = useApolloNetworkStatus();
 
   return (

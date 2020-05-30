@@ -3,16 +3,16 @@ import { View, KeyboardAvoidingView } from "react-native";
 import { Layout, Text, useTheme } from "@ui-kitten/components";
 import { AuthContext } from "../auth/AuthProvider";
 import { StyleSheet } from "react-native";
-import { PostcodeLookup } from "./postcode-lookup.component";
-import { GetDeviceLocation } from "./get-device-location.component";
+import { PostcodeLookup } from "./PostcodeLookup";
+import { GetDeviceLocation } from "./GetDeviceLocation";
 import Snackbar from "react-native-snackbar";
-import { PaLogo } from "../../components/pa-logo.component";
+import { PaLogo } from "../../components/PaLogo";
 import {
   Get_User_LocationDocument,
   useUpdate_User_LocationMutation
 } from "../../generated/graphql";
 
-export function SetLocationScreen({ navigation }) {
+export function SetLocationScreen({ navigation }: any) { // TODO: UseNavigation?
   const theme = useTheme();
   const { credentials } = useContext(AuthContext);
   const [
@@ -21,23 +21,19 @@ export function SetLocationScreen({ navigation }) {
   ] = useUpdate_User_LocationMutation({
     update(
       cache,
-      {
-        data: {
-          update_users: { returning }
-        }
-      }
+      mutationResponse
     ) {
       cache.writeQuery({
         query: Get_User_LocationDocument,
         variables: {
           id: credentials.claims.sub
         },
-        data: { users: returning }
+        data: { users: mutationResponse.data?.update_users?.returning }
       });
     }
   });
 
-  const updateUserLocation = async coordinates => {
+  const updateUserLocation = async (coordinates: coordinates) => {
     await updateUserLocationMutation({
       variables: {
         id: credentials.claims.sub,

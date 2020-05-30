@@ -1,11 +1,14 @@
 import React from "react";
 import { SafeAreaView } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  TabNavigationState
+} from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { BottomNavigation, BottomNavigationTab } from "@ui-kitten/components";
-import { HomeScreen } from "../screens/home/home-screen.component";
-import { SettingsScreen } from "../screens/settings/settings-screen.component";
-import { SetLocationScreen } from "../screens/set-location/set-location-screen.component";
+import { HomeScreen } from "../screens/home/HomeScreen";
+import { SettingsScreen } from "../screens/settings/SettingsScreen";
+import { SetLocationScreen } from "../screens/set-location/SetLocationScreen";
 
 // Don't delete these... it f***** jinxes it.
 // import {MapTest} from '../screens/test/map-test.component';
@@ -13,8 +16,8 @@ import { SetLocationScreen } from "../screens/set-location/set-location-screen.c
 
 const BottomTab = createBottomTabNavigator();
 
-const BottomTabBar = ({ navigation, state }) => {
-  const onSelect = index => {
+const BottomTabBar = ({ navigation, state }: any) => {
+  const onSelect = (index: number) => {
     navigation.navigate(state.routeNames[index]);
   };
 

@@ -1,20 +1,20 @@
-import React, { useContext, useState } from "react";
-import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
+import React, { useContext, useState } from 'react'
+import MapView, { Marker, PROVIDER_DEFAULT, Region } from 'react-native-maps'
 import { Layout, Text } from "@ui-kitten/components";
 import { Platform } from "react-native";
-import { PaStatusMarkers } from "./pa-status-markers.component";
+import { PaStatusMarkers } from "./PaStatusMarkers";
 import _ from "lodash";
 import { AuthContext } from "../auth/AuthProvider";
 import { StyleSheet, View } from "react-native";
 import { postGisToRNMapsLocation, regionFrom } from "../../utils";
-import { HomeMarker } from "../../components/home-marker.component";
-import { PaStatusDetails } from "../../components/pa-status-details-callout.component";
-import FullScreenLoader from "../../components/full-screen-loader.component";
+import { HomeMarker } from "../../components/HomeMarker";
+import { PaStatusDetails } from "../../components/PaStatusDetails";
+import { FullScreenLoader } from "../../components/FullScreenLoader";
 import { useFocusEffect } from "@react-navigation/native";
-import NoLocationWarning from "./no-location-warning.component";
-import { useGet_User_LocationQuery } from "../../generated/graphql";
+import NoLocationWarning from "./NoLocationWarning";
+import { Pa_Status, useGet_User_LocationQuery } from '../../generated/graphql'
 
-let mapRef;
+let mapRef: any; // TODO: TS - how to type this as optional ref?
 
 /**
  * Main map view
@@ -33,7 +33,7 @@ let mapRef;
  * ... when minZoomLevel={12} is set anyway.
  *
  *
- * animateToRegion is way more reloiable than control via props.
+ * animateToRegion is way more reliable than control via props.
  * https://github.com/react-native-community/react-native-maps/issues/1338#issuecomment-351270046
  *
  *
@@ -41,7 +41,7 @@ let mapRef;
  * @returns {boolean|*}
  * @constructor
  */
-export function UserLocationMap({ navigation }) {
+export function UserLocationMap({ navigation }: any) {
   // Get user location
   const { credentials } = useContext(AuthContext);
   const { loading, error, data } = useGet_User_LocationQuery({
@@ -56,8 +56,8 @@ export function UserLocationMap({ navigation }) {
 
   // Local state
   const [mapReady, setMapReady] = useState(false);
-  const [mapViewLocation, setMapViewLocation] = useState(null);
-  const [focusedPa, setfocusedPa] = useState(null);
+  const [mapViewLocation, setMapViewLocation] = useState(null as null | geography);
+  const [focusedPa, setfocusedPa] = useState(null as null | Pa_Status);
 
   // Reset map region on view focus.
   // TODO: Still really dodgy...
@@ -86,9 +86,8 @@ export function UserLocationMap({ navigation }) {
 
   /**
    * Update location gql query param with new map region, when dragged.
-   * @param region
    */
-  const handleRegionChange = newRegion => {
+  const handleRegionChange = (newRegion: Region) => {
     // console.log("handleRegionChange", newRegion);
     setMapViewLocation({
       type: "Point",
@@ -102,7 +101,7 @@ export function UserLocationMap({ navigation }) {
    * TODO: Control map position here
    * @param pa
    */
-  const focusPa = pa => {
+  const focusPa = (pa: Pa_Status) => {
     console.log("focusPa", pa);
     setfocusedPa(pa);
   };

@@ -5,9 +5,13 @@ import {PERMISSIONS, request, RESULTS} from 'react-native-permissions';
 import Geolocation from "react-native-geolocation-service";
 import Snackbar from 'react-native-snackbar';
 
-const NavigationIcon = style => <Icon {...style} name="navigation-2-outline" />;
+interface GetDeviceLocationProps {
+  updateUserLocation: (coords: any) => any
+}
 
-export function GetDeviceLocation({updateUserLocation}) {
+const NavigationIcon = (style:any) => <Icon {...style} name="navigation-2-outline" />;
+
+export function GetDeviceLocation({updateUserLocation}: GetDeviceLocationProps) {
   const [loading, setLoading] = useState(false);
 
   const getLocation = async () => {
@@ -56,7 +60,7 @@ export function GetDeviceLocation({updateUserLocation}) {
   if(loading) return <Spinner/>;
 
   return (
-      <Button onPress={getLocation} icon={NavigationIcon}>
+      <Button onPress={getLocation} accessoryRight={NavigationIcon}>
         Get Location
       </Button>
   )

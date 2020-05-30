@@ -15,7 +15,7 @@ import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { mapping } from "@eva-design/eva";
 import theme from "./src/theme.json";
-import { AppNavigator } from "./src/navigation/app.navigator";
+import { AppNavigator } from "./src/navigation/AppNavigator";
 import { GraphQLProvider } from "./src/data-layer/GraphQLProvider";
 import { AuthProvider } from "./src/screens/auth/AuthProvider";
 import messaging from "@react-native-firebase/messaging";

@@ -2,15 +2,19 @@ import React, { useState } from "react";
 import {Icon, Input, Spinner} from '@ui-kitten/components';
 import {isValidPostcode} from '../../utils';
 import Snackbar from 'react-native-snackbar';
-import config from '../../../config';
+import config from '../../../config.json';
 
-const CheckMarkIcon = style => (
+interface PostcodeLookupProps {
+  updateUserLocation: (coords: coordinates) => any
+}
+
+const CheckMarkIcon = (style: any) => (
     <Icon {...style} name="checkmark-circle-outline" />
 );
 
-const SearchIcon = style => <Icon {...style} name="search-outline" />;
+const SearchIcon = (style: any) => <Icon {...style} name="search-outline" />;
 
-export function PostcodeLookup({updateUserLocation}) {
+export function PostcodeLookup({updateUserLocation}: PostcodeLookupProps) {
   const [postcode, setPostcode] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -52,7 +56,7 @@ export function PostcodeLookup({updateUserLocation}) {
           value={postcode}
           onChangeText={setPostcode}
           onBlur={getPostcodeGeolocation}
-          icon={isValidPostcode(postcode) ? CheckMarkIcon : SearchIcon}
+          accessoryRight={isValidPostcode(postcode) ? CheckMarkIcon : SearchIcon}
       />
 
   )

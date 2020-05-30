@@ -1,11 +1,15 @@
-import React from "react";
+import React from 'react'
 import { StyleSheet, ImageBackground, View } from "react-native";
 import { Button, Icon, Layout, Text } from "@ui-kitten/components";
-import { PaLogo } from "../../components/pa-logo.component";
+import { PaLogo } from "../../components/PaLogo";
 
-const PeopleIcon = style => <Icon {...style} name="people-outline" />;
+// TODO: how should this be typed?
+const PeopleIcon = (style: any) => <Icon {...style} name="people-outline" />;
 
-export function WelcomeScreen({ doLogin }) {
+interface WelcomeScreenProps {
+  doLogin: () => any
+}
+export function WelcomeScreen({ doLogin }: WelcomeScreenProps) {
   return (
     <ImageBackground
       source={require("../../../assets/intro-bg.jpg")}
@@ -21,7 +25,7 @@ export function WelcomeScreen({ doLogin }) {
         </Text>
       </View>
       <Button
-        icon={PeopleIcon}
+        accessoryLeft={PeopleIcon}
         onPress={doLogin}
         style={styles.button}
         size="giant"

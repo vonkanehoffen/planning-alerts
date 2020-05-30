@@ -4,6 +4,7 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import { Icon, Spinner } from "@ui-kitten/components";
 import { useApolloNetworkStatus } from "react-apollo-network-status";
 
+// UNUSED.... TODO: Do we want any global apollo loading thing?
 export function NavSpinnerIcon() {
   const navigation = useNavigation();
   const status = useApolloNetworkStatus();

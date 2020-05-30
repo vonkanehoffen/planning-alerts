@@ -2,18 +2,39 @@ import React, { createContext, useState, useEffect } from "react";
 import * as Keychain from "react-native-keychain";
 import Auth0 from "react-native-auth0";
 import config from "../../../config.json";
-import jwtDecode from 'jwt-decode'
-import { WelcomeScreen } from './welcome-screen.component'
-import { addSeconds, isPast, parseISO } from 'date-fns'
-import { Alert } from 'react-native'
-import FullScreenLoader from '../../components/full-screen-loader.component';
+import jwtDecode from "jwt-decode";
+import { WelcomeScreen } from "./WelcomeScreen";
+import { addSeconds, isPast, parseISO } from "date-fns";
+import { Alert } from "react-native";
+import { FullScreenLoader } from "../../components/FullScreenLoader";
+
+interface getIdTokenSilently {
+  (forceRefresh?: boolean): Promise<string>;
+}
+
+type credentials = {
+  refreshToken: null | string;
+  idToken: null | string;
+  expiryDate: Date;
+  claims: any;
+};
+
+interface doLogout {
+  (): Promise<any>;
+}
+
+interface AuthContextState {
+  getIdTokenSilently: getIdTokenSilently;
+  credentials: credentials;
+  doLogout: doLogout;
+}
 
 export const auth0 = new Auth0({
   domain: config.auth0.domain,
   clientId: config.auth0.clientId
 });
 
-export const AuthContext = createContext(null);
+export const AuthContext = createContext({} as AuthContextState);
 
 /**
  * Authentication Provider
@@ -24,7 +45,7 @@ export const AuthContext = createContext(null);
  */
 export const AuthProvider: React.FC = ({ children }) => {
   const [loading, setLoading] = useState(true);
-  const initialState = {
+  const initialState: credentials = {
     refreshToken: null,
     idToken: null,
     expiryDate: new Date(),
@@ -39,7 +60,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     async function rehydrateCredentials() {
       console.log("rehydrateCredentials");
       const keychain = await Keychain.getGenericPassword();
-      console.log("KEYCHAIN: ",keychain);
+      console.log("KEYCHAIN: ", keychain);
       if (keychain) {
         setCredentials(JSON.parse(keychain.password));
       } else {
@@ -74,7 +95,6 @@ export const AuthProvider: React.FC = ({ children }) => {
       );
 
       setCredentials(credentials);
-
     } catch (error) {
       // TODO: Error toasts
       console.log("Auth error: ", error);
@@ -86,18 +106,18 @@ export const AuthProvider: React.FC = ({ children }) => {
    * @returns {Promise<void>}
    */
   const doLogout = async () => {
-    console.log('doing logout');
+    console.log("doing logout");
     try {
       // @ts-ignore
-      const response = await auth0.webAuth.clearSession({})
-      console.log('logged out ', response);
+      const response = await auth0.webAuth.clearSession({});
+      console.log("logged out ", response);
       Alert.alert("Logged out!");
       setCredentials(initialState);
       await Keychain.resetGenericPassword();
-    } catch(error) {
+    } catch (error) {
       console.log("Log out cancelled");
     }
-  }
+  };
 
   /**
    * Get ID token (JWT) for authenticating requests.
@@ -105,11 +125,13 @@ export const AuthProvider: React.FC = ({ children }) => {
    * @param forceRefresh {boolean} TODO: Bad token should force refresh somehow.
    * @returns {Promise<void>}
    */
-  const getIdTokenSilently = async (forceRefresh: boolean) => {
+  const getIdTokenSilently: getIdTokenSilently = async (
+    forceRefresh = false
+  ) => {
     // @ts-ignore
     const expiryDate = parseISO(credentials.expiryDate);
-    if(isPast(expiryDate) || forceRefresh) {
-      console.log('getIdTokenSilently - refreshing', forceRefresh && 'forced');
+    if (isPast(expiryDate) || forceRefresh) {
+      console.log("getIdTokenSilently - refreshing", forceRefresh && "forced");
       const response = await auth0.auth.refreshToken({
         // @ts-ignore
         refreshToken: credentials.refreshToken
@@ -127,13 +149,13 @@ export const AuthProvider: React.FC = ({ children }) => {
     } else {
       return credentials.idToken;
     }
-  }
+  };
 
   // Getting token? Show loading
   if (loading) return <FullScreenLoader message="Loading Profile" />;
 
   // No credentials? Show auth / welcome started screen
-  if (!credentials.idToken) return <WelcomeScreen doLogin={doLogin}/>;
+  if (!credentials.idToken) return <WelcomeScreen doLogin={doLogin} />;
 
   // All authenticated? Show the app
   return (
@@ -142,4 +164,4 @@ export const AuthProvider: React.FC = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-}
+};

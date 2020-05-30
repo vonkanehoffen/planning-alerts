@@ -1,13 +1,13 @@
 import React from "react";
 import Svg, { G, Path } from "react-native-svg";
 
-export const PA_OPEN = 'PA_OPEN';
-export const PA_CLOSED = 'PA_CLOSED';
-export const PA_NEW = 'PA_NEW';
-
-export function PaMarker({ status, focused }) {
-  const bgFill = { [PA_OPEN]: "#426C49", [PA_CLOSED]: "#999999", [PA_NEW]: "#ff9900" };
-  const iconFill = { [PA_OPEN]: "#7BAF5B", [PA_CLOSED]: "#777777", [PA_NEW]: '#ffffff' };
+interface PaMarkerProps {
+  status: "open" | "closed" | "new";
+  focused?: boolean
+}
+export function PaMarker({ status, focused }: PaMarkerProps) {
+  const bgFill = { open: "#426C49", closed: "#999999", new: "#ff9900" };
+  const iconFill = { open: "#7BAF5B", closed: "#777777", new: '#ffffff' };
 
   // TODO: Highlight marker ... can it be done where tracksViewChanges={false} is?
   //     <Svg width={focused ? 51 : 34} height={focused ? 70 : 47} viewBox="0 0 34 47">

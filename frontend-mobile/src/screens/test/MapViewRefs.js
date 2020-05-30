@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import MapView from "react-native-maps";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { PaLogo } from "../../components/pa-logo.component";
+import { PaLogo } from "../../components/PaLogo";
 
 const initialRegion = {
   latitude: 53.44377497031008,

@@ -3,14 +3,14 @@ import _ from "lodash";
 import { StyleSheet, View } from "react-native";
 import { Icon, Layout, ListItem, Text, useTheme } from "@ui-kitten/components";
 import { AuthContext } from "../auth/AuthProvider";
-import { PaLogo } from "../../components/pa-logo.component";
+import { PaLogo } from "../../components/PaLogo";
 import { useGet_User_LocationQuery } from "../../generated/graphql";
 
-const PersonIcon = style => <Icon {...style} name="person-outline" />;
-const LogoutIcon = style => <Icon {...style} name="log-out-outline" />;
-const NavigationIcon = style => <Icon {...style} name="navigation-2-outline" />;
+const PersonIcon = (style: any) => <Icon {...style} name="person-outline" />;
+const LogoutIcon = (style: any) => <Icon {...style} name="log-out-outline" />;
+const NavigationIcon = (style: any) => <Icon {...style} name="navigation-2-outline" />;
 
-export function SettingsScreen({ navigation }) {
+export function SettingsScreen({ navigation }: any) {
   const theme = useTheme();
   const {
     doLogout,
@@ -35,15 +35,15 @@ export function SettingsScreen({ navigation }) {
       <ListItem
         title={`Logged in as ${claims.name}`}
         description={claims.sub}
-        icon={PersonIcon}
+        accessoryLeft={PersonIcon}
       />
       <ListItem
         title="Set Location"
         description={userLocation}
         onPress={() => navigation.navigate("Set Location")}
-        icon={NavigationIcon}
+        accessoryLeft={NavigationIcon}
       />
-      <ListItem title="Log out" icon={LogoutIcon} onPress={doLogout} />
+      <ListItem title="Log out" accessoryRight={LogoutIcon} onPress={doLogout} />
     </Layout>
   );
 }

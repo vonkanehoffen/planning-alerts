@@ -5,11 +5,13 @@ import { AuthContext } from "../screens/auth/AuthProvider";
 import Snackbar from "react-native-snackbar";
 import DeviceInfo from "react-native-device-info";
 import { useUpsert_Fcm_TokenMutation } from "../generated/graphql";
+import { View } from 'react-native'
 
 /**
  * Get FCM token and store with user record in Hasura
  * Permission has to be asked on iOS, with some weirdness.
  * @see https://github.com/invertase/react-native-firebase/issues/2657#issuecomment-572922981
+ * TODO: Should this really be it's own component though? It renders nothing.
  * @returns {*}
  * @constructor
  */
@@ -56,7 +58,8 @@ export function FCMSetup() {
             upsertFCMToken({
               variables: {
                 user_id: credentials.claims.sub,
-                token
+                token,
+                device_id
               }
             });
           }
@@ -74,5 +77,5 @@ export function FCMSetup() {
     registerForPushNotifications();
   }, []);
 
-  return false;
+  return <View/>;
 }

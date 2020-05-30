@@ -9,26 +9,37 @@ import {
 import {
   Button,
   Card,
-  CardHeader,
-  Text,
   Icon,
   ListItem
 } from "@ui-kitten/components";
-import { LogoFab } from "./logo-fab.component";
+import { LogoFab } from "./LogoFab";
 import { formatDistance, parseISO } from "date-fns";
+import { Pa_Status } from '../generated/graphql'
 
-function Meta({ icon, title, value }) {
+interface PaStatusDetailsProps {
+  pa: Pa_Status | null;
+  unFocusPa: () => any
+  resetRegion: () => any
+}
+
+interface MetaProps {
+  icon?: string;
+  title: string;
+  value: string;
+}
+
+function Meta({ icon, title, value }: MetaProps) {
   return (
     <ListItem
       title={title}
       description={value}
-      icon={icon ? () => <Icon name={icon} /> : false}
+      accessoryLeft={icon ? () => <Icon name={icon} /> : undefined}
     />
   );
 }
 
 // TODO: Fix initial card flash with opacity?
-export function PaStatusDetails({ pa, unFocusPa, resetRegion }) {
+export function PaStatusDetails({ pa, unFocusPa, resetRegion }: PaStatusDetailsProps) {
   // console.log("PaStatusDetails ---- ", JSON.stringify(pa, null, 2));
   const [cardTranslate, setCardTranslate] = useState(new Animated.Value(0));
   const [cardHeight, setCardHeight] = useState(0);
@@ -65,7 +76,8 @@ export function PaStatusDetails({ pa, unFocusPa, resetRegion }) {
           {
             transform: [
               {
-                translateY: cardTranslate
+                // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/12202
+                translateY: cardTranslate as any
               }
             ]
           }
@@ -75,7 +87,7 @@ export function PaStatusDetails({ pa, unFocusPa, resetRegion }) {
           <>
             <Meta
               title={`${pa.open ? "Open" : "Closed"} Planning Application`}
-              subtitle={pa.address}
+              value={pa.address}
             />
             <Meta
               title="Proposal"

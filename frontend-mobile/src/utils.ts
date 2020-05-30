@@ -3,7 +3,9 @@
  * @param location
  * @returns {{latitude: (*|LatLng), longitude: (*|LatLng)}}
  */
-export function postGisToRNMapsLocation(location: geography) {
+import { LatLng } from 'react-native-maps'
+
+export function postGisToRNMapsLocation(location: geography): LatLng {
   return {
     latitude: location.coordinates[0],
     longitude: location.coordinates[1]

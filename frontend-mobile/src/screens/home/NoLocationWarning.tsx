@@ -1,10 +1,10 @@
 import React from "react";
 import { Button, Icon, Layout, Text, useTheme } from "@ui-kitten/components";
 import { StyleSheet, View } from "react-native";
-import { PaLogo } from "../../components/pa-logo.component";
+import { PaLogo } from "../../components/PaLogo";
 import { useNavigation } from "@react-navigation/native";
 
-const NavigationIcon = style => <Icon {...style} name="navigation-2-outline" />;
+const NavigationIcon = (style: any) => <Icon {...style} name="navigation-2-outline" />;
 
 export default function NoLocationWarning() {
   const navigation = useNavigation();
@@ -21,7 +21,7 @@ export default function NoLocationWarning() {
       </Text>
       <Button
         onPress={() => navigation.navigate("Set Location")}
-        icon={NavigationIcon}
+        accessoryRight={NavigationIcon}
       >
         Set Location
       </Button>

@@ -21,6 +21,7 @@
     "@react-navigation/native": "^5.0.9",
     "@react-navigation/routers": "^5.1.0",
     "@react-navigation/stack": "^5.1.1",
+    "@types/lodash": "^4.14.153",
     "@ui-kitten/components": "5.0.0",
     "@ui-kitten/eva-icons": "5.0.0",
     "apollo-cache-inmemory": "^1.6.5",
