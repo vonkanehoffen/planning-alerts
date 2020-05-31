@@ -10,7 +10,7 @@ import { postGisToRNMapsLocation, regionFrom } from "../../utils";
 import { HomeMarker } from "../../components/HomeMarker";
 import { PaStatusDetails } from "../../components/PaStatusDetails";
 import { FullScreenLoader } from "../../components/FullScreenLoader";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import NoLocationWarning from "./NoLocationWarning";
 import { Pa_Status, useGet_User_LocationQuery } from '../../generated/graphql'
 
@@ -41,7 +41,8 @@ let mapRef: any; // TODO: TS - how to type this as optional ref?
  * @returns {boolean|*}
  * @constructor
  */
-export function UserLocationMap({ navigation }: any) {
+export function UserLocationMap() {
+  const navigation = useNavigation();
   // Get user location
   const { credentials } = useContext(AuthContext);
   const { loading, error, data } = useGet_User_LocationQuery({

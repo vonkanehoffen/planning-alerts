@@ -5,13 +5,13 @@ import { UserLocationMap } from "./UserLocationMap";
 import { FCMSetup } from "../../data-layer/FCMSetup";
 import { useApolloNetworkStatus } from "react-apollo-network-status";
 
-export function HomeScreen({ navigation }: any) { // TODO: can this be useNavigation?
+export function HomeScreen() {
   const status = useApolloNetworkStatus();
 
   return (
     <Layout style={styles.container}>
       <FCMSetup />
-      <UserLocationMap navigation={navigation} />
+      <UserLocationMap />
       {(status.numPendingQueries > 0 || status.numPendingMutations > 0) && (
         <View style={styles.loading}>
           <Spinner />
