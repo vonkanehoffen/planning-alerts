@@ -1,6 +1,6 @@
 # For initial council selection by user
 query council_autocomplete($input: String!) {
-  council(where: { title: { _ilike: $input}}) {
+  council(where: { title: { _ilike: $input}}, limit: 10) {
     id
     title
   }

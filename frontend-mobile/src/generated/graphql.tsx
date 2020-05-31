@@ -3411,7 +3411,7 @@ export type Recent_Pa_StatusSubscriptionHookResult = ReturnType<typeof useRecent
 export type Recent_Pa_StatusSubscriptionResult = ApolloReactCommon.SubscriptionResult<Recent_Pa_StatusSubscription>;
 export const Council_AutocompleteDocument = gql`
     query council_autocomplete($input: String!) {
-  council(where: {title: {_ilike: $input}}) {
+  council(where: {title: {_ilike: $input}}, limit: 10) {
     id
     title
   }

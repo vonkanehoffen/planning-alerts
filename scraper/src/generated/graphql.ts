@@ -3364,7 +3364,7 @@ export const Recent_Pa_StatusDocument = gql`
     `;
 export const Council_AutocompleteDocument = gql`
     query council_autocomplete($input: String!) {
-  council(where: {title: {_ilike: $input}}) {
+  council(where: {title: {_ilike: $input}}, limit: 10) {
     id
     title
   }
