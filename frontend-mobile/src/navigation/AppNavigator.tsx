@@ -28,6 +28,7 @@ const BottomTabBar = ({ navigation, state }: any) => {
         <BottomNavigationTab title="HOME" />
         <BottomNavigationTab title="SETTINGS" />
         <BottomNavigationTab title="SET LOCATION" />
+        <BottomNavigationTab title="Set Council" />
         {/*<BottomNavigationTab title="TEST" />*/}
       </BottomNavigation>
     </SafeAreaView>

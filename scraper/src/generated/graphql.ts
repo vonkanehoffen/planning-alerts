@@ -3110,6 +3110,19 @@ export type Recent_Pa_StatusSubscription = (
   )> }
 );
 
+export type Council_AutocompleteQueryVariables = {
+  input: Scalars['String'];
+};
+
+
+export type Council_AutocompleteQuery = (
+  { __typename?: 'query_root' }
+  & { council: Array<(
+    { __typename?: 'council' }
+    & Pick<Council, 'id' | 'title'>
+  )> }
+);
+
 export type Get_User_LocationQueryVariables = {
   id: Scalars['String'];
 };
@@ -3349,6 +3362,14 @@ export const Recent_Pa_StatusDocument = gql`
   }
 }
     `;
+export const Council_AutocompleteDocument = gql`
+    query council_autocomplete($input: String!) {
+  council(where: {title: {_ilike: $input}}) {
+    id
+    title
+  }
+}
+    `;
 export const Get_User_LocationDocument = gql`
     query get_user_location($id: String!) {
   users(where: {id: {_eq: $id}}) {
@@ -3507,6 +3528,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     recent_pa_status(variables?: Recent_Pa_StatusSubscriptionVariables): Promise<Recent_Pa_StatusSubscription> {
       return withWrapper(() => client.request<Recent_Pa_StatusSubscription>(print(Recent_Pa_StatusDocument), variables));
+    },
+    council_autocomplete(variables: Council_AutocompleteQueryVariables): Promise<Council_AutocompleteQuery> {
+      return withWrapper(() => client.request<Council_AutocompleteQuery>(print(Council_AutocompleteDocument), variables));
     },
     get_user_location(variables: Get_User_LocationQueryVariables): Promise<Get_User_LocationQuery> {
       return withWrapper(() => client.request<Get_User_LocationQuery>(print(Get_User_LocationDocument), variables));

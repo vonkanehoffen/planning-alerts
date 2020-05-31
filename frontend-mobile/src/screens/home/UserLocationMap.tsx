@@ -122,7 +122,7 @@ export function UserLocationMap() {
   }
 
   if (!userLocation) {
-    navigation.navigate("Set Location");
+    // navigation.navigate("Set Location");
     return <NoLocationWarning />;
   }
 

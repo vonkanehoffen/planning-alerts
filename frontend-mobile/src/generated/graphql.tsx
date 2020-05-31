@@ -3110,6 +3110,19 @@ export type Recent_Pa_StatusSubscription = (
   )> }
 );
 
+export type Council_AutocompleteQueryVariables = {
+  input: Scalars['String'];
+};
+
+
+export type Council_AutocompleteQuery = (
+  { __typename?: 'query_root' }
+  & { council: Array<(
+    { __typename?: 'council' }
+    & Pick<Council, 'id' | 'title'>
+  )> }
+);
+
 export type Get_User_LocationQueryVariables = {
   id: Scalars['String'];
 };
@@ -3396,6 +3409,40 @@ export function useRecent_Pa_StatusSubscription(baseOptions?: ApolloReactHooks.S
       }
 export type Recent_Pa_StatusSubscriptionHookResult = ReturnType<typeof useRecent_Pa_StatusSubscription>;
 export type Recent_Pa_StatusSubscriptionResult = ApolloReactCommon.SubscriptionResult<Recent_Pa_StatusSubscription>;
+export const Council_AutocompleteDocument = gql`
+    query council_autocomplete($input: String!) {
+  council(where: {title: {_ilike: $input}}) {
+    id
+    title
+  }
+}
+    `;
+
+/**
+ * __useCouncil_AutocompleteQuery__
+ *
+ * To run a query within a React component, call `useCouncil_AutocompleteQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCouncil_AutocompleteQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCouncil_AutocompleteQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCouncil_AutocompleteQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Council_AutocompleteQuery, Council_AutocompleteQueryVariables>) {
+        return ApolloReactHooks.useQuery<Council_AutocompleteQuery, Council_AutocompleteQueryVariables>(Council_AutocompleteDocument, baseOptions);
+      }
+export function useCouncil_AutocompleteLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Council_AutocompleteQuery, Council_AutocompleteQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<Council_AutocompleteQuery, Council_AutocompleteQueryVariables>(Council_AutocompleteDocument, baseOptions);
+        }
+export type Council_AutocompleteQueryHookResult = ReturnType<typeof useCouncil_AutocompleteQuery>;
+export type Council_AutocompleteLazyQueryHookResult = ReturnType<typeof useCouncil_AutocompleteLazyQuery>;
+export type Council_AutocompleteQueryResult = ApolloReactCommon.QueryResult<Council_AutocompleteQuery, Council_AutocompleteQueryVariables>;
 export const Get_User_LocationDocument = gql`
     query get_user_location($id: String!) {
   users(where: {id: {_eq: $id}}) {

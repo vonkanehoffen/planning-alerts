@@ -1,3 +1,11 @@
+# For initial council selection by user
+query council_autocomplete($input: String!) {
+  council(where: { title: { _ilike: $input}}) {
+    id
+    title
+  }
+}
+
 query get_user_location($id: String!) {
   users(where: { id: { _eq: $id } }) {
     id
