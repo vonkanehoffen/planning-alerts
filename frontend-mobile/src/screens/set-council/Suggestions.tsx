@@ -4,8 +4,8 @@ import { Text } from "@ui-kitten/components";
 
 interface SuggestionProps {
   data: Array<{
-    id: number
-    title: string
+    id: number;
+    title: string;
   }>;
   onSelect: (value: any) => any;
 }
