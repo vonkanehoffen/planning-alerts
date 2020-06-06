@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Input, Layout, Text, useTheme, Autocomplete, AutocompleteItem } from '@ui-kitten/components'
+import { Input, Layout, Text } from '@ui-kitten/components'
 import { StyleSheet } from 'react-native'
 import { useCouncil_AutocompleteLazyQuery, useSet_User_CouncilMutation } from '../../generated/graphql'
-import { FullScreenLoader } from '../../components/FullScreenLoader'
 import useDebounce from '../../hooks/use-debounce';
 import { AuthContext } from '../auth/AuthProvider'
+import { Suggestions } from './Suggestions'
 
 interface SetCouncilScreenProps {
 
@@ -25,11 +25,10 @@ export const SetCouncilScreen: React.FC<SetCouncilScreenProps> = ({}) => {
     }, [debouncedSearchTerm]
   );
 
-  const onSelect = (index: number) => {
-    setSearchTerm(data?.council[index].title || '');
-    console.log('onSelect', index, credentials.claims.sub);
-    // TODO: This is just the index of the suggestion not the actual council. ....so it doesn't work.
-    const args = { variables: { user_id: credentials.claims.sub, council_id: index}}
+  const onSelect = (council: any) => {
+    setSearchTerm(council.title || '');
+    console.log('onSelect', council, credentials.claims.sub);
+    const args = { variables: { user_id: credentials.claims.sub, council_id: council.id}}
     console.log('SETTING COUNCIL', args);
     setUserCouncil(args);
   }
@@ -37,13 +36,10 @@ export const SetCouncilScreen: React.FC<SetCouncilScreenProps> = ({}) => {
   console.log(data, error);
   return (
     <Layout style={styles.container}>
-      <Text category="h3">Who are your Local Council asc?</Text>
-      <Autocomplete placeholder="Start typing" value={searchTerm} onSelect={onSelect} onChangeText={s => setSearchTerm(s)}>
-        {data?.council.map(council => {
-          console.log('AUTOSUGGESTION', council.id, council.title);
-          return <AutocompleteItem key={council.id} title={council.title} />
-        })}
-      </Autocomplete>
+      <Text category="h3">Who are your Local Council?</Text>
+      <Input placeholder="Start typing..." value={searchTerm} onChangeText={s => setSearchTerm(s)}/>
+      {data?.council && <Suggestions data={data.council} onSelect={onSelect} />}
+
       {/*{(called && loading) && <Text>Loading Lazy Auto</Text>}*/}
       {/*<Text category="p1">{JSON.stringify(data?.council, null, 2)}</Text>*/}
     </Layout>
