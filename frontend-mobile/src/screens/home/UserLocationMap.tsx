@@ -12,7 +12,7 @@ import { PaStatusDetails } from "../../components/PaStatusDetails";
 import { FullScreenLoader } from "../../components/FullScreenLoader";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import NoLocationWarning from "./NoLocationWarning";
-import { Pa_Status, useGet_User_LocationQuery } from '../../generated/graphql'
+import { Pa_Status, useGet_User_MetaQuery } from '../../generated/graphql'
 
 let mapRef: any; // TODO: TS - how to type this as optional ref?
 
@@ -45,7 +45,7 @@ export function UserLocationMap() {
   const navigation = useNavigation();
   // Get user location
   const { credentials } = useContext(AuthContext);
-  const { loading, error, data } = useGet_User_LocationQuery({
+  const { loading, error, data } = useGet_User_MetaQuery({
     variables: {
       id: credentials.claims.sub
     }

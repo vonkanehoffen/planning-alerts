@@ -3141,16 +3141,16 @@ export type Set_User_CouncilMutation = (
   )> }
 );
 
-export type Get_User_LocationQueryVariables = {
+export type Get_User_MetaQueryVariables = {
   id: Scalars['String'];
 };
 
 
-export type Get_User_LocationQuery = (
+export type Get_User_MetaQuery = (
   { __typename?: 'query_root' }
   & { users: Array<(
     { __typename?: 'users' }
-    & Pick<Users, 'id' | 'location'>
+    & Pick<Users, 'id' | 'name' | 'email' | 'location' | 'council_id' | 'created_at'>
   )> }
 );
 
@@ -3399,11 +3399,15 @@ export const Set_User_CouncilDocument = gql`
   }
 }
     `;
-export const Get_User_LocationDocument = gql`
-    query get_user_location($id: String!) {
+export const Get_User_MetaDocument = gql`
+    query get_user_meta($id: String!) {
   users(where: {id: {_eq: $id}}) {
     id
+    name
+    email
     location
+    council_id
+    created_at
   }
 }
     `;
@@ -3564,8 +3568,8 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     set_user_council(variables: Set_User_CouncilMutationVariables): Promise<Set_User_CouncilMutation> {
       return withWrapper(() => client.request<Set_User_CouncilMutation>(print(Set_User_CouncilDocument), variables));
     },
-    get_user_location(variables: Get_User_LocationQueryVariables): Promise<Get_User_LocationQuery> {
-      return withWrapper(() => client.request<Get_User_LocationQuery>(print(Get_User_LocationDocument), variables));
+    get_user_meta(variables: Get_User_MetaQueryVariables): Promise<Get_User_MetaQuery> {
+      return withWrapper(() => client.request<Get_User_MetaQuery>(print(Get_User_MetaDocument), variables));
     },
     update_user_location(variables: Update_User_LocationMutationVariables): Promise<Update_User_LocationMutation> {
       return withWrapper(() => client.request<Update_User_LocationMutation>(print(Update_User_LocationDocument), variables));

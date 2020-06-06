@@ -3141,16 +3141,16 @@ export type Set_User_CouncilMutation = (
   )> }
 );
 
-export type Get_User_LocationQueryVariables = {
+export type Get_User_MetaQueryVariables = {
   id: Scalars['String'];
 };
 
 
-export type Get_User_LocationQuery = (
+export type Get_User_MetaQuery = (
   { __typename?: 'query_root' }
   & { users: Array<(
     { __typename?: 'users' }
-    & Pick<Users, 'id' | 'location'>
+    & Pick<Users, 'id' | 'name' | 'email' | 'location' | 'council_id' | 'created_at'>
   )> }
 );
 
@@ -3498,40 +3498,44 @@ export function useSet_User_CouncilMutation(baseOptions?: ApolloReactHooks.Mutat
 export type Set_User_CouncilMutationHookResult = ReturnType<typeof useSet_User_CouncilMutation>;
 export type Set_User_CouncilMutationResult = ApolloReactCommon.MutationResult<Set_User_CouncilMutation>;
 export type Set_User_CouncilMutationOptions = ApolloReactCommon.BaseMutationOptions<Set_User_CouncilMutation, Set_User_CouncilMutationVariables>;
-export const Get_User_LocationDocument = gql`
-    query get_user_location($id: String!) {
+export const Get_User_MetaDocument = gql`
+    query get_user_meta($id: String!) {
   users(where: {id: {_eq: $id}}) {
     id
+    name
+    email
     location
+    council_id
+    created_at
   }
 }
     `;
 
 /**
- * __useGet_User_LocationQuery__
+ * __useGet_User_MetaQuery__
  *
- * To run a query within a React component, call `useGet_User_LocationQuery` and pass it any options that fit your needs.
- * When your component renders, `useGet_User_LocationQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGet_User_MetaQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGet_User_MetaQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGet_User_LocationQuery({
+ * const { data, loading, error } = useGet_User_MetaQuery({
  *   variables: {
  *      id: // value for 'id'
  *   },
  * });
  */
-export function useGet_User_LocationQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Get_User_LocationQuery, Get_User_LocationQueryVariables>) {
-        return ApolloReactHooks.useQuery<Get_User_LocationQuery, Get_User_LocationQueryVariables>(Get_User_LocationDocument, baseOptions);
+export function useGet_User_MetaQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Get_User_MetaQuery, Get_User_MetaQueryVariables>) {
+        return ApolloReactHooks.useQuery<Get_User_MetaQuery, Get_User_MetaQueryVariables>(Get_User_MetaDocument, baseOptions);
       }
-export function useGet_User_LocationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Get_User_LocationQuery, Get_User_LocationQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<Get_User_LocationQuery, Get_User_LocationQueryVariables>(Get_User_LocationDocument, baseOptions);
+export function useGet_User_MetaLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Get_User_MetaQuery, Get_User_MetaQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<Get_User_MetaQuery, Get_User_MetaQueryVariables>(Get_User_MetaDocument, baseOptions);
         }
-export type Get_User_LocationQueryHookResult = ReturnType<typeof useGet_User_LocationQuery>;
-export type Get_User_LocationLazyQueryHookResult = ReturnType<typeof useGet_User_LocationLazyQuery>;
-export type Get_User_LocationQueryResult = ApolloReactCommon.QueryResult<Get_User_LocationQuery, Get_User_LocationQueryVariables>;
+export type Get_User_MetaQueryHookResult = ReturnType<typeof useGet_User_MetaQuery>;
+export type Get_User_MetaLazyQueryHookResult = ReturnType<typeof useGet_User_MetaLazyQuery>;
+export type Get_User_MetaQueryResult = ApolloReactCommon.QueryResult<Get_User_MetaQuery, Get_User_MetaQueryVariables>;
 export const Update_User_LocationDocument = gql`
     mutation update_user_location($id: String!, $location: geography!) {
   update_users(where: {id: {_eq: $id}}, _set: {location: $location}) {

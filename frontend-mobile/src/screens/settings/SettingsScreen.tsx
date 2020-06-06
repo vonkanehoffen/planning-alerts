@@ -4,7 +4,7 @@ import { StyleSheet, View } from "react-native";
 import { Icon, Layout, ListItem, Text, useTheme } from "@ui-kitten/components";
 import { AuthContext } from "../auth/AuthProvider";
 import { PaLogo } from "../../components/PaLogo";
-import { useGet_User_LocationQuery } from "../../generated/graphql";
+import { useGet_User_MetaQuery } from "../../generated/graphql";
 
 const PersonIcon = (style: any) => <Icon {...style} name="person-outline" />;
 const LogoutIcon = (style: any) => <Icon {...style} name="log-out-outline" />;
@@ -16,7 +16,7 @@ export function SettingsScreen({ navigation }: any) {
     doLogout,
     credentials: { claims }
   } = React.useContext(AuthContext);
-  const { data } = useGet_User_LocationQuery({
+  const { data } = useGet_User_MetaQuery({
     variables: {
       id: claims.sub
     }

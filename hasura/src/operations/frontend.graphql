@@ -18,10 +18,14 @@ mutation set_user_council($user_id: String!, $council_id: Int!) {
   }
 }
 
-query get_user_location($id: String!) {
+query get_user_meta($id: String!) {
   users(where: { id: { _eq: $id } }) {
     id
+    name
+    email
     location
+    council_id
+    created_at
   }
 }
 

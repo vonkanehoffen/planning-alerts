@@ -13,8 +13,8 @@ interface SuggestionProps {
 export const Suggestions: React.FC<SuggestionProps> = ({ data, onSelect }) => {
   return (
     <ScrollView>
-      {data.map(e => (
-        <TouchableHighlight onPress={() => onSelect(e)}>
+      {data.map((e, i) => (
+        <TouchableHighlight key={i} onPress={() => onSelect(e)}>
           <View style={styles.button}>
             <Text category="s1">{e.title}</Text>
           </View>

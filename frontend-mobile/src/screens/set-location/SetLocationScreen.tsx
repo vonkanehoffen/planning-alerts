@@ -8,7 +8,7 @@ import { GetDeviceLocation } from "./GetDeviceLocation";
 import Snackbar from "react-native-snackbar";
 import { PaLogo } from "../../components/PaLogo";
 import {
-  Get_User_LocationDocument,
+  Get_User_MetaDocument,
   useUpdate_User_LocationMutation
 } from "../../generated/graphql";
 
@@ -24,7 +24,7 @@ export function SetLocationScreen({ navigation }: any) { // TODO: UseNavigation?
       mutationResponse
     ) {
       cache.writeQuery({
-        query: Get_User_LocationDocument,
+        query: Get_User_MetaDocument,
         variables: {
           id: credentials.claims.sub
         },
