@@ -6,20 +6,15 @@ import {
   Animated,
   TouchableOpacity
 } from "react-native";
-import {
-  Button,
-  Card,
-  Icon,
-  ListItem
-} from "@ui-kitten/components";
+import { Button, Card, Icon, ListItem } from "@ui-kitten/components";
 import { LogoFab } from "./LogoFab";
 import { formatDistance, parseISO } from "date-fns";
-import { Pa_Status } from '../generated/graphql'
+import { Pa_Status } from "../generated/graphql";
 
 interface PaStatusDetailsProps {
   pa: Pa_Status | null;
-  unFocusPa: () => any
-  resetRegion: () => any
+  unFocusPa: () => any;
+  resetRegion: () => any;
 }
 
 interface MetaProps {
@@ -39,7 +34,11 @@ function Meta({ icon, title, value }: MetaProps) {
 }
 
 // TODO: Fix initial card flash with opacity?
-export function PaStatusDetails({ pa, unFocusPa, resetRegion }: PaStatusDetailsProps) {
+export function PaStatusDetails({
+  pa,
+  unFocusPa,
+  resetRegion
+}: PaStatusDetailsProps) {
   // console.log("PaStatusDetails ---- ", JSON.stringify(pa, null, 2));
   const [cardTranslate, setCardTranslate] = useState(new Animated.Value(0));
   const [cardHeight, setCardHeight] = useState(0);

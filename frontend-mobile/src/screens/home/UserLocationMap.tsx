@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react'
-import MapView, { Marker, PROVIDER_DEFAULT, Region } from 'react-native-maps'
+import React, { useContext, useState } from "react";
+import MapView, { Marker, PROVIDER_DEFAULT, Region } from "react-native-maps";
 import { Layout, Text } from "@ui-kitten/components";
 import { Platform } from "react-native";
 import { PaStatusMarkers } from "./PaStatusMarkers";
@@ -12,7 +12,7 @@ import { PaStatusDetails } from "../../components/PaStatusDetails";
 import { FullScreenLoader } from "../../components/FullScreenLoader";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import NoLocationWarning from "./NoLocationWarning";
-import { Pa_Status, useGet_User_MetaQuery } from '../../generated/graphql'
+import { Pa_Status, useGet_User_MetaQuery } from "../../generated/graphql";
 
 let mapRef: any; // TODO: TS - how to type this as optional ref?
 
@@ -57,7 +57,9 @@ export function UserLocationMap() {
 
   // Local state
   const [mapReady, setMapReady] = useState(false);
-  const [mapViewLocation, setMapViewLocation] = useState(null as null | geography);
+  const [mapViewLocation, setMapViewLocation] = useState(
+    null as null | geography
+  );
   const [focusedPa, setfocusedPa] = useState(null as null | Pa_Status);
 
   // Reset map region on view focus.

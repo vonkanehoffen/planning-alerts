@@ -9,7 +9,7 @@ import { BottomNavigation, BottomNavigationTab } from "@ui-kitten/components";
 import { HomeScreen } from "../screens/home/HomeScreen";
 import { SettingsScreen } from "../screens/settings/SettingsScreen";
 import { SetLocationScreen } from "../screens/set-location/SetLocationScreen";
-import { SetCouncilScreen } from '../screens/set-council/SetCouncilScreen'
+import { SetCouncilScreen } from "../screens/set-council/SetCouncilScreen";
 
 // Don't delete these... it f***** jinxes it.
 // import {MapTest} from '../screens/test/map-test.component';

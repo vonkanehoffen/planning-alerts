@@ -5,7 +5,7 @@ import { AuthContext } from "../screens/auth/AuthProvider";
 import Snackbar from "react-native-snackbar";
 import DeviceInfo from "react-native-device-info";
 import { useUpsert_Fcm_TokenMutation } from "../generated/graphql";
-import { View } from 'react-native'
+import { View } from "react-native";
 
 /**
  * Get FCM token and store with user record in Hasura
@@ -77,5 +77,5 @@ export function FCMSetup() {
     registerForPushNotifications();
   }, []);
 
-  return <View/>;
+  return <View />;
 }

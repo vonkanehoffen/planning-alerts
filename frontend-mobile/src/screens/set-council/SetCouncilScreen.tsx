@@ -3,9 +3,10 @@ import { Input, Layout, Text } from "@ui-kitten/components";
 import { StyleSheet } from "react-native";
 import {
   Get_User_MetaDocument,
-  useCouncil_AutocompleteLazyQuery, useGet_User_MetaQuery,
+  useCouncil_AutocompleteLazyQuery,
+  useGet_User_MetaQuery,
   useSet_User_CouncilMutation
-} from '../../generated/graphql'
+} from "../../generated/graphql";
 import useDebounce from "../../hooks/use-debounce";
 import { AuthContext } from "../auth/AuthProvider";
 import { Suggestions } from "./Suggestions";
@@ -25,7 +26,11 @@ export const SetCouncilScreen: React.FC<SetCouncilScreenProps> = ({}) => {
     setUserCouncil,
     { data: mutationData }
   ] = useSet_User_CouncilMutation();
-  const { loading: userLoading, data: userData, error: userError } = useGet_User_MetaQuery({
+  const {
+    loading: userLoading,
+    data: userData,
+    error: userError
+  } = useGet_User_MetaQuery({
     variables: {
       id: credentials.claims.sub
     }
@@ -52,7 +57,9 @@ export const SetCouncilScreen: React.FC<SetCouncilScreenProps> = ({}) => {
   console.log(data, error);
   return (
     <Layout style={styles.container}>
-      <Text category="s1">User council: {JSON.stringify(userData?.users[0].council_id, null, 2)}</Text>
+      <Text category="s1">
+        User council: {JSON.stringify(userData?.users[0].council_id, null, 2)}
+      </Text>
       <Text category="h3">Who are your Local Council?</Text>
       <Input
         placeholder="Start typing..."

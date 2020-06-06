@@ -12,17 +12,15 @@ import {
   useUpdate_User_LocationMutation
 } from "../../generated/graphql";
 
-export function SetLocationScreen({ navigation }: any) { // TODO: UseNavigation?
+export function SetLocationScreen({ navigation }: any) {
+  // TODO: UseNavigation?
   const theme = useTheme();
   const { credentials } = useContext(AuthContext);
   const [
     updateUserLocationMutation,
     { loading, error, data }
   ] = useUpdate_User_LocationMutation({
-    update(
-      cache,
-      mutationResponse
-    ) {
+    update(cache, mutationResponse) {
       cache.writeQuery({
         query: Get_User_MetaDocument,
         variables: {

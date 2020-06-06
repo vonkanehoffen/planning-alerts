@@ -11,9 +11,13 @@ import {
 interface PaStatusMarkersProps {
   location: geography;
   focusPa: (pa: any) => void; // TODO: Use pa type from gql somehow?
-  focusedPa: any
+  focusedPa: any;
 }
-export function PaStatusMarkers({ location, focusPa, focusedPa }: PaStatusMarkersProps) {
+export function PaStatusMarkers({
+  location,
+  focusPa,
+  focusedPa
+}: PaStatusMarkersProps) {
   const {
     error: openPaError,
     data: openPaData

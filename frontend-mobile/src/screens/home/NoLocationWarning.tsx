@@ -4,7 +4,9 @@ import { StyleSheet, View } from "react-native";
 import { PaLogo } from "../../components/PaLogo";
 import { useNavigation } from "@react-navigation/native";
 
-const NavigationIcon = (style: any) => <Icon {...style} name="navigation-2-outline" />;
+const NavigationIcon = (style: any) => (
+  <Icon {...style} name="navigation-2-outline" />
+);
 
 export default function NoLocationWarning() {
   const navigation = useNavigation();

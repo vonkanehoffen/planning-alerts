@@ -8,7 +8,9 @@ import { useGet_User_MetaQuery } from "../../generated/graphql";
 
 const PersonIcon = (style: any) => <Icon {...style} name="person-outline" />;
 const LogoutIcon = (style: any) => <Icon {...style} name="log-out-outline" />;
-const NavigationIcon = (style: any) => <Icon {...style} name="navigation-2-outline" />;
+const NavigationIcon = (style: any) => (
+  <Icon {...style} name="navigation-2-outline" />
+);
 
 export function SettingsScreen({ navigation }: any) {
   const theme = useTheme();
@@ -43,7 +45,11 @@ export function SettingsScreen({ navigation }: any) {
         onPress={() => navigation.navigate("Set Location")}
         accessoryLeft={NavigationIcon}
       />
-      <ListItem title="Log out" accessoryRight={LogoutIcon} onPress={doLogout} />
+      <ListItem
+        title="Log out"
+        accessoryRight={LogoutIcon}
+        onPress={doLogout}
+      />
     </Layout>
   );
 }

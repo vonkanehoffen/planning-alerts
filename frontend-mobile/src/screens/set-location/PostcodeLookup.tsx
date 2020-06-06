@@ -1,20 +1,20 @@
 import React, { useState } from "react";
-import {Icon, Input, Spinner} from '@ui-kitten/components';
-import {isValidPostcode} from '../../utils';
-import Snackbar from 'react-native-snackbar';
-import config from '../../../config.json';
+import { Icon, Input, Spinner } from "@ui-kitten/components";
+import { isValidPostcode } from "../../utils";
+import Snackbar from "react-native-snackbar";
+import config from "../../../config.json";
 
 interface PostcodeLookupProps {
-  updateUserLocation: (coords: coordinates) => any
+  updateUserLocation: (coords: coordinates) => any;
 }
 
 const CheckMarkIcon = (style: any) => (
-    <Icon {...style} name="checkmark-circle-outline" />
+  <Icon {...style} name="checkmark-circle-outline" />
 );
 
 const SearchIcon = (style: any) => <Icon {...style} name="search-outline" />;
 
-export function PostcodeLookup({updateUserLocation}: PostcodeLookupProps) {
+export function PostcodeLookup({ updateUserLocation }: PostcodeLookupProps) {
   const [postcode, setPostcode] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -28,7 +28,7 @@ export function PostcodeLookup({updateUserLocation}: PostcodeLookupProps) {
       setLoading(true);
 
       const request = await fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?${params.toString()}`
+        `https://maps.googleapis.com/maps/api/geocode/json?${params.toString()}`
       );
       const location = await request.json();
       setLoading(false);
@@ -48,16 +48,15 @@ export function PostcodeLookup({updateUserLocation}: PostcodeLookupProps) {
     }
   };
 
-  if(loading) return <Spinner/>;
+  if (loading) return <Spinner />;
 
   return (
-      <Input
-          placeholder="Enter your postcode"
-          value={postcode}
-          onChangeText={setPostcode}
-          onBlur={getPostcodeGeolocation}
-          accessoryRight={isValidPostcode(postcode) ? CheckMarkIcon : SearchIcon}
-      />
-
-  )
+    <Input
+      placeholder="Enter your postcode"
+      value={postcode}
+      onChangeText={setPostcode}
+      onBlur={getPostcodeGeolocation}
+      accessoryRight={isValidPostcode(postcode) ? CheckMarkIcon : SearchIcon}
+    />
+  );
 }

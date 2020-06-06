@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { StyleSheet, ImageBackground, View } from "react-native";
 import { Button, Icon, Layout, Text } from "@ui-kitten/components";
 import { PaLogo } from "../../components/PaLogo";
@@ -7,7 +7,7 @@ import { PaLogo } from "../../components/PaLogo";
 const PeopleIcon = (style: any) => <Icon {...style} name="people-outline" />;
 
 interface WelcomeScreenProps {
-  doLogin: () => any
+  doLogin: () => any;
 }
 export function WelcomeScreen({ doLogin }: WelcomeScreenProps) {
   return (

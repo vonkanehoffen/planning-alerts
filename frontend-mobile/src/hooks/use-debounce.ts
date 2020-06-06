@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 // Taken from https://dev.to/gabe_ragland/debouncing-with-react-hooks-jci
 
