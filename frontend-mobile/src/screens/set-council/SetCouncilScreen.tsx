@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Input, Layout, Text, useTheme, Autocomplete, AutocompleteItem } from '@ui-kitten/components'
 import { StyleSheet } from 'react-native'
-import { useCouncil_AutocompleteLazyQuery } from '../../generated/graphql'
+import { useCouncil_AutocompleteLazyQuery, useSet_User_CouncilMutation } from '../../generated/graphql'
 import { FullScreenLoader } from '../../components/FullScreenLoader'
 import useDebounce from '../../hooks/use-debounce';
+import { AuthContext } from '../auth/AuthProvider'
 
 interface SetCouncilScreenProps {
 
@@ -13,6 +14,8 @@ export const SetCouncilScreen: React.FC<SetCouncilScreenProps> = ({}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
   const [loadCouncilAutocomplete, { called, loading, data, error }] = useCouncil_AutocompleteLazyQuery();
+  const [setUserCouncil, {data: mutationData }] = useSet_User_CouncilMutation()
+  const { credentials } = useContext(AuthContext);
 
   useEffect(
     () => {
@@ -24,7 +27,11 @@ export const SetCouncilScreen: React.FC<SetCouncilScreenProps> = ({}) => {
 
   const onSelect = (index: number) => {
     setSearchTerm(data?.council[index].title || '');
-    console.log('onSelect', index);
+    console.log('onSelect', index, credentials.claims.sub);
+    // TODO: This is just the index of the suggestion not the actual council. ....so it doesn't work.
+    const args = { variables: { user_id: credentials.claims.sub, council_id: index}}
+    console.log('SETTING COUNCIL', args);
+    setUserCouncil(args);
   }
 
   console.log(data, error);

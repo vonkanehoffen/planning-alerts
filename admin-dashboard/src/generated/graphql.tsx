@@ -3123,6 +3123,24 @@ export type Council_AutocompleteQuery = (
   )> }
 );
 
+export type Set_User_CouncilMutationVariables = {
+  user_id: Scalars['String'];
+  council_id: Scalars['Int'];
+};
+
+
+export type Set_User_CouncilMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_users?: Maybe<(
+    { __typename?: 'users_mutation_response' }
+    & Pick<Users_Mutation_Response, 'affected_rows'>
+    & { returning: Array<(
+      { __typename?: 'users' }
+      & Pick<Users, 'id' | 'council_id'>
+    )> }
+  )> }
+);
+
 export type Get_User_LocationQueryVariables = {
   id: Scalars['String'];
 };
@@ -3443,6 +3461,43 @@ export function useCouncil_AutocompleteLazyQuery(baseOptions?: ApolloReactHooks.
 export type Council_AutocompleteQueryHookResult = ReturnType<typeof useCouncil_AutocompleteQuery>;
 export type Council_AutocompleteLazyQueryHookResult = ReturnType<typeof useCouncil_AutocompleteLazyQuery>;
 export type Council_AutocompleteQueryResult = ApolloReactCommon.QueryResult<Council_AutocompleteQuery, Council_AutocompleteQueryVariables>;
+export const Set_User_CouncilDocument = gql`
+    mutation set_user_council($user_id: String!, $council_id: Int!) {
+  update_users(where: {id: {_eq: $user_id}}, _set: {council_id: $council_id}) {
+    affected_rows
+    returning {
+      id
+      council_id
+    }
+  }
+}
+    `;
+export type Set_User_CouncilMutationFn = ApolloReactCommon.MutationFunction<Set_User_CouncilMutation, Set_User_CouncilMutationVariables>;
+
+/**
+ * __useSet_User_CouncilMutation__
+ *
+ * To run a mutation, you first call `useSet_User_CouncilMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSet_User_CouncilMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setUserCouncilMutation, { data, loading, error }] = useSet_User_CouncilMutation({
+ *   variables: {
+ *      user_id: // value for 'user_id'
+ *      council_id: // value for 'council_id'
+ *   },
+ * });
+ */
+export function useSet_User_CouncilMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Set_User_CouncilMutation, Set_User_CouncilMutationVariables>) {
+        return ApolloReactHooks.useMutation<Set_User_CouncilMutation, Set_User_CouncilMutationVariables>(Set_User_CouncilDocument, baseOptions);
+      }
+export type Set_User_CouncilMutationHookResult = ReturnType<typeof useSet_User_CouncilMutation>;
+export type Set_User_CouncilMutationResult = ApolloReactCommon.MutationResult<Set_User_CouncilMutation>;
+export type Set_User_CouncilMutationOptions = ApolloReactCommon.BaseMutationOptions<Set_User_CouncilMutation, Set_User_CouncilMutationVariables>;
 export const Get_User_LocationDocument = gql`
     query get_user_location($id: String!) {
   users(where: {id: {_eq: $id}}) {

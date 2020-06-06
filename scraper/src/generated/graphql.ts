@@ -3123,6 +3123,24 @@ export type Council_AutocompleteQuery = (
   )> }
 );
 
+export type Set_User_CouncilMutationVariables = {
+  user_id: Scalars['String'];
+  council_id: Scalars['Int'];
+};
+
+
+export type Set_User_CouncilMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_users?: Maybe<(
+    { __typename?: 'users_mutation_response' }
+    & Pick<Users_Mutation_Response, 'affected_rows'>
+    & { returning: Array<(
+      { __typename?: 'users' }
+      & Pick<Users, 'id' | 'council_id'>
+    )> }
+  )> }
+);
+
 export type Get_User_LocationQueryVariables = {
   id: Scalars['String'];
 };
@@ -3370,6 +3388,17 @@ export const Council_AutocompleteDocument = gql`
   }
 }
     `;
+export const Set_User_CouncilDocument = gql`
+    mutation set_user_council($user_id: String!, $council_id: Int!) {
+  update_users(where: {id: {_eq: $user_id}}, _set: {council_id: $council_id}) {
+    affected_rows
+    returning {
+      id
+      council_id
+    }
+  }
+}
+    `;
 export const Get_User_LocationDocument = gql`
     query get_user_location($id: String!) {
   users(where: {id: {_eq: $id}}) {
@@ -3531,6 +3560,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     council_autocomplete(variables: Council_AutocompleteQueryVariables): Promise<Council_AutocompleteQuery> {
       return withWrapper(() => client.request<Council_AutocompleteQuery>(print(Council_AutocompleteDocument), variables));
+    },
+    set_user_council(variables: Set_User_CouncilMutationVariables): Promise<Set_User_CouncilMutation> {
+      return withWrapper(() => client.request<Set_User_CouncilMutation>(print(Set_User_CouncilDocument), variables));
     },
     get_user_location(variables: Get_User_LocationQueryVariables): Promise<Get_User_LocationQuery> {
       return withWrapper(() => client.request<Get_User_LocationQuery>(print(Get_User_LocationDocument), variables));
