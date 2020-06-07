@@ -45,7 +45,6 @@ export const SetCouncilScreen: React.FC<SetCouncilScreenProps> = ({}) => {
   }, [debouncedSearchTerm]);
 
   const onSelect = (council: any) => {
-    setSearchTerm(council.title || "");
     console.log("onSelect", council, credentials.claims.sub);
     const args = {
       variables: { user_id: credentials.claims.sub, council_id: council.id }
@@ -66,7 +65,13 @@ export const SetCouncilScreen: React.FC<SetCouncilScreenProps> = ({}) => {
         value={searchTerm}
         onChangeText={s => setSearchTerm(s)}
       />
-      {data?.council && <Suggestions data={data.council} onSelect={onSelect} />}
+      {data?.council && (
+        <Suggestions
+          data={data.council}
+          onSelect={onSelect}
+          selected={userData?.users[0].council_id || null}
+        />
+      )}
 
       {/*{(called && loading) && <Text>Loading Lazy Auto</Text>}*/}
       {/*<Text category="p1">{JSON.stringify(data?.council, null, 2)}</Text>*/}

@@ -1,6 +1,6 @@
 import React from "react";
-import { TouchableHighlight, View, StyleSheet, ScrollView } from "react-native";
-import { Text } from "@ui-kitten/components";
+import { StyleSheet } from "react-native";
+import { Icon, List, ListItem } from "@ui-kitten/components";
 
 interface SuggestionProps {
   data: Array<{
@@ -8,24 +8,41 @@ interface SuggestionProps {
     title: string;
   }>;
   onSelect: (value: any) => any;
+  selected: number | null;
 }
 
-export const Suggestions: React.FC<SuggestionProps> = ({ data, onSelect }) => {
-  return (
-    <ScrollView>
-      {data.map((e, i) => (
-        <TouchableHighlight key={i} onPress={() => onSelect(e)}>
-          <View style={styles.button}>
-            <Text category="s1">{e.title}</Text>
-          </View>
-        </TouchableHighlight>
-      ))}
-    </ScrollView>
+// TODO: Use UIK list el with adornment
+export const Suggestions: React.FC<SuggestionProps> = ({
+  data,
+  onSelect,
+  selected
+}) => {
+  const homeIcon = (props: any) => <Icon {...props} name="home" />;
+
+  const checkIcon = (props: any) => (
+    <Icon {...props} name="checkmark-circle-2" />
   );
+
+  const renderItem = ({ item, index }: any) => (
+    <ListItem
+      title={item.title}
+      accessoryLeft={homeIcon}
+      accessoryRight={selected === item.id ? checkIcon : undefined}
+      onPress={() => onSelect(item)}
+    />
+  );
+
+  return <List data={data} renderItem={renderItem} />;
 };
 
 const styles = StyleSheet.create({
-  button: {
+  option: {
+    display: "flex",
+    // flexDirection: "row",
     padding: 10
+  },
+  icon: {
+    width: 16,
+    height: 16
   }
 });
