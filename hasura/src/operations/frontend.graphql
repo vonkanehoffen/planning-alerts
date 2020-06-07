@@ -6,7 +6,7 @@ query council_autocomplete($input: String!) {
   }
 }
 
-mutation set_user_council($user_id: String!, $council_id: Int!) {
+mutation set_user_council($user_id: String!, $council_id: Int) {
   update_users(where: {
     id: { _eq: $user_id}
   }, _set: { council_id: $council_id }) {
@@ -14,6 +14,10 @@ mutation set_user_council($user_id: String!, $council_id: Int!) {
     returning {
       id
       council_id
+      council {
+        title
+        scraper
+      }
     }
   }
 }
@@ -25,6 +29,10 @@ query get_user_meta($id: String!) {
     email
     location
     council_id
+    council {
+      title
+      scraper
+    }
     created_at
   }
 }

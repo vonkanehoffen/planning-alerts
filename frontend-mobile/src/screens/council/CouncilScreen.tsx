@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Input, Layout, Text } from "@ui-kitten/components";
-import { StyleSheet } from "react-native";
+import { Button, Input, Layout, Text } from "@ui-kitten/components";
+import { StyleSheet, View } from "react-native";
 import {
   Get_User_MetaDocument,
   useCouncil_AutocompleteLazyQuery,
@@ -10,71 +10,46 @@ import {
 import useDebounce from "../../hooks/use-debounce";
 import { AuthContext } from "../auth/AuthProvider";
 import { Suggestions } from "./Suggestions";
+import { SelectCouncil } from "./SelectCouncil";
 
 interface CouncilScreenProps {}
 
 export const CouncilScreen: React.FC<CouncilScreenProps> = ({}) => {
-  const [searchTerm, setSearchTerm] = useState("");
   const { credentials } = useContext(AuthContext);
-  const debouncedSearchTerm = useDebounce(searchTerm, 500);
-
-  const [
-    loadCouncilAutocomplete,
-    { called, loading, data, error }
-  ] = useCouncil_AutocompleteLazyQuery();
   const [
     setUserCouncil,
     { data: mutationData }
   ] = useSet_User_CouncilMutation();
-  const {
-    loading: userLoading,
-    data: userData,
-    error: userError
-  } = useGet_User_MetaQuery({
+
+  const { loading, data: userMeta, error } = useGet_User_MetaQuery({
     variables: {
       id: credentials.claims.sub
     }
   });
 
-  useEffect(() => {
-    if (debouncedSearchTerm) {
-      loadCouncilAutocomplete({
-        variables: { input: `%${debouncedSearchTerm}%` }
-      });
-    }
-  }, [debouncedSearchTerm]);
-
-  const onSelect = (council: any) => {
-    console.log("onSelect", council, credentials.claims.sub);
-    const args = {
-      variables: { user_id: credentials.claims.sub, council_id: council.id }
-    };
-    console.log("SETTING COUNCIL", args);
-    setUserCouncil(args);
+  const unsetCouncil = () => {
+    setUserCouncil({
+      variables: { user_id: credentials.claims.sub, council_id: null }
+    });
   };
 
-  console.log(data, error);
   return (
     <Layout style={styles.container}>
-      <Text category="s1">
-        User council: {JSON.stringify(userData?.users[0].council_id, null, 2)}
-      </Text>
-      <Text category="h3">Who are your Local Council?</Text>
-      <Input
-        placeholder="Start typing..."
-        value={searchTerm}
-        onChangeText={s => setSearchTerm(s)}
-      />
-      {data?.council && (
-        <Suggestions
-          data={data.council}
-          onSelect={onSelect}
-          selected={userData?.users[0].council_id || null}
-        />
+      {userMeta?.users[0].council ? (
+        <View>
+          <Text category="s1">Council selected:</Text>
+          <Text category="h4">{userMeta?.users[0].council.title}</Text>
+          {userMeta?.users[0].council.scraper !== "idox" && (
+            <Text category="h6" status="danger">
+              Sorry, your council is not covered by Planning Alerts yet. TODO:
+              Let me know fn
+            </Text>
+          )}
+          <Button onPress={unsetCouncil}>Change selection</Button>
+        </View>
+      ) : (
+        <SelectCouncil />
       )}
-
-      {/*{(called && loading) && <Text>Loading Lazy Auto</Text>}*/}
-      {/*<Text category="p1">{JSON.stringify(data?.council, null, 2)}</Text>*/}
     </Layout>
   );
 };

@@ -3125,7 +3125,7 @@ export type Council_AutocompleteQuery = (
 
 export type Set_User_CouncilMutationVariables = {
   user_id: Scalars['String'];
-  council_id: Scalars['Int'];
+  council_id?: Maybe<Scalars['Int']>;
 };
 
 
@@ -3137,6 +3137,10 @@ export type Set_User_CouncilMutation = (
     & { returning: Array<(
       { __typename?: 'users' }
       & Pick<Users, 'id' | 'council_id'>
+      & { council?: Maybe<(
+        { __typename?: 'council' }
+        & Pick<Council, 'title' | 'scraper'>
+      )> }
     )> }
   )> }
 );
@@ -3151,6 +3155,10 @@ export type Get_User_MetaQuery = (
   & { users: Array<(
     { __typename?: 'users' }
     & Pick<Users, 'id' | 'name' | 'email' | 'location' | 'council_id' | 'created_at'>
+    & { council?: Maybe<(
+      { __typename?: 'council' }
+      & Pick<Council, 'title' | 'scraper'>
+    )> }
   )> }
 );
 
@@ -3389,12 +3397,16 @@ export const Council_AutocompleteDocument = gql`
 }
     `;
 export const Set_User_CouncilDocument = gql`
-    mutation set_user_council($user_id: String!, $council_id: Int!) {
+    mutation set_user_council($user_id: String!, $council_id: Int) {
   update_users(where: {id: {_eq: $user_id}}, _set: {council_id: $council_id}) {
     affected_rows
     returning {
       id
       council_id
+      council {
+        title
+        scraper
+      }
     }
   }
 }
@@ -3407,6 +3419,10 @@ export const Get_User_MetaDocument = gql`
     email
     location
     council_id
+    council {
+      title
+      scraper
+    }
     created_at
   }
 }
