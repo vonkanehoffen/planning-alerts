@@ -11,9 +11,9 @@ import useDebounce from "../../hooks/use-debounce";
 import { AuthContext } from "../auth/AuthProvider";
 import { Suggestions } from "./Suggestions";
 
-interface SetCouncilScreenProps {}
+interface CouncilScreenProps {}
 
-export const SetCouncilScreen: React.FC<SetCouncilScreenProps> = ({}) => {
+export const CouncilScreen: React.FC<CouncilScreenProps> = ({}) => {
   const [searchTerm, setSearchTerm] = useState("");
   const { credentials } = useContext(AuthContext);
   const debouncedSearchTerm = useDebounce(searchTerm, 500);

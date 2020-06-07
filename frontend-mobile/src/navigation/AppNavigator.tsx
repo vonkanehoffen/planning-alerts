@@ -9,7 +9,7 @@ import { BottomNavigation, BottomNavigationTab } from "@ui-kitten/components";
 import { HomeScreen } from "../screens/home/HomeScreen";
 import { SettingsScreen } from "../screens/settings/SettingsScreen";
 import { SetLocationScreen } from "../screens/set-location/SetLocationScreen";
-import { SetCouncilScreen } from "../screens/set-council/SetCouncilScreen";
+import { CouncilScreen } from "../screens/council/CouncilScreen";
 
 // Don't delete these... it f***** jinxes it.
 // import {MapTest} from '../screens/test/map-test.component';
@@ -28,7 +28,7 @@ const BottomTabBar = ({ navigation, state }: any) => {
         <BottomNavigationTab title="HOME" />
         <BottomNavigationTab title="SETTINGS" />
         <BottomNavigationTab title="SET LOCATION" />
-        <BottomNavigationTab title="Set Council" />
+        <BottomNavigationTab title="Council" />
         {/*<BottomNavigationTab title="TEST" />*/}
       </BottomNavigation>
     </SafeAreaView>
@@ -43,7 +43,7 @@ const TabNavigator = () => (
     <BottomTab.Screen name="Home" component={HomeScreen} />
     <BottomTab.Screen name="Settings" component={SettingsScreen} />
     <BottomTab.Screen name="Set Location" component={SetLocationScreen} />
-    <BottomTab.Screen name="Set Council" component={SetCouncilScreen} />
+    <BottomTab.Screen name="Council" component={CouncilScreen} />
     {/*<BottomTab.Screen name="Test" component={MapViewRefs} />*/}
   </BottomTab.Navigator>
 );
