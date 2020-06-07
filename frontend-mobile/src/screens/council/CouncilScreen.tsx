@@ -11,14 +11,17 @@ import useDebounce from "../../hooks/use-debounce";
 import { AuthContext } from "../auth/AuthProvider";
 import { Suggestions } from "./Suggestions";
 import { SelectCouncil } from "./SelectCouncil";
+import { useNavigation } from "@react-navigation/native";
+import { LoadingIndicator } from "../../components/LoadingIndicator";
 
 interface CouncilScreenProps {}
 
 export const CouncilScreen: React.FC<CouncilScreenProps> = ({}) => {
+  const navigation = useNavigation();
   const { credentials } = useContext(AuthContext);
   const [
     setUserCouncil,
-    { data: mutationData }
+    { data: mutationData, loading: setCouncilLoading }
   ] = useSet_User_CouncilMutation();
 
   const { loading, data: userMeta, error } = useGet_User_MetaQuery({
@@ -39,13 +42,27 @@ export const CouncilScreen: React.FC<CouncilScreenProps> = ({}) => {
         <View>
           <Text category="s1">Council selected:</Text>
           <Text category="h4">{userMeta?.users[0].council.title}</Text>
-          {userMeta?.users[0].council.scraper !== "idox" && (
+          {userMeta?.users[0].council.scraper !== "idox" ? (
             <Text category="h6" status="danger">
               Sorry, your council is not covered by Planning Alerts yet. TODO:
               Let me know fn
             </Text>
+          ) : (
+            <Text category="h6">
+              Great news! Your council is covered by our systems. Set your
+              location to receive alerts on planning applications near you.
+            </Text>
           )}
-          <Button onPress={unsetCouncil}>Change selection</Button>
+          <Button
+            onPress={unsetCouncil}
+            appearance="outline"
+            accessoryRight={setCouncilLoading ? LoadingIndicator : undefined}
+          >
+            Change selection
+          </Button>
+          <Button onPress={() => navigation.navigate("Set Location")}>
+            Set your location
+          </Button>
         </View>
       ) : (
         <SelectCouncil />
