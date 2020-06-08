@@ -23,7 +23,9 @@ export function SettingsScreen({ navigation }: any) {
       id: claims.sub
     }
   });
-  const userLocation = JSON.stringify(_.get(data, "users[0].location"));
+  const userLocation = JSON.stringify(data?.users[0].location);
+  const userCouncil = JSON.stringify(data?.users[0].council);
+
   console.log("USER LOC", userLocation);
 
   return (
@@ -38,6 +40,12 @@ export function SettingsScreen({ navigation }: any) {
         title={`Logged in as ${claims.name}`}
         description={claims.sub}
         accessoryLeft={PersonIcon}
+      />
+      <ListItem
+        title="Set Council"
+        description={userCouncil}
+        onPress={() => navigation.navigate("Council")}
+        accessoryLeft={NavigationIcon}
       />
       <ListItem
         title="Set Location"

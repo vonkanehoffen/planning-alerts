@@ -27,8 +27,8 @@ const BottomTabBar = ({ navigation, state }: any) => {
       <BottomNavigation selectedIndex={state.index} onSelect={onSelect}>
         <BottomNavigationTab title="HOME" />
         <BottomNavigationTab title="SETTINGS" />
-        <BottomNavigationTab title="SET LOCATION" />
-        <BottomNavigationTab title="Council" />
+        {/*<BottomNavigationTab title="SET LOCATION" />*/}
+        {/*<BottomNavigationTab title="COUNCIL" />*/}
         {/*<BottomNavigationTab title="TEST" />*/}
       </BottomNavigation>
     </SafeAreaView>
