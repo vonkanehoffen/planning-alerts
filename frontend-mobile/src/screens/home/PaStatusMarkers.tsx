@@ -2,7 +2,7 @@ import React from "react";
 import { Callout, Marker } from "react-native-maps";
 import { subDays, formatISO, compareAsc, parseISO } from "date-fns";
 import { postGisToRNMapsLocation } from "../../utils";
-import { PaMarker } from "../../components/PaMarker";
+import { PaMarker } from "./PaMarker";
 import {
   useGet_Open_Pa_Near_PointQuery,
   useGet_Recent_Closed_Pa_Near_PointQuery

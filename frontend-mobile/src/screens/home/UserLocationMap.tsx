@@ -8,7 +8,7 @@ import { AuthContext } from "../auth/AuthProvider";
 import { StyleSheet, View } from "react-native";
 import { postGisToRNMapsLocation, regionFrom } from "../../utils";
 import { HomeMarker } from "../../components/HomeMarker";
-import { PaStatusDetails } from "../../components/PaStatusDetails";
+import { PaStatusDetails } from "./PaStatusDetails";
 import { FullScreenLoader } from "../../components/FullScreenLoader";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import NoLocationWarning from "./NoLocationWarning";
