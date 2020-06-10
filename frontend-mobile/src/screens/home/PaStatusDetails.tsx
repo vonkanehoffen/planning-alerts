@@ -17,22 +17,6 @@ interface PaStatusDetailsProps {
   resetRegion: () => any;
 }
 
-interface MetaProps {
-  icon?: string;
-  title: string;
-  value: string;
-}
-
-// function Meta({ icon, title, value }: MetaProps) {
-//   return (
-//     <ListItem
-//       title={title}
-//       description={value}
-//       accessoryLeft={icon ? () => <Icon name={icon} /> : undefined}
-//     />
-//   );
-// }
-
 // TODO: Fix initial card flash with opacity?
 export function PaStatusDetails({
   pa,
