@@ -20,7 +20,7 @@ export function HomeScreen() {
   });
   // TODO: Show / redirect to council / onboarding stuff if not set on user here.
 
-  if (loading) return <FullScreenLoader />;
+  if (loading) return <FullScreenLoader message="Loading user" />;
 
   if (!data?.users[0].council) {
     navigation.navigate("Council");
