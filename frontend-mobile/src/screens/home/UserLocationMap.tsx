@@ -1,17 +1,17 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import MapView, { Marker, PROVIDER_DEFAULT, Region } from "react-native-maps";
 import { Layout, Text } from "@ui-kitten/components";
 import { Platform } from "react-native";
 import { PaStatusMarkers } from "./PaStatusMarkers";
 import _ from "lodash";
-import { AuthContext } from "../auth/AuthProvider";
+import { useAuth } from "../auth/AuthProvider";
 import { StyleSheet, View } from "react-native";
 import { postGisToRNMapsLocation, regionFrom } from "../../utils";
 import { HomeMarker } from "../../components/HomeMarker";
 import { PaStatusDetails } from "./PaStatusDetails";
 import { FullScreenLoader } from "../../components/FullScreenLoader";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import NoLocationWarning from "./NoLocationWarning";
+// import NoLocationWarning from "./NoLocationWarning";
 import { Pa_Status, useGet_User_MetaQuery } from "../../generated/graphql";
 
 let mapRef: any; // TODO: TS - how to type this as optional ref?
@@ -44,7 +44,7 @@ let mapRef: any; // TODO: TS - how to type this as optional ref?
 export function UserLocationMap() {
   const navigation = useNavigation();
   // Get user location
-  const { credentials } = useContext(AuthContext);
+  const { credentials } = useAuth();
   const { loading, error, data } = useGet_User_MetaQuery({
     variables: {
       id: credentials.claims.sub
@@ -123,10 +123,10 @@ export function UserLocationMap() {
     );
   }
 
-  if (!userLocation) {
-    // navigation.navigate("Set Location");
-    return <NoLocationWarning />;
-  }
+  // if (!userLocation) {
+  //   // navigation.navigate("Set Location");
+  //   return <NoLocationWarning />;
+  // }
 
   // console.log("USER REGION: ", userRegion);
 

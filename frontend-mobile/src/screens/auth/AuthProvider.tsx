@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 import * as Keychain from "react-native-keychain";
 import Auth0 from "react-native-auth0";
 import config from "../../../config.json";
@@ -35,6 +35,8 @@ export const auth0 = new Auth0({
 });
 
 export const AuthContext = createContext({} as AuthContextState);
+
+export const useAuth = () => useContext(AuthContext);
 
 /**
  * Authentication Provider

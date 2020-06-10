@@ -8,6 +8,7 @@ const NavigationIcon = (style: any) => (
   <Icon {...style} name="navigation-2-outline" />
 );
 
+// TODO: Shouldn't need this if redirect works?
 export default function NoLocationWarning() {
   const navigation = useNavigation();
   const theme = useTheme();
