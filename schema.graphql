@@ -211,7 +211,7 @@ type council_variance_fields {
 FCM device tokens for users
 
 
-columns and relationships of \"fcm_token\"
+columns and relationships of "fcm_token"
 """
 type fcm_token {
   created_at: timestamptz
