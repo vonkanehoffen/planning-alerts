@@ -57,7 +57,7 @@ export async function pushNotify(council: Pick<Council, 'id' | 'title'>) {
   } while (users.users.length > 0);
 }
 
-async function sendFcm(token, title, body, data, username) {
+export async function sendFcm(token, title, body, data, username) {
   const message = {
     notification: {
       title,
