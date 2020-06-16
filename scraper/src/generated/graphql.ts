@@ -232,7 +232,7 @@ export type Council_Variance_Fields = {
  * FCM device tokens for users
  * 
  * 
- * columns and relationships of \"fcm_token\"
+ * columns and relationships of "fcm_token"
  */
 export type Fcm_Token = {
    __typename?: 'fcm_token';
@@ -316,6 +316,10 @@ export type Mutation_Root = {
   delete_scrape_log?: Maybe<Scrape_Log_Mutation_Response>;
   /** delete single row from the table: "scrape_log" */
   delete_scrape_log_by_pk?: Maybe<Scrape_Log>;
+  /** delete data from the table: "user_pa_status" */
+  delete_user_pa_status?: Maybe<User_Pa_Status_Mutation_Response>;
+  /** delete single row from the table: "user_pa_status" */
+  delete_user_pa_status_by_pk?: Maybe<User_Pa_Status>;
   /** delete data from the table: "users" */
   delete_users?: Maybe<Users_Mutation_Response>;
   /** delete single row from the table: "users" */
@@ -340,6 +344,10 @@ export type Mutation_Root = {
   insert_scrape_log?: Maybe<Scrape_Log_Mutation_Response>;
   /** insert a single row into the table: "scrape_log" */
   insert_scrape_log_one?: Maybe<Scrape_Log>;
+  /** insert data into the table: "user_pa_status" */
+  insert_user_pa_status?: Maybe<User_Pa_Status_Mutation_Response>;
+  /** insert a single row into the table: "user_pa_status" */
+  insert_user_pa_status_one?: Maybe<User_Pa_Status>;
   /** insert data into the table: "users" */
   insert_users?: Maybe<Users_Mutation_Response>;
   /** insert a single row into the table: "users" */
@@ -364,6 +372,10 @@ export type Mutation_Root = {
   update_scrape_log?: Maybe<Scrape_Log_Mutation_Response>;
   /** update single row of the table: "scrape_log" */
   update_scrape_log_by_pk?: Maybe<Scrape_Log>;
+  /** update data of the table: "user_pa_status" */
+  update_user_pa_status?: Maybe<User_Pa_Status_Mutation_Response>;
+  /** update single row of the table: "user_pa_status" */
+  update_user_pa_status_by_pk?: Maybe<User_Pa_Status>;
   /** update data of the table: "users" */
   update_users?: Maybe<Users_Mutation_Response>;
   /** update single row of the table: "users" */
@@ -428,6 +440,19 @@ export type Mutation_RootDelete_Scrape_LogArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Scrape_Log_By_PkArgs = {
   id: Scalars['Int'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_User_Pa_StatusArgs = {
+  where: User_Pa_Status_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_User_Pa_Status_By_PkArgs = {
+  pa_status_id: Scalars['String'];
+  user_id: Scalars['String'];
 };
 
 
@@ -510,6 +535,20 @@ export type Mutation_RootInsert_Scrape_LogArgs = {
 export type Mutation_RootInsert_Scrape_Log_OneArgs = {
   object: Scrape_Log_Insert_Input;
   on_conflict?: Maybe<Scrape_Log_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_User_Pa_StatusArgs = {
+  objects: Array<User_Pa_Status_Insert_Input>;
+  on_conflict?: Maybe<User_Pa_Status_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_User_Pa_Status_OneArgs = {
+  object: User_Pa_Status_Insert_Input;
+  on_conflict?: Maybe<User_Pa_Status_On_Conflict>;
 };
 
 
@@ -622,6 +661,20 @@ export type Mutation_RootUpdate_Scrape_Log_By_PkArgs = {
   _prepend?: Maybe<Scrape_Log_Prepend_Input>;
   _set?: Maybe<Scrape_Log_Set_Input>;
   pk_columns: Scrape_Log_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Pa_StatusArgs = {
+  _set?: Maybe<User_Pa_Status_Set_Input>;
+  where: User_Pa_Status_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Pa_Status_By_PkArgs = {
+  _set?: Maybe<User_Pa_Status_Set_Input>;
+  pk_columns: User_Pa_Status_Pk_Columns_Input;
 };
 
 
@@ -827,6 +880,10 @@ export type Pa_Status = {
   status?: Maybe<Scalars['String']>;
   updated_at: Scalars['timestamptz'];
   url: Scalars['String'];
+  /** An array relationship */
+  user_pa_statuses: Array<User_Pa_Status>;
+  /** An aggregated array relationship */
+  user_pa_statuses_aggregate: User_Pa_Status_Aggregate;
 };
 
 
@@ -847,6 +904,26 @@ export type Pa_StatusPa_Scrapes_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Pa_Scrape_Order_By>>;
   where?: Maybe<Pa_Scrape_Bool_Exp>;
+};
+
+
+/** columns and relationships of "pa_status" */
+export type Pa_StatusUser_Pa_StatusesArgs = {
+  distinct_on?: Maybe<Array<User_Pa_Status_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<User_Pa_Status_Order_By>>;
+  where?: Maybe<User_Pa_Status_Bool_Exp>;
+};
+
+
+/** columns and relationships of "pa_status" */
+export type Pa_StatusUser_Pa_Statuses_AggregateArgs = {
+  distinct_on?: Maybe<Array<User_Pa_Status_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<User_Pa_Status_Order_By>>;
+  where?: Maybe<User_Pa_Status_Bool_Exp>;
 };
 
 /** aggregated selection of "pa_status" */
@@ -1003,6 +1080,12 @@ export type Query_Root = {
   scrape_log_aggregate: Scrape_Log_Aggregate;
   /** fetch data from the table: "scrape_log" using primary key columns */
   scrape_log_by_pk?: Maybe<Scrape_Log>;
+  /** fetch data from the table: "user_pa_status" */
+  user_pa_status: Array<User_Pa_Status>;
+  /** fetch aggregated fields from the table: "user_pa_status" */
+  user_pa_status_aggregate: User_Pa_Status_Aggregate;
+  /** fetch data from the table: "user_pa_status" using primary key columns */
+  user_pa_status_by_pk?: Maybe<User_Pa_Status>;
   /** fetch data from the table: "users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "users" */
@@ -1139,6 +1222,33 @@ export type Query_RootScrape_Log_AggregateArgs = {
 /** query root */
 export type Query_RootScrape_Log_By_PkArgs = {
   id: Scalars['Int'];
+};
+
+
+/** query root */
+export type Query_RootUser_Pa_StatusArgs = {
+  distinct_on?: Maybe<Array<User_Pa_Status_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<User_Pa_Status_Order_By>>;
+  where?: Maybe<User_Pa_Status_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootUser_Pa_Status_AggregateArgs = {
+  distinct_on?: Maybe<Array<User_Pa_Status_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<User_Pa_Status_Order_By>>;
+  where?: Maybe<User_Pa_Status_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootUser_Pa_Status_By_PkArgs = {
+  pa_status_id: Scalars['String'];
+  user_id: Scalars['String'];
 };
 
 
@@ -1334,6 +1444,12 @@ export type Subscription_Root = {
   scrape_log_aggregate: Scrape_Log_Aggregate;
   /** fetch data from the table: "scrape_log" using primary key columns */
   scrape_log_by_pk?: Maybe<Scrape_Log>;
+  /** fetch data from the table: "user_pa_status" */
+  user_pa_status: Array<User_Pa_Status>;
+  /** fetch aggregated fields from the table: "user_pa_status" */
+  user_pa_status_aggregate: User_Pa_Status_Aggregate;
+  /** fetch data from the table: "user_pa_status" using primary key columns */
+  user_pa_status_by_pk?: Maybe<User_Pa_Status>;
   /** fetch data from the table: "users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "users" */
@@ -1474,6 +1590,33 @@ export type Subscription_RootScrape_Log_By_PkArgs = {
 
 
 /** subscription root */
+export type Subscription_RootUser_Pa_StatusArgs = {
+  distinct_on?: Maybe<Array<User_Pa_Status_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<User_Pa_Status_Order_By>>;
+  where?: Maybe<User_Pa_Status_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootUser_Pa_Status_AggregateArgs = {
+  distinct_on?: Maybe<Array<User_Pa_Status_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<User_Pa_Status_Order_By>>;
+  where?: Maybe<User_Pa_Status_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootUser_Pa_Status_By_PkArgs = {
+  pa_status_id: Scalars['String'];
+  user_id: Scalars['String'];
+};
+
+
+/** subscription root */
 export type Subscription_RootUsersArgs = {
   distinct_on?: Maybe<Array<Users_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -1498,6 +1641,73 @@ export type Subscription_RootUsers_By_PkArgs = {
   id: Scalars['String'];
 };
 
+/**
+ * Bridge table for user associated pa statuses
+ * 
+ * 
+ * columns and relationships of "user_pa_status"
+ */
+export type User_Pa_Status = {
+   __typename?: 'user_pa_status';
+  /** An object relationship */
+  pa_status: Pa_Status;
+  pa_status_id: Scalars['String'];
+  status: Scalars['String'];
+  ts: Scalars['timestamptz'];
+  /** An object relationship */
+  user: Users;
+  user_id: Scalars['String'];
+};
+
+/** aggregated selection of "user_pa_status" */
+export type User_Pa_Status_Aggregate = {
+   __typename?: 'user_pa_status_aggregate';
+  aggregate?: Maybe<User_Pa_Status_Aggregate_Fields>;
+  nodes: Array<User_Pa_Status>;
+};
+
+/** aggregate fields of "user_pa_status" */
+export type User_Pa_Status_Aggregate_Fields = {
+   __typename?: 'user_pa_status_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<User_Pa_Status_Max_Fields>;
+  min?: Maybe<User_Pa_Status_Min_Fields>;
+};
+
+
+/** aggregate fields of "user_pa_status" */
+export type User_Pa_Status_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<User_Pa_Status_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** aggregate max on columns */
+export type User_Pa_Status_Max_Fields = {
+   __typename?: 'user_pa_status_max_fields';
+  pa_status_id?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+  ts?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type User_Pa_Status_Min_Fields = {
+   __typename?: 'user_pa_status_min_fields';
+  pa_status_id?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+  ts?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "user_pa_status" */
+export type User_Pa_Status_Mutation_Response = {
+   __typename?: 'user_pa_status_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<User_Pa_Status>;
+};
+
 /** columns and relationships of "users" */
 export type Users = {
    __typename?: 'users';
@@ -1513,6 +1723,10 @@ export type Users = {
   id: Scalars['String'];
   location?: Maybe<Scalars['geography']>;
   name?: Maybe<Scalars['String']>;
+  /** An array relationship */
+  user_pa_statuses: Array<User_Pa_Status>;
+  /** An aggregated array relationship */
+  user_pa_statuses_aggregate: User_Pa_Status_Aggregate;
 };
 
 
@@ -1533,6 +1747,26 @@ export type UsersFcm_Tokens_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Fcm_Token_Order_By>>;
   where?: Maybe<Fcm_Token_Bool_Exp>;
+};
+
+
+/** columns and relationships of "users" */
+export type UsersUser_Pa_StatusesArgs = {
+  distinct_on?: Maybe<Array<User_Pa_Status_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<User_Pa_Status_Order_By>>;
+  where?: Maybe<User_Pa_Status_Bool_Exp>;
+};
+
+
+/** columns and relationships of "users" */
+export type UsersUser_Pa_Statuses_AggregateArgs = {
+  distinct_on?: Maybe<Array<User_Pa_Status_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<User_Pa_Status_Order_By>>;
+  where?: Maybe<User_Pa_Status_Bool_Exp>;
 };
 
 /** aggregated selection of "users" */
@@ -1892,6 +2126,36 @@ export enum Scrape_Log_Update_Column {
   Scraper = 'scraper',
   /** column name */
   Ts = 'ts'
+}
+
+/** unique or primary key constraints on table "user_pa_status" */
+export enum User_Pa_Status_Constraint {
+  /** unique or primary key constraint */
+  UserPaStatusPkey = 'user_pa_status_pkey'
+}
+
+/** select columns of table "user_pa_status" */
+export enum User_Pa_Status_Select_Column {
+  /** column name */
+  PaStatusId = 'pa_status_id',
+  /** column name */
+  Status = 'status',
+  /** column name */
+  Ts = 'ts',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** update columns of table "user_pa_status" */
+export enum User_Pa_Status_Update_Column {
+  /** column name */
+  PaStatusId = 'pa_status_id',
+  /** column name */
+  Status = 'status',
+  /** column name */
+  Ts = 'ts',
+  /** column name */
+  UserId = 'user_id'
 }
 
 /** unique or primary key constraints on table "users" */
@@ -2567,6 +2831,7 @@ export type Pa_Status_Bool_Exp = {
   status?: Maybe<String_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
   url?: Maybe<String_Comparison_Exp>;
+  user_pa_statuses?: Maybe<User_Pa_Status_Bool_Exp>;
 };
 
 /** input type for incrementing integer column in table "pa_status" */
@@ -2592,6 +2857,7 @@ export type Pa_Status_Insert_Input = {
   status?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   url?: Maybe<Scalars['String']>;
+  user_pa_statuses?: Maybe<User_Pa_Status_Arr_Rel_Insert_Input>;
 };
 
 /** order by max() on columns of table "pa_status" */
@@ -2657,6 +2923,7 @@ export type Pa_Status_Order_By = {
   status?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   url?: Maybe<Order_By>;
+  user_pa_statuses_aggregate?: Maybe<User_Pa_Status_Aggregate_Order_By>;
 };
 
 /** primary key columns input for table: "pa_status" */
@@ -2923,6 +3190,95 @@ export type Timestamptz_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['timestamptz']>>;
 };
 
+/** order by aggregate values of table "user_pa_status" */
+export type User_Pa_Status_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<User_Pa_Status_Max_Order_By>;
+  min?: Maybe<User_Pa_Status_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "user_pa_status" */
+export type User_Pa_Status_Arr_Rel_Insert_Input = {
+  data: Array<User_Pa_Status_Insert_Input>;
+  on_conflict?: Maybe<User_Pa_Status_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "user_pa_status". All fields are combined with a logical 'AND'. */
+export type User_Pa_Status_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<User_Pa_Status_Bool_Exp>>>;
+  _not?: Maybe<User_Pa_Status_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<User_Pa_Status_Bool_Exp>>>;
+  pa_status?: Maybe<Pa_Status_Bool_Exp>;
+  pa_status_id?: Maybe<String_Comparison_Exp>;
+  status?: Maybe<String_Comparison_Exp>;
+  ts?: Maybe<Timestamptz_Comparison_Exp>;
+  user?: Maybe<Users_Bool_Exp>;
+  user_id?: Maybe<String_Comparison_Exp>;
+};
+
+/** input type for inserting data into table "user_pa_status" */
+export type User_Pa_Status_Insert_Input = {
+  pa_status?: Maybe<Pa_Status_Obj_Rel_Insert_Input>;
+  pa_status_id?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+  ts?: Maybe<Scalars['timestamptz']>;
+  user?: Maybe<Users_Obj_Rel_Insert_Input>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "user_pa_status" */
+export type User_Pa_Status_Max_Order_By = {
+  pa_status_id?: Maybe<Order_By>;
+  status?: Maybe<Order_By>;
+  ts?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** order by min() on columns of table "user_pa_status" */
+export type User_Pa_Status_Min_Order_By = {
+  pa_status_id?: Maybe<Order_By>;
+  status?: Maybe<Order_By>;
+  ts?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** input type for inserting object relation for remote table "user_pa_status" */
+export type User_Pa_Status_Obj_Rel_Insert_Input = {
+  data: User_Pa_Status_Insert_Input;
+  on_conflict?: Maybe<User_Pa_Status_On_Conflict>;
+};
+
+/** on conflict condition type for table "user_pa_status" */
+export type User_Pa_Status_On_Conflict = {
+  constraint: User_Pa_Status_Constraint;
+  update_columns: Array<User_Pa_Status_Update_Column>;
+  where?: Maybe<User_Pa_Status_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "user_pa_status" */
+export type User_Pa_Status_Order_By = {
+  pa_status?: Maybe<Pa_Status_Order_By>;
+  pa_status_id?: Maybe<Order_By>;
+  status?: Maybe<Order_By>;
+  ts?: Maybe<Order_By>;
+  user?: Maybe<Users_Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "user_pa_status" */
+export type User_Pa_Status_Pk_Columns_Input = {
+  pa_status_id: Scalars['String'];
+  user_id: Scalars['String'];
+};
+
+/** input type for updating data in table "user_pa_status" */
+export type User_Pa_Status_Set_Input = {
+  pa_status_id?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+  ts?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
 /** order by aggregate values of table "users" */
 export type Users_Aggregate_Order_By = {
   avg?: Maybe<Users_Avg_Order_By>;
@@ -2962,6 +3318,7 @@ export type Users_Bool_Exp = {
   id?: Maybe<String_Comparison_Exp>;
   location?: Maybe<Geography_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
+  user_pa_statuses?: Maybe<User_Pa_Status_Bool_Exp>;
 };
 
 /** input type for incrementing integer column in table "users" */
@@ -2979,6 +3336,7 @@ export type Users_Insert_Input = {
   id?: Maybe<Scalars['String']>;
   location?: Maybe<Scalars['geography']>;
   name?: Maybe<Scalars['String']>;
+  user_pa_statuses?: Maybe<User_Pa_Status_Arr_Rel_Insert_Input>;
 };
 
 /** order by max() on columns of table "users" */
@@ -3022,6 +3380,7 @@ export type Users_Order_By = {
   id?: Maybe<Order_By>;
   location?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
+  user_pa_statuses_aggregate?: Maybe<User_Pa_Status_Aggregate_Order_By>;
 };
 
 /** primary key columns input for table: "users" */

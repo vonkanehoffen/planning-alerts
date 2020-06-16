@@ -296,6 +296,13 @@ type mutation_root {
   ): scrape_log_mutation_response
   "delete single row from the table: \"scrape_log\""
   delete_scrape_log_by_pk(id: Int!): scrape_log
+  "delete data from the table: \"user_pa_status\""
+  delete_user_pa_status(
+    "filter the rows which have to be deleted"
+    where: user_pa_status_bool_exp!
+  ): user_pa_status_mutation_response
+  "delete single row from the table: \"user_pa_status\""
+  delete_user_pa_status_by_pk(pa_status_id: String!, user_id: String!): user_pa_status
   "delete data from the table: \"users\""
   delete_users(
     "filter the rows which have to be deleted"
@@ -373,6 +380,20 @@ type mutation_root {
     "on conflict condition"
     on_conflict: scrape_log_on_conflict
   ): scrape_log
+  "insert data into the table: \"user_pa_status\""
+  insert_user_pa_status(
+    "the rows to be inserted"
+    objects: [user_pa_status_insert_input!]!,
+    "on conflict condition"
+    on_conflict: user_pa_status_on_conflict
+  ): user_pa_status_mutation_response
+  "insert a single row into the table: \"user_pa_status\""
+  insert_user_pa_status_one(
+    "the row to be inserted"
+    object: user_pa_status_insert_input!,
+    "on conflict condition"
+    on_conflict: user_pa_status_on_conflict
+  ): user_pa_status
   "insert data into the table: \"users\""
   insert_users(
     "the rows to be inserted"
@@ -508,6 +529,19 @@ type mutation_root {
     _set: scrape_log_set_input,
     pk_columns: scrape_log_pk_columns_input!
   ): scrape_log
+  "update data of the table: \"user_pa_status\""
+  update_user_pa_status(
+    "sets the columns of the filtered rows to the given values"
+    _set: user_pa_status_set_input,
+    "filter the rows which have to be updated"
+    where: user_pa_status_bool_exp!
+  ): user_pa_status_mutation_response
+  "update single row of the table: \"user_pa_status\""
+  update_user_pa_status_by_pk(
+    "sets the columns of the filtered rows to the given values"
+    _set: user_pa_status_set_input,
+    pk_columns: user_pa_status_pk_columns_input!
+  ): user_pa_status
   "update data of the table: \"users\""
   update_users(
     "increments the integer columns with given value of the filtered values"
@@ -702,6 +736,32 @@ type pa_status {
   status: String
   updated_at: timestamptz!
   url: String!
+  "An array relationship"
+  user_pa_statuses(
+    "distinct select on columns"
+    distinct_on: [user_pa_status_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [user_pa_status_order_by!],
+    "filter the rows returned"
+    where: user_pa_status_bool_exp
+  ): [user_pa_status!]!
+  "An aggregated array relationship"
+  user_pa_statuses_aggregate(
+    "distinct select on columns"
+    distinct_on: [user_pa_status_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [user_pa_status_order_by!],
+    "filter the rows returned"
+    where: user_pa_status_bool_exp
+  ): user_pa_status_aggregate!
 }
 
 "aggregated selection of \"pa_status\""
@@ -947,6 +1007,34 @@ type query_root {
   ): scrape_log_aggregate!
   "fetch data from the table: \"scrape_log\" using primary key columns"
   scrape_log_by_pk(id: Int!): scrape_log
+  "fetch data from the table: \"user_pa_status\""
+  user_pa_status(
+    "distinct select on columns"
+    distinct_on: [user_pa_status_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [user_pa_status_order_by!],
+    "filter the rows returned"
+    where: user_pa_status_bool_exp
+  ): [user_pa_status!]!
+  "fetch aggregated fields from the table: \"user_pa_status\""
+  user_pa_status_aggregate(
+    "distinct select on columns"
+    distinct_on: [user_pa_status_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [user_pa_status_order_by!],
+    "filter the rows returned"
+    where: user_pa_status_bool_exp
+  ): user_pa_status_aggregate!
+  "fetch data from the table: \"user_pa_status\" using primary key columns"
+  user_pa_status_by_pk(pa_status_id: String!, user_id: String!): user_pa_status
   "fetch data from the table: \"users\""
   users(
     "distinct select on columns"
@@ -1229,6 +1317,34 @@ type subscription_root {
   ): scrape_log_aggregate!
   "fetch data from the table: \"scrape_log\" using primary key columns"
   scrape_log_by_pk(id: Int!): scrape_log
+  "fetch data from the table: \"user_pa_status\""
+  user_pa_status(
+    "distinct select on columns"
+    distinct_on: [user_pa_status_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [user_pa_status_order_by!],
+    "filter the rows returned"
+    where: user_pa_status_bool_exp
+  ): [user_pa_status!]!
+  "fetch aggregated fields from the table: \"user_pa_status\""
+  user_pa_status_aggregate(
+    "distinct select on columns"
+    distinct_on: [user_pa_status_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [user_pa_status_order_by!],
+    "filter the rows returned"
+    where: user_pa_status_bool_exp
+  ): user_pa_status_aggregate!
+  "fetch data from the table: \"user_pa_status\" using primary key columns"
+  user_pa_status_by_pk(pa_status_id: String!, user_id: String!): user_pa_status
   "fetch data from the table: \"users\""
   users(
     "distinct select on columns"
@@ -1257,6 +1373,61 @@ type subscription_root {
   ): users_aggregate!
   "fetch data from the table: \"users\" using primary key columns"
   users_by_pk(id: String!): users
+}
+
+"""
+
+Bridge table for user associated pa statuses
+
+
+columns and relationships of "user_pa_status"
+"""
+type user_pa_status {
+  "An object relationship"
+  pa_status: pa_status!
+  pa_status_id: String!
+  status: String!
+  ts: timestamptz!
+  "An object relationship"
+  user: users!
+  user_id: String!
+}
+
+"aggregated selection of \"user_pa_status\""
+type user_pa_status_aggregate {
+  aggregate: user_pa_status_aggregate_fields
+  nodes: [user_pa_status!]!
+}
+
+"aggregate fields of \"user_pa_status\""
+type user_pa_status_aggregate_fields {
+  count(columns: [user_pa_status_select_column!], distinct: Boolean): Int
+  max: user_pa_status_max_fields
+  min: user_pa_status_min_fields
+}
+
+"aggregate max on columns"
+type user_pa_status_max_fields {
+  pa_status_id: String
+  status: String
+  ts: timestamptz
+  user_id: String
+}
+
+"aggregate min on columns"
+type user_pa_status_min_fields {
+  pa_status_id: String
+  status: String
+  ts: timestamptz
+  user_id: String
+}
+
+"response of any mutation on the table \"user_pa_status\""
+type user_pa_status_mutation_response {
+  "number of affected rows by the mutation"
+  affected_rows: Int!
+  "data of the affected rows by the mutation"
+  returning: [user_pa_status!]!
 }
 
 "columns and relationships of \"users\""
@@ -1295,6 +1466,32 @@ type users {
   id: String!
   location: geography
   name: String
+  "An array relationship"
+  user_pa_statuses(
+    "distinct select on columns"
+    distinct_on: [user_pa_status_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [user_pa_status_order_by!],
+    "filter the rows returned"
+    where: user_pa_status_bool_exp
+  ): [user_pa_status!]!
+  "An aggregated array relationship"
+  user_pa_statuses_aggregate(
+    "distinct select on columns"
+    distinct_on: [user_pa_status_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [user_pa_status_order_by!],
+    "filter the rows returned"
+    where: user_pa_status_bool_exp
+  ): user_pa_status_aggregate!
 }
 
 "aggregated selection of \"users\""
@@ -1634,6 +1831,36 @@ enum scrape_log_update_column {
   scraper
   "column name"
   ts
+}
+
+"unique or primary key constraints on table \"user_pa_status\""
+enum user_pa_status_constraint {
+  "unique or primary key constraint"
+  user_pa_status_pkey
+}
+
+"select columns of table \"user_pa_status\""
+enum user_pa_status_select_column {
+  "column name"
+  pa_status_id
+  "column name"
+  status
+  "column name"
+  ts
+  "column name"
+  user_id
+}
+
+"update columns of table \"user_pa_status\""
+enum user_pa_status_update_column {
+  "column name"
+  pa_status_id
+  "column name"
+  status
+  "column name"
+  ts
+  "column name"
+  user_id
 }
 
 "unique or primary key constraints on table \"users\""
@@ -2309,6 +2536,7 @@ input pa_status_bool_exp {
   status: String_comparison_exp
   updated_at: timestamptz_comparison_exp
   url: String_comparison_exp
+  user_pa_statuses: user_pa_status_bool_exp
 }
 
 "input type for incrementing integer column in table \"pa_status\""
@@ -2334,6 +2562,7 @@ input pa_status_insert_input {
   status: String
   updated_at: timestamptz
   url: String
+  user_pa_statuses: user_pa_status_arr_rel_insert_input
 }
 
 "order by max() on columns of table \"pa_status\""
@@ -2399,6 +2628,7 @@ input pa_status_order_by {
   status: order_by
   updated_at: order_by
   url: order_by
+  user_pa_statuses_aggregate: user_pa_status_aggregate_order_by
 }
 
 "primary key columns input for table: \"pa_status\""
@@ -2665,6 +2895,95 @@ input timestamptz_comparison_exp {
   _nin: [timestamptz!]
 }
 
+"order by aggregate values of table \"user_pa_status\""
+input user_pa_status_aggregate_order_by {
+  count: order_by
+  max: user_pa_status_max_order_by
+  min: user_pa_status_min_order_by
+}
+
+"input type for inserting array relation for remote table \"user_pa_status\""
+input user_pa_status_arr_rel_insert_input {
+  data: [user_pa_status_insert_input!]!
+  on_conflict: user_pa_status_on_conflict
+}
+
+"Boolean expression to filter rows from the table \"user_pa_status\". All fields are combined with a logical 'AND'."
+input user_pa_status_bool_exp {
+  _and: [user_pa_status_bool_exp]
+  _not: user_pa_status_bool_exp
+  _or: [user_pa_status_bool_exp]
+  pa_status: pa_status_bool_exp
+  pa_status_id: String_comparison_exp
+  status: String_comparison_exp
+  ts: timestamptz_comparison_exp
+  user: users_bool_exp
+  user_id: String_comparison_exp
+}
+
+"input type for inserting data into table \"user_pa_status\""
+input user_pa_status_insert_input {
+  pa_status: pa_status_obj_rel_insert_input
+  pa_status_id: String
+  status: String
+  ts: timestamptz
+  user: users_obj_rel_insert_input
+  user_id: String
+}
+
+"order by max() on columns of table \"user_pa_status\""
+input user_pa_status_max_order_by {
+  pa_status_id: order_by
+  status: order_by
+  ts: order_by
+  user_id: order_by
+}
+
+"order by min() on columns of table \"user_pa_status\""
+input user_pa_status_min_order_by {
+  pa_status_id: order_by
+  status: order_by
+  ts: order_by
+  user_id: order_by
+}
+
+"input type for inserting object relation for remote table \"user_pa_status\""
+input user_pa_status_obj_rel_insert_input {
+  data: user_pa_status_insert_input!
+  on_conflict: user_pa_status_on_conflict
+}
+
+"on conflict condition type for table \"user_pa_status\""
+input user_pa_status_on_conflict {
+  constraint: user_pa_status_constraint!
+  update_columns: [user_pa_status_update_column!]!
+  where: user_pa_status_bool_exp
+}
+
+"ordering options when selecting data from \"user_pa_status\""
+input user_pa_status_order_by {
+  pa_status: pa_status_order_by
+  pa_status_id: order_by
+  status: order_by
+  ts: order_by
+  user: users_order_by
+  user_id: order_by
+}
+
+"primary key columns input for table: \"user_pa_status\""
+input user_pa_status_pk_columns_input {
+  pa_status_id: String!
+  user_id: String!
+}
+
+"input type for updating data in table \"user_pa_status\""
+input user_pa_status_set_input {
+  pa_status_id: String
+  status: String
+  ts: timestamptz
+  user_id: String
+}
+
 "order by aggregate values of table \"users\""
 input users_aggregate_order_by {
   avg: users_avg_order_by
@@ -2704,6 +3023,7 @@ input users_bool_exp {
   id: String_comparison_exp
   location: geography_comparison_exp
   name: String_comparison_exp
+  user_pa_statuses: user_pa_status_bool_exp
 }
 
 "input type for incrementing integer column in table \"users\""
@@ -2721,6 +3041,7 @@ input users_insert_input {
   id: String
   location: geography
   name: String
+  user_pa_statuses: user_pa_status_arr_rel_insert_input
 }
 
 "order by max() on columns of table \"users\""
@@ -2764,6 +3085,7 @@ input users_order_by {
   id: order_by
   location: order_by
   name: order_by
+  user_pa_statuses_aggregate: user_pa_status_aggregate_order_by
 }
 
 "primary key columns input for table: \"users\""
