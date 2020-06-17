@@ -17,7 +17,6 @@ inquirer
     }
   ])
   .then(answers => {
-    console.log(answers);
     sendFcm(
       answers.token,
       answers.title,

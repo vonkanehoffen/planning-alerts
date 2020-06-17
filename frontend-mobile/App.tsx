@@ -25,17 +25,31 @@ import messaging, {
 import RNBootSplash from "react-native-bootsplash";
 import AsyncStorage from "@react-native-community/async-storage";
 
-// interface MessageContext {
-//   [FirebaseMessagingTypes.RemoteMessage]
+// Full Notification looks like:
+// {
+//   "newPaIds": "[\"126774/TEL/2020\",\"CDN/20/0111\"]",
+//   "notification": {
+//     "body": "Click here to see details",
+//     "e": "1",
+//     "title": "2 new planning applications near you this week."
+//   }
 // }
-const MessageContext = createContext<FirebaseMessagingTypes.RemoteMessage | null>(
-  null
-);
 
-export const useFCMessage = () => useContext(MessageContext);
+type MessageData = { [key: string]: string };
+export type MessageContext = Array<MessageData>;
 
+const MessageContext = createContext<MessageContext>([]);
+
+export const useFCMessages = () => useContext(MessageContext);
+
+/**
+ * Initialise the app.
+ * Setup listeners
+ * Hide boot screen etc.
+ * @constructor
+ */
 export function App(): React.ReactFragment {
-  const [messages, setMessages] = useState<any>([]);
+  const [messages, setMessages] = useState<MessageContext>([]);
 
   useEffect(() => {
     RNBootSplash.hide();
@@ -53,8 +67,9 @@ export function App(): React.ReactFragment {
 
     return messaging().onMessage(async remoteMessage => {
       console.log("FCM Message:", JSON.stringify(remoteMessage, null, 2));
-      setMessages(remoteMessage);
-      // We could also.... Update a users messages list using AsyncStorage
+      if (remoteMessage.data) {
+        setMessages(m => [remoteMessage.data as MessageData, ...m]);
+      }
     });
   }, []);
 
@@ -67,22 +82,14 @@ export function App(): React.ReactFragment {
   }, []);
 
   const _handleAppStateChange = async (nextAppState: AppStateStatus) => {
-    console.log("_handleAppStateChange", nextAppState);
     if (nextAppState === "active") {
-      console.log("doing async get");
       const currentMessages = await AsyncStorage.getItem("messages");
-      console.log("current messages = ", currentMessages);
       if (currentMessages) {
         const m = JSON.parse(currentMessages);
         setMessages(m);
-        console.log("Loaded messages into state:", m);
+        await AsyncStorage.removeItem("messages");
       }
     }
-    // if (appState.match(/inactive|background/) && nextAppState === "active") {
-    //   console.log("App has come to the foreground!");
-    //   setMessages()
-    // }
-    // setAppState(nextAppState);
   };
 
   return (

@@ -13,6 +13,7 @@ import { FullScreenLoader } from "../../components/FullScreenLoader";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 // import NoLocationWarning from "./NoLocationWarning";
 import { Pa_Status, useGet_User_MetaQuery } from "../../generated/graphql";
+import { useAlertedNewPaIds } from "../../hooks/use-alerted-new-pa-ids";
 
 let mapRef: any; // TODO: TS - how to type this as optional ref?
 
@@ -55,6 +56,8 @@ export function UserLocationMap() {
     userLocation &&
     regionFrom(userLocation.coordinates[0], userLocation.coordinates[1], 5000);
 
+  const alertedNewPaIds = useAlertedNewPaIds();
+  console.log("alertedNewPaIds ===== ", alertedNewPaIds);
   // Local state
   const [mapReady, setMapReady] = useState(false);
   const [mapViewLocation, setMapViewLocation] = useState(
