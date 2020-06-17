@@ -44,9 +44,9 @@ export function PaStatusDetails({
       useNativeDriver: true
     }).start(unFocusPa);
 
-  console.log("card translate = ", cardTranslate);
+  // console.log("card translate = ", cardTranslate);
 
-  console.log("PA in PaStatsDetails", pa);
+  // console.log("PA in PaStatsDetails", pa);
 
   const renderItem = ({ item, index }: any) => (
     <ListItem

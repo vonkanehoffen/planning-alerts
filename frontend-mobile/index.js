@@ -4,16 +4,25 @@
 
 import "react-native-gesture-handler";
 import { AppRegistry } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
 import { App } from "./App";
 import { name as appName } from "./app.json";
 import messaging from "@react-native-firebase/messaging";
 
+/**
+ * Handle notifications while app is in background.
+ * Note this fn won't see the React component tree, hence we add this data to
+ * AsyncStorage for processing later.
+ * Also see onMessage in App.js
+ */
 messaging().setBackgroundMessageHandler(async remoteMessage => {
-  console.log("Message handled in the background!", remoteMessage);
-  // ...which isn't much use as this fn won't see the React component tree, so we can't act on the data.
-  // We could add this data to AsyncStorage (see onMessage in App.js) ...but it's
-  // probably better to just set the data in Hasura against the user before
-  // sending the message.
+  console.log("Message handled in the background but not!", remoteMessage);
+  const currentMessages = await AsyncStorage.getItem("messages");
+  console.log("current messages = ", currentMessages);
+  const messageArray = currentMessages ? JSON.parse(currentMessages) : [];
+  messageArray.push(remoteMessage.data);
+  console.log("messageArray = ", messageArray);
+  await AsyncStorage.setItem("messages", JSON.stringify(messageArray));
 });
 
 AppRegistry.registerComponent(appName, () => App);
