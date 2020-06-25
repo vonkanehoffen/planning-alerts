@@ -56,49 +56,36 @@ export function PaStatusMarkers({
 
   // console.log("PA STATUS MARKERS RESPONSES ---- ", JSON.stringify({openPaData, closedPaData}, null, 2));
 
+  const MapMarker = ({ pa, status }: any) => (
+    <Marker
+      coordinate={postGisToRNMapsLocation(pa.location)}
+      onPress={() => {
+        console.log(`PRESSED ${status} MARKER`);
+        focusPa(pa);
+      }}
+      tracksViewChanges={false}
+    >
+      <PaMarker status={status} focused={pa.id === focusedPa?.id} />
+    </Marker>
+  );
+
+  const newMarkers = openPaData?.pa_status
+    .filter(pa => compareAsc(parseISO(pa.updated_at), minDate) > -1)
+    .map(pa => <MapMarker pa={pa} status="new" key={pa.id} />);
+
+  const openMarkers = openPaData?.pa_status
+    .filter(pa => compareAsc(parseISO(pa.updated_at), minDate) <= -1)
+    .map(pa => <MapMarker pa={pa} status="open" key={pa.id} />);
+
+  const closedMarkers = closedPaData?.pa_status.map(pa => (
+    <MapMarker pa={pa} status="closed" key={pa.id} />
+  ));
+
   return (
     <>
-      {closedPaData &&
-        closedPaData.pa_status.map(pa => (
-          <Marker
-            coordinate={postGisToRNMapsLocation(pa.location)}
-            key={pa.id}
-            onPress={() => {
-              console.log("PRESSED CLOSED MARKER");
-              focusPa(pa);
-            }}
-            tracksViewChanges={false}
-          >
-            <PaMarker status="closed" />
-            {/*<Callout>*/}
-            {/*  <PaStatusDetails pa={pa} />*/}
-            {/*</Callout>*/}
-          </Marker>
-        ))}
-      {openPaData &&
-        openPaData.pa_status.map(pa => (
-          <Marker
-            coordinate={{
-              latitude: pa.location.coordinates[0],
-              longitude: pa.location.coordinates[1]
-            }}
-            key={pa.id}
-            onPress={() => {
-              console.log("PRESSED OPEN MARKER");
-              focusPa(pa);
-            }}
-            tracksViewChanges={false}
-          >
-            <PaMarker
-              status={
-                compareAsc(parseISO(pa.updated_at), minDate) > -1
-                  ? "new"
-                  : "open"
-              }
-              focused={pa.id === focusedPa?.id}
-            />
-          </Marker>
-        ))}
+      {newMarkers}
+      {openMarkers}
+      {closedMarkers}
     </>
   );
 }
