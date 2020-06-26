@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Callout, Marker } from "react-native-maps";
 import { subDays, formatISO, compareAsc, parseISO } from "date-fns";
 import { postGisToRNMapsLocation } from "../../utils";
@@ -12,11 +12,13 @@ interface PaStatusMarkersProps {
   location: geography;
   focusPa: (pa: any) => void; // TODO: Use pa type from gql somehow?
   focusedPa: any;
+  mapRef: any;
 }
 export function PaStatusMarkers({
   location,
   focusPa,
-  focusedPa
+  focusedPa,
+  mapRef
 }: PaStatusMarkersProps) {
   const {
     error: openPaError,
@@ -24,7 +26,7 @@ export function PaStatusMarkers({
   } = useGet_Open_Pa_Near_PointQuery({
     variables: {
       point: location,
-      distance: 2000
+      distance: 3000
     }
     // skip: !location
   });
@@ -37,10 +39,24 @@ export function PaStatusMarkers({
   } = useGet_Recent_Closed_Pa_Near_PointQuery({
     variables: {
       point: location,
-      distance: 2000,
+      distance: 3000,
       minDate: minDateFormatted
     }
   });
+
+  // TODO: This fit to markers should work... whyyy
+  // https://stackoverflow.com/questions/39575037/zoom-to-specified-markers-react-native-maps
+  useEffect(() => {
+    if (!openPaData) return;
+    const markers = openPaData.pa_status
+      .filter(pa => compareAsc(parseISO(pa.updated_at), minDate) > -1)
+      .map(pa => pa.id);
+
+    if (mapRef && markers.length > 0) {
+      console.log("fitToSuppliedMarkers", markers);
+      mapRef.current.fitToSuppliedMarkers(markers, { animated: true });
+    }
+  }, [mapRef, openPaData]);
 
   // // TODO: error display for this further up the tree.
   // if (openPaError || closedPaError) {
@@ -64,6 +80,7 @@ export function PaStatusMarkers({
         focusPa(pa);
       }}
       tracksViewChanges={false}
+      identifier={pa.id}
     >
       <PaMarker status={status} focused={pa.id === focusedPa?.id} />
     </Marker>

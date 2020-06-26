@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import MapView, { Marker, PROVIDER_DEFAULT, Region } from "react-native-maps";
 import { Layout, Text } from "@ui-kitten/components";
 import { Platform } from "react-native";
@@ -13,8 +13,6 @@ import { FullScreenLoader } from "../../components/FullScreenLoader";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 // import NoLocationWarning from "./NoLocationWarning";
 import { Pa_Status, useGet_User_MetaQuery } from "../../generated/graphql";
-
-let mapRef: any; // TODO: TS - how to type this as optional ref?
 
 /**
  * Main map view
@@ -42,6 +40,7 @@ let mapRef: any; // TODO: TS - how to type this as optional ref?
  * @constructor
  */
 export function UserLocationMap() {
+  const mapRef = useRef(null);
   const navigation = useNavigation();
   // Get user location
   const { credentials } = useAuth();
@@ -79,9 +78,10 @@ export function UserLocationMap() {
 
   // Actions
   const resetRegion = () => {
-    if (userRegion && mapRef) {
+    if (mapRef && userRegion) {
       // console.log("doing reset", userRegion);
-      mapRef.animateToRegion(userRegion);
+      // @ts-ignore
+      mapRef.current.animateToRegion(userRegion);
     } else {
       console.log("map not ready. Not resetting.");
     }
@@ -135,7 +135,7 @@ export function UserLocationMap() {
       <MapView
         provider={PROVIDER_DEFAULT}
         initialRegion={userRegion}
-        ref={el => (mapRef = el)}
+        ref={mapRef}
         style={styles.map}
         onMapReady={() => {
           // setMapReady(true);
@@ -150,6 +150,7 @@ export function UserLocationMap() {
           location={mapViewLocation || userLocation}
           focusPa={focusPa}
           focusedPa={focusedPa}
+          mapRef={mapRef}
         />
         <Marker
           coordinate={postGisToRNMapsLocation(userLocation)}
