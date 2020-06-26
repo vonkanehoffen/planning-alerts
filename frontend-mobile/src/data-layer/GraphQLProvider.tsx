@@ -76,6 +76,16 @@ export const GraphQLProvider: React.FC = ({ children }) => {
     link: ApolloLink.from([
       onError(({ graphQLErrors, networkError }) => {
         if (graphQLErrors) {
+          /**
+           * TODO: Does this need to bump user back to auth screen? ...or was it just a glitch on iOS emulator after
+           *  hibernation?
+           * Errors like:
+           * graphQLErrors=  [
+             {
+              extensions: { code: "invalid-jwt", path: "$" },
+              message: "Could not verify JWT: JWTExpired"
+            }]
+           */
           Snackbar.show({
             text: `Server error: ${graphQLErrors[0].message}`,
             duration: Snackbar.LENGTH_SHORT,
