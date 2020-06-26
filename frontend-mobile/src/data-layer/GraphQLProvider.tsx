@@ -9,6 +9,8 @@ import { ApolloLink, Observable } from "apollo-link";
 import config from "../../config.json";
 import { AuthContext } from "../screens/auth/AuthProvider";
 import { ApolloNetworkStatusProvider } from "react-apollo-network-status";
+import Snackbar from "react-native-snackbar";
+import { useTheme } from "@ui-kitten/components";
 
 /**
  * Apollo Provider with Auth0 token.
@@ -20,6 +22,7 @@ import { ApolloNetworkStatusProvider } from "react-apollo-network-status";
 export const GraphQLProvider: React.FC = ({ children }) => {
   // @ts-ignore
   const { getIdTokenSilently } = useContext(AuthContext);
+  const theme = useTheme();
 
   const cache = new InMemoryCache({
     // cacheRedirects: {
@@ -73,6 +76,11 @@ export const GraphQLProvider: React.FC = ({ children }) => {
     link: ApolloLink.from([
       onError(({ graphQLErrors, networkError }) => {
         if (graphQLErrors) {
+          Snackbar.show({
+            text: `Server error: ${graphQLErrors[0].message}`,
+            duration: Snackbar.LENGTH_SHORT,
+            backgroundColor: theme["color-danger-default"]
+          });
           console.log("ApolloClient - GRAPHQL ERRORS: ", graphQLErrors);
         }
         if (networkError) {
