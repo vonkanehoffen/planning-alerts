@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Callout, Marker } from "react-native-maps";
+import { Marker } from "react-native-maps";
 import { subDays, formatISO, compareAsc, parseISO } from "date-fns";
 import { postGisToRNMapsLocation } from "../../utils";
 import { PaMarker } from "./PaMarker";
@@ -7,6 +7,7 @@ import {
   useGet_Open_Pa_Near_PointQuery,
   useGet_Recent_Closed_Pa_Near_PointQuery
 } from "../../generated/graphql";
+import AsyncStorage from "@react-native-community/async-storage";
 
 interface PaStatusMarkersProps {
   location: geography;
@@ -44,18 +45,26 @@ export function PaStatusMarkers({
     }
   });
 
-  // TODO: This fit to markers should work... whyyy
   // https://stackoverflow.com/questions/39575037/zoom-to-specified-markers-react-native-maps
+  // TODO: This effect doesn't always fire when app state changes / map viewed. Hence focus doesn't work.
   useEffect(() => {
-    if (!openPaData) return;
-    const markers = openPaData.pa_status
-      .filter(pa => compareAsc(parseISO(pa.updated_at), minDate) > -1)
-      .map(pa => pa.id);
+    console.log("pastatusmarkers useEffect");
+    (async () => {
+      if (!openPaData) return;
+      const messages = await AsyncStorage.getItem("messages");
+      console.log("pastatusmarkers useEffect msgs", messages);
+      AsyncStorage.removeItem("messages");
+      if (messages) {
+        const markers = openPaData.pa_status
+          .filter(pa => compareAsc(parseISO(pa.updated_at), minDate) > -1)
+          .map(pa => pa.id);
 
-    if (mapRef && markers.length > 0) {
-      console.log("fitToSuppliedMarkers", markers);
-      mapRef.current.fitToSuppliedMarkers(markers, { animated: true });
-    }
+        if (mapRef && markers.length > 0) {
+          console.log("fitToSuppliedMarkers", markers);
+          mapRef.current.fitToSuppliedMarkers(markers, { animated: true });
+        }
+      }
+    })();
   }, [mapRef, openPaData]);
 
   // // TODO: error display for this further up the tree.

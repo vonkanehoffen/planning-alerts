@@ -20,6 +20,7 @@ import { AppNavigator } from "./src/navigation/AppNavigator";
 import { GraphQLProvider } from "./src/data-layer/GraphQLProvider";
 import { AuthProvider } from "./src/screens/auth/AuthProvider";
 import RNBootSplash from "react-native-bootsplash";
+import AsyncStorage from "@react-native-community/async-storage";
 
 // Full Notification looks like:
 // {
@@ -61,6 +62,10 @@ export function App(): React.ReactFragment {
 
   const _handleAppStateChange = async (nextAppState: AppStateStatus) => {
     // TODO: Reload planning apps here - newly alerted ones won't be in cache.
+    //  or is that just on the pa status marker useEffect?
+    console.log("App state change");
+    const messages = await AsyncStorage.getItem("messages");
+    console.log("MEssages on change", messages);
   };
 
   return (
