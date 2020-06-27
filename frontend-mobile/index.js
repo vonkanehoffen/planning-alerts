@@ -16,12 +16,10 @@ import messaging from "@react-native-firebase/messaging";
  * Also see onMessage in App.js
  */
 messaging().setBackgroundMessageHandler(async remoteMessage => {
-  console.log("Message handled in the background but not!", remoteMessage);
+  console.log("Message handled in the background:", remoteMessage);
   const currentMessages = await AsyncStorage.getItem("messages");
-  console.log("current messages = ", currentMessages);
   const messageArray = currentMessages ? JSON.parse(currentMessages) : [];
   messageArray.push(remoteMessage.data);
-  console.log("messageArray = ", messageArray);
   await AsyncStorage.setItem("messages", JSON.stringify(messageArray));
 });
 
