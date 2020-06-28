@@ -52,7 +52,7 @@ export function UserLocationMap() {
   const userLocation = _.get(data, "users[0].location");
   const userRegion =
     userLocation &&
-    regionFrom(userLocation.coordinates[0], userLocation.coordinates[1], 5000);
+    regionFrom(userLocation.coordinates[0], userLocation.coordinates[1], 3000);
 
   // Local state
   const [mapReady, setMapReady] = useState(false);
@@ -145,6 +145,9 @@ export function UserLocationMap() {
         }}
         onRegionChangeComplete={handleRegionChange}
         showsUserLocation={true}
+        // minDelta={0.0017} ...doesn't work. Bug?
+        maxZoomLevel={18}
+        minZoomLevel={12}
       >
         <PaStatusMarkers
           location={mapViewLocation || userLocation}

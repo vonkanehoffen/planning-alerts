@@ -10,7 +10,7 @@
  * @format
  */
 
-import React, { useEffect } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { AppState, AppStateStatus } from "react-native";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
@@ -21,7 +21,9 @@ import { GraphQLProvider } from "./src/data-layer/GraphQLProvider";
 import { AuthProvider } from "./src/screens/auth/AuthProvider";
 import RNBootSplash from "react-native-bootsplash";
 import AsyncStorage from "@react-native-community/async-storage";
+import messaging from "@react-native-firebase/messaging";
 
+// Alerts....
 // Full Notification looks like:
 // {
 //   "newPaIds": "[\"126774/TEL/2020\",\"CDN/20/0111\"]",
@@ -31,15 +33,16 @@ import AsyncStorage from "@react-native-community/async-storage";
 //     "title": "2 new planning applications near you this week."
 //   }
 // }
-// Needs to....
-//  - receive from index.js .setBackgroundMessageHandler (Async Storage)
-//  - DOESN't need to receive from .onMessage here? - use already active. Map shouldn't change?
-//  - Focus map on PAs when app first becomes active after notification
-//  - Notification content doesn't matter. It comes from Graph query
-//
-//  ...so can we just
-//  - Look for ANY async storage messages item on openPaData useEffect
-//  - focus map and remove it immediately
+//  - They are received from index.js .setBackgroundMessageHandler (Async Storage)
+//  - Notification content doesn't actually matter. It comes from Graph query
+//  - They're just a signal to focus map on PAs when app first becomes active after notification
+//  - They're stored in Async storage as mostly they'll be accepted from the background handler.
+
+/**
+ * App state updates when app comes to foreground / background
+ */
+const AppStateContext = createContext<AppStateStatus>("active");
+export const useAppState = () => useContext(AppStateContext);
 
 /**
  * Initialise the app.
@@ -48,21 +51,29 @@ import AsyncStorage from "@react-native-community/async-storage";
  * @constructor
  */
 export function App(): React.ReactFragment {
+  const [appState, setAppState] = useState<AppStateStatus>("active");
   useEffect(() => {
     RNBootSplash.hide();
   });
 
   useEffect(() => {
     AppState.addEventListener("change", _handleAppStateChange);
-
     return () => {
       AppState.removeEventListener("change", _handleAppStateChange);
     };
   }, []);
 
+  useEffect(() => {
+    // Note this is for foreground messages only. Background ones handled in index.js
+    return messaging().onMessage(async remoteMessage => {
+      const message = JSON.stringify(remoteMessage);
+      console.log("FCM onMessage:", message);
+      AsyncStorage.setItem("messages", message);
+    });
+  }, []);
+
   const _handleAppStateChange = async (nextAppState: AppStateStatus) => {
-    // TODO: Reload planning apps here - newly alerted ones won't be in cache.
-    //  or is that just on the pa status marker useEffect?
+    setAppState(nextAppState);
     console.log("App state change");
     const messages = await AsyncStorage.getItem("messages");
     console.log("MEssages on change", messages);
@@ -72,11 +83,13 @@ export function App(): React.ReactFragment {
     <>
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider mapping={mapping} theme={theme}>
-        <AuthProvider>
-          <GraphQLProvider>
-            <AppNavigator />
-          </GraphQLProvider>
-        </AuthProvider>
+        <AppStateContext.Provider value={appState}>
+          <AuthProvider>
+            <GraphQLProvider>
+              <AppNavigator />
+            </GraphQLProvider>
+          </AuthProvider>
+        </AppStateContext.Provider>
       </ApplicationProvider>
     </>
   );

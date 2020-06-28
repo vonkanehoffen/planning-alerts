@@ -8,6 +8,7 @@ import {
   useGet_Recent_Closed_Pa_Near_PointQuery
 } from "../../generated/graphql";
 import AsyncStorage from "@react-native-community/async-storage";
+import { useAppState } from "../../../App";
 
 interface PaStatusMarkersProps {
   location: geography;
@@ -15,12 +16,25 @@ interface PaStatusMarkersProps {
   focusedPa: any;
   mapRef: any;
 }
+
+/**
+ * - Draw markers on the UserLocationMap
+ * - Handle focusing map on selected PA
+ * - Focus on new PAs following notification
+ *
+ * @param location
+ * @param focusPa
+ * @param focusedPa
+ * @param mapRef
+ * @constructor
+ */
 export function PaStatusMarkers({
   location,
   focusPa,
   focusedPa,
   mapRef
 }: PaStatusMarkersProps) {
+  const appState = useAppState();
   const {
     error: openPaError,
     data: openPaData
@@ -45,27 +59,39 @@ export function PaStatusMarkers({
     }
   });
 
-  // https://stackoverflow.com/questions/39575037/zoom-to-specified-markers-react-native-maps
-  // TODO: This effect doesn't always fire when app state changes / map viewed. Hence focus doesn't work.
+  /**
+   * Focus on new PAs following notification
+   * This looks for presence of message in async storage, then removes it as focus takes place.
+   * The relevant Apollo query is also updated...somehow? Not sure which hook is doing that but it seems to work.
+   * TODO: Fully focus to show details when it's just one new PA.
+   */
   useEffect(() => {
-    console.log("pastatusmarkers useEffect");
     (async () => {
-      if (!openPaData) return;
-      const messages = await AsyncStorage.getItem("messages");
-      console.log("pastatusmarkers useEffect msgs", messages);
-      AsyncStorage.removeItem("messages");
-      if (messages) {
-        const markers = openPaData.pa_status
-          .filter(pa => compareAsc(parseISO(pa.updated_at), minDate) > -1)
-          .map(pa => pa.id);
+      if (appState === "active" && openPaData) {
+        const messages = await AsyncStorage.getItem("messages");
+        console.log("pastatusmarkers useEffect msgs", messages);
+        AsyncStorage.removeItem("messages");
+        if (messages) {
+          const markers = openPaData.pa_status
+            .filter(pa => compareAsc(parseISO(pa.updated_at), minDate) > -1)
+            .map(pa => pa.id);
 
-        if (mapRef && markers.length > 0) {
-          console.log("fitToSuppliedMarkers", markers);
-          mapRef.current.fitToSuppliedMarkers(markers, { animated: true });
+          if (mapRef && markers.length > 0) {
+            console.log("fitToSuppliedMarkers", markers);
+            mapRef.current.fitToSuppliedMarkers(markers, {
+              // edgePadding: { // This does bugger all. Bug?
+              //   top: 2000,
+              //   right: 2000,
+              //   bottom: 2000,
+              //   left: 2000,
+              // },
+              animated: true
+            });
+          }
         }
       }
     })();
-  }, [mapRef, openPaData]);
+  }, [mapRef, openPaData, appState]);
 
   // // TODO: error display for this further up the tree.
   // if (openPaError || closedPaError) {
