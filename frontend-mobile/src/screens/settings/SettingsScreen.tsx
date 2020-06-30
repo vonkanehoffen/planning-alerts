@@ -23,8 +23,8 @@ export function SettingsScreen({ navigation }: any) {
       id: claims.sub
     }
   });
-  const userLocation = JSON.stringify(data?.users[0].location);
-  const userCouncil = JSON.stringify(data?.users[0].council);
+  const userLocation = JSON.stringify(data?.users_by_pk?.location);
+  const userCouncil = JSON.stringify(data?.users_by_pk?.council);
 
   console.log("USER LOC", userLocation);
 

@@ -4,16 +4,20 @@ import inquirer from "inquirer";
 inquirer
   .prompt([
     {
-      name: "token"
+      name: "token",
+      default: "eApZz22RE7g:APA91bGKdvMydSTv6BxYLgS6dC-fjVnhfFegPlNTHSfNwPHqggjtOaeY8SyyaMOtgmuTHlNTLd6lLTTifIE8RlhnNfIl8Wc0cJqBSXXISzh1M5rOTIsBFVKooeS-XIcsQ_PF-jsZUmss"
     },
     {
-      name: "title"
+      name: "title",
+      default: "Test"
     },
     {
-      name: "body"
+      name: "body",
+      default: "Test desc"
     },
     {
-      name: "data"
+      name: "data",
+      default: '{"newPaIds": "[\\"126774/wibble\\",\\"CDN/20/ooo\\"]"}'
     }
   ])
   .then(answers => {

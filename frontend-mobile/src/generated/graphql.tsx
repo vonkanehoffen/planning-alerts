@@ -3382,13 +3382,19 @@ export type Get_User_MetaQueryVariables = {
 };
 
 export type Get_User_MetaQuery = { __typename?: "query_root" } & {
-  users: Array<
+  users_by_pk?: Maybe<
     { __typename?: "users" } & Pick<
       Users,
       "id" | "name" | "email" | "location" | "council_id" | "created_at"
     > & {
         council?: Maybe<
           { __typename?: "council" } & Pick<Council, "title" | "scraper">
+        >;
+        user_pa_statuses: Array<
+          { __typename?: "user_pa_status" } & Pick<
+            User_Pa_Status,
+            "pa_status_id" | "status" | "ts"
+          >
         >;
       }
   >;
@@ -3822,7 +3828,7 @@ export type Set_User_CouncilMutationOptions = ApolloReactCommon.BaseMutationOpti
 >;
 export const Get_User_MetaDocument = gql`
   query get_user_meta($id: String!) {
-    users(where: { id: { _eq: $id } }) {
+    users_by_pk(id: $id) {
       id
       name
       email
@@ -3831,6 +3837,11 @@ export const Get_User_MetaDocument = gql`
       council {
         title
         scraper
+      }
+      user_pa_statuses {
+        pa_status_id
+        status
+        ts
       }
       created_at
     }

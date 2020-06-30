@@ -9,6 +9,7 @@ import Snackbar from "react-native-snackbar";
 import { PaLogo } from "../../components/PaLogo";
 import {
   Get_User_MetaDocument,
+  Get_User_MetaQuery,
   useUpdate_User_LocationMutation
 } from "../../generated/graphql";
 
@@ -21,12 +22,24 @@ export function SetLocationScreen({ navigation }: any) {
     { loading, error, data }
   ] = useUpdate_User_LocationMutation({
     update(cache, mutationResponse) {
+      let data = cache.readQuery<Get_User_MetaQuery>({
+        query: Get_User_MetaDocument,
+        variables: {
+          id: credentials.claims.sub
+        }
+      });
+
+      if (data?.users_by_pk?.location) {
+        data.users_by_pk.location =
+          mutationResponse.data?.update_users?.returning[0].location;
+      }
+
       cache.writeQuery({
         query: Get_User_MetaDocument,
         variables: {
           id: credentials.claims.sub
         },
-        data: { users: mutationResponse.data?.update_users?.returning }
+        data
       });
     }
   });

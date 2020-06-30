@@ -49,7 +49,7 @@ export function UserLocationMap() {
       id: credentials.claims.sub
     }
   });
-  const userLocation = _.get(data, "users[0].location");
+  const userLocation = data?.users_by_pk?.location;
   const userRegion =
     userLocation &&
     regionFrom(userLocation.coordinates[0], userLocation.coordinates[1], 3000);

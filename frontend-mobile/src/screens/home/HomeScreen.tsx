@@ -22,12 +22,12 @@ export function HomeScreen() {
 
   if (loading) return <FullScreenLoader message="Loading user" />;
 
-  if (!data?.users[0].council) {
+  if (!data?.users_by_pk?.council) {
     navigation.navigate("Council");
     return <View />;
   }
 
-  if (!data?.users[0].location) {
+  if (!data.users_by_pk.location) {
     navigation.navigate("Set Location");
     return <View />;
   }

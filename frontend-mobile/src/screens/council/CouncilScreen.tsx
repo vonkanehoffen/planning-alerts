@@ -1,15 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Button, Input, Layout, Text } from "@ui-kitten/components";
+import React, { useContext } from "react";
+import { Button, Layout, Text } from "@ui-kitten/components";
 import { StyleSheet, View } from "react-native";
 import {
-  Get_User_MetaDocument,
-  useCouncil_AutocompleteLazyQuery,
   useGet_User_MetaQuery,
   useSet_User_CouncilMutation
 } from "../../generated/graphql";
-import useDebounce from "../../hooks/use-debounce";
 import { AuthContext } from "../auth/AuthProvider";
-import { Suggestions } from "./Suggestions";
 import { SelectCouncil } from "./SelectCouncil";
 import { useNavigation } from "@react-navigation/native";
 import { LoadingIndicator } from "../../components/LoadingIndicator";
@@ -38,11 +34,11 @@ export const CouncilScreen: React.FC<CouncilScreenProps> = ({}) => {
 
   return (
     <Layout style={styles.container}>
-      {userMeta?.users[0].council ? (
+      {userMeta?.users_by_pk?.council ? (
         <View>
           <Text category="s1">Council selected:</Text>
-          <Text category="h4">{userMeta?.users[0].council.title}</Text>
-          {userMeta?.users[0].council.scraper !== "idox" ? (
+          <Text category="h4">{userMeta.users_by_pk.council.title}</Text>
+          {userMeta.users_by_pk.council.scraper !== "idox" ? (
             <Text category="h6" status="danger">
               Sorry, your council is not covered by Planning Alerts yet. TODO:
               Let me know fn
