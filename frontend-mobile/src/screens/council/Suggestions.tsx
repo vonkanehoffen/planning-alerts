@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { Keyboard, StyleSheet } from "react-native";
 import { Icon, List, ListItem } from "@ui-kitten/components";
 
 interface SuggestionProps {
@@ -28,11 +28,20 @@ export const Suggestions: React.FC<SuggestionProps> = ({
       title={item.title}
       accessoryLeft={homeIcon}
       accessoryRight={selected === item.id ? checkIcon : undefined}
-      onPress={() => onSelect(item)}
+      onPress={() => {
+        onSelect(item);
+        Keyboard.dismiss();
+      }}
     />
   );
 
-  return <List data={data} renderItem={renderItem} />;
+  return (
+    <List
+      data={data}
+      renderItem={renderItem}
+      keyboardShouldPersistTaps="handled"
+    />
+  );
 };
 
 const styles = StyleSheet.create({
