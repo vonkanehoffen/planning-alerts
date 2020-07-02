@@ -87,6 +87,7 @@ export function PaStatusMarkers({
               // },
               animated: true
             });
+            // TODO: Focus it if there's only one new PA...
           }
         }
       }
