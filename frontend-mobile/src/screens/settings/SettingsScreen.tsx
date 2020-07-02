@@ -23,8 +23,8 @@ export function SettingsScreen({ navigation }: any) {
       id: claims.sub
     }
   });
-  const userLocation = JSON.stringify(data?.users_by_pk?.location);
-  const userCouncil = JSON.stringify(data?.users_by_pk?.council);
+  const userLocation = JSON.stringify(data?.users_by_pk?.location?.coordinates);
+  const userCouncil = data?.users_by_pk?.council?.title;
 
   console.log("USER LOC", userLocation);
 
@@ -53,11 +53,7 @@ export function SettingsScreen({ navigation }: any) {
         onPress={() => navigation.navigate("Set Location")}
         accessoryLeft={NavigationIcon}
       />
-      <ListItem
-        title="Log out"
-        accessoryRight={LogoutIcon}
-        onPress={doLogout}
-      />
+      <ListItem title="Log out" accessoryLeft={LogoutIcon} onPress={doLogout} />
     </Layout>
   );
 }

@@ -15,7 +15,7 @@ import { AppState, AppStateStatus } from "react-native";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { mapping } from "@eva-design/eva";
-import theme from "./src/theme.json";
+import { myTheme } from "./src/custom-theme";
 import { AppNavigator } from "./src/navigation/AppNavigator";
 import { GraphQLProvider } from "./src/data-layer/GraphQLProvider";
 import { AuthProvider } from "./src/screens/auth/AuthProvider";
@@ -82,7 +82,7 @@ export function App(): React.ReactFragment {
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
-      <ApplicationProvider mapping={mapping} theme={theme}>
+      <ApplicationProvider mapping={mapping} theme={myTheme}>
         <AppStateContext.Provider value={appState}>
           <AuthProvider>
             <GraphQLProvider>

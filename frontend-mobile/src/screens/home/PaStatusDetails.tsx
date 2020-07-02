@@ -1,12 +1,14 @@
 import React, { useState, useLayoutEffect } from "react";
+import { View, Linking, Animated, TouchableOpacity } from "react-native";
 import {
-  StyleSheet,
-  View,
-  Linking,
-  Animated,
-  TouchableOpacity
-} from "react-native";
-import { Button, Card, Icon, List, ListItem } from "@ui-kitten/components";
+  Button,
+  Card,
+  Icon,
+  List,
+  ListItem,
+  StyleService,
+  useStyleSheet
+} from "@ui-kitten/components";
 import { LogoFab } from "../../components/LogoFab";
 import { formatDistance, parseISO } from "date-fns";
 import { Pa_Status } from "../../generated/graphql";
@@ -23,6 +25,7 @@ export function PaStatusDetails({
   unFocusPa,
   resetRegion
 }: PaStatusDetailsProps) {
+  const styles = useStyleSheet(themedStyles);
   // console.log("PaStatusDetails ---- ", JSON.stringify(pa, null, 2));
   const [cardTranslate, setCardTranslate] = useState(new Animated.Value(0));
   const [cardHeight, setCardHeight] = useState(0);
@@ -124,11 +127,11 @@ export function PaStatusDetails({
   );
 }
 
-const styles = StyleSheet.create({
+const themedStyles = StyleService.create({
   card: {
     width: "90%",
     maxHeight: "60%",
-    backgroundColor: "#ffffff",
+    backgroundColor: "color-basic-800",
     position: "relative"
   },
   list: {
