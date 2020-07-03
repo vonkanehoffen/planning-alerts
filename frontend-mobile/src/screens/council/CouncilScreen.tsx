@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { Button, Layout, Text } from "@ui-kitten/components";
-import { KeyboardAvoidingView, StyleSheet, View, Platform } from "react-native";
+import { Button, Text } from "@ui-kitten/components";
+import { StyleSheet, View } from "react-native";
 import {
   useGet_User_MetaQuery,
   useSet_User_CouncilMutation
@@ -10,7 +10,6 @@ import { SelectCouncil } from "./SelectCouncil";
 import { useNavigation } from "@react-navigation/native";
 import { LoadingIndicator } from "../../components/LoadingIndicator";
 import { PaLogoHeader } from "../../components/PaLogoHeader";
-import { LayoutFlex } from "../../components/LayoutFlex";
 import { KeyboardAvoidingLayoutFlex } from "../../components/KeyboardAvoidingLayoutFlex";
 
 interface CouncilScreenProps {}
@@ -31,7 +30,7 @@ export const CouncilScreen: React.FC<CouncilScreenProps> = ({}) => {
 
   const unsetCouncil = () => {
     setUserCouncil({
-      variables: { user_id: credentials.claims.sub, council_id: null }
+      variables: { id: credentials.claims.sub, council_id: null }
     });
   };
 

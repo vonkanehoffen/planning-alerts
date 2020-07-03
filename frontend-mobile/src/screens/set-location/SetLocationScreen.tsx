@@ -29,9 +29,9 @@ export function SetLocationScreen({ navigation }: any) {
         }
       });
 
-      if (data?.users_by_pk?.location) {
+      if (data?.users_by_pk) {
         data.users_by_pk.location =
-          mutationResponse.data?.update_users?.returning[0].location;
+          mutationResponse.data?.update_users_by_pk?.location;
       }
 
       cache.writeQuery({

@@ -3483,23 +3483,19 @@ export type Council_AutocompleteQuery = (
 );
 
 export type Set_User_CouncilMutationVariables = {
-  user_id: Scalars['String'];
+  id: Scalars['String'];
   council_id?: Maybe<Scalars['Int']>;
 };
 
 
 export type Set_User_CouncilMutation = (
   { __typename?: 'mutation_root' }
-  & { update_users?: Maybe<(
-    { __typename?: 'users_mutation_response' }
-    & Pick<Users_Mutation_Response, 'affected_rows'>
-    & { returning: Array<(
-      { __typename?: 'users' }
-      & Pick<Users, 'id' | 'council_id'>
-      & { council?: Maybe<(
-        { __typename?: 'council' }
-        & Pick<Council, 'title' | 'scraper'>
-      )> }
+  & { update_users_by_pk?: Maybe<(
+    { __typename?: 'users' }
+    & Pick<Users, 'id' | 'council_id'>
+    & { council?: Maybe<(
+      { __typename?: 'council' }
+      & Pick<Council, 'title' | 'scraper'>
     )> }
   )> }
 );
@@ -3532,13 +3528,9 @@ export type Update_User_LocationMutationVariables = {
 
 export type Update_User_LocationMutation = (
   { __typename?: 'mutation_root' }
-  & { update_users?: Maybe<(
-    { __typename?: 'users_mutation_response' }
-    & Pick<Users_Mutation_Response, 'affected_rows'>
-    & { returning: Array<(
-      { __typename?: 'users' }
-      & Pick<Users, 'id' | 'location'>
-    )> }
+  & { update_users_by_pk?: Maybe<(
+    { __typename?: 'users' }
+    & Pick<Users, 'id' | 'location'>
   )> }
 );
 
@@ -3759,16 +3751,13 @@ export const Council_AutocompleteDocument = gql`
 }
     `;
 export const Set_User_CouncilDocument = gql`
-    mutation set_user_council($user_id: String!, $council_id: Int) {
-  update_users(where: {id: {_eq: $user_id}}, _set: {council_id: $council_id}) {
-    affected_rows
-    returning {
-      id
-      council_id
-      council {
-        title
-        scraper
-      }
+    mutation set_user_council($id: String!, $council_id: Int) {
+  update_users_by_pk(pk_columns: {id: $id}, _set: {council_id: $council_id}) {
+    id
+    council_id
+    council {
+      title
+      scraper
     }
   }
 }
@@ -3796,12 +3785,9 @@ export const Get_User_MetaDocument = gql`
     `;
 export const Update_User_LocationDocument = gql`
     mutation update_user_location($id: String!, $location: geography!) {
-  update_users(where: {id: {_eq: $id}}, _set: {location: $location}) {
-    affected_rows
-    returning {
-      id
-      location
-    }
+  update_users_by_pk(pk_columns: {id: $id}, _set: {location: $location}) {
+    id
+    location
   }
 }
     `;

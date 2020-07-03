@@ -6,18 +6,13 @@ query council_autocomplete($input: String!) {
   }
 }
 
-mutation set_user_council($user_id: String!, $council_id: Int) {
-  update_users(where: {
-    id: { _eq: $user_id}
-  }, _set: { council_id: $council_id }) {
-    affected_rows
-    returning {
-      id
-      council_id
-      council {
-        title
-        scraper
-      }
+mutation set_user_council($id: String!, $council_id: Int) {
+  update_users_by_pk(pk_columns: { id: $id }, _set: { council_id: $council_id }) {
+    id
+    council_id
+    council {
+      title
+      scraper
     }
   }
 }
@@ -43,12 +38,9 @@ query get_user_meta($id: String!) {
 }
 
 mutation update_user_location($id: String!, $location: geography!) {
-  update_users(where: { id: { _eq: $id } }, _set: { location: $location }) {
-    affected_rows
-    returning {
-      id
-      location
-    }
+  update_users_by_pk(pk_columns: {id: $id}, _set: { location: $location }) {
+    id
+    location
   }
 }
 
