@@ -6,7 +6,7 @@ interface PaMarkerProps {
   focused?: boolean;
 }
 export function PaMarker({ status, focused }: PaMarkerProps) {
-  const bgFill = { open: "#426C49", closed: "#999999", new: "#ff9900" };
+  const bgFill = { open: "#2E6A38", closed: "#999999", new: "#ff9900" };
   const iconFill = { open: "#7BAF5B", closed: "#777777", new: "#ffffff" };
 
   // TODO: Highlight marker ... can it be done where tracksViewChanges={false} is?

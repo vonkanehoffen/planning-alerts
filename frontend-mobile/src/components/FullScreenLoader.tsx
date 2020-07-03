@@ -10,11 +10,7 @@ export function FullScreenLoader({ message }: FullScreenLoaderProps) {
   return (
     <Layout style={styles.container}>
       <Spinner size="large" />
-      {message && (
-        <Text style={styles.message} status="info">
-          {message}
-        </Text>
-      )}
+      {message && <Text style={styles.message}>{message}</Text>}
     </Layout>
   );
 }
