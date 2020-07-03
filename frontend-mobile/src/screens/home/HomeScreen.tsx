@@ -8,6 +8,8 @@ import { useGet_User_MetaQuery } from "../../generated/graphql";
 import { useAuth } from "../auth/AuthProvider";
 import { useNavigation } from "@react-navigation/native";
 import { FullScreenLoader } from "../../components/FullScreenLoader";
+import { CouncilScreen } from "../council/CouncilScreen";
+import { SetLocationScreen } from "../set-location/SetLocationScreen";
 
 export function HomeScreen() {
   const status = useApolloNetworkStatus();
@@ -22,14 +24,13 @@ export function HomeScreen() {
 
   if (loading) return <FullScreenLoader message="Loading user" />;
 
+  // Note redirect with navigation.navigate("Council") doesn't work here for some reason. Hence...
   if (!data?.users_by_pk?.council) {
-    navigation.navigate("Council");
-    return <View />;
+    return <CouncilScreen />;
   }
 
   if (!data.users_by_pk.location) {
-    navigation.navigate("Set Location");
-    return <View />;
+    return <SetLocationScreen />;
   }
 
   return (
