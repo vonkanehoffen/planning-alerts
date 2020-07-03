@@ -1,19 +1,17 @@
 import React, { useRef, useState } from "react";
 import MapView, { Marker, PROVIDER_DEFAULT, Region } from "react-native-maps";
-import { Layout, Text } from "@ui-kitten/components";
 import { Platform } from "react-native";
 import { PaStatusMarkers } from "./PaStatusMarkers";
-import _ from "lodash";
-import { useAuth } from "../auth/AuthProvider";
 import { StyleSheet, View } from "react-native";
 import { postGisToRNMapsLocation, regionFrom } from "../../utils";
 import { HomeMarker } from "../../components/HomeMarker";
 import { PaStatusDetails } from "./PaStatusDetails";
-import { FullScreenLoader } from "../../components/FullScreenLoader";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-// import NoLocationWarning from "./NoLocationWarning";
-import { Pa_Status, useGet_User_MetaQuery } from "../../generated/graphql";
+import { Pa_Status } from "../../generated/graphql";
 
+interface UserLocationMapProps {
+  userLocation: geography;
+}
 /**
  * Main map view
  *
@@ -39,26 +37,19 @@ import { Pa_Status, useGet_User_MetaQuery } from "../../generated/graphql";
  * @returns {boolean|*}
  * @constructor
  */
-export function UserLocationMap() {
+export const UserLocationMap: React.FC<UserLocationMapProps> = ({
+  userLocation
+}) => {
   const mapRef = useRef(null);
-  const navigation = useNavigation();
-  // Get user location
-  const { credentials } = useAuth();
-  const { loading, error, data } = useGet_User_MetaQuery({
-    variables: {
-      id: credentials.claims.sub
-    }
-  });
-  const userLocation = data?.users_by_pk?.location;
-  const userRegion =
-    userLocation &&
-    regionFrom(userLocation.coordinates[0], userLocation.coordinates[1], 3000);
+
+  const userRegion = regionFrom(
+    userLocation.coordinates[0],
+    userLocation.coordinates[1],
+    3000
+  );
 
   // Local state
-  const [mapReady, setMapReady] = useState(false);
-  const [mapViewLocation, setMapViewLocation] = useState(
-    null as null | geography
-  );
+  const [mapViewLocation, setMapViewLocation] = useState(userLocation);
   const [focusedPa, setfocusedPa] = useState(null as null | Pa_Status);
 
   // Reset map region on view focus.
@@ -111,25 +102,6 @@ export function UserLocationMap() {
 
   const unFocusPa = () => setfocusedPa(null);
 
-  if (loading) {
-    return <FullScreenLoader message="Loading Map" />;
-  }
-
-  if (error) {
-    return (
-      <Layout>
-        <Text status="danger">UserLocationMap error: {error.message}</Text>
-      </Layout>
-    );
-  }
-
-  // if (!userLocation) {
-  //   // navigation.navigate("Set Location");
-  //   return <NoLocationWarning />;
-  // }
-
-  // console.log("USER REGION: ", userRegion);
-
   return (
     <View style={styles.container}>
       <MapView
@@ -137,17 +109,11 @@ export function UserLocationMap() {
         initialRegion={userRegion}
         ref={mapRef}
         style={styles.map}
-        onMapReady={() => {
-          // setMapReady(true);
-          console.log("MAP READY");
-          setMapReady(true);
-          // resetRegion();
-        }}
         onRegionChangeComplete={handleRegionChange}
         showsUserLocation={true}
         // minDelta={0.0017} ...doesn't work. Bug?
         maxZoomLevel={18}
-        minZoomLevel={12}
+        // minZoomLevel={12} // Breaks initialRegion on iOS. https://github.com/react-native-community/react-native-maps/issues/3338
       >
         <PaStatusMarkers
           location={mapViewLocation || userLocation}
@@ -170,7 +136,7 @@ export function UserLocationMap() {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

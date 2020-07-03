@@ -68,6 +68,8 @@ mutation upsert_fcm_token(
 #     "coordinates": [53.5184479,-2.6761717]
 #   }
 # }
+# Note this and get_recent_closed_pa_near_point can't be joined as _st_d_within doesn't work with _or
+
 query get_open_pa_near_point($point: geography!, $distance: Float!) {
   pa_status(
     where: {

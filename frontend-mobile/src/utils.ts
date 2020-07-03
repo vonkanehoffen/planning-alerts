@@ -4,6 +4,8 @@
  * @returns {{latitude: (*|LatLng), longitude: (*|LatLng)}}
  */
 import { LatLng } from "react-native-maps";
+import Snackbar from "react-native-snackbar";
+import { myTheme } from "./custom-theme";
 
 export function postGisToRNMapsLocation(location: geography): LatLng {
   return {
@@ -55,4 +57,17 @@ export function isValidPostcode(postcode) {
   const postcodeRegEx = /[A-Z]{1,2}[0-9][0-9A-Z]?\s?[0-9][A-Z]{2}/i;
   const result = postcodeRegEx.test(postcode);
   return result;
+}
+
+/**
+ * Show a red error snackbar
+ * @param text
+ */
+export function showErrorSnackbar(text: string) {
+  console.log("showErrorSnackbar:", text);
+  Snackbar.show({
+    text,
+    duration: Snackbar.LENGTH_SHORT,
+    backgroundColor: myTheme["color-danger-500"]
+  });
 }
