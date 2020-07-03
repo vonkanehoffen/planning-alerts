@@ -9,6 +9,8 @@ import { AuthContext } from "../auth/AuthProvider";
 import { SelectCouncil } from "./SelectCouncil";
 import { useNavigation } from "@react-navigation/native";
 import { LoadingIndicator } from "../../components/LoadingIndicator";
+import { PaLogoHeader } from "../../components/PaLogoHeader";
+import { LayoutFlex } from "../../components/LayoutFlex";
 
 interface CouncilScreenProps {}
 
@@ -33,7 +35,8 @@ export const CouncilScreen: React.FC<CouncilScreenProps> = ({}) => {
   };
 
   return (
-    <Layout style={styles.container}>
+    <LayoutFlex>
+      <PaLogoHeader />
       {userMeta?.users_by_pk?.council ? (
         <View>
           <Text category="s1">Council selected:</Text>
@@ -63,16 +66,14 @@ export const CouncilScreen: React.FC<CouncilScreenProps> = ({}) => {
       ) : (
         <SelectCouncil />
       )}
-    </Layout>
+    </LayoutFlex>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-start",
-    padding: 20,
-    paddingTop: 60
+    justifyContent: "flex-start"
   },
   intro: {
     paddingTop: 20,

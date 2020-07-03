@@ -5,9 +5,9 @@ import {
   useCouncil_AutocompleteLazyQuery,
   useSet_User_CouncilMutation
 } from "../../generated/graphql";
-import { View } from "react-native";
 import { Input, Layout, Text } from "@ui-kitten/components";
 import { Suggestions } from "./Suggestions";
+import { Box } from "../../components/Box";
 
 interface SelectCouncilProps {}
 
@@ -44,7 +44,7 @@ export const SelectCouncil: React.FC<SelectCouncilProps> = ({}) => {
   console.log(data, error);
 
   return (
-    <View>
+    <Box m={1}>
       <Text category="h3">Who are your Local Council?</Text>
       <Input
         placeholder="Start typing..."
@@ -54,6 +54,6 @@ export const SelectCouncil: React.FC<SelectCouncilProps> = ({}) => {
       {data?.council && (
         <Suggestions data={data.council} onSelect={onSelect} selected={null} />
       )}
-    </View>
+    </Box>
   );
 };

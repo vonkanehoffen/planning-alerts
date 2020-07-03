@@ -1,10 +1,9 @@
 import React from "react";
-import _ from "lodash";
-import { StyleSheet, View } from "react-native";
-import { Icon, Layout, ListItem, Text, useTheme } from "@ui-kitten/components";
+import { StyleSheet } from "react-native";
+import { Icon, Layout, ListItem, Text } from "@ui-kitten/components";
 import { AuthContext } from "../auth/AuthProvider";
-import { PaLogo } from "../../components/PaLogo";
 import { useGet_User_MetaQuery } from "../../generated/graphql";
+import { PaLogoHeader } from "../../components/PaLogoHeader";
 
 const PersonIcon = (style: any) => <Icon {...style} name="person-outline" />;
 const LogoutIcon = (style: any) => <Icon {...style} name="log-out-outline" />;
@@ -13,7 +12,6 @@ const NavigationIcon = (style: any) => (
 );
 
 export function SettingsScreen({ navigation }: any) {
-  const theme = useTheme();
   const {
     doLogout,
     credentials: { claims }
@@ -30,9 +28,7 @@ export function SettingsScreen({ navigation }: any) {
 
   return (
     <Layout style={styles.container}>
-      <View style={styles.logo}>
-        <PaLogo color={theme["color-primary-500"]} size={140} />
-      </View>
+      <PaLogoHeader />
       <Text category="h1" style={styles.header}>
         Settings
       </Text>
