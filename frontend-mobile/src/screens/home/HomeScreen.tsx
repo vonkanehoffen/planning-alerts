@@ -20,7 +20,6 @@ export function HomeScreen() {
       id: credentials.claims.sub
     }
   });
-  // TODO: Show / redirect to council / onboarding stuff if not set on user here.
 
   if (loading) return <FullScreenLoader message="Loading user" />;
 

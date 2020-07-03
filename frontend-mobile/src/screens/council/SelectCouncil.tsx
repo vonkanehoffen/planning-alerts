@@ -21,19 +21,11 @@ export const SelectCouncil: React.FC<SelectCouncilProps> = ({}) => {
     loadCouncilAutocomplete,
     { called, loading, data, error }
   ] = useCouncil_AutocompleteLazyQuery();
-  const [setUserCouncil, { data: mutationData }] = useSet_User_CouncilMutation({
-    // update(cache, mutationResponse) {
-    //   let data = cache.readQuery<Get_User_MetaQuery>({
-    //     query: Get_User_MetaDocument,
-    //     variables: {
-    //       id: credentials.claims.sub
-    //     }
-    //   });
-    //   if(data?.users_by_pk) {
-    //     data.users_by_pk.council = mutationResponse.data?.update_users_by_pk?.council // add here
-    //   }
-    // }
-  });
+  // Note: This updates the cache automatically.
+  const [
+    setUserCouncil,
+    { data: mutationData }
+  ] = useSet_User_CouncilMutation();
 
   useEffect(() => {
     if (debouncedSearchTerm) {
