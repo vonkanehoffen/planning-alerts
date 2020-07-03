@@ -39,19 +39,20 @@ export function FCMSetup() {
         console.log("DOING getToken");
         const token = await messaging().getToken();
 
-        console.log("GOT TOKEN", token); // TODO: This shouldn't block the ui
-        // TODO: This ain't firing on iOS
+        const variables = {
+          user_id: credentials.claims.sub,
+          token,
+          device_id
+        };
         upsertFCMToken({
-          variables: {
-            user_id: credentials.claims.sub,
-            token,
-            device_id
-          }
+          variables
         });
-        Snackbar.show({
-          text: "Saved FCM Token",
-          duration: Snackbar.LENGTH_SHORT
-        });
+        console.log("Saved FCM Token", variables);
+
+        // Snackbar.show({
+        //   text: "Saved FCM Token",
+        //   duration: Snackbar.LENGTH_SHORT
+        // });
 
         const onTokenRefreshListenerRef = messaging().onTokenRefresh(token => {
           if (token) {
