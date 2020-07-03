@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { Layout, useTheme, Spinner } from "@ui-kitten/components";
 import { UserLocationMap } from "./UserLocationMap";
-import { FCMSetup } from "../../data-layer/FCMSetup";
+import { useFCMSetup } from "../../data-layer/FCMSetup";
 import { useApolloNetworkStatus } from "react-apollo-network-status";
 import { useGet_User_MetaQuery } from "../../generated/graphql";
 import { useAuth } from "../auth/AuthProvider";
@@ -15,6 +15,7 @@ export function HomeScreen() {
   const status = useApolloNetworkStatus();
   const navigation = useNavigation();
   const { credentials } = useAuth();
+  const fcm = useFCMSetup();
   const { loading, error, data } = useGet_User_MetaQuery({
     variables: {
       id: credentials.claims.sub
@@ -34,7 +35,6 @@ export function HomeScreen() {
 
   return (
     <Layout style={styles.container}>
-      <FCMSetup />
       <UserLocationMap />
       {(status.numPendingQueries > 0 || status.numPendingMutations > 0) && (
         <View style={styles.loading}>
