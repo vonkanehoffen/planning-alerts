@@ -1,0 +1,167 @@
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Platform, StyleSheet, View } from "react-native";
+import { postGisToRNMapsLocation, regionFrom, toObject } from "../../utils";
+import {
+  useGet_Open_Pa_Near_PointLazyQuery,
+  useGet_Recent_Closed_Pa_Near_PointLazyQuery
+} from "../../generated/graphql";
+import { compareAsc, formatISO, parseISO, subDays } from "date-fns";
+import MapView, { Marker, PROVIDER_DEFAULT, Region } from "react-native-maps";
+import { HomeMarker } from "../../components/HomeMarker";
+import { MapMarker } from "./MapMarker";
+
+interface PlanningMapProps {
+  userLocation: geography;
+}
+
+// Do we really need to refactor the whole thing?
+
+export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
+  const mapRef = useRef(null);
+
+  // PA Data request hooks
+  const [
+    getOpenPa,
+    { error: openPaError, data: openPaQueryData }
+  ] = useGet_Open_Pa_Near_PointLazyQuery();
+
+  const [
+    getClosedPa,
+    { error: closedPaError, data: closedPaQueryData }
+  ] = useGet_Recent_Closed_Pa_Near_PointLazyQuery();
+
+  // Min date to show closed PAs
+  const minDate = subDays(new Date(), 8);
+  const minDateFormatted = formatISO(minDate, { representation: "date" });
+  const distance = 3000; // Search radius
+
+  // Get PAs near user location
+  useEffect(() => {
+    getOpenPa({
+      variables: {
+        point: userLocation,
+        distance
+      }
+    });
+    getClosedPa({
+      variables: {
+        point: userLocation,
+        distance,
+        minDate: minDateFormatted
+      }
+    });
+  }, [userLocation]);
+
+  // Accumulated PA records from above Apollo requests in local state
+  // We don't want to lose data from previous search positions.
+  const [openPaData, setOpenPaData] = useState({});
+  const [closedPaData, setClosedPaData] = useState({});
+
+  useEffect(() => {
+    console.log("setOpenPaData");
+    setOpenPaData(value => ({
+      ...value,
+      ...toObject(openPaQueryData?.pa_status)
+    }));
+  }, [openPaQueryData]);
+
+  useEffect(() => {
+    setClosedPaData(value => ({
+      ...value,
+      ...toObject(closedPaQueryData?.pa_status)
+    }));
+  }, [closedPaQueryData]);
+
+  // Query at new location when map is moved
+  const handleRegionChange = (newRegion: Region) => {
+    const point = {
+      type: "Point",
+      coordinates: [newRegion.latitude, newRegion.longitude]
+    };
+    getOpenPa({
+      variables: {
+        point,
+        distance
+      }
+    });
+    getClosedPa({
+      variables: {
+        point,
+        distance,
+        minDate: minDateFormatted
+      }
+    });
+  };
+
+  // Build Map Markers
+  const focusedPa = "todo";
+
+  // const newMarkers = openPaData?.pa_status
+  //   .filter(pa => compareAsc(parseISO(pa.updated_at), minDate) > -1)
+  //   .map(pa => <MapMarker pa={pa} status="new" key={pa.id} />);
+
+  const openMarkers = useMemo(
+    () =>
+      Object.keys(openPaData)
+        .filter(
+          // @ts-ignore
+          id => compareAsc(parseISO(openPaData[id].updated_at), minDate) <= -1
+        )
+        // @ts-ignore
+        .map(id => <MapMarker pa={openPaData[id]} status="open" key={id} />),
+    [openPaData]
+  );
+
+  // const closedMarkers = closedPaData?.pa_status.map(pa => (
+  //   <MapMarker pa={pa} status="closed" key={pa.id} />
+  // ));
+
+  const initialRegion = regionFrom(
+    userLocation.coordinates[0],
+    userLocation.coordinates[1],
+    3000
+  );
+
+  return (
+    <View style={styles.container}>
+      <MapView
+        provider={PROVIDER_DEFAULT}
+        initialRegion={initialRegion}
+        ref={mapRef}
+        style={styles.map}
+        onRegionChangeComplete={handleRegionChange}
+        showsUserLocation={true}
+        // minDelta={0.0017} ...doesn't work. Bug?
+        maxZoomLevel={18}
+        // minZoomLevel={12} // Breaks initialRegion on iOS. https://github.com/react-native-community/react-native-maps/issues/3338
+      >
+        {openMarkers}
+        <Marker
+          coordinate={postGisToRNMapsLocation(userLocation)}
+          title="You"
+          tracksViewChanges={false}
+        >
+          <HomeMarker />
+        </Marker>
+      </MapView>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    ...StyleSheet.absoluteFillObject,
+    height: "100%",
+    width: "100%",
+    justifyContent: "flex-end",
+    alignItems: "center"
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject
+  },
+  logo: {
+    position: "absolute",
+    top: Platform.OS === "ios" ? 50 : 10,
+    left: 10
+  }
+});

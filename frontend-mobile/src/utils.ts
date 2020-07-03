@@ -71,3 +71,17 @@ export function showErrorSnackbar(text: string) {
     backgroundColor: myTheme["color-danger-500"]
   });
 }
+
+/**
+ * Convert array of objects to single nested object with keys of ID
+ * @param data
+ */
+export function toObject(data: any) {
+  let obj: any = {};
+  if (data) {
+    for (const el of data) {
+      obj[el.id] = el;
+    }
+  }
+  return obj;
+}
