@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import { postGisToRNMapsLocation, regionFrom, toObject } from "../../utils";
 import {
+  Pa_Status,
   useGet_Open_Pa_Near_PointLazyQuery,
   useGet_Recent_Closed_Pa_Near_PointLazyQuery
 } from "../../generated/graphql";
@@ -9,17 +10,19 @@ import { compareAsc, formatISO, parseISO, subDays } from "date-fns";
 import MapView, { Marker, PROVIDER_DEFAULT, Region } from "react-native-maps";
 import { HomeMarker } from "../../components/HomeMarker";
 import { MapMarker } from "./MapMarker";
-import { PaStatusDetails } from "./PaStatusDetails";
+import { PaDetails } from "./PaDetails";
+import { StyleService, useStyleSheet } from "@ui-kitten/components";
 
 interface PlanningMapProps {
   userLocation: geography;
 }
 
-type PaDataObject = { [index: string]: any }; // TODO: Actual PA
+type PaDataObject = { [index: string]: Pa_Status };
 
 // Do we really need to refactor the whole thing?
 
 export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
+  const styles = useStyleSheet(themedStyles);
   const mapRef = useRef(null);
 
   // PA Data request hooks
@@ -170,22 +173,33 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
           <HomeMarker />
         </Marker>
       </MapView>
-      <PaStatusDetails
-        pa={openPaData[focusedPaId] || closedPaData[focusedPaId]}
-        unFocusPa={unFocusPa}
-        resetRegion={resetRegion}
-      />
+      <View style={styles.detailCard}>
+        {focusedPaId ? (
+          <PaDetails
+            pa={openPaData[focusedPaId] || closedPaData[focusedPaId]}
+            unFocus={unFocusPa}
+          />
+        ) : (
+          <View />
+        )}
+      </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
+const themedStyles = StyleService.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     height: "100%",
     width: "100%",
     justifyContent: "flex-end",
     alignItems: "center"
+  },
+  detailCard: {
+    width: "100%",
+    maxHeight: "60%",
+    backgroundColor: "color-basic-800",
+    position: "relative"
   },
   map: {
     ...StyleSheet.absoluteFillObject
