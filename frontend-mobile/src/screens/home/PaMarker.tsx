@@ -1,8 +1,10 @@
 import React from "react";
 import Svg, { G, Path } from "react-native-svg";
 
+export type PaMarkerStatus = "open" | "closed" | "new";
+
 interface PaMarkerProps {
-  status: "open" | "closed" | "new";
+  status: PaMarkerStatus;
   focused?: boolean;
 }
 export function PaMarker({ status, focused }: PaMarkerProps) {

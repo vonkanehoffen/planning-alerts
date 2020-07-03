@@ -14,6 +14,8 @@ interface PlanningMapProps {
   userLocation: geography;
 }
 
+type PaDataObject = { [index: string]: any }; // TODO: Actual PA
+
 // Do we really need to refactor the whole thing?
 
 export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
@@ -54,11 +56,10 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
 
   // Accumulated PA records from above Apollo requests in local state
   // We don't want to lose data from previous search positions.
-  const [openPaData, setOpenPaData] = useState({});
-  const [closedPaData, setClosedPaData] = useState({});
+  const [openPaData, setOpenPaData] = useState<PaDataObject>({});
+  const [closedPaData, setClosedPaData] = useState<PaDataObject>({});
 
   useEffect(() => {
-    console.log("setOpenPaData");
     setOpenPaData(value => ({
       ...value,
       ...toObject(openPaQueryData?.pa_status)
@@ -93,29 +94,41 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
     });
   };
 
+  // PA currently focused by user
+  const [focusedPaId, setFocusedPaId] = useState("");
+
   // Build Map Markers
-  const focusedPa = "todo";
-
-  // const newMarkers = openPaData?.pa_status
-  //   .filter(pa => compareAsc(parseISO(pa.updated_at), minDate) > -1)
-  //   .map(pa => <MapMarker pa={pa} status="new" key={pa.id} />);
-
   const openMarkers = useMemo(
     () =>
-      Object.keys(openPaData)
-        .filter(
-          // @ts-ignore
-          id => compareAsc(parseISO(openPaData[id].updated_at), minDate) <= -1
-        )
-        // @ts-ignore
-        .map(id => <MapMarker pa={openPaData[id]} status="open" key={id} />),
+      Object.keys(openPaData).map(id => (
+        <MapMarker
+          pa={openPaData[id]}
+          status={
+            compareAsc(parseISO(openPaData[id].updated_at), minDate) <= -1
+              ? "open"
+              : "new"
+          }
+          key={id}
+          setFocusedPaId={setFocusedPaId}
+        />
+      )),
     [openPaData]
   );
 
-  // const closedMarkers = closedPaData?.pa_status.map(pa => (
-  //   <MapMarker pa={pa} status="closed" key={pa.id} />
-  // ));
+  const closedMarkers = useMemo(
+    () =>
+      Object.keys(closedPaData).map(id => (
+        <MapMarker
+          pa={closedPaData[id]}
+          status="closed"
+          key={id}
+          setFocusedPaId={setFocusedPaId}
+        />
+      )),
+    [closedPaData]
+  );
 
+  // Initial region for map on mount
   const initialRegion = regionFrom(
     userLocation.coordinates[0],
     userLocation.coordinates[1],
@@ -135,6 +148,7 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
         maxZoomLevel={18}
         // minZoomLevel={12} // Breaks initialRegion on iOS. https://github.com/react-native-community/react-native-maps/issues/3338
       >
+        {closedMarkers}
         {openMarkers}
         <Marker
           coordinate={postGisToRNMapsLocation(userLocation)}
