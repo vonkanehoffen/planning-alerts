@@ -9,6 +9,7 @@ import { compareAsc, formatISO, parseISO, subDays } from "date-fns";
 import MapView, { Marker, PROVIDER_DEFAULT, Region } from "react-native-maps";
 import { HomeMarker } from "../../components/HomeMarker";
 import { MapMarker } from "./MapMarker";
+import { PaStatusDetails } from "./PaStatusDetails";
 
 interface PlanningMapProps {
   userLocation: geography;
@@ -94,6 +95,8 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
     });
   };
 
+  // TODO: On load focus on new markers from notification. See old code
+
   // PA currently focused by user
   const [focusedPaId, setFocusedPaId] = useState("");
 
@@ -135,6 +138,15 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
     3000
   );
 
+  // Position map over user home location
+  const resetRegion = () => {
+    // @ts-ignore
+    mapRef?.current.animateToRegion(initialRegion);
+  };
+
+  // Close details callout
+  const unFocusPa = () => setFocusedPaId("");
+
   return (
     <View style={styles.container}>
       <MapView
@@ -158,6 +170,11 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
           <HomeMarker />
         </Marker>
       </MapView>
+      <PaStatusDetails
+        pa={openPaData[focusedPaId] || closedPaData[focusedPaId]}
+        unFocusPa={unFocusPa}
+        resetRegion={resetRegion}
+      />
     </View>
   );
 };
