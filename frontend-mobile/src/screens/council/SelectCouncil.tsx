@@ -44,16 +44,33 @@ export const SelectCouncil: React.FC<SelectCouncilProps> = ({}) => {
   console.log(data, error);
 
   return (
-    <Box m={1}>
-      <Text category="h3">Who are your Local Council?</Text>
-      <Input
-        placeholder="Start typing..."
-        value={searchTerm}
-        onChangeText={s => setSearchTerm(s)}
-      />
-      {data?.council && (
-        <Suggestions data={data.council} onSelect={onSelect} selected={null} />
-      )}
-    </Box>
+    <>
+      <Box m={1}>
+        <Text category="h4">Hi! Let's get started...</Text>
+      </Box>
+      <Box m={1}>
+        <Text category="h3">Who are your Local Council?</Text>
+      </Box>
+      <Box m={1}>
+        <Input
+          placeholder="Start typing..."
+          value={searchTerm}
+          onChangeText={s => setSearchTerm(s)}
+        />
+        {data?.council ? (
+          <Suggestions
+            data={data.council}
+            onSelect={onSelect}
+            selected={null}
+          />
+        ) : (
+          <Box mt={1}>
+            <Text category="c1">
+              (We'll tell you if they're covered in the app yet.)
+            </Text>
+          </Box>
+        )}
+      </Box>
+    </>
   );
 };

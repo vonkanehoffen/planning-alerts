@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Button, Layout, Text } from "@ui-kitten/components";
-import { StyleSheet, View } from "react-native";
+import { KeyboardAvoidingView, StyleSheet, View, Platform } from "react-native";
 import {
   useGet_User_MetaQuery,
   useSet_User_CouncilMutation
@@ -11,6 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import { LoadingIndicator } from "../../components/LoadingIndicator";
 import { PaLogoHeader } from "../../components/PaLogoHeader";
 import { LayoutFlex } from "../../components/LayoutFlex";
+import { KeyboardAvoidingLayoutFlex } from "../../components/KeyboardAvoidingLayoutFlex";
 
 interface CouncilScreenProps {}
 
@@ -35,7 +36,7 @@ export const CouncilScreen: React.FC<CouncilScreenProps> = ({}) => {
   };
 
   return (
-    <LayoutFlex>
+    <KeyboardAvoidingLayoutFlex>
       <PaLogoHeader />
       {userMeta?.users_by_pk?.council ? (
         <View>
@@ -66,14 +67,14 @@ export const CouncilScreen: React.FC<CouncilScreenProps> = ({}) => {
       ) : (
         <SelectCouncil />
       )}
-    </LayoutFlex>
+    </KeyboardAvoidingLayoutFlex>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "flex-start"
+    flex: 1
+    // justifyContent: "flex-start"
   },
   intro: {
     paddingTop: 20,
