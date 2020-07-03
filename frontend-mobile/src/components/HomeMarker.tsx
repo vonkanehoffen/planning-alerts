@@ -6,7 +6,7 @@ export function HomeMarker() {
     <Svg width={60} height={60} viewBox="0 0 50 50">
       <G>
         <Path
-          fill="#2E6A38"
+          fill="#093B31"
           d="M24.6,47.9C24,47.2,9,30.4,9,18.7c0-8.8,7.2-16,16-16s16,7.2,16,16c0,11.7-15,28.5-15.7,29.2L25,48.3
 		L24.6,47.9z"
         />
@@ -18,7 +18,7 @@ export function HomeMarker() {
         />
       </G>
       <Path
-        fill="#7BAF5B"
+        fill="#46ab5d"
         d="M23.4,26.2v-4.8h3.2v4.8h4v-6.4H33l-8-7.2l-8,7.2h2.4v6.4H23.4z"
       />
     </Svg>

@@ -31,7 +31,7 @@ export function SettingsScreen({ navigation }: any) {
   return (
     <Layout style={styles.container}>
       <View style={styles.logo}>
-        <PaLogo color={theme["color-primary-300"]} size={140} />
+        <PaLogo color={theme["color-primary-500"]} size={140} />
       </View>
       <Text category="h1" style={styles.header}>
         Settings

@@ -6,8 +6,8 @@ interface PaMarkerProps {
   focused?: boolean;
 }
 export function PaMarker({ status, focused }: PaMarkerProps) {
-  const bgFill = { open: "#2E6A38", closed: "#999999", new: "#ff9900" };
-  const iconFill = { open: "#7BAF5B", closed: "#777777", new: "#ffffff" };
+  const bgFill = { open: "#093B31", closed: "#999999", new: "#ff9900" };
+  const iconFill = { open: "#46ab5d", closed: "#777777", new: "#ffffff" };
 
   // TODO: Highlight marker ... can it be done where tracksViewChanges={false} is?
   //     <Svg width={focused ? 51 : 34} height={focused ? 70 : 47} viewBox="0 0 34 47">
