@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Button, Text } from "@ui-kitten/components";
+import { Button, Icon, Text } from "@ui-kitten/components";
 import { StyleSheet, View } from "react-native";
 import {
   useGet_User_MetaQuery,
@@ -11,8 +11,13 @@ import { useNavigation } from "@react-navigation/native";
 import { LoadingIndicator } from "../../components/LoadingIndicator";
 import { PaLogoHeader } from "../../components/PaLogoHeader";
 import { KeyboardAvoidingLayoutFlex } from "../../components/KeyboardAvoidingLayoutFlex";
+import { Box } from "../../components/Box";
 
 interface CouncilScreenProps {}
+
+const ArrowIcon = (style: any) => (
+  <Icon {...style} name="arrow-forward-outline" />
+);
 
 export const CouncilScreen: React.FC<CouncilScreenProps> = ({}) => {
   const navigation = useNavigation();
@@ -38,31 +43,42 @@ export const CouncilScreen: React.FC<CouncilScreenProps> = ({}) => {
     <KeyboardAvoidingLayoutFlex>
       <PaLogoHeader />
       {userMeta?.users_by_pk?.council ? (
-        <View>
-          <Text category="s1">Council selected:</Text>
-          <Text category="h4">{userMeta.users_by_pk.council.title}</Text>
-          {userMeta.users_by_pk.council.scraper !== "idox" ? (
-            <Text category="h6" status="danger">
-              Sorry, your council is not covered by Planning Alerts yet. TODO:
-              Let me know fn
-            </Text>
-          ) : (
-            <Text category="h6">
-              Great news! Your council is covered by our systems. Set your
-              location to receive alerts on planning applications near you.
-            </Text>
-          )}
-          <Button
-            onPress={unsetCouncil}
-            appearance="outline"
-            accessoryRight={setCouncilLoading ? LoadingIndicator : undefined}
-          >
-            Change selection
-          </Button>
-          <Button onPress={() => navigation.navigate("Set Location")}>
-            Set your location
-          </Button>
-        </View>
+        <>
+          <Box m={1}>
+            <Text category="s1">Council selected:</Text>
+            <Text category="h4">{userMeta.users_by_pk.council.title}</Text>
+          </Box>
+          <Box m={1}>
+            {userMeta.users_by_pk.council.scraper !== "idox" ? (
+              <Text category="h6" status="danger">
+                Sorry, your council is not covered by Planning Alerts yet. TODO:
+                Let me know fn
+              </Text>
+            ) : (
+              <Text category="h6">
+                Great news! Your council is covered by our systems. Set your
+                location to receive alerts on planning applications near you.
+              </Text>
+            )}
+          </Box>
+          <Box m={1}>
+            <Button
+              onPress={unsetCouncil}
+              appearance="outline"
+              accessoryRight={setCouncilLoading ? LoadingIndicator : undefined}
+            >
+              Change selection
+            </Button>
+          </Box>
+          <Box mx={1}>
+            <Button
+              onPress={() => navigation.navigate("Set Location")}
+              accessoryRight={ArrowIcon}
+            >
+              Set your location
+            </Button>
+          </Box>
+        </>
       ) : (
         <SelectCouncil />
       )}
