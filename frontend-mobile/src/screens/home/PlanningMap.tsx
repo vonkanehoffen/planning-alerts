@@ -12,6 +12,9 @@ import { HomeMarker } from "../../components/HomeMarker";
 import { MapMarker } from "./MapMarker";
 import { PaDetails } from "./PaDetails";
 import { StyleService, useStyleSheet } from "@ui-kitten/components";
+import AsyncStorage from "@react-native-community/async-storage";
+import { useAppState } from "../../../App";
+import { ApolloNetworkStatus } from "./ApolloNetworkStatus";
 
 interface PlanningMapProps {
   userLocation: geography;
@@ -24,6 +27,7 @@ type PaDataObject = { [index: string]: Pa_Status };
 export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
   const styles = useStyleSheet(themedStyles);
   const mapRef = useRef(null);
+  const appState = useAppState();
 
   // PA Data request hooks
   const [
@@ -39,6 +43,8 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
   // Min date to show closed PAs
   const minDate = subDays(new Date(), 8);
   const minDateFormatted = formatISO(minDate, { representation: "date" });
+  const isNew = (updated_at: string) =>
+    compareAsc(parseISO(updated_at), minDate) > -1;
   const distance = 3000; // Search radius
 
   // Get PAs near user location
@@ -98,7 +104,42 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
     });
   };
 
-  // TODO: On load focus on new markers from notification. See old code
+  /**
+   * Focus on new PAs following notification
+   * This looks for presence of message in async storage, then removes it as focus takes place.
+   * The relevant Apollo query is also updated...somehow? Not sure which hook is doing that but it seems to work.
+   */
+  useEffect(() => {
+    (async () => {
+      if (appState === "active" && openPaData) {
+        const messages = await AsyncStorage.getItem("messages");
+        console.log("PlanninMap useEffect appstate - messages: ", messages);
+        if (messages) {
+          await AsyncStorage.removeItem("messages");
+          // TODO: This works...just doesn't have data here
+          const markers = Object.keys(openPaData).filter(id =>
+            isNew(openPaData[id].updated_at)
+          );
+
+          console.log("doing fit. markers = ", markers); // This is blank ffs
+          if (mapRef && markers.length > 0) {
+            console.log("fitToSuppliedMarkers", markers);
+            // @ts-ignore
+            mapRef.current.fitToSuppliedMarkers(markers, {
+              // edgePadding: { // This does bugger all. Bug?
+              //   top: 2000,
+              //   right: 2000,
+              //   bottom: 2000,
+              //   left: 2000,
+              // },
+              animated: true
+            });
+            // TODO: Fully focus to show details when it's just one new PA.
+          }
+        }
+      }
+    })();
+  }, [mapRef, openPaData, appState]);
 
   // PA currently focused by user
   const [focusedPaId, setFocusedPaId] = useState("");
@@ -109,11 +150,7 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
       Object.keys(openPaData).map(id => (
         <MapMarker
           pa={openPaData[id]}
-          status={
-            compareAsc(parseISO(openPaData[id].updated_at), minDate) <= -1
-              ? "open"
-              : "new"
-          }
+          status={isNew(openPaData[id].updated_at) ? "new" : "open"}
           key={id}
           setFocusedPaId={setFocusedPaId}
         />
@@ -183,6 +220,7 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
           <View />
         )}
       </View>
+      <ApolloNetworkStatus />
     </View>
   );
 };

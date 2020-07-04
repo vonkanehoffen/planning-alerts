@@ -13,7 +13,6 @@ import { showErrorSnackbar } from "../../utils";
 import { PlanningMap } from "./PlanningMap";
 
 export function HomeScreen() {
-  const status = useApolloNetworkStatus();
   const { credentials } = useAuth();
   const fcm = useFCMSetup();
   const { loading, error, data } = useGet_User_MetaQuery({
@@ -40,17 +39,6 @@ export function HomeScreen() {
   // Everything is cool and we have a user location. Show the map...
 
   return <PlanningMap userLocation={data.users_by_pk.location} />;
-
-  // return (
-  //   <Layout style={styles.container}>
-  //     <UserLocationMap userLocation={data.users_by_pk.location} />
-  //     {(status.numPendingQueries > 0 || status.numPendingMutations > 0) && (
-  //       <View style={styles.loading}>
-  //         <Spinner />
-  //       </View>
-  //     )}
-  //   </Layout>
-  // );
 }
 
 const styles = StyleSheet.create({

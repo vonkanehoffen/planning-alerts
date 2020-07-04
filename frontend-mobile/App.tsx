@@ -76,7 +76,7 @@ export function App(): React.ReactFragment {
     setAppState(nextAppState);
     console.log("App state change");
     const messages = await AsyncStorage.getItem("messages");
-    console.log("MEssages on change", messages);
+    console.log("Messages on change", messages);
   };
 
   return (
