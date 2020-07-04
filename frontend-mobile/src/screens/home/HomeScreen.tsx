@@ -1,9 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import { Layout, Spinner } from "@ui-kitten/components";
-import { UserLocationMap } from "./UserLocationMap";
 import { useFCMSetup } from "../../data-layer/FCMSetup";
-import { useApolloNetworkStatus } from "react-apollo-network-status";
 import { useGet_User_MetaQuery } from "../../generated/graphql";
 import { useAuth } from "../auth/AuthProvider";
 import { FullScreenLoader } from "../../components/FullScreenLoader";

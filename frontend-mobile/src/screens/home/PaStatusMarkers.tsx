@@ -8,7 +8,7 @@ import {
   useGet_Recent_Closed_Pa_Near_PointQuery
 } from "../../generated/graphql";
 import AsyncStorage from "@react-native-community/async-storage";
-import { useAppState } from "../../../App";
+// import { useAppState } from "../../../App";
 
 interface PaStatusMarkersProps {
   location: geography;
@@ -34,7 +34,8 @@ export function PaStatusMarkers({
   focusedPa,
   mapRef
 }: PaStatusMarkersProps) {
-  const appState = useAppState();
+  // const appState = useAppState();
+  const appState = "active";
   const {
     error: openPaError,
     data: openPaData

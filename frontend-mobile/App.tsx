@@ -10,8 +10,7 @@
  * @format
  */
 
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { AppState, AppStateStatus } from "react-native";
+import React, { useEffect } from "react";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { mapping } from "@eva-design/eva";
@@ -39,29 +38,15 @@ import messaging from "@react-native-firebase/messaging";
 //  - They're stored in Async storage as mostly they'll be accepted from the background handler.
 
 /**
- * App state updates when app comes to foreground / background
- */
-const AppStateContext = createContext<AppStateStatus>("active");
-export const useAppState = () => useContext(AppStateContext);
-
-/**
  * Initialise the app.
  * Setup listeners
  * Hide boot screen etc.
  * @constructor
  */
 export function App(): React.ReactFragment {
-  const [appState, setAppState] = useState<AppStateStatus>("active");
   useEffect(() => {
     RNBootSplash.hide();
   });
-
-  useEffect(() => {
-    AppState.addEventListener("change", _handleAppStateChange);
-    return () => {
-      AppState.removeEventListener("change", _handleAppStateChange);
-    };
-  }, []);
 
   useEffect(() => {
     // Note this is for foreground messages only. Background ones handled in index.js
@@ -72,24 +57,15 @@ export function App(): React.ReactFragment {
     });
   }, []);
 
-  const _handleAppStateChange = async (nextAppState: AppStateStatus) => {
-    setAppState(nextAppState);
-    console.log("App state change");
-    const messages = await AsyncStorage.getItem("messages");
-    console.log("Messages on change", messages);
-  };
-
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider mapping={mapping} theme={myTheme}>
-        <AppStateContext.Provider value={appState}>
-          <AuthProvider>
-            <GraphQLProvider>
-              <AppNavigator />
-            </GraphQLProvider>
-          </AuthProvider>
-        </AppStateContext.Provider>
+        <AuthProvider>
+          <GraphQLProvider>
+            <AppNavigator />
+          </GraphQLProvider>
+        </AuthProvider>
       </ApplicationProvider>
     </>
   );

@@ -1,5 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Platform, StyleSheet, View } from "react-native";
+import {
+  AppState,
+  AppStateStatus,
+  Platform,
+  StyleSheet,
+  View
+} from "react-native";
 import { postGisToRNMapsLocation, regionFrom, toObject } from "../../utils";
 import {
   Pa_Status,
@@ -13,7 +19,6 @@ import { MapMarker } from "./MapMarker";
 import { PaDetails } from "./PaDetails";
 import { StyleService, useStyleSheet } from "@ui-kitten/components";
 import AsyncStorage from "@react-native-community/async-storage";
-import { useAppState } from "../../../App";
 import { ApolloNetworkStatus } from "./ApolloNetworkStatus";
 
 interface PlanningMapProps {
@@ -27,7 +32,6 @@ type PaDataObject = { [index: string]: Pa_Status };
 export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
   const styles = useStyleSheet(themedStyles);
   const mapRef = useRef(null);
-  const appState = useAppState();
 
   // PA Data request hooks
   const [
@@ -110,36 +114,42 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
    * The relevant Apollo query is also updated...somehow? Not sure which hook is doing that but it seems to work.
    */
   useEffect(() => {
-    (async () => {
-      if (appState === "active" && openPaData) {
+    const handleAppStateChange = async (nextAppState: AppStateStatus) => {
+      console.log("handleAppStateChange", nextAppState);
+      if (nextAppState === "active") {
         const messages = await AsyncStorage.getItem("messages");
-        console.log("PlanninMap useEffect appstate - messages: ", messages);
+        console.log("messages = ", messages);
         if (messages) {
-          await AsyncStorage.removeItem("messages");
-          // TODO: This works...just doesn't have data here
           const markers = Object.keys(openPaData).filter(id =>
             isNew(openPaData[id].updated_at)
           );
-
-          console.log("doing fit. markers = ", markers); // This is blank ffs
-          if (mapRef && markers.length > 0) {
-            console.log("fitToSuppliedMarkers", markers);
+          console.log("markers:", markers);
+          if (markers.length > 0) {
             // @ts-ignore
             mapRef.current.fitToSuppliedMarkers(markers, {
+              animated: true
               // edgePadding: { // This does bugger all. Bug?
               //   top: 2000,
               //   right: 2000,
               //   bottom: 2000,
               //   left: 2000,
               // },
-              animated: true
             });
-            // TODO: Fully focus to show details when it's just one new PA.
           }
+          if (markers.length === 1) {
+            setFocusedPaId(markers[0]);
+          }
+
+          AsyncStorage.removeItem("messages");
         }
       }
-    })();
-  }, [mapRef, openPaData, appState]);
+    };
+
+    AppState.addEventListener("change", handleAppStateChange);
+    return () => {
+      AppState.removeEventListener("change", handleAppStateChange);
+    };
+  });
 
   // PA currently focused by user
   const [focusedPaId, setFocusedPaId] = useState("");
