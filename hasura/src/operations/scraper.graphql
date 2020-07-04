@@ -97,3 +97,10 @@ query get_users($limit: Int!, $offset: Int!) {
     }
   }
 }
+
+# Set planning apps to alert the user about next time they open the app
+mutation set_user_alerts($objects:[user_pa_status_insert_input!]!) {
+  insert_user_pa_status(objects: $objects) {
+    affected_rows
+  }
+}

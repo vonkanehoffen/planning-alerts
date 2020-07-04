@@ -112,8 +112,9 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
    * Focus on new PAs following notification
    * This looks for presence of message in async storage, then removes it as focus takes place.
    * The relevant Apollo query is also updated...somehow? Not sure which hook is doing that but it seems to work.
-   * TODO: Does this all need to be in Hasura against users?
-   *  setBackgroundMessageHandler doesn't work when app closed?
+   * TODO: Does this all need to be in Hasura against users.
+   *  setBackgroundMessageHandler doesn't work when app closed on Android.
+   *  Doesn't work at all on iOS
    */
   useEffect(() => {
     const handleAppStateChange = async (nextAppState: AppStateStatus) => {
@@ -198,6 +199,8 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
 
   // Close details callout
   const unFocusPa = () => setFocusedPaId("");
+
+  // TODO: Reinstate home button
 
   return (
     <View style={styles.container}>
