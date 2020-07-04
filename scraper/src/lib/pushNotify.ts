@@ -65,7 +65,7 @@ export async function sendFcm(token, title, body, data, username) {
     },
     data,
     android: {
-      priority: "normal"
+      priority: "high"
     },
     apns: {
       headers: {
