@@ -6,13 +6,14 @@ import { Spinner } from "@ui-kitten/components";
 export const ApolloNetworkStatus = () => {
   const status = useApolloNetworkStatus();
 
-  return (
-    <View style={styles.loading}>
-      {(status.numPendingQueries > 0 || status.numPendingMutations > 0) && (
+  if (status.numPendingQueries > 0 || status.numPendingMutations > 0)
+    return (
+      <View style={styles.loading}>
         <Spinner />
-      )}
-    </View>
-  );
+      </View>
+    );
+
+  return null;
 };
 
 const styles = StyleSheet.create({
