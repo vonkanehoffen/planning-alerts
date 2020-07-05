@@ -58,6 +58,7 @@ and [here](https://facebook.github.io/react-native/docs/signed-apk-android)
 
 - Make sure `frontend-mobile/android/app/pa-upload-key.keystore` exists.
 - Bump versionCode & versionName in `frontend-mobile/android/app/build.gradle`
+- Un-install existing dev version from phone (sigs won't match)
 
 ```
 npx react-native run-android --variant=release
@@ -70,14 +71,16 @@ Upload the resulting bundle `frontend-mobile/android/app/build/outputs/bundle/re
 #### iOS
 
 Enable App Transport Security - `NSExceptionDomains` in `ios/PlanningAlerts/Info.plist` should be blank. localhost should be excluded for dev.
+...is this actually a thing any more?
 
 In Xcode:
 
+- Bump Version and Build numbers in project root view
 - Switch profile to "Release" (Product -> Scheme -> Edit Scheme...)
 - Choose "Generic iOS Device" as target
 - Product -> Build
 - Product -> Archive
 - Window -> Organizer (to see new archive)
-- Distribute App
+- Distribute App - App store connect
 
 Dev and Distribution certs live in the login keychain.

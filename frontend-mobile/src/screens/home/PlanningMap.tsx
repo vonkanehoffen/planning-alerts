@@ -112,9 +112,17 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
    * Focus on new PAs following notification
    * This looks for presence of message in async storage, then removes it as focus takes place.
    * The relevant Apollo query is also updated...somehow? Not sure which hook is doing that but it seems to work.
-   * TODO: Does this all need to be in Hasura against users.
+   * TODO: Does this all need to be in Hasura against users?
    *  setBackgroundMessageHandler doesn't work when app closed on Android.
    *  Doesn't work at all on iOS
+   *  ...or can https://github.com/react-native-community/push-notification-ios help ?
+   *  Also this probably won't trigger a re-fetch of planning data.
+   *  We need an event that says "I've been opened from a notifcation"
+   *  All we have currently is "I've been opened" ...via AppState
+   *  ...or is this a dev only thing? TRhe docs here:
+   *  https://rnfirebase.io/messaging/usage
+   *  say it should work.
+   *  Try a proper app store release first.
    */
   useEffect(() => {
     const handleAppStateChange = async (nextAppState: AppStateStatus) => {
