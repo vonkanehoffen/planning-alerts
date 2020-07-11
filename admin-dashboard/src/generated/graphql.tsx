@@ -3771,10 +3771,20 @@ export type Get_User_MetaQuery = (
     & { council?: Maybe<(
       { __typename?: 'council' }
       & Pick<Council, 'title' | 'scraper'>
-    )>, user_pa_statuses: Array<(
-      { __typename?: 'user_pa_status' }
-      & Pick<User_Pa_Status, 'pa_status_id' | 'status' | 'ts'>
     )> }
+  )> }
+);
+
+export type Get_User_Pa_AlertsQueryVariables = {
+  user_id: Scalars['String'];
+};
+
+
+export type Get_User_Pa_AlertsQuery = (
+  { __typename?: 'query_root' }
+  & { user_pa_status: Array<(
+    { __typename?: 'user_pa_status' }
+    & Pick<User_Pa_Status, 'pa_status_id'>
   )> }
 );
 
@@ -4144,11 +4154,6 @@ export const Get_User_MetaDocument = gql`
       title
       scraper
     }
-    user_pa_statuses {
-      pa_status_id
-      status
-      ts
-    }
     created_at
   }
 }
@@ -4179,6 +4184,39 @@ export function useGet_User_MetaLazyQuery(baseOptions?: ApolloReactHooks.LazyQue
 export type Get_User_MetaQueryHookResult = ReturnType<typeof useGet_User_MetaQuery>;
 export type Get_User_MetaLazyQueryHookResult = ReturnType<typeof useGet_User_MetaLazyQuery>;
 export type Get_User_MetaQueryResult = ApolloReactCommon.QueryResult<Get_User_MetaQuery, Get_User_MetaQueryVariables>;
+export const Get_User_Pa_AlertsDocument = gql`
+    query get_user_pa_alerts($user_id: String!) {
+  user_pa_status(where: {user_id: {_eq: $user_id}, status: {_eq: alert}}) {
+    pa_status_id
+  }
+}
+    `;
+
+/**
+ * __useGet_User_Pa_AlertsQuery__
+ *
+ * To run a query within a React component, call `useGet_User_Pa_AlertsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGet_User_Pa_AlertsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGet_User_Pa_AlertsQuery({
+ *   variables: {
+ *      user_id: // value for 'user_id'
+ *   },
+ * });
+ */
+export function useGet_User_Pa_AlertsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Get_User_Pa_AlertsQuery, Get_User_Pa_AlertsQueryVariables>) {
+        return ApolloReactHooks.useQuery<Get_User_Pa_AlertsQuery, Get_User_Pa_AlertsQueryVariables>(Get_User_Pa_AlertsDocument, baseOptions);
+      }
+export function useGet_User_Pa_AlertsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Get_User_Pa_AlertsQuery, Get_User_Pa_AlertsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<Get_User_Pa_AlertsQuery, Get_User_Pa_AlertsQueryVariables>(Get_User_Pa_AlertsDocument, baseOptions);
+        }
+export type Get_User_Pa_AlertsQueryHookResult = ReturnType<typeof useGet_User_Pa_AlertsQuery>;
+export type Get_User_Pa_AlertsLazyQueryHookResult = ReturnType<typeof useGet_User_Pa_AlertsLazyQuery>;
+export type Get_User_Pa_AlertsQueryResult = ApolloReactCommon.QueryResult<Get_User_Pa_AlertsQuery, Get_User_Pa_AlertsQueryVariables>;
 export const Update_User_LocationDocument = gql`
     mutation update_user_location($id: String!, $location: geography!) {
   update_users_by_pk(pk_columns: {id: $id}, _set: {location: $location}) {

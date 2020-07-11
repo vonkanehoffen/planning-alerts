@@ -3771,10 +3771,20 @@ export type Get_User_MetaQuery = (
     & { council?: Maybe<(
       { __typename?: 'council' }
       & Pick<Council, 'title' | 'scraper'>
-    )>, user_pa_statuses: Array<(
-      { __typename?: 'user_pa_status' }
-      & Pick<User_Pa_Status, 'pa_status_id' | 'status' | 'ts'>
     )> }
+  )> }
+);
+
+export type Get_User_Pa_AlertsQueryVariables = {
+  user_id: Scalars['String'];
+};
+
+
+export type Get_User_Pa_AlertsQuery = (
+  { __typename?: 'query_root' }
+  & { user_pa_status: Array<(
+    { __typename?: 'user_pa_status' }
+    & Pick<User_Pa_Status, 'pa_status_id'>
   )> }
 );
 
@@ -4045,12 +4055,14 @@ export const Get_User_MetaDocument = gql`
       title
       scraper
     }
-    user_pa_statuses {
-      pa_status_id
-      status
-      ts
-    }
     created_at
+  }
+}
+    `;
+export const Get_User_Pa_AlertsDocument = gql`
+    query get_user_pa_alerts($user_id: String!) {
+  user_pa_status(where: {user_id: {_eq: $user_id}, status: {_eq: alert}}) {
+    pa_status_id
   }
 }
     `;
@@ -4217,6 +4229,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     get_user_meta(variables: Get_User_MetaQueryVariables): Promise<Get_User_MetaQuery> {
       return withWrapper(() => client.request<Get_User_MetaQuery>(print(Get_User_MetaDocument), variables));
+    },
+    get_user_pa_alerts(variables: Get_User_Pa_AlertsQueryVariables): Promise<Get_User_Pa_AlertsQuery> {
+      return withWrapper(() => client.request<Get_User_Pa_AlertsQuery>(print(Get_User_Pa_AlertsDocument), variables));
     },
     update_user_location(variables: Update_User_LocationMutationVariables): Promise<Update_User_LocationMutation> {
       return withWrapper(() => client.request<Update_User_LocationMutation>(print(Update_User_LocationDocument), variables));

@@ -28,12 +28,13 @@ query get_user_meta($id: String!) {
       title
       scraper
     }
-    user_pa_statuses {
-      pa_status_id
-      status
-      ts
-    }
     created_at
+  }
+}
+
+query get_user_pa_alerts($user_id: String!) {
+  user_pa_status(where: {user_id: {_eq: $user_id }, status: { _eq: alert }}) {
+    pa_status_id
   }
 }
 
