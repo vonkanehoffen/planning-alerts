@@ -10,7 +10,8 @@ import { postGisToRNMapsLocation, regionFrom, toObject } from "../../utils";
 import {
   Pa_Status,
   useGet_Open_Pa_Near_PointLazyQuery,
-  useGet_Recent_Closed_Pa_Near_PointLazyQuery
+  useGet_Recent_Closed_Pa_Near_PointLazyQuery,
+  useGet_User_Pa_AlertsQuery
 } from "../../generated/graphql";
 import { compareAsc, formatISO, parseISO, subDays } from "date-fns";
 import MapView, { Marker, PROVIDER_DEFAULT, Region } from "react-native-maps";
@@ -20,6 +21,7 @@ import { PaDetails } from "./PaDetails";
 import { StyleService, useStyleSheet } from "@ui-kitten/components";
 import AsyncStorage from "@react-native-community/async-storage";
 import { ApolloNetworkStatus } from "./ApolloNetworkStatus";
+import { useAuth } from "../auth/AuthProvider";
 
 interface PlanningMapProps {
   userLocation: geography;
@@ -32,6 +34,14 @@ type PaDataObject = { [index: string]: Pa_Status };
 export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
   const styles = useStyleSheet(themedStyles);
   const mapRef = useRef(null);
+
+  // User PA alerts query
+  const { credentials } = useAuth();
+  const userPaAlertsQuery = useGet_User_Pa_AlertsQuery({
+    variables: {
+      user_id: credentials.claims.sub
+    }
+  });
 
   // PA Data request hooks
   const [
@@ -110,31 +120,20 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
 
   /**
    * Focus on new PAs following notification
-   * This looks for presence of message in async storage, then removes it as focus takes place.
-   * The relevant Apollo query is also updated...somehow? Not sure which hook is doing that but it seems to work.
-   * TODO: Does this all need to be in Hasura against users?
-   *  setBackgroundMessageHandler doesn't work when app closed on Android.
-   *  Doesn't work at all on iOS
-   *  ...or can https://github.com/react-native-community/push-notification-ios help ?
-   *  Also this probably won't trigger a re-fetch of planning data.
-   *  We need an event that says "I've been opened from a notifcation"
-   *  All we have currently is "I've been opened" ...via AppState
-   *  ...or is this a dev only thing? TRhe docs here:
-   *  https://rnfirebase.io/messaging/usage
-   *  say it should work.
-   *  Try a proper app store release first.
+   * This re-fetches the appropriate apollo query and focuses if alert items are returned.
+   * Note FCM background message processing is too unreliable to do this, hence we just trigger on AppState change.
+   * Tried lots. Not just dev environment.... don't go there again...
    */
   useEffect(() => {
     const handleAppStateChange = async (nextAppState: AppStateStatus) => {
       console.log("handleAppStateChange", nextAppState);
       if (nextAppState === "active") {
-        const messages = await AsyncStorage.getItem("messages");
-        console.log("messages = ", messages);
-        if (messages) {
-          const markers = Object.keys(openPaData).filter(id =>
-            isNew(openPaData[id].updated_at)
-          );
-          console.log("markers:", markers);
+        // TODO: Dodgy: https://github.com/apollographql/react-apollo/issues/3917
+        const query = await userPaAlertsQuery.refetch();
+        console.log("userPaAlertsQuery:", query);
+        if (query.data?.user_pa_status) {
+          const markers = query.data.user_pa_status.map(s => s.pa_status_id);
+          console.log("markers", markers);
           if (markers.length > 0) {
             // @ts-ignore
             mapRef.current.fitToSuppliedMarkers(markers, {
@@ -150,8 +149,6 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
           if (markers.length === 1) {
             setFocusedPaId(markers[0]);
           }
-
-          AsyncStorage.removeItem("messages");
         }
       }
     };
