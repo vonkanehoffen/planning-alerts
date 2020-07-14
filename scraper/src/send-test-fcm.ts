@@ -9,7 +9,7 @@ inquirer
     },
     {
       name: "token",
-      default: "eApZz22RE7g:APA91bGKdvMydSTv6BxYLgS6dC-fjVnhfFegPlNTHSfNwPHqggjtOaeY8SyyaMOtgmuTHlNTLd6lLTTifIE8RlhnNfIl8Wc0cJqBSXXISzh1M5rOTIsBFVKooeS-XIcsQ_PF-jsZUmss"
+      default: "ejA5zNqFRG2TviUftK-Ase:APA91bFl6zUaevB-q_nbC09FdBpXyweziM25EWJs-J8Jmt1e3To21RWVqi-dDnn0ao6PzAP4RKJe3GV_LSCJHn--ntFIruerZtJ7jmsDxIHXRmVaf5ZysLDsHPUfK_ein1tXbFtE8U__"
     },
     {
       name: "title",

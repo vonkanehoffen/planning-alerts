@@ -4977,7 +4977,13 @@ export type Get_UsersQueryResult = ApolloReactCommon.QueryResult<
 >;
 export const Set_User_AlertsDocument = gql`
   mutation set_user_alerts($objects: [user_pa_status_insert_input!]!) {
-    insert_user_pa_status(objects: $objects) {
+    insert_user_pa_status(
+      objects: $objects
+      on_conflict: {
+        constraint: user_pa_status_pkey
+        update_columns: [status, pa_status_id]
+      }
+    ) {
       affected_rows
     }
   }

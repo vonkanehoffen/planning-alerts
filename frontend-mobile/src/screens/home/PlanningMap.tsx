@@ -19,7 +19,6 @@ import { HomeMarker } from "../../components/HomeMarker";
 import { MapMarker } from "./MapMarker";
 import { PaDetails } from "./PaDetails";
 import { StyleService, useStyleSheet } from "@ui-kitten/components";
-import AsyncStorage from "@react-native-community/async-storage";
 import { ApolloNetworkStatus } from "./ApolloNetworkStatus";
 import { useAuth } from "../auth/AuthProvider";
 
@@ -120,7 +119,9 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
 
   /**
    * Focus on new PAs following notification
-   * This re-fetches the appropriate apollo query and focuses if alert items are returned.
+   * This re-fetches the user pa alerts query when app is opened and focuses if alert items are returned:
+   * The secondary effect below fires for this - needs to be two stage as focus is reliant on main PA data query.
+   *
    * Note FCM background message processing is too unreliable to do this, hence we just trigger on AppState change.
    * Tried lots. Not just dev environment.... don't go there again...
    */
@@ -128,28 +129,8 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
     const handleAppStateChange = async (nextAppState: AppStateStatus) => {
       console.log("handleAppStateChange", nextAppState);
       if (nextAppState === "active") {
-        // TODO: Dodgy: https://github.com/apollographql/react-apollo/issues/3917
+        // TODO: Dodgy? https://github.com/apollographql/react-apollo/issues/3917
         const query = await userPaAlertsQuery.refetch();
-        console.log("userPaAlertsQuery:", query);
-        if (query.data?.user_pa_status) {
-          const markers = query.data.user_pa_status.map(s => s.pa_status_id);
-          console.log("markers", markers);
-          if (markers.length > 0) {
-            // @ts-ignore
-            mapRef.current.fitToSuppliedMarkers(markers, {
-              animated: true
-              // edgePadding: { // This does bugger all. Bug?
-              //   top: 2000,
-              //   right: 2000,
-              //   bottom: 2000,
-              //   left: 2000,
-              // },
-            });
-          }
-          if (markers.length === 1) {
-            setFocusedPaId(markers[0]);
-          }
-        }
       }
     };
 
@@ -161,6 +142,31 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
 
   // PA currently focused by user
   const [focusedPaId, setFocusedPaId] = useState("");
+
+  // Focus on alert PAs when marker data has loaded.
+  useEffect(() => {
+    if (userPaAlertsQuery.data?.user_pa_status && openPaQueryData?.pa_status) {
+      const markers = userPaAlertsQuery.data.user_pa_status.map(
+        s => s.pa_status_id
+      );
+      console.log("markers", markers);
+      if (markers.length > 0) {
+        // @ts-ignore
+        mapRef.current.fitToSuppliedMarkers(markers, {
+          animated: true
+          // edgePadding: { // This does bugger all. Bug?
+          //   top: 2000,
+          //   right: 2000,
+          //   bottom: 2000,
+          //   left: 2000,
+          // },
+        });
+      }
+      if (markers.length === 1) {
+        setFocusedPaId(markers[0]);
+      }
+    }
+  }, [userPaAlertsQuery.data, openPaQueryData]);
 
   // Build Map Markers
   const openMarkers = useMemo(

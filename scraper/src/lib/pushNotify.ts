@@ -94,6 +94,12 @@ export async function sendFcm(token, title, body, data, username) {
   }
 }
 
+/**
+ * Set new planning app alert status in Hasura - this gets hit when app opens from push notification
+ * ...data payloads in the notifications themselves are too unreliable with the FCM lib currently :-(
+ * @param paIds
+ * @param userId
+ */
 export async function setUserAlerts(paIds: string[], userId: string) {
   return sdk.set_user_alerts({
     objects: paIds.map(paId => ({

@@ -88,7 +88,7 @@ query get_new_planning_apps_near(
 }
 
 query get_users($limit: Int!, $offset: Int!) {
-  users( limit: $limit, offset: $offset) {
+  users(limit: $limit, offset: $offset) {
     id
     name
     location
@@ -99,8 +99,14 @@ query get_users($limit: Int!, $offset: Int!) {
 }
 
 # Set planning apps to alert the user about next time they open the app
-mutation set_user_alerts($objects:[user_pa_status_insert_input!]!) {
-  insert_user_pa_status(objects: $objects) {
+mutation set_user_alerts($objects: [user_pa_status_insert_input!]!) {
+  insert_user_pa_status(
+    objects: $objects
+    on_conflict: {
+      constraint: user_pa_status_pkey
+      update_columns: [status, pa_status_id]
+    }
+  ) {
     affected_rows
   }
 }
