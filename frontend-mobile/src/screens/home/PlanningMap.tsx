@@ -11,7 +11,9 @@ import {
   Pa_Status,
   useGet_Open_Pa_Near_PointLazyQuery,
   useGet_Recent_Closed_Pa_Near_PointLazyQuery,
-  useGet_User_Pa_AlertsQuery
+  useGet_User_Pa_AlertsQuery,
+  useSet_User_AlertsMutation,
+  User_Pa_Status_Type_Enum
 } from "../../generated/graphql";
 import { compareAsc, formatISO, parseISO, subDays } from "date-fns";
 import MapView, { Marker, PROVIDER_DEFAULT, Region } from "react-native-maps";
@@ -41,6 +43,9 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
       user_id: credentials.claims.sub
     }
   });
+
+  // Unset user PA alerts mutation
+  const [setUserAlerts] = useSet_User_AlertsMutation();
 
   // PA Data request hooks
   const [
@@ -165,6 +170,15 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
       if (markers.length === 1) {
         setFocusedPaId(markers[0]);
       }
+      setUserAlerts({
+        variables: {
+          objects: markers.map(m => ({
+            pa_status_id: m,
+            status: User_Pa_Status_Type_Enum.Alerted,
+            user_id: credentials.claims.sub
+          }))
+        }
+      });
     }
   }, [userPaAlertsQuery.data, openPaQueryData]);
 

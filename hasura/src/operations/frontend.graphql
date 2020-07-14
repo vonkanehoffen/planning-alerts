@@ -121,3 +121,5 @@ query get_recent_closed_pa_near_point(
     url
   }
 }
+
+# Note mutation set_user_alerts in scraper is shared with front end.
