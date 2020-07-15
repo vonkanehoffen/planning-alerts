@@ -4,6 +4,7 @@ import {
   AppStateStatus,
   Platform,
   StyleSheet,
+  TouchableOpacity,
   View
 } from "react-native";
 import { postGisToRNMapsLocation, regionFrom, toObject } from "../../utils";
@@ -23,6 +24,7 @@ import { PaDetails } from "./PaDetails";
 import { StyleService, useStyleSheet } from "@ui-kitten/components";
 import { ApolloNetworkStatus } from "./ApolloNetworkStatus";
 import { useAuth } from "../auth/AuthProvider";
+import { LogoFab } from "../../components/LogoFab";
 
 interface PlanningMapProps {
   userLocation: geography;
@@ -209,6 +211,9 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
     [closedPaData]
   );
 
+  // Height of PaDetails when populated, for offsetting the home button.
+  const [paDetailsHeight, setPaDetailsHeight] = useState(0);
+
   // Initial region for map on mount
   const initialRegion = regionFrom(
     userLocation.coordinates[0],
@@ -217,15 +222,14 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
   );
 
   // Position map over user home location
-  const resetRegion = () => {
+  const goHome = () => {
     // @ts-ignore
     mapRef?.current.animateToRegion(initialRegion);
+    setFocusedPaId("");
   };
 
   // Close details callout
   const unFocusPa = () => setFocusedPaId("");
-
-  // TODO: Reinstate home button
 
   return (
     <View style={styles.container}>
@@ -255,12 +259,22 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
           <PaDetails
             pa={openPaData[focusedPaId] || closedPaData[focusedPaId]}
             unFocus={unFocusPa}
+            setHeight={setPaDetailsHeight}
           />
         ) : (
           <View />
         )}
       </View>
       <ApolloNetworkStatus />
+      <TouchableOpacity
+        style={{
+          ...styles.fab,
+          bottom: (focusedPaId ? paDetailsHeight + 85 : 0) + 10
+        }}
+        onPress={goHome}
+      >
+        <LogoFab />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -286,5 +300,9 @@ const themedStyles = StyleService.create({
     position: "absolute",
     top: Platform.OS === "ios" ? 50 : 10,
     left: 10
+  },
+  fab: {
+    position: "absolute",
+    right: 10
   }
 });

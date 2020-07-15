@@ -8,15 +8,20 @@ import {
   StyleService
 } from "@ui-kitten/components";
 import { formatDistance, parseISO } from "date-fns";
-import { Linking, StyleSheet, View } from "react-native";
+import { Animated, Linking, StyleSheet, View } from "react-native";
 import { Box } from "../../components/Box";
 
 interface PaDetailsProps {
   pa: Pa_Status;
   unFocus: () => any;
+  setHeight: (height: number) => any;
 }
 
-export const PaDetails: React.FC<PaDetailsProps> = ({ pa, unFocus }) => {
+export const PaDetails: React.FC<PaDetailsProps> = ({
+  pa,
+  unFocus,
+  setHeight
+}) => {
   const renderItem = ({ item, index }: any) => (
     <ListItem
       title={item.title}
@@ -46,7 +51,13 @@ export const PaDetails: React.FC<PaDetailsProps> = ({ pa, unFocus }) => {
 
   return (
     <Box m={1}>
-      <List data={listData} renderItem={renderItem} />
+      <List
+        data={listData}
+        renderItem={renderItem}
+        onLayout={event => {
+          setHeight(event.nativeEvent.layout.height);
+        }}
+      />
       <View style={styles.footerContainer}>
         <Button
           style={styles.backButton}
