@@ -158,13 +158,13 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
       if (markers.length > 0) {
         // @ts-ignore
         mapRef.current.fitToSuppliedMarkers(markers, {
-          animated: true
-          // edgePadding: { // This does bugger all. Bug?
-          //   top: 2000,
-          //   right: 2000,
-          //   bottom: 2000,
-          //   left: 2000,
-          // },
+          animated: true,
+          edgePadding: {
+            top: 220,
+            right: 220,
+            bottom: 220,
+            left: 220
+          }
         });
       }
       if (markers.length === 1) {
