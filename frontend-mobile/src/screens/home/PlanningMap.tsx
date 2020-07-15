@@ -21,7 +21,12 @@ import MapView, { Marker, PROVIDER_DEFAULT, Region } from "react-native-maps";
 import { HomeMarker } from "../../components/HomeMarker";
 import { MapMarker } from "./MapMarker";
 import { PaDetails } from "./PaDetails";
-import { StyleService, useStyleSheet } from "@ui-kitten/components";
+import {
+  StyleService,
+  useStyleSheet,
+  Icon,
+  useTheme
+} from "@ui-kitten/components";
 import { ApolloNetworkStatus } from "./ApolloNetworkStatus";
 import { useAuth } from "../auth/AuthProvider";
 import { LogoFab } from "../../components/LogoFab";
@@ -32,11 +37,14 @@ interface PlanningMapProps {
 
 type PaDataObject = { [index: string]: Pa_Status };
 
-// Do we really need to refactor the whole thing?
+const HomeIcon = (props: any) => <Icon {...props} name="home" />;
+
+const CloseIcon = (props: any) => <Icon {...props} name="close" />;
 
 export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
   const styles = useStyleSheet(themedStyles);
   const mapRef = useRef(null);
+  const theme = useTheme();
 
   // User PA alerts query
   const { credentials } = useAuth();
@@ -269,11 +277,15 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
       <TouchableOpacity
         style={{
           ...styles.fab,
-          bottom: (focusedPaId ? paDetailsHeight + 85 : 0) + 10
+          bottom: (focusedPaId ? paDetailsHeight + 60 : 0) + 10
         }}
         onPress={goHome}
       >
-        <LogoFab />
+        {focusedPaId ? (
+          <Icon fill={theme["color-basic-800"]} name="close" />
+        ) : (
+          <Icon fill={theme["color-basic-800"]} name="home" />
+        )}
       </TouchableOpacity>
     </View>
   );
@@ -303,6 +315,11 @@ const themedStyles = StyleService.create({
   },
   fab: {
     position: "absolute",
-    right: 10
+    right: 10,
+    backgroundColor: "color-primary-500",
+    width: 50,
+    height: 50,
+    padding: 7,
+    borderRadius: 20
   }
 });

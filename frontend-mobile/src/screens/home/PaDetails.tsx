@@ -59,14 +59,6 @@ export const PaDetails: React.FC<PaDetailsProps> = ({
         }}
       />
       <View style={styles.footerContainer}>
-        <Button
-          style={styles.backButton}
-          size="small"
-          status="basic"
-          onPress={unFocus}
-        >
-          BACK
-        </Button>
         <Button size="small" onPress={() => Linking.openURL(pa.url)}>
           MORE INFO
         </Button>
@@ -80,8 +72,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     marginTop: 10
-  },
-  backButton: {
-    marginRight: 10
   }
 });
