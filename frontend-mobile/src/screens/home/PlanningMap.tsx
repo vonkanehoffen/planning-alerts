@@ -37,9 +37,7 @@ interface PlanningMapProps {
 
 type PaDataObject = { [index: string]: Pa_Status };
 
-const HomeIcon = (props: any) => <Icon {...props} name="home" />;
-
-const CloseIcon = (props: any) => <Icon {...props} name="close" />;
+// TODO: Think about how to cycle through new planning alerts and relate what colour blobs mean what
 
 export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
   const styles = useStyleSheet(themedStyles);
