@@ -84,3 +84,7 @@ In Xcode:
 - Distribute App - App store connect
 
 Dev and Distribution certs live in the login keychain.
+
+### Upgrading React Native versions
+
+[Upgrade Helper](https://react-native-community.github.io/upgrade-helper/?from=0.62.2&to=0.63.2)
