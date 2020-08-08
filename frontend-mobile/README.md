@@ -88,3 +88,32 @@ Dev and Distribution certs live in the login keychain.
 ### Upgrading React Native versions
 
 [Upgrade Helper](https://react-native-community.github.io/upgrade-helper/?from=0.62.2&to=0.63.2)
+
+### Things to try when RN is screwed following upgrades
+
+```
+pod deintegrate
+pod install
+```
+
+- Open PlanningAlerts.xcworkspace no proj in Xcode
+
+Clean build folders
+
+- Product -> Clean Build Folder
+  or
+
+```
+cd ios
+xcodebuild clean
+...
+cd android
+./gradlew clean
+```
+
+```
+npx react-native start --reset-cache
+npx react-native run-android
+```
+
+https://guides.cocoapods.org/using/troubleshooting.html
