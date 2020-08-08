@@ -117,3 +117,11 @@ npx react-native run-android
 ```
 
 https://guides.cocoapods.org/using/troubleshooting.html
+
+Don't do Hermes yet. RN Firebase doesn't support it.
+
+IOS: Could not find or use auto-linked library:
+https://github.com/facebook/react-native-fbsdk/issues/755
+
+Upgrade support:
+https://github.com/react-native-community/upgrade-support/issues/13

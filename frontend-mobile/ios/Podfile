@@ -1,26 +1,12 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, '11.0'
+platform :ios, '10.0'
 
 target 'PlanningAlerts' do
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
-
-  # react-native-permissions
-  permissions_path = '../node_modules/react-native-permissions/ios'
-  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse.podspec"
-  pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications.podspec"
-
-  # react-native-geolocation-service
-  pod 'react-native-geolocation', path: '../node_modules/@react-native-community/geolocation'
-
-  # React Native Maps dependencies
-  rn_maps_path = '../node_modules/react-native-maps'
-  pod 'react-native-google-maps', :path => rn_maps_path
-  pod 'GoogleMaps'
-  pod 'Google-Maps-iOS-Utils'
 
   target 'PlanningAlertsTests' do
     inherit! :complete
