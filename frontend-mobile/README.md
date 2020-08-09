@@ -125,3 +125,4 @@ https://github.com/facebook/react-native-fbsdk/issues/755
 
 Upgrade support:
 https://github.com/react-native-community/upgrade-support/issues/13
+https://github.com/react-native-community/upgrade-support/issues/25
