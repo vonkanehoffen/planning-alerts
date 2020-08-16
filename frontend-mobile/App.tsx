@@ -1,118 +1,72 @@
 /**
- * Sample React Native App
+ * Planning Alerts
+ *
+ * React Native App
  * https://github.com/facebook/react-native
  *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
+ * Some parts of the UI Kitten template
+ * https://akveo.github.io/react-native-ui-kitten/docs
  *
  * @format
  */
 
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import React, { useEffect } from "react";
+import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
+import { mapping } from "@eva-design/eva";
+import { myTheme } from "./src/custom-theme";
+import { AppNavigator } from "./src/navigation/AppNavigator";
+import { GraphQLProvider } from "./src/data-layer/GraphQLProvider";
+import { AuthProvider } from "./src/screens/auth/AuthProvider";
+import RNBootSplash from "react-native-bootsplash";
+import AsyncStorage from "@react-native-community/async-storage";
+import messaging from "@react-native-firebase/messaging";
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+// Alerts....
+// Full Notification looks like:
+// {
+//   "newPaIds": "[\"126774/TEL/2020\",\"CDN/20/0111\"]",
+//   "notification": {
+//     "body": "Click here to see details",
+//     "e": "1",
+//     "title": "2 new planning applications near you this week."
+//   }
+// }
+//  - They are received from index.js .setBackgroundMessageHandler (Async Storage)
+//  - Notification content doesn't actually matter. It comes from Graph query
+//  - They're just a signal to focus map on PAs when app first becomes active after notification
+//  - They're stored in Async storage as mostly they'll be accepted from the background handler.
 
-declare const global: {HermesInternal: null | {}};
+/**
+ * Initialise the app.
+ * Setup listeners
+ * Hide boot screen etc.
+ * @constructor
+ */
+export function App(): React.ReactFragment {
+  useEffect(() => {
+    RNBootSplash.hide();
+  });
 
-const App = () => {
+  useEffect(() => {
+    // Note this is for foreground messages only. Background ones handled in index.js
+    return messaging().onMessage(async remoteMessage => {
+      const message = JSON.stringify(remoteMessage);
+      console.log("FCM onMessage:", message);
+      AsyncStorage.setItem("messages", message);
+    });
+  }, []);
+
   return (
     <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.tsx</Text> to change
-                this screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+      <IconRegistry icons={EvaIconsPack} />
+      <ApplicationProvider mapping={mapping} theme={myTheme}>
+        <AuthProvider>
+          <GraphQLProvider>
+            <AppNavigator />
+          </GraphQLProvider>
+        </AuthProvider>
+      </ApplicationProvider>
     </>
   );
-};
-
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
-
-export default App;
+}
