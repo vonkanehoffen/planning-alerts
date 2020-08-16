@@ -15,9 +15,9 @@ import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { mapping } from "@eva-design/eva";
 import { myTheme } from "./src/custom-theme";
-// import { AppNavigator } from "./src/navigation/AppNavigator";
-// import { GraphQLProvider } from "./src/data-layer/GraphQLProvider";
-// import { AuthProvider } from "./src/screens/auth/AuthProvider";
+import { AppNavigator } from "./src/navigation/AppNavigator";
+import { GraphQLProvider } from "./src/data-layer/GraphQLProvider";
+import { AuthProvider } from "./src/screens/auth/AuthProvider";
 // import RNBootSplash from "react-native-bootsplash";
 import AsyncStorage from "@react-native-community/async-storage";
 import messaging from "@react-native-firebase/messaging";
@@ -63,12 +63,11 @@ export default function App(): React.ReactFragment {
     <>
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider mapping={mapping} theme={myTheme}>
-        <WelcomeScreen doLogin={() => false}/>
-        {/*<AuthProvider>*/}
-        {/*  <GraphQLProvider>*/}
-        {/*    <AppNavigator />*/}
-        {/*  </GraphQLProvider>*/}
-        {/*</AuthProvider>*/}
+        <AuthProvider>
+          <GraphQLProvider>
+            <AppNavigator />
+          </GraphQLProvider>
+        </AuthProvider>
       </ApplicationProvider>
     </>
   );

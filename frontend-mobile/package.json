@@ -31,7 +31,7 @@
     "graphql-tag": "^2.11.0",
     "jwt-decode": "^2.2.0",
     "react": "16.13.1",
-    "react-apollo-network-status": "^5.0.0-beta.2",
+    "react-apollo-network-status": "^3.0.0",
     "react-native": "0.63.2",
     "react-native-auth0": "^2.6.0",
     "react-native-device-info": "^5.6.5",
@@ -43,6 +43,7 @@
     "react-native-reanimated": "^1.13.0",
     "react-native-safe-area-context": "^3.1.4",
     "react-native-screens": "^2.10.1",
+    "react-native-snackbar": "^2.2.3",
     "react-native-svg": "^12.1.0"
   },
   "devDependencies": {
@@ -50,8 +51,11 @@
     "@babel/runtime": "^7.8.4",
     "@react-native-community/eslint-config": "^1.1.0",
     "@types/jest": "^25.2.3",
+    "@types/jwt-decode": "^2.2.1",
     "@types/lodash": "^4.14.159",
     "@types/react-native": "^0.63.2",
+    "@types/react-native-auth0": "^2.5.1",
+    "@types/react-navigation": "^3.4.0",
     "@types/react-test-renderer": "^16.9.2",
     "@typescript-eslint/eslint-plugin": "^2.27.0",
     "@typescript-eslint/parser": "^2.27.0",
