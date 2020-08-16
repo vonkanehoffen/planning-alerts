@@ -15,12 +15,14 @@ import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { mapping } from "@eva-design/eva";
 import { myTheme } from "./src/custom-theme";
-import { AppNavigator } from "./src/navigation/AppNavigator";
-import { GraphQLProvider } from "./src/data-layer/GraphQLProvider";
-import { AuthProvider } from "./src/screens/auth/AuthProvider";
-import RNBootSplash from "react-native-bootsplash";
+// import { AppNavigator } from "./src/navigation/AppNavigator";
+// import { GraphQLProvider } from "./src/data-layer/GraphQLProvider";
+// import { AuthProvider } from "./src/screens/auth/AuthProvider";
+// import RNBootSplash from "react-native-bootsplash";
 import AsyncStorage from "@react-native-community/async-storage";
 import messaging from "@react-native-firebase/messaging";
+import { Text } from 'react-native'
+import { WelcomeScreen } from './src/screens/auth/WelcomeScreen'
 
 // Alerts....
 // Full Notification looks like:
@@ -43,9 +45,9 @@ import messaging from "@react-native-firebase/messaging";
  * Hide boot screen etc.
  * @constructor
  */
-export function App(): React.ReactFragment {
+export default function App(): React.ReactFragment {
   useEffect(() => {
-    RNBootSplash.hide();
+    // RNBootSplash.hide();
   });
 
   useEffect(() => {
@@ -61,11 +63,12 @@ export function App(): React.ReactFragment {
     <>
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider mapping={mapping} theme={myTheme}>
-        <AuthProvider>
-          <GraphQLProvider>
-            <AppNavigator />
-          </GraphQLProvider>
-        </AuthProvider>
+        <WelcomeScreen doLogin={() => false}/>
+        {/*<AuthProvider>*/}
+        {/*  <GraphQLProvider>*/}
+        {/*    <AppNavigator />*/}
+        {/*  </GraphQLProvider>*/}
+        {/*</AuthProvider>*/}
       </ApplicationProvider>
     </>
   );
