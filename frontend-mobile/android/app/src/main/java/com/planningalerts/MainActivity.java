@@ -1,4 +1,4 @@
-package com.planningalerts;
+package com.kanec.planningalerts;
 
 import com.facebook.react.ReactActivity;
 
