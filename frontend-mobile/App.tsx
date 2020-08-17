@@ -18,7 +18,7 @@ import { myTheme } from "./src/custom-theme";
 import { AppNavigator } from "./src/navigation/AppNavigator";
 import { GraphQLProvider } from "./src/data-layer/GraphQLProvider";
 import { AuthProvider } from "./src/screens/auth/AuthProvider";
-// import RNBootSplash from "react-native-bootsplash";
+import RNBootSplash from "react-native-bootsplash";
 import AsyncStorage from "@react-native-community/async-storage";
 import messaging from "@react-native-firebase/messaging";
 import { Text } from 'react-native'
@@ -47,7 +47,7 @@ import { WelcomeScreen } from './src/screens/auth/WelcomeScreen'
  */
 export default function App(): React.ReactFragment {
   useEffect(() => {
-    // RNBootSplash.hide();
+    RNBootSplash.hide();
   });
 
   useEffect(() => {
