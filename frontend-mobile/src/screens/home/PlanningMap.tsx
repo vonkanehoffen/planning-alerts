@@ -38,7 +38,7 @@ type PaDataObject = {[index: string]: Pa_Status};
 
 // TODO: Think about how to cycle through new planning alerts and relate what colour blobs mean what
 
-export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
+export const PlanningMap: React.FC<PlanningMapProps> = ({userLocation}) => {
   const styles = useStyleSheet(themedStyles);
   const mapRef = useRef(null);
   const theme = useTheme();

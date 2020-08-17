@@ -19,6 +19,8 @@ export function useFCMSetup() {
   const { credentials } = useContext(AuthContext);
   const [upsertFCMToken, { data }] = useUpsert_Fcm_TokenMutation();
   useEffect(() => {
+    // TODO: fix registerForPushNotifications error: [Error: [messaging/unregistered] You must be registered for remote messages before calling getToken, see messaging().registerDeviceForRemoteMessages().]
+    //  ....or bin FBM off altogether as it stops us using Flipper. Use expo notifications module instead.
     async function registerForPushNotifications() {
       const device_id = DeviceInfo.getUniqueId();
       try {
