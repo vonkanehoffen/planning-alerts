@@ -1,41 +1,40 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {
   AppState,
   AppStateStatus,
   Platform,
   StyleSheet,
   TouchableOpacity,
-  View
-} from "react-native";
-import { postGisToRNMapsLocation, regionFrom, toObject } from "../../utils";
+  View,
+} from 'react-native';
+import {postGisToRNMapsLocation, regionFrom, toObject} from '../../utils';
 import {
   Pa_Status,
   useGet_Open_Pa_Near_PointLazyQuery,
   useGet_Recent_Closed_Pa_Near_PointLazyQuery,
   useGet_User_Pa_AlertsQuery,
   useSet_User_AlertsMutation,
-  User_Pa_Status_Type_Enum
-} from "../../generated/graphql";
-import { compareAsc, formatISO, parseISO, subDays } from "date-fns";
-import MapView, { Marker, PROVIDER_DEFAULT, Region } from "react-native-maps";
-import { HomeMarker } from "../../components/HomeMarker";
-import { MapMarker } from "./MapMarker";
-import { PaDetails } from "./PaDetails";
+  User_Pa_Status_Type_Enum,
+} from '../../generated/graphql';
+import {compareAsc, formatISO, parseISO, subDays} from 'date-fns';
+import MapView, {Marker, PROVIDER_DEFAULT, Region} from 'react-native-maps';
+import {HomeMarker} from '../../components/HomeMarker';
+import {MapMarker} from './MapMarker';
+import {PaDetails} from './PaDetails';
 import {
   StyleService,
   useStyleSheet,
   Icon,
-  useTheme
-} from "@ui-kitten/components";
-import { ApolloNetworkStatus } from "./ApolloNetworkStatus";
-import { useAuth } from "../auth/AuthProvider";
-import { LogoFab } from "../../components/LogoFab";
+  useTheme,
+  Spinner,
+} from '@ui-kitten/components';
+import {useAuth} from '../auth/AuthProvider';
 
 interface PlanningMapProps {
   userLocation: geography;
 }
 
-type PaDataObject = { [index: string]: Pa_Status };
+type PaDataObject = {[index: string]: Pa_Status};
 
 // TODO: Think about how to cycle through new planning alerts and relate what colour blobs mean what
 
@@ -45,30 +44,33 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
   const theme = useTheme();
 
   // User PA alerts query
-  const { credentials } = useAuth();
+  const {credentials} = useAuth();
   const userPaAlertsQuery = useGet_User_Pa_AlertsQuery({
     variables: {
-      user_id: credentials.claims.sub
-    }
+      user_id: credentials.claims.sub,
+    },
   });
 
   // Unset user PA alerts mutation
-  const [setUserAlerts] = useSet_User_AlertsMutation();
+  const [setUserAlerts, setUserAlertsMutation] = useSet_User_AlertsMutation();
 
-  // PA Data request hooks
-  const [
-    getOpenPa,
-    { error: openPaError, data: openPaQueryData }
-  ] = useGet_Open_Pa_Near_PointLazyQuery();
+  // PA Data queries
+  const [getOpenPa, openPaQuery] = useGet_Open_Pa_Near_PointLazyQuery();
 
   const [
     getClosedPa,
-    { error: closedPaError, data: closedPaQueryData }
+    closedPaQuery,
   ] = useGet_Recent_Closed_Pa_Near_PointLazyQuery();
+
+  const loading =
+    userPaAlertsQuery.loading ||
+    setUserAlertsMutation.loading ||
+    openPaQuery.loading ||
+    closedPaQuery.loading;
 
   // Min date to show closed PAs
   const minDate = subDays(new Date(), 8);
-  const minDateFormatted = formatISO(minDate, { representation: "date" });
+  const minDateFormatted = formatISO(minDate, {representation: 'date'});
   const isNew = (updated_at: string) =>
     compareAsc(parseISO(updated_at), minDate) > -1;
   const distance = 3000; // Search radius
@@ -78,15 +80,15 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
     getOpenPa({
       variables: {
         point: userLocation,
-        distance
-      }
+        distance,
+      },
     });
     getClosedPa({
       variables: {
         point: userLocation,
         distance,
-        minDate: minDateFormatted
-      }
+        minDate: minDateFormatted,
+      },
     });
   }, [userLocation]);
 
@@ -98,35 +100,35 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
   useEffect(() => {
     setOpenPaData(value => ({
       ...value,
-      ...toObject(openPaQueryData?.pa_status)
+      ...toObject(openPaQuery.data?.pa_status),
     }));
-  }, [openPaQueryData]);
+  }, [openPaQuery.data]);
 
   useEffect(() => {
     setClosedPaData(value => ({
       ...value,
-      ...toObject(closedPaQueryData?.pa_status)
+      ...toObject(closedPaQuery.data?.pa_status),
     }));
-  }, [closedPaQueryData]);
+  }, [closedPaQuery.data]);
 
   // Query at new location when map is moved
   const handleRegionChange = (newRegion: Region) => {
     const point = {
-      type: "Point",
-      coordinates: [newRegion.latitude, newRegion.longitude]
+      type: 'Point',
+      coordinates: [newRegion.latitude, newRegion.longitude],
     };
     getOpenPa({
       variables: {
         point,
-        distance
-      }
+        distance,
+      },
     });
     getClosedPa({
       variables: {
         point,
         distance,
-        minDate: minDateFormatted
-      }
+        minDate: minDateFormatted,
+      },
     });
   };
 
@@ -140,29 +142,29 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
    */
   useEffect(() => {
     const handleAppStateChange = async (nextAppState: AppStateStatus) => {
-      console.log("handleAppStateChange", nextAppState);
-      if (nextAppState === "active") {
+      console.log('handleAppStateChange', nextAppState);
+      if (nextAppState === 'active') {
         // TODO: Dodgy? https://github.com/apollographql/react-apollo/issues/3917
         const query = await userPaAlertsQuery.refetch();
       }
     };
 
-    AppState.addEventListener("change", handleAppStateChange);
+    AppState.addEventListener('change', handleAppStateChange);
     return () => {
-      AppState.removeEventListener("change", handleAppStateChange);
+      AppState.removeEventListener('change', handleAppStateChange);
     };
   });
 
   // PA currently focused by user
-  const [focusedPaId, setFocusedPaId] = useState("");
+  const [focusedPaId, setFocusedPaId] = useState('');
 
   // Focus on alert PAs when marker data has loaded.
   useEffect(() => {
-    if (userPaAlertsQuery.data?.user_pa_status && openPaQueryData?.pa_status) {
+    if (userPaAlertsQuery.data?.user_pa_status && openPaQuery.data?.pa_status) {
       const markers = userPaAlertsQuery.data.user_pa_status.map(
-        s => s.pa_status_id
+        s => s.pa_status_id,
       );
-      console.log("markers", markers);
+      console.log('markers', markers);
       if (markers.length > 0) {
         // @ts-ignore
         mapRef.current.fitToSuppliedMarkers(markers, {
@@ -171,8 +173,8 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
             top: 220,
             right: 220,
             bottom: 220,
-            left: 220
-          }
+            left: 220,
+          },
         });
       }
       if (markers.length === 1) {
@@ -183,12 +185,12 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
           objects: markers.map(m => ({
             pa_status_id: m,
             status: User_Pa_Status_Type_Enum.Alerted,
-            user_id: credentials.claims.sub
-          }))
-        }
+            user_id: credentials.claims.sub,
+          })),
+        },
       });
     }
-  }, [userPaAlertsQuery.data, openPaQueryData]);
+  }, [userPaAlertsQuery.data, openPaQuery.data]);
 
   // Build Map Markers
   const openMarkers = useMemo(
@@ -196,12 +198,12 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
       Object.keys(openPaData).map(id => (
         <MapMarker
           pa={openPaData[id]}
-          status={isNew(openPaData[id].updated_at) ? "new" : "open"}
+          status={isNew(openPaData[id].updated_at) ? 'new' : 'open'}
           key={id}
           setFocusedPaId={setFocusedPaId}
         />
       )),
-    [openPaData]
+    [openPaData],
   );
 
   const closedMarkers = useMemo(
@@ -214,7 +216,7 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
           setFocusedPaId={setFocusedPaId}
         />
       )),
-    [closedPaData]
+    [closedPaData],
   );
 
   // Height of PaDetails when populated, for offsetting the home button.
@@ -224,18 +226,18 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
   const initialRegion = regionFrom(
     userLocation.coordinates[0],
     userLocation.coordinates[1],
-    3000
+    3000,
   );
 
   // Position map over user home location
   const goHome = () => {
     // @ts-ignore
     mapRef?.current.animateToRegion(initialRegion);
-    setFocusedPaId("");
+    setFocusedPaId('');
   };
 
   // Close details callout
-  const unFocusPa = () => setFocusedPaId("");
+  const unFocusPa = () => setFocusedPaId('');
 
   return (
     <View style={styles.container}>
@@ -255,8 +257,7 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
         <Marker
           coordinate={postGisToRNMapsLocation(userLocation)}
           title="You"
-          tracksViewChanges={false}
-        >
+          tracksViewChanges={false}>
           <HomeMarker />
         </Marker>
       </MapView>
@@ -271,18 +272,21 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
           <View />
         )}
       </View>
-      <ApolloNetworkStatus />
+      {loading && (
+        <View style={styles.loading}>
+          <Spinner />
+        </View>
+      )}
       <TouchableOpacity
         style={{
           ...styles.fab,
-          bottom: (focusedPaId ? paDetailsHeight + 60 : 0) + 10
+          bottom: (focusedPaId ? paDetailsHeight + 60 : 0) + 10,
         }}
-        onPress={goHome}
-      >
+        onPress={goHome}>
         {focusedPaId ? (
-          <Icon fill={theme["color-basic-800"]} name="close" />
+          <Icon fill={theme['color-basic-800']} name="close" />
         ) : (
-          <Icon fill={theme["color-basic-800"]} name="home" />
+          <Icon fill={theme['color-basic-800']} name="home" />
         )}
       </TouchableOpacity>
     </View>
@@ -292,32 +296,37 @@ export const PlanningMap: React.FC<PlanningMapProps> = ({ userLocation }) => {
 const themedStyles = StyleService.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    height: "100%",
-    width: "100%",
-    justifyContent: "flex-end",
-    alignItems: "center"
+    height: '100%',
+    width: '100%',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
   detailCard: {
-    width: "100%",
-    maxHeight: "60%",
-    backgroundColor: "color-basic-800",
-    position: "relative"
+    width: '100%',
+    maxHeight: '60%',
+    backgroundColor: 'color-basic-800',
+    position: 'relative',
   },
   map: {
-    ...StyleSheet.absoluteFillObject
+    ...StyleSheet.absoluteFillObject,
   },
   logo: {
-    position: "absolute",
-    top: Platform.OS === "ios" ? 50 : 10,
-    left: 10
+    position: 'absolute',
+    top: Platform.OS === 'ios' ? 50 : 10,
+    left: 10,
   },
   fab: {
-    position: "absolute",
+    position: 'absolute',
     right: 10,
-    backgroundColor: "color-primary-500",
+    backgroundColor: 'color-primary-500',
     width: 50,
     height: 50,
     padding: 7,
-    borderRadius: 20
-  }
+    borderRadius: 20,
+  },
+  loading: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+  },
 });

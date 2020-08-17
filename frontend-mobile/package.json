@@ -31,7 +31,6 @@
     "graphql-tag": "^2.11.0",
     "jwt-decode": "^2.2.0",
     "react": "16.13.1",
-    "react-apollo-network-status": "^3.0.0",
     "react-native": "0.63.2",
     "react-native-auth0": "^2.6.0",
     "react-native-bootsplash": "^2.2.5",

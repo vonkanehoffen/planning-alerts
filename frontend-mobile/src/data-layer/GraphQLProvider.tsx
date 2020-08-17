@@ -8,7 +8,6 @@ import { withClientState } from "apollo-link-state";
 import { ApolloLink, Observable } from "apollo-link";
 import config from "../../config.json";
 import { AuthContext } from "../screens/auth/AuthProvider";
-import { ApolloNetworkStatusProvider } from "react-apollo-network-status";
 import Snackbar from "react-native-snackbar";
 import { useTheme } from "@ui-kitten/components";
 
@@ -123,7 +122,7 @@ export const GraphQLProvider: React.FC = ({ children }) => {
 
   return (
     <ApolloProvider client={client}>
-      <ApolloNetworkStatusProvider>{children}</ApolloNetworkStatusProvider>
+      {children}
     </ApolloProvider>
   );
 };
