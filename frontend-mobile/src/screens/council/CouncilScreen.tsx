@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Button, Icon, Text } from "@ui-kitten/components";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import {
   useGet_User_MetaQuery,
   useSet_User_CouncilMutation
@@ -50,10 +50,16 @@ export const CouncilScreen: React.FC<CouncilScreenProps> = ({}) => {
           </Box>
           <Box m={1}>
             {userMeta.users_by_pk.council.scraper !== "idox" ? (
-              <Text category="h6" status="danger">
-                Sorry, your council is not covered by Planning Alerts yet. TODO:
-                Let me know fn
-              </Text>
+              <>
+                <Box mb={1}>
+                  <Text category="h6" status="danger">
+                    Sorry, your council is not covered by Planning Alerts yet.
+                  </Text>
+                </Box>
+                <Text category="p1">
+                  Please get in touch to let us know you're interested!
+                </Text>
+              </>
             ) : (
               <Text category="h6">
                 Great news! Your council is covered by our systems. Set your
