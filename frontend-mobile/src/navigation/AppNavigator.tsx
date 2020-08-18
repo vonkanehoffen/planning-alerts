@@ -5,7 +5,7 @@ import {
   TabNavigationState
 } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { BottomNavigation, BottomNavigationTab } from "@ui-kitten/components";
+import { BottomNavigation, BottomNavigationTab, useTheme } from '@ui-kitten/components'
 import { HomeScreen } from "../screens/home/HomeScreen";
 import { SettingsScreen } from "../screens/settings/SettingsScreen";
 import { SetLocationScreen } from "../screens/set-location/SetLocationScreen";
@@ -18,12 +18,13 @@ import { CouncilScreen } from "../screens/council/CouncilScreen";
 const BottomTab = createBottomTabNavigator();
 
 const BottomTabBar = ({ navigation, state }: any) => {
+  const theme = useTheme();
   const onSelect = (index: number) => {
     navigation.navigate(state.routeNames[index]);
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ backgroundColor: theme['color-basic-800'] }}>
       <BottomNavigation selectedIndex={state.index} onSelect={onSelect}>
         <BottomNavigationTab title="HOME" />
         <BottomNavigationTab title="SETTINGS" />
