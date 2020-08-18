@@ -54,6 +54,7 @@
 		2D02E4901E0B4A5D006451C7 /* PlanningAlerts-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PlanningAlerts-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		38F0B26124E9969600F9A9A4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		38F0B26324EA00DD00F9A9A4 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = PlanningAlerts/BootSplash.storyboard; sourceTree = "<group>"; };
+		38F0B26524EB22B700F9A9A4 /* PlanningAlerts.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = PlanningAlerts.entitlements; path = PlanningAlerts/PlanningAlerts.entitlements; sourceTree = "<group>"; };
 		49764AB67237830E48A0CC3E /* libPods-PlanningAlerts-PlanningAlertsTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PlanningAlerts-PlanningAlertsTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5082EFE021CD21221F549262 /* Pods-PlanningAlerts-PlanningAlertsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlanningAlerts-PlanningAlertsTests.release.xcconfig"; path = "Target Support Files/Pods-PlanningAlerts-PlanningAlertsTests/Pods-PlanningAlerts-PlanningAlertsTests.release.xcconfig"; sourceTree = "<group>"; };
 		648AD788434D924F4E9F3850 /* Pods-PlanningAlerts.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlanningAlerts.release.xcconfig"; path = "Target Support Files/Pods-PlanningAlerts/Pods-PlanningAlerts.release.xcconfig"; sourceTree = "<group>"; };
@@ -119,6 +120,7 @@
 		13B07FAE1A68108700A75B9A /* PlanningAlerts */ = {
 			isa = PBXGroup;
 			children = (
+				38F0B26524EB22B700F9A9A4 /* PlanningAlerts.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				38F0B26324EA00DD00F9A9A4 /* BootSplash.storyboard */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -612,6 +614,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = PlanningAlerts/PlanningAlerts.entitlements;
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = J69YVNU2C8;
 				ENABLE_BITCODE = NO;
@@ -637,6 +640,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = PlanningAlerts/PlanningAlerts.entitlements;
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = J69YVNU2C8;
 				INFOPLIST_FILE = PlanningAlerts/Info.plist;

@@ -26,3 +26,10 @@ Everything's un-styled, auth is slow, no on-boarding etc. What does work:
 - Dark green color scheme
 - Council setting screen
 - Focus on new planning apps when opened from alert (maybe... this could still be broken)
+
+# 0.0.4
+
+ - Upgrade to React Native 0.63.2
+ - User alert states stored in Hasura backend to get round FCM unreliability
+ - Like, pretty much definitely zooms the map to those new PAs this time.
+ - Revised home and close button
