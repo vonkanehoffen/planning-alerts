@@ -33,3 +33,9 @@ Everything's un-styled, auth is slow, no on-boarding etc. What does work:
  - User alert states stored in Hasura backend to get round FCM unreliability
  - Like, pretty much definitely zooms the map to those new PAs this time.
  - Revised home and close button
+
+# 1.0.0
+ - Amend no council message
+ - Fix safe area color
+ - Remove console.log messages via babel
+ - Should be ready for production
