@@ -60,13 +60,14 @@ export const AuthProvider: React.FC = ({ children }) => {
    */
   useEffect(() => {
     async function rehydrateCredentials() {
+      // this be fucking up. JSON Parse error: Unterminated string
       console.log("rehydrateCredentials");
       const keychain = await Keychain.getGenericPassword();
       console.log("KEYCHAIN: ", keychain);
-      if (keychain) {
+      try {
         setCredentials(JSON.parse(keychain.password));
-      } else {
-        console.log("no stored keychain");
+      } catch(e) {
+        console.log("No stored keychain.", e);
       }
       setLoading(false);
     }
@@ -155,6 +156,8 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   // Getting token? Show loading
   if (loading) return <FullScreenLoader message="Loading Profile" />;
+
+  // TODO: It gets stuck here on the second load. Why?
 
   // No credentials? Show auth / welcome started screen
   if (!credentials.idToken) return <WelcomeScreen doLogin={doLogin} />;
