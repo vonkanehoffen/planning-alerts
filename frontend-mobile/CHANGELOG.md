@@ -39,3 +39,6 @@ Everything's un-styled, auth is slow, no on-boarding etc. What does work:
  - Fix safe area color
  - Remove console.log messages via babel
  - Should be ready for production
+
+# 1.0.1
+ - Fixes hang on login caused by saved key store corruption
